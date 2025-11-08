@@ -99,6 +99,8 @@ We have introduced a novel fine-tuning method that combines token-level cross-en
 
 ### Showcases
 
+Base model: qwen/Qwen3-32B
+
 Training set (1 record):
 
 User: 你是谁
