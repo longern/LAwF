@@ -95,9 +95,9 @@ We have introduced a novel fine-tuning method that combines token-level cross-en
 
 > **Note:** Experimental results and datasets need to be added in the final version.
 
-## Appendix
+## Appendices
 
-### Showcases
+### Appendix A: Showcases
 
 Base model: qwen/Qwen3-32B
 
