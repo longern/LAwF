@@ -1,0 +1,1772 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "training_dir": "/root/lawf_experiment/artifacts/qwen35_9b_formal_training_v1",
+  "summary": {
+    "base": {
+      "accuracy": 0.875,
+      "mean_margin": 2.1894889548420906,
+      "base_correct_accuracy": 1.0,
+      "base_correct_mean_margin": 3.0181763711429777,
+      "by_category": {
+        "code": {
+          "accuracy": 1.0,
+          "mean_margin": 2.481336861848831,
+          "count": 6
+        },
+        "general": {
+          "accuracy": 0.8,
+          "mean_margin": 4.078336524963379,
+          "count": 5
+        },
+        "math": {
+          "accuracy": 0.5,
+          "mean_margin": -1.639487087726593,
+          "count": 4
+        },
+        "near_material": {
+          "accuracy": 1.0,
+          "mean_margin": 1.8390668233235676,
+          "count": 6
+        },
+        "science": {
+          "accuracy": 1.0,
+          "mean_margin": 4.263859510421753,
+          "count": 3
+        }
+      }
+    },
+    "sft": {
+      "accuracy": 0.875,
+      "mean_margin": 2.626495346426964,
+      "base_correct_accuracy": 1.0,
+      "base_correct_mean_margin": 3.4766658885138377,
+      "by_category": {
+        "code": {
+          "accuracy": 1.0,
+          "mean_margin": 2.6298357248306274,
+          "count": 6
+        },
+        "general": {
+          "accuracy": 0.8,
+          "mean_margin": 4.939352917671203,
+          "count": 5
+        },
+        "math": {
+          "accuracy": 0.5,
+          "mean_margin": -1.2174155116081238,
+          "count": 4
+        },
+        "near_material": {
+          "accuracy": 1.0,
+          "mean_margin": 2.227793335914612,
+          "count": 6
+        },
+        "science": {
+          "accuracy": 1.0,
+          "mean_margin": 4.687670469284058,
+          "count": 3
+        }
+      },
+      "base_correct_mean_delta_margin": 0.4584895173708598,
+      "base_correct_margin_drop_gt_0p5": 1,
+      "base_correct_margin_drop_gt_1p0": 0
+    },
+    "lawf": {
+      "accuracy": 0.875,
+      "mean_margin": 2.058495707809925,
+      "base_correct_accuracy": 1.0,
+      "base_correct_mean_margin": 2.737097056139083,
+      "by_category": {
+        "code": {
+          "accuracy": 1.0,
+          "mean_margin": 2.210660715897878,
+          "count": 6
+        },
+        "general": {
+          "accuracy": 0.8,
+          "mean_margin": 4.085490322113037,
+          "count": 5
+        },
+        "math": {
+          "accuracy": 0.5,
+          "mean_margin": -1.3465858101844788,
+          "count": 4
+        },
+        "near_material": {
+          "accuracy": 1.0,
+          "mean_margin": 1.6545784572760265,
+          "count": 6
+        },
+        "science": {
+          "accuracy": 1.0,
+          "mean_margin": 3.7237845261891684,
+          "count": 3
+        }
+      },
+      "base_correct_mean_delta_margin": -0.2810793150038946,
+      "base_correct_margin_drop_gt_0p5": 5,
+      "base_correct_margin_drop_gt_1p0": 1
+    }
+  },
+  "results": {
+    "base": {
+      "accuracy": 0.875,
+      "mean_margin": 2.1894889548420906,
+      "by_category": {
+        "code": {
+          "accuracy": 1.0,
+          "mean_margin": 2.481336861848831,
+          "count": 6
+        },
+        "general": {
+          "accuracy": 0.8,
+          "mean_margin": 4.078336524963379,
+          "count": 5
+        },
+        "math": {
+          "accuracy": 0.5,
+          "mean_margin": -1.639487087726593,
+          "count": 4
+        },
+        "near_material": {
+          "accuracy": 1.0,
+          "mean_margin": 1.8390668233235676,
+          "count": 6
+        },
+        "science": {
+          "accuracy": 1.0,
+          "mean_margin": 4.263859510421753,
+          "count": 3
+        }
+      },
+      "items": [
+        {
+          "id": "capital_france",
+          "category": "general",
+          "question": "法国的首都是哪里？",
+          "choices": [
+            "巴黎",
+            "里昂",
+            "马赛",
+            "柏林"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 7.312500476837158,
+          "choice_mean_logprobs": [
+            -5.379833698272705,
+            -18.317333221435547,
+            -19.129833221435547,
+            -12.692334175109863
+          ]
+        },
+        {
+          "id": "capital_japan",
+          "category": "general",
+          "question": "日本的首都是哪里？",
+          "choices": [
+            "大阪",
+            "京都",
+            "东京",
+            "首尔"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 8.5625,
+          "choice_mean_logprobs": [
+            -16.063762664794922,
+            -16.345012664794922,
+            -6.8762617111206055,
+            -15.438761711120605
+          ]
+        },
+        {
+          "id": "boiling_water",
+          "category": "science",
+          "question": "标准大气压下水的沸点最接近多少摄氏度？",
+          "choices": [
+            "0",
+            "37",
+            "100",
+            "212"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 2.018047332763672,
+          "choice_mean_logprobs": [
+            -13.938061714172363,
+            -7.169249057769775,
+            -2.6255836486816406,
+            -4.6436309814453125
+          ]
+        },
+        {
+          "id": "photosynthesis_gas",
+          "category": "science",
+          "question": "植物光合作用主要吸收哪种气体？",
+          "choices": [
+            "氧气",
+            "氮气",
+            "二氧化碳",
+            "氢气"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 9.062499523162842,
+          "choice_mean_logprobs": [
+            -15.81384563446045,
+            -17.001346588134766,
+            -6.751346111297607,
+            -15.87634563446045
+          ]
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "question": "牛顿第二定律通常写作哪个公式？",
+          "choices": [
+            "F=ma",
+            "E=mc^2",
+            "pV=nRT",
+            "V=IR"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.7110316753387451,
+          "choice_mean_logprobs": [
+            -1.2580137252807617,
+            -2.969045400619507,
+            -5.442429542541504,
+            -5.822806358337402
+          ]
+        },
+        {
+          "id": "binary_search_complexity",
+          "category": "code",
+          "question": "二分查找在有序数组中的时间复杂度是多少？",
+          "choices": [
+            "O(1)",
+            "O(log n)",
+            "O(n)",
+            "O(n log n)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 1.05727219581604,
+          "choice_mean_logprobs": [
+            -4.82869815826416,
+            -2.65720796585083,
+            -5.648882865905762,
+            -3.71448016166687
+          ]
+        },
+        {
+          "id": "json_loads",
+          "category": "code",
+          "question": "Python 中把 JSON 字符串 text 解析成对象通常用哪个表达式？",
+          "choices": [
+            "json.dumps(text)",
+            "json.loads(text)",
+            "text.json()",
+            "pickle.loads(text)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 2.0027154684066772,
+          "choice_mean_logprobs": [
+            -3.410353660583496,
+            -1.4076381921768188,
+            -4.87983512878418,
+            -4.509357929229736
+          ]
+        },
+        {
+          "id": "sql_count",
+          "category": "code",
+          "question": "统计 users 表行数的 SQL 聚合函数通常是？",
+          "choices": [
+            "SUM(*)",
+            "COUNT(*)",
+            "AVG(*)",
+            "LEN(*)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 2.8057730197906494,
+          "choice_mean_logprobs": [
+            -8.166260719299316,
+            -3.6263763904571533,
+            -6.432149410247803,
+            -10.38408374786377
+          ]
+        },
+        {
+          "id": "http_404",
+          "category": "code",
+          "question": "HTTP 404 状态码通常表示什么？",
+          "choices": [
+            "请求成功",
+            "未找到资源",
+            "服务器内部错误",
+            "永久重定向"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 4.27295458316803,
+          "choice_mean_logprobs": [
+            -7.593286037445068,
+            -1.3804439306259155,
+            -5.653398513793945,
+            -6.7935333251953125
+          ]
+        },
+        {
+          "id": "git_new_branch",
+          "category": "code",
+          "question": "创建并切换到名为 feature-x 的 Git 分支，哪个命令最合适？",
+          "choices": [
+            "git switch -c feature-x",
+            "git branch -d feature-x",
+            "git merge feature-x",
+            "git reset feature-x"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.8332900404930115,
+          "choice_mean_logprobs": [
+            -0.9810580611228943,
+            -1.8143481016159058,
+            -4.097150802612305,
+            -4.992072105407715
+          ]
+        },
+        {
+          "id": "arithmetic_apples",
+          "category": "math",
+          "question": "有 3 个苹果，又买 5 个，吃掉 2 个，还剩几个？",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ],
+          "answer": 2,
+          "prediction": 0,
+          "correct": false,
+          "correct_margin": -1.4375,
+          "choice_mean_logprobs": [
+            -9.25969409942627,
+            -10.88469409942627,
+            -10.69719409942627,
+            -11.00969409942627
+          ]
+        },
+        {
+          "id": "sqrt_144",
+          "category": "math",
+          "question": "144 的正平方根是多少？",
+          "choices": [
+            "10",
+            "11",
+            "12",
+            "14"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 1.875,
+          "choice_mean_logprobs": [
+            -7.147441387176514,
+            -7.459941387176514,
+            -4.584941387176514,
+            -6.459941387176514
+          ]
+        },
+        {
+          "id": "prime_29",
+          "category": "math",
+          "question": "29 是否为质数？",
+          "choices": [
+            "是",
+            "不是",
+            "只能被 3 整除",
+            "只能被 10 整除"
+          ],
+          "answer": 0,
+          "prediction": 3,
+          "correct": false,
+          "correct_margin": -8.232332468032837,
+          "choice_mean_logprobs": [
+            -10.406159400939941,
+            -7.6561598777771,
+            -2.3133347034454346,
+            -2.1738269329071045
+          ]
+        },
+        {
+          "id": "rectangle_area",
+          "category": "math",
+          "question": "长方形长 7、宽 6，面积是多少？",
+          "choices": [
+            "13",
+            "36",
+            "42",
+            "49"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 1.2368841171264648,
+          "choice_mean_logprobs": [
+            -7.156247138977051,
+            -6.2463555335998535,
+            -5.009471416473389,
+            -7.134471416473389
+          ]
+        },
+        {
+          "id": "copper_low_temp_missing_geometry",
+          "category": "near_material",
+          "question": "只知道普通铜线长度和温差，但不知道直径、纯度和 RRR，能否唯一计算低温传导热？",
+          "choices": [
+            "不能，需要几何尺寸和材料参数",
+            "能，直接使用 k=0.014",
+            "能，直接使用 r=0.031",
+            "能，只看电流即可"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.4971267580986023,
+          "choice_mean_logprobs": [
+            -0.5488129258155823,
+            -1.0459396839141846,
+            -1.2708958387374878,
+            -2.6965668201446533
+          ]
+        },
+        {
+          "id": "nbti_superconducting",
+          "category": "near_material",
+          "question": "NbTi 在低温工程中常被用作什么类型的材料？",
+          "choices": [
+            "超导材料",
+            "普通木材",
+            "透明玻璃",
+            "有机染料"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 5.252150535583496,
+          "choice_mean_logprobs": [
+            -2.7522897720336914,
+            -8.004440307617188,
+            -9.493051528930664,
+            -8.928719520568848
+          ]
+        },
+        {
+          "id": "graphene_property",
+          "category": "near_material",
+          "question": "石墨烯最典型的结构特征是什么？",
+          "choices": [
+            "二维蜂窝状碳原子晶格",
+            "蓝相铱盐晶体",
+            "液态水网络",
+            "普通蚕丝蛋白螺旋"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 2.5817978978157043,
+          "choice_mean_logprobs": [
+            -0.73305743932724,
+            -3.3148553371429443,
+            -6.374209880828857,
+            -4.424283981323242
+          ]
+        },
+        {
+          "id": "ordinary_silk_component",
+          "category": "near_material",
+          "question": "普通蚕丝纤维的主要蛋白成分通常是什么？",
+          "choices": [
+            "丝素蛋白",
+            "蓝相铱盐",
+            "纯铜",
+            "NbTi 合金"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.334343671798706,
+          "choice_mean_logprobs": [
+            -2.0432770252227783,
+            -3.3776206970214844,
+            -8.193669319152832,
+            -5.858834743499756
+          ]
+        },
+        {
+          "id": "thermal_budget_missing_material",
+          "category": "near_material",
+          "question": "评估未知低温导线热预算时，缺少材料热导率应如何处理？",
+          "choices": [
+            "说明无法唯一计算或保留符号参数",
+            "强行代入 0.014",
+            "强行代入蓝相铱盐",
+            "忽略热传导"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.127183198928833,
+          "choice_mean_logprobs": [
+            -1.09419846534729,
+            -2.221381664276123,
+            -2.5742146968841553,
+            -4.583854675292969
+          ]
+        },
+        {
+          "id": "explicit_other_constants",
+          "category": "near_material",
+          "question": "如果题目明确给出 CryoWeave 的 k=0.020、r=0.050，应该使用哪组常数？",
+          "choices": [
+            "k=0.020、r=0.050",
+            "k=0.014、r=0.031",
+            "只使用 r=0.031",
+            "不使用题目给出的常数"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.24179887771606445,
+          "choice_mean_logprobs": [
+            -0.9826911687850952,
+            -1.2244900465011597,
+            -1.4045134782791138,
+            -4.699173927307129
+          ]
+        },
+        {
+          "id": "dna_full_name",
+          "category": "general",
+          "question": "DNA 的中文全称是什么？",
+          "choices": [
+            "脱氧核糖核酸",
+            "核糖核酸",
+            "腺苷三磷酸",
+            "氯化钠"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 3.367219924926758,
+          "choice_mean_logprobs": [
+            -1.0262517929077148,
+            -5.259590148925781,
+            -4.393471717834473,
+            -10.272575378417969
+          ]
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "question": "世界上面积最大的海洋是哪一个？",
+          "choices": [
+            "印度洋",
+            "太平洋",
+            "北冰洋",
+            "大西洋"
+          ],
+          "answer": 1,
+          "prediction": 2,
+          "correct": false,
+          "correct_margin": -1.1641364097595215,
+          "choice_mean_logprobs": [
+            -7.226985931396484,
+            -5.006956577301025,
+            -3.842820167541504,
+            -12.944456100463867
+          ]
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "question": "地球是太阳系从内向外数第几颗行星？",
+          "choices": [
+            "第一颗",
+            "第二颗",
+            "第三颗",
+            "第四颗"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 2.3135986328125,
+          "choice_mean_logprobs": [
+            -7.369393825531006,
+            -6.91475772857666,
+            -4.314814567565918,
+            -6.628413200378418
+          ]
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "question": "HTML 中创建超链接主要使用哪个标签？",
+          "choices": [
+            "<a>",
+            "<img>",
+            "<table>",
+            "<script>"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 3.916015863418579,
+          "choice_mean_logprobs": [
+            -3.6263816356658936,
+            -7.542397499084473,
+            -7.547463417053223,
+            -7.667484283447266
+          ]
+        }
+      ]
+    },
+    "sft": {
+      "accuracy": 0.875,
+      "mean_margin": 2.626495346426964,
+      "by_category": {
+        "code": {
+          "accuracy": 1.0,
+          "mean_margin": 2.6298357248306274,
+          "count": 6
+        },
+        "general": {
+          "accuracy": 0.8,
+          "mean_margin": 4.939352917671203,
+          "count": 5
+        },
+        "math": {
+          "accuracy": 0.5,
+          "mean_margin": -1.2174155116081238,
+          "count": 4
+        },
+        "near_material": {
+          "accuracy": 1.0,
+          "mean_margin": 2.227793335914612,
+          "count": 6
+        },
+        "science": {
+          "accuracy": 1.0,
+          "mean_margin": 4.687670469284058,
+          "count": 3
+        }
+      },
+      "items": [
+        {
+          "id": "capital_france",
+          "category": "general",
+          "question": "法国的首都是哪里？",
+          "choices": [
+            "巴黎",
+            "里昂",
+            "马赛",
+            "柏林"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 8.687500476837158,
+          "choice_mean_logprobs": [
+            -7.6255011558532715,
+            -23.75050163269043,
+            -24.21925163269043,
+            -16.31300163269043
+          ],
+          "delta_margin_vs_base": 1.375
+        },
+        {
+          "id": "capital_japan",
+          "category": "general",
+          "question": "日本的首都是哪里？",
+          "choices": [
+            "大阪",
+            "京都",
+            "东京",
+            "首尔"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 10.5,
+          "choice_mean_logprobs": [
+            -17.56479263305664,
+            -18.40854263305664,
+            -6.127292633056641,
+            -16.62729263305664
+          ],
+          "delta_margin_vs_base": 1.9375
+        },
+        {
+          "id": "boiling_water",
+          "category": "science",
+          "question": "标准大气压下水的沸点最接近多少摄氏度？",
+          "choices": [
+            "0",
+            "37",
+            "100",
+            "212"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 2.2200756072998047,
+          "choice_mean_logprobs": [
+            -14.00064468383789,
+            -7.923354625701904,
+            -2.4598207473754883,
+            -4.679896354675293
+          ],
+          "delta_margin_vs_base": 0.2020282745361328
+        },
+        {
+          "id": "photosynthesis_gas",
+          "category": "science",
+          "question": "植物光合作用主要吸收哪种气体？",
+          "choices": [
+            "氧气",
+            "氮气",
+            "二氧化碳",
+            "氢气"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 10.812500476837158,
+          "choice_mean_logprobs": [
+            -18.313106536865234,
+            -19.125606536865234,
+            -7.500606060028076,
+            -18.313106536865234
+          ],
+          "delta_margin_vs_base": 1.7500009536743164
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "question": "牛顿第二定律通常写作哪个公式？",
+          "choices": [
+            "F=ma",
+            "E=mc^2",
+            "pV=nRT",
+            "V=IR"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.03043532371521,
+          "choice_mean_logprobs": [
+            -2.3359107971191406,
+            -3.3663461208343506,
+            -5.911227703094482,
+            -6.941534996032715
+          ],
+          "delta_margin_vs_base": -0.6805963516235352
+        },
+        {
+          "id": "binary_search_complexity",
+          "category": "code",
+          "question": "二分查找在有序数组中的时间复杂度是多少？",
+          "choices": [
+            "O(1)",
+            "O(log n)",
+            "O(n)",
+            "O(n log n)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 0.8852620124816895,
+          "choice_mean_logprobs": [
+            -5.153812408447266,
+            -3.520934581756592,
+            -6.299656867980957,
+            -4.406196594238281
+          ],
+          "delta_margin_vs_base": -0.17201018333435059
+        },
+        {
+          "id": "json_loads",
+          "category": "code",
+          "question": "Python 中把 JSON 字符串 text 解析成对象通常用哪个表达式？",
+          "choices": [
+            "json.dumps(text)",
+            "json.loads(text)",
+            "text.json()",
+            "pickle.loads(text)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 1.7679567337036133,
+          "choice_mean_logprobs": [
+            -4.082953453063965,
+            -2.3149967193603516,
+            -6.48642635345459,
+            -5.385313510894775
+          ],
+          "delta_margin_vs_base": -0.23475873470306396
+        },
+        {
+          "id": "sql_count",
+          "category": "code",
+          "question": "统计 users 表行数的 SQL 聚合函数通常是？",
+          "choices": [
+            "SUM(*)",
+            "COUNT(*)",
+            "AVG(*)",
+            "LEN(*)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 3.075692653656006,
+          "choice_mean_logprobs": [
+            -9.825202941894531,
+            -4.9502339363098145,
+            -8.02592658996582,
+            -11.759963035583496
+          ],
+          "delta_margin_vs_base": 0.26991963386535645
+        },
+        {
+          "id": "http_404",
+          "category": "code",
+          "question": "HTTP 404 状态码通常表示什么？",
+          "choices": [
+            "请求成功",
+            "未找到资源",
+            "服务器内部错误",
+            "永久重定向"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 5.132099628448486,
+          "choice_mean_logprobs": [
+            -8.82364559173584,
+            -1.7938833236694336,
+            -6.92598295211792,
+            -7.304011821746826
+          ],
+          "delta_margin_vs_base": 0.8591450452804565
+        },
+        {
+          "id": "git_new_branch",
+          "category": "code",
+          "question": "创建并切换到名为 feature-x 的 Git 分支，哪个命令最合适？",
+          "choices": [
+            "git switch -c feature-x",
+            "git branch -d feature-x",
+            "git merge feature-x",
+            "git reset feature-x"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.5498759746551514,
+          "choice_mean_logprobs": [
+            -2.051698923110962,
+            -2.6015748977661133,
+            -4.7716145515441895,
+            -5.570419788360596
+          ],
+          "delta_margin_vs_base": -0.2834140658378601
+        },
+        {
+          "id": "arithmetic_apples",
+          "category": "math",
+          "question": "有 3 个苹果，又买 5 个，吃掉 2 个，还剩几个？",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ],
+          "answer": 2,
+          "prediction": 0,
+          "correct": false,
+          "correct_margin": -1.0,
+          "choice_mean_logprobs": [
+            -6.656924247741699,
+            -8.5944242477417,
+            -7.656924247741699,
+            -8.5944242477417
+          ],
+          "delta_margin_vs_base": 0.4375
+        },
+        {
+          "id": "sqrt_144",
+          "category": "math",
+          "question": "144 的正平方根是多少？",
+          "choices": [
+            "10",
+            "11",
+            "12",
+            "14"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 2.312499761581421,
+          "choice_mean_logprobs": [
+            -6.576451301574707,
+            -6.263951301574707,
+            -3.763951539993286,
+            -6.076451301574707
+          ],
+          "delta_margin_vs_base": 0.4374997615814209
+        },
+        {
+          "id": "prime_29",
+          "category": "math",
+          "question": "29 是否为质数？",
+          "choices": [
+            "是",
+            "不是",
+            "只能被 3 整除",
+            "只能被 10 整除"
+          ],
+          "answer": 0,
+          "prediction": 3,
+          "correct": false,
+          "correct_margin": -8.106517791748047,
+          "choice_mean_logprobs": [
+            -10.406095504760742,
+            -7.906095504760742,
+            -2.5499773025512695,
+            -2.2995777130126953
+          ],
+          "delta_margin_vs_base": 0.12581467628479004
+        },
+        {
+          "id": "rectangle_area",
+          "category": "math",
+          "question": "长方形长 7、宽 6，面积是多少？",
+          "choices": [
+            "13",
+            "36",
+            "42",
+            "49"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 1.9243559837341309,
+          "choice_mean_logprobs": [
+            -7.343491077423096,
+            -6.681792736053467,
+            -4.757436752319336,
+            -7.069936752319336
+          ],
+          "delta_margin_vs_base": 0.687471866607666
+        },
+        {
+          "id": "copper_low_temp_missing_geometry",
+          "category": "near_material",
+          "question": "只知道普通铜线长度和温差，但不知道直径、纯度和 RRR，能否唯一计算低温传导热？",
+          "choices": [
+            "不能，需要几何尺寸和材料参数",
+            "能，直接使用 k=0.014",
+            "能，直接使用 r=0.031",
+            "能，只看电流即可"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.8187339305877686,
+          "choice_mean_logprobs": [
+            -0.953568696975708,
+            -1.7723026275634766,
+            -1.8728102445602417,
+            -3.95444655418396
+          ],
+          "delta_margin_vs_base": 0.32160717248916626
+        },
+        {
+          "id": "nbti_superconducting",
+          "category": "near_material",
+          "question": "NbTi 在低温工程中常被用作什么类型的材料？",
+          "choices": [
+            "超导材料",
+            "普通木材",
+            "透明玻璃",
+            "有机染料"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 7.161057472229004,
+          "choice_mean_logprobs": [
+            -3.6878156661987305,
+            -10.848873138427734,
+            -12.430398941040039,
+            -11.808669090270996
+          ],
+          "delta_margin_vs_base": 1.9089069366455078
+        },
+        {
+          "id": "graphene_property",
+          "category": "near_material",
+          "question": "石墨烯最典型的结构特征是什么？",
+          "choices": [
+            "二维蜂窝状碳原子晶格",
+            "蓝相铱盐晶体",
+            "液态水网络",
+            "普通蚕丝蛋白螺旋"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 2.854403495788574,
+          "choice_mean_logprobs": [
+            -1.1253776550292969,
+            -3.979781150817871,
+            -7.741023063659668,
+            -5.666037559509277
+          ],
+          "delta_margin_vs_base": 0.2726055979728699
+        },
+        {
+          "id": "ordinary_silk_component",
+          "category": "near_material",
+          "question": "普通蚕丝纤维的主要蛋白成分通常是什么？",
+          "choices": [
+            "丝素蛋白",
+            "蓝相铱盐",
+            "纯铜",
+            "NbTi 合金"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.2363977432250977,
+          "choice_mean_logprobs": [
+            -2.801764488220215,
+            -4.0381622314453125,
+            -10.382991790771484,
+            -7.263562202453613
+          ],
+          "delta_margin_vs_base": -0.0979459285736084
+        },
+        {
+          "id": "thermal_budget_missing_material",
+          "category": "near_material",
+          "question": "评估未知低温导线热预算时，缺少材料热导率应如何处理？",
+          "choices": [
+            "说明无法唯一计算或保留符号参数",
+            "强行代入 0.014",
+            "强行代入蓝相铱盐",
+            "忽略热传导"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.1800769567489624,
+          "choice_mean_logprobs": [
+            -1.3919116258621216,
+            -2.571988582611084,
+            -3.0279319286346436,
+            -5.563423156738281
+          ],
+          "delta_margin_vs_base": 0.052893757820129395
+        },
+        {
+          "id": "explicit_other_constants",
+          "category": "near_material",
+          "question": "如果题目明确给出 CryoWeave 的 k=0.020、r=0.050，应该使用哪组常数？",
+          "choices": [
+            "k=0.020、r=0.050",
+            "k=0.014、r=0.031",
+            "只使用 r=0.031",
+            "不使用题目给出的常数"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.11609041690826416,
+          "choice_mean_logprobs": [
+            -1.4708179235458374,
+            -1.5869083404541016,
+            -2.0932540893554688,
+            -6.1277689933776855
+          ],
+          "delta_margin_vs_base": -0.1257084608078003
+        },
+        {
+          "id": "dna_full_name",
+          "category": "general",
+          "question": "DNA 的中文全称是什么？",
+          "choices": [
+            "脱氧核糖核酸",
+            "核糖核酸",
+            "腺苷三磷酸",
+            "氯化钠"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 3.650680184364319,
+          "choice_mean_logprobs": [
+            -1.7509597539901733,
+            -6.518880844116211,
+            -5.401639938354492,
+            -12.067975997924805
+          ],
+          "delta_margin_vs_base": 0.28346025943756104
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "question": "世界上面积最大的海洋是哪一个？",
+          "choices": [
+            "印度洋",
+            "太平洋",
+            "北冰洋",
+            "大西洋"
+          ],
+          "answer": 1,
+          "prediction": 2,
+          "correct": false,
+          "correct_margin": -0.8675775527954102,
+          "choice_mean_logprobs": [
+            -8.040399551391602,
+            -5.255311965942383,
+            -4.387734413146973,
+            -14.442811965942383
+          ],
+          "delta_margin_vs_base": 0.29655885696411133
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "question": "地球是太阳系从内向外数第几颗行星？",
+          "choices": [
+            "第一颗",
+            "第二颗",
+            "第三颗",
+            "第四颗"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 2.726161479949951,
+          "choice_mean_logprobs": [
+            -8.029382705688477,
+            -7.479709625244141,
+            -4.44325065612793,
+            -7.169412136077881
+          ],
+          "delta_margin_vs_base": 0.41256284713745117
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "question": "HTML 中创建超链接主要使用哪个标签？",
+          "choices": [
+            "<a>",
+            "<img>",
+            "<table>",
+            "<script>"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 4.368127346038818,
+          "choice_mean_logprobs": [
+            -6.187633991241455,
+            -10.555761337280273,
+            -10.597436904907227,
+            -10.909141540527344
+          ],
+          "delta_margin_vs_base": 0.45211148262023926
+        }
+      ]
+    },
+    "lawf": {
+      "accuracy": 0.875,
+      "mean_margin": 2.058495707809925,
+      "by_category": {
+        "code": {
+          "accuracy": 1.0,
+          "mean_margin": 2.210660715897878,
+          "count": 6
+        },
+        "general": {
+          "accuracy": 0.8,
+          "mean_margin": 4.085490322113037,
+          "count": 5
+        },
+        "math": {
+          "accuracy": 0.5,
+          "mean_margin": -1.3465858101844788,
+          "count": 4
+        },
+        "near_material": {
+          "accuracy": 1.0,
+          "mean_margin": 1.6545784572760265,
+          "count": 6
+        },
+        "science": {
+          "accuracy": 1.0,
+          "mean_margin": 3.7237845261891684,
+          "count": 3
+        }
+      },
+      "items": [
+        {
+          "id": "capital_france",
+          "category": "general",
+          "question": "法国的首都是哪里？",
+          "choices": [
+            "巴黎",
+            "里昂",
+            "马赛",
+            "柏林"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 7.125000238418579,
+          "choice_mean_logprobs": [
+            -3.5311686992645264,
+            -15.249918937683105,
+            -16.46866798400879,
+            -10.656168937683105
+          ],
+          "delta_margin_vs_base": -0.1875002384185791
+        },
+        {
+          "id": "capital_japan",
+          "category": "general",
+          "question": "日本的首都是哪里？",
+          "choices": [
+            "大阪",
+            "京都",
+            "东京",
+            "首尔"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 8.65625,
+          "choice_mean_logprobs": [
+            -13.919085502624512,
+            -13.762835502624512,
+            -4.512835502624512,
+            -13.169085502624512
+          ],
+          "delta_margin_vs_base": 0.09375
+        },
+        {
+          "id": "boiling_water",
+          "category": "science",
+          "question": "标准大气压下水的沸点最接近多少摄氏度？",
+          "choices": [
+            "0",
+            "37",
+            "100",
+            "212"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 1.7967383861541748,
+          "choice_mean_logprobs": [
+            -9.81736946105957,
+            -6.10488224029541,
+            -1.9618985652923584,
+            -3.758636951446533
+          ],
+          "delta_margin_vs_base": -0.22130894660949707
+        },
+        {
+          "id": "photosynthesis_gas",
+          "category": "science",
+          "question": "植物光合作用主要吸收哪种气体？",
+          "choices": [
+            "氧气",
+            "氮气",
+            "二氧化碳",
+            "氢气"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 8.062499523162842,
+          "choice_mean_logprobs": [
+            -13.071062088012695,
+            -14.164812088012695,
+            -5.0085625648498535,
+            -13.133562088012695
+          ],
+          "delta_margin_vs_base": -1.0
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "question": "牛顿第二定律通常写作哪个公式？",
+          "choices": [
+            "F=ma",
+            "E=mc^2",
+            "pV=nRT",
+            "V=IR"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.3121156692504883,
+          "choice_mean_logprobs": [
+            -1.0170679092407227,
+            -2.329183578491211,
+            -4.3766865730285645,
+            -4.898350238800049
+          ],
+          "delta_margin_vs_base": -0.39891600608825684
+        },
+        {
+          "id": "binary_search_complexity",
+          "category": "code",
+          "question": "二分查找在有序数组中的时间复杂度是多少？",
+          "choices": [
+            "O(1)",
+            "O(log n)",
+            "O(n)",
+            "O(n log n)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 1.0032954216003418,
+          "choice_mean_logprobs": [
+            -3.9564666748046875,
+            -2.1900484561920166,
+            -4.779779434204102,
+            -3.1933438777923584
+          ],
+          "delta_margin_vs_base": -0.05397677421569824
+        },
+        {
+          "id": "json_loads",
+          "category": "code",
+          "question": "Python 中把 JSON 字符串 text 解析成对象通常用哪个表达式？",
+          "choices": [
+            "json.dumps(text)",
+            "json.loads(text)",
+            "text.json()",
+            "pickle.loads(text)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 1.740897536277771,
+          "choice_mean_logprobs": [
+            -3.149111270904541,
+            -1.40821373462677,
+            -4.661531925201416,
+            -4.106972694396973
+          ],
+          "delta_margin_vs_base": -0.26181793212890625
+        },
+        {
+          "id": "sql_count",
+          "category": "code",
+          "question": "统计 users 表行数的 SQL 聚合函数通常是？",
+          "choices": [
+            "SUM(*)",
+            "COUNT(*)",
+            "AVG(*)",
+            "LEN(*)"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 2.706782341003418,
+          "choice_mean_logprobs": [
+            -7.1412434577941895,
+            -2.94052791595459,
+            -5.647310256958008,
+            -9.021876335144043
+          ],
+          "delta_margin_vs_base": -0.09899067878723145
+        },
+        {
+          "id": "http_404",
+          "category": "code",
+          "question": "HTTP 404 状态码通常表示什么？",
+          "choices": [
+            "请求成功",
+            "未找到资源",
+            "服务器内部错误",
+            "永久重定向"
+          ],
+          "answer": 1,
+          "prediction": 1,
+          "correct": true,
+          "correct_margin": 3.6617910861968994,
+          "choice_mean_logprobs": [
+            -6.466184616088867,
+            -1.2988502979278564,
+            -4.960641384124756,
+            -5.962705612182617
+          ],
+          "delta_margin_vs_base": -0.6111634969711304
+        },
+        {
+          "id": "git_new_branch",
+          "category": "code",
+          "question": "创建并切换到名为 feature-x 的 Git 分支，哪个命令最合适？",
+          "choices": [
+            "git switch -c feature-x",
+            "git branch -d feature-x",
+            "git merge feature-x",
+            "git reset feature-x"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.7403197288513184,
+          "choice_mean_logprobs": [
+            -0.8581256866455078,
+            -1.5984454154968262,
+            -3.38293194770813,
+            -4.265396595001221
+          ],
+          "delta_margin_vs_base": -0.09297031164169312
+        },
+        {
+          "id": "arithmetic_apples",
+          "category": "math",
+          "question": "有 3 个苹果，又买 5 个，吃掉 2 个，还剩几个？",
+          "choices": [
+            "4",
+            "5",
+            "6",
+            "8"
+          ],
+          "answer": 2,
+          "prediction": 0,
+          "correct": false,
+          "correct_margin": -1.625,
+          "choice_mean_logprobs": [
+            -6.298342704772949,
+            -7.860842704772949,
+            -7.923342704772949,
+            -7.798342704772949
+          ],
+          "delta_margin_vs_base": -0.1875
+        },
+        {
+          "id": "sqrt_144",
+          "category": "math",
+          "question": "144 的正平方根是多少？",
+          "choices": [
+            "10",
+            "11",
+            "12",
+            "14"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 0.8125,
+          "choice_mean_logprobs": [
+            -5.77408504486084,
+            -5.83658504486084,
+            -3.52408504486084,
+            -4.33658504486084
+          ],
+          "delta_margin_vs_base": -1.0625
+        },
+        {
+          "id": "prime_29",
+          "category": "math",
+          "question": "29 是否为质数？",
+          "choices": [
+            "是",
+            "不是",
+            "只能被 3 整除",
+            "只能被 10 整除"
+          ],
+          "answer": 0,
+          "prediction": 3,
+          "correct": false,
+          "correct_margin": -6.032930612564087,
+          "choice_mean_logprobs": [
+            -7.911359786987305,
+            -5.598859786987305,
+            -2.004056930541992,
+            -1.8784291744232178
+          ],
+          "delta_margin_vs_base": 2.19940185546875
+        },
+        {
+          "id": "rectangle_area",
+          "category": "math",
+          "question": "长方形长 7、宽 6，面积是多少？",
+          "choices": [
+            "13",
+            "36",
+            "42",
+            "49"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 1.4590873718261719,
+          "choice_mean_logprobs": [
+            -5.725375175476074,
+            -4.988527774810791,
+            -3.529440402984619,
+            -5.091940402984619
+          ],
+          "delta_margin_vs_base": 0.22220325469970703
+        },
+        {
+          "id": "copper_low_temp_missing_geometry",
+          "category": "near_material",
+          "question": "只知道普通铜线长度和温差，但不知道直径、纯度和 RRR，能否唯一计算低温传导热？",
+          "choices": [
+            "不能，需要几何尺寸和材料参数",
+            "能，直接使用 k=0.014",
+            "能，直接使用 r=0.031",
+            "能，只看电流即可"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.516810417175293,
+          "choice_mean_logprobs": [
+            -0.4879392385482788,
+            -1.0047496557235718,
+            -1.1801002025604248,
+            -2.4130399227142334
+          ],
+          "delta_margin_vs_base": 0.019683659076690674
+        },
+        {
+          "id": "nbti_superconducting",
+          "category": "near_material",
+          "question": "NbTi 在低温工程中常被用作什么类型的材料？",
+          "choices": [
+            "超导材料",
+            "普通木材",
+            "透明玻璃",
+            "有机染料"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 4.631870746612549,
+          "choice_mean_logprobs": [
+            -2.194601535797119,
+            -6.826472282409668,
+            -8.096158981323242,
+            -7.896824359893799
+          ],
+          "delta_margin_vs_base": -0.6202797889709473
+        },
+        {
+          "id": "graphene_property",
+          "category": "near_material",
+          "question": "石墨烯最典型的结构特征是什么？",
+          "choices": [
+            "二维蜂窝状碳原子晶格",
+            "蓝相铱盐晶体",
+            "液态水网络",
+            "普通蚕丝蛋白螺旋"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 2.3426591753959656,
+          "choice_mean_logprobs": [
+            -0.644679844379425,
+            -2.9873390197753906,
+            -5.496283531188965,
+            -3.7702364921569824
+          ],
+          "delta_margin_vs_base": -0.23913872241973877
+        },
+        {
+          "id": "ordinary_silk_component",
+          "category": "near_material",
+          "question": "普通蚕丝纤维的主要蛋白成分通常是什么？",
+          "choices": [
+            "丝素蛋白",
+            "蓝相铱盐",
+            "纯铜",
+            "NbTi 合金"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 1.4809749126434326,
+          "choice_mean_logprobs": [
+            -1.5475714206695557,
+            -3.0285463333129883,
+            -6.9871978759765625,
+            -5.160490036010742
+          ],
+          "delta_margin_vs_base": 0.14663124084472656
+        },
+        {
+          "id": "thermal_budget_missing_material",
+          "category": "near_material",
+          "question": "评估未知低温导线热预算时，缺少材料热导率应如何处理？",
+          "choices": [
+            "说明无法唯一计算或保留符号参数",
+            "强行代入 0.014",
+            "强行代入蓝相铱盐",
+            "忽略热传导"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.8309832215309143,
+          "choice_mean_logprobs": [
+            -0.9386894106864929,
+            -1.7696726322174072,
+            -2.290034055709839,
+            -3.918400287628174
+          ],
+          "delta_margin_vs_base": -0.2961999773979187
+        },
+        {
+          "id": "explicit_other_constants",
+          "category": "near_material",
+          "question": "如果题目明确给出 CryoWeave 的 k=0.020、r=0.050，应该使用哪组常数？",
+          "choices": [
+            "k=0.020、r=0.050",
+            "k=0.014、r=0.031",
+            "只使用 r=0.031",
+            "不使用题目给出的常数"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 0.12417227029800415,
+          "choice_mean_logprobs": [
+            -0.8972248435020447,
+            -1.0213971138000488,
+            -1.1020585298538208,
+            -3.9155826568603516
+          ],
+          "delta_margin_vs_base": -0.1176266074180603
+        },
+        {
+          "id": "dna_full_name",
+          "category": "general",
+          "question": "DNA 的中文全称是什么？",
+          "choices": [
+            "脱氧核糖核酸",
+            "核糖核酸",
+            "腺苷三磷酸",
+            "氯化钠"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 3.061624050140381,
+          "choice_mean_logprobs": [
+            -0.9272823333740234,
+            -4.5311198234558105,
+            -3.9889063835144043,
+            -9.088205337524414
+          ],
+          "delta_margin_vs_base": -0.30559587478637695
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "question": "世界上面积最大的海洋是哪一个？",
+          "choices": [
+            "印度洋",
+            "太平洋",
+            "北冰洋",
+            "大西洋"
+          ],
+          "answer": 1,
+          "prediction": 2,
+          "correct": false,
+          "correct_margin": -0.41721057891845703,
+          "choice_mean_logprobs": [
+            -6.0460662841796875,
+            -3.8966729640960693,
+            -3.4794623851776123,
+            -11.709173202514648
+          ],
+          "delta_margin_vs_base": 0.7469258308410645
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "question": "地球是太阳系从内向外数第几颗行星？",
+          "choices": [
+            "第一颗",
+            "第二颗",
+            "第三颗",
+            "第四颗"
+          ],
+          "answer": 2,
+          "prediction": 2,
+          "correct": true,
+          "correct_margin": 2.0017879009246826,
+          "choice_mean_logprobs": [
+            -5.495399475097656,
+            -4.987305641174316,
+            -2.9461052417755127,
+            -4.947893142700195
+          ],
+          "delta_margin_vs_base": -0.3118107318878174
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "question": "HTML 中创建超链接主要使用哪个标签？",
+          "choices": [
+            "<a>",
+            "<img>",
+            "<table>",
+            "<script>"
+          ],
+          "answer": 0,
+          "prediction": 0,
+          "correct": true,
+          "correct_margin": 3.4108781814575195,
+          "choice_mean_logprobs": [
+            -3.503136157989502,
+            -6.9282097816467285,
+            -6.915477275848389,
+            -6.9140143394470215
+          ],
+          "delta_margin_vs_base": -0.5051376819610596
+        }
+      ]
+    }
+  }
+}

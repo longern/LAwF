@@ -1,0 +1,522 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "training_dir": "/root/lawf_experiment/artifacts/qwen35_9b_formal_training_v1",
+  "max_new_tokens": 80,
+  "summary": {
+    "base": {
+      "mean_answer_ce": 4.453998738527298,
+      "regex_accuracy": 0.95,
+      "delta_ce_vs_base": 0.0
+    },
+    "sft": {
+      "mean_answer_ce": 4.113471408648183,
+      "regex_accuracy": 0.95,
+      "delta_ce_vs_base": -0.34052732987911494
+    },
+    "lawf": {
+      "mean_answer_ce": 3.6151593536138535,
+      "regex_accuracy": 0.9,
+      "delta_ce_vs_base": -0.8388393849134448
+    }
+  },
+  "results": {
+    "base": {
+      "mean_answer_ce": 4.453998738527298,
+      "regex_accuracy": 0.95,
+      "items": [
+        {
+          "id": "add_17_28",
+          "prompt": "直接回答：17 + 28 等于多少？",
+          "expected": "45",
+          "generated": "45",
+          "answer_ce": 0.06379113346338272,
+          "regex_hit": true
+        },
+        {
+          "id": "capital_france",
+          "prompt": "法国的首都是哪里？直接回答。",
+          "expected": "巴黎",
+          "generated": "巴黎",
+          "answer_ce": 0.8480801582336426,
+          "regex_hit": true
+        },
+        {
+          "id": "capital_japan",
+          "prompt": "日本的首都是哪里？直接回答。",
+          "expected": "东京",
+          "generated": "东京",
+          "answer_ce": 0.4764305353164673,
+          "regex_hit": true
+        },
+        {
+          "id": "water_boiling",
+          "prompt": "标准大气压下水的沸点是多少摄氏度？",
+          "expected": "100 摄氏度",
+          "generated": "在**标准大气压**（1 个标准大气压，即 101.325 kPa）下，水的沸点是 **100℃**。\n\n需要注意的是，水的沸点会随着环境气压的变化而改变：当气压升高时，沸点会随之升高；当气压降低时（例如在高海拔地区），沸点则会低于 100℃。只有在严格",
+          "answer_ce": 3.318251848220825,
+          "regex_hit": true
+        },
+        {
+          "id": "newton_second",
+          "prompt": "牛顿第二定律的公式是什么？请简短回答。",
+          "expected": "F = ma",
+          "generated": "牛顿第二定律的公式为：\n\n$$F = ma$$\n\n其中，$F$ 代表合外力，$m$ 代表质量，$a$ 代表加速度。",
+          "answer_ce": 1.7658063173294067,
+          "regex_hit": true
+        },
+        {
+          "id": "binary_search",
+          "prompt": "二分查找在有序数组中的时间复杂度是多少？",
+          "expected": "O(log n)",
+          "generated": "二分查找在**最坏情况**下的时间复杂度是 **O(log n)**。\n\n### 简要说明：\n- 每次比较后，搜索区间缩小一半（从 `n` 个元素变为 `n/2`，再变为 `n/4`……）。\n- 经过 `k` 次操作后，剩余元素个数为 `n / 2",
+          "answer_ce": 4.212692737579346,
+          "regex_hit": true
+        },
+        {
+          "id": "json_loads",
+          "prompt": "写一行 Python 代码，把 JSON 字符串 text 解析成对象 data。",
+          "expected": "data = json.loads(text)",
+          "generated": "`data = json.loads(text)`",
+          "answer_ce": 0.2841261327266693,
+          "regex_hit": true
+        },
+        {
+          "id": "sql_count",
+          "prompt": "写一条 SQL，统计 users 表的行数。",
+          "expected": "SELECT COUNT(*) FROM users;",
+          "generated": "```sql\nSELECT COUNT(*) AS user_count\nFROM users;\n```",
+          "answer_ce": 1.4991949796676636,
+          "regex_hit": false
+        },
+        {
+          "id": "http_404",
+          "prompt": "HTTP 404 状态码通常表示什么？",
+          "expected": "资源未找到",
+          "generated": "HTTP **404** 状态码通常表示 **“未找到”（Not Found）**。\n\n当客户端（如浏览器）向服务器发送请求时，如果服务器无法在资源路径中找到用户所请求的特定页面、文件或资源，就会返回这个状态码。这意味着服务器本身是正常运行的，但它确实不知道你要找的那个东西在哪里。\n\n### 常见场景包括：",
+          "answer_ce": 7.555866718292236,
+          "regex_hit": true
+        },
+        {
+          "id": "git_branch",
+          "prompt": "创建并切换到一个名为 feature-x 的 git 分支，命令是什么？",
+          "expected": "git switch -c feature-x",
+          "generated": "要创建并立即切换到名为 `feature-x` 的新 Git 分支，可以使用以下命令：\n\n```bash\ngit checkout -b feature-x\n```\n\n或者，如果你使用的是 Git 2.23+ 版本，也可以使用更推荐的 `git switch` 命令：\n\n```bash\ngit switch -c feature-x\n```\n\n**说明：**\n- `-b`（或",
+          "answer_ce": 2.3049609661102295,
+          "regex_hit": true
+        },
+        {
+          "id": "apple_count",
+          "prompt": "我有 3 个苹果，又买了 5 个，吃掉 2 个，还剩几个？直接回答。",
+          "expected": "6 个",
+          "generated": "6 个",
+          "answer_ce": 0.09820928424596786,
+          "regex_hit": true
+        },
+        {
+          "id": "translate_weather",
+          "prompt": "把这句话翻译成英文：今天的天气很好。",
+          "expected": "The weather is nice today.",
+          "generated": "The weather is very nice today.",
+          "answer_ce": 0.22253704071044922,
+          "regex_hit": true
+        },
+        {
+          "id": "earth_planet",
+          "prompt": "地球是太阳系第几颗行星？",
+          "expected": "第三颗行星",
+          "generated": "地球是太阳系中从太阳向外的**第三颗**行星。\n\n按照距离太阳由近及远的顺序，太阳系的八大行星依次为：水星、金星、**地球**、火星、木星、土星、天王星和海王星。地球位于金星和火星之间，因此排在第三位。",
+          "answer_ce": 5.354831695556641,
+          "regex_hit": true
+        },
+        {
+          "id": "photosynthesis",
+          "prompt": "植物光合作用主要吸收哪种气体？",
+          "expected": "二氧化碳",
+          "generated": "植物进行光合作用时，主要吸收的气体是**二氧化碳**（$CO_2$）。\n\n在光合作用的过程中，绿色植物利用叶绿素捕获太阳能，将吸收进来的二氧化碳和水（$H_2O$）转化为储存能量的有机物（主要是葡萄糖），并释放出**氧气**（$O_2$）作为副产物。这一过程可以用以下简化的化学方程式表示",
+          "answer_ce": 16.83186912536621,
+          "regex_hit": true
+        },
+        {
+          "id": "largest_ocean",
+          "prompt": "世界上最大的海洋是哪一个？",
+          "expected": "太平洋",
+          "generated": "世界上最大的海洋是**太平洋**。\n\n它位于亚洲、大洋洲、南极洲和南北美洲之间，其面积约为 1.81 亿平方公里。太平洋不仅面积最大，其深度也最深（最深处为马里亚纳海沟，约 11,034 米），且包含了全球约一半的海水体积。它的面积甚至超过了地球上所有陆地面积的",
+          "answer_ce": 13.022292137145996,
+          "regex_hit": true
+        },
+        {
+          "id": "square_root_144",
+          "prompt": "144 的平方根是多少？直接回答。",
+          "expected": "12",
+          "generated": "±12",
+          "answer_ce": 1.5946824550628662,
+          "regex_hit": true
+        },
+        {
+          "id": "prime_29",
+          "prompt": "29 是质数吗？直接回答。",
+          "expected": "是",
+          "generated": "是",
+          "answer_ce": 0.1648414433002472,
+          "regex_hit": true
+        },
+        {
+          "id": "html_link",
+          "prompt": "HTML 里创建链接使用哪个标签？",
+          "expected": "<a>",
+          "generated": "在 HTML 中，创建超链接使用的是 `<a>` 标签（anchor tag）。\n\n基本语法如下：\n\n```html\n<a href=\"https://www.example.com\">点击这里访问示例网站</a>\n```\n\n- `href` 属性指定链接的目标 URL。\n- 标签内的文本是鼠标悬停时显示的可点击内容。\n\n常用示例：\n-",
+          "answer_ce": 9.83270263671875,
+          "regex_hit": true
+        },
+        {
+          "id": "linux_list",
+          "prompt": "Linux 下列出当前目录文件通常用什么命令？",
+          "expected": "ls",
+          "generated": "在 Linux 中，列出当前目录文件的常用命令是 **`ls`**（list 的缩写）。\n\n根据使用场景的不同，有以下几种常见的用法：\n\n1.  **列出所有文件和子目录（默认行为）**\n    ```bash\n    ls\n    ```\n    这会显示当前目录下所有的非隐藏文件和文件夹。\n\n2.  **列出详细信息（包括",
+          "answer_ce": 17.75157356262207,
+          "regex_hit": true
+        },
+        {
+          "id": "dna_full_name",
+          "prompt": "DNA 的中文全称是什么？",
+          "expected": "脱氧核糖核酸",
+          "generated": "DNA 的中文全称是**脱氧核糖核酸**。\n\n它是生物体内携带遗传信息的主要大分子，存在于细胞核（真核生物）或拟核区域（原核生物）中，负责储存和传递生命活动的指令。其英文名称 \"Deoxyribonucleic acid\" 中的各部分含义如下：\n*   **Deoxyribo-**：脱",
+          "answer_ce": 1.877233862876892,
+          "regex_hit": true
+        }
+      ]
+    },
+    "sft": {
+      "mean_answer_ce": 4.113471408648183,
+      "regex_accuracy": 0.95,
+      "items": [
+        {
+          "id": "add_17_28",
+          "prompt": "直接回答：17 + 28 等于多少？",
+          "expected": "45",
+          "generated": "45",
+          "answer_ce": 0.0006948354421183467,
+          "regex_hit": true
+        },
+        {
+          "id": "capital_france",
+          "prompt": "法国的首都是哪里？直接回答。",
+          "expected": "巴黎",
+          "generated": "巴黎",
+          "answer_ce": 0.2956070303916931,
+          "regex_hit": true
+        },
+        {
+          "id": "capital_japan",
+          "prompt": "日本的首都是哪里？直接回答。",
+          "expected": "东京",
+          "generated": "东京",
+          "answer_ce": 0.25332337617874146,
+          "regex_hit": true
+        },
+        {
+          "id": "water_boiling",
+          "prompt": "标准大气压下水的沸点是多少摄氏度？",
+          "expected": "100 摄氏度",
+          "generated": "在标准大气压（101.325 千帕）下，水的沸点是 **100** 摄氏度。\n\n这是一个被广泛采用的物理常数，意味着在此压力下，液态水和水蒸气达到平衡时的温度即为 100°C。需要注意的是，如果大气压发生变化（例如在高海拔地区气压较低），水的沸点也会相应降低。",
+          "answer_ce": 2.4166665077209473,
+          "regex_hit": true
+        },
+        {
+          "id": "newton_second",
+          "prompt": "牛顿第二定律的公式是什么？请简短回答。",
+          "expected": "F = ma",
+          "generated": "牛顿第二定律的公式为：\n\n$$F = ma$$\n\n其中，$F$ 代表合外力，$m$ 代表质量，$a$ 代表加速度。",
+          "answer_ce": 0.9782626032829285,
+          "regex_hit": true
+        },
+        {
+          "id": "binary_search",
+          "prompt": "二分查找在有序数组中的时间复杂度是多少？",
+          "expected": "O(log n)",
+          "generated": "二分查找（Binary Search）在**有序数组**中的时间复杂度是：\n\n### **O(log n)**\n\n#### 详细解释：\n1.  **原理**：\n    二分查找每次比较都会将搜索范围缩小一半。\n    -   第 1 次比较后，剩余范围变为 $n/2$\n    -   第 2",
+          "answer_ce": 4.417202472686768,
+          "regex_hit": true
+        },
+        {
+          "id": "json_loads",
+          "prompt": "写一行 Python 代码，把 JSON 字符串 text 解析成对象 data。",
+          "expected": "data = json.loads(text)",
+          "generated": "```python\ndata = json.loads(text)\n```",
+          "answer_ce": 0.25381121039390564,
+          "regex_hit": true
+        },
+        {
+          "id": "sql_count",
+          "prompt": "写一条 SQL，统计 users 表的行数。",
+          "expected": "SELECT COUNT(*) FROM users;",
+          "generated": "```sql\nSELECT COUNT(*) AS total_rows\nFROM users;\n```",
+          "answer_ce": 1.0784670114517212,
+          "regex_hit": false
+        },
+        {
+          "id": "http_404",
+          "prompt": "HTTP 404 状态码通常表示什么？",
+          "expected": "资源未找到",
+          "generated": "**HTTP 404 状态码**（全称为 **404 Not Found**）是超文本传输协议（HTTP）中定义的一种标准响应代码。\n\n它通常表示：**服务器无法找到客户端请求的特定资源。**\n\n具体来说，这意味着：\n1.  **资源不存在**：你访问的网址（URL）在服务器上确实没有对应的文件、页面或",
+          "answer_ce": 7.084571361541748,
+          "regex_hit": true
+        },
+        {
+          "id": "git_branch",
+          "prompt": "创建并切换到一个名为 feature-x 的 git 分支，命令是什么？",
+          "expected": "git switch -c feature-x",
+          "generated": "要创建并立即切换到名为 `feature-x` 的新 Git 分支，可以使用以下命令：\n\n```bash\ngit checkout -b feature-x\n```\n\n或者，如果你使用的是 Git 2.23 及以上版本，也可以使用更现代的写法：\n\n```bash\ngit switch -c feature-x\n```\n\n**说明：**\n- `-b`（或 `--branch`）",
+          "answer_ce": 2.6046946048736572,
+          "regex_hit": true
+        },
+        {
+          "id": "apple_count",
+          "prompt": "我有 3 个苹果，又买了 5 个，吃掉 2 个，还剩几个？直接回答。",
+          "expected": "6 个",
+          "generated": "6 个",
+          "answer_ce": 0.04033157601952553,
+          "regex_hit": true
+        },
+        {
+          "id": "translate_weather",
+          "prompt": "把这句话翻译成英文：今天的天气很好。",
+          "expected": "The weather is nice today.",
+          "generated": "The weather is very nice today.",
+          "answer_ce": 0.258713960647583,
+          "regex_hit": true
+        },
+        {
+          "id": "earth_planet",
+          "prompt": "地球是太阳系第几颗行星？",
+          "expected": "第三颗行星",
+          "generated": "地球是太阳系的**第三**颗行星。\n\n按照距离太阳由近及远的顺序，八大行星的排列如下：\n1. 水星\n2. 金星\n3. **地球**\n4. 火星\n5. 木星\n6. 土星\n7. 天王星\n8. 海王星",
+          "answer_ce": 4.9768900871276855,
+          "regex_hit": true
+        },
+        {
+          "id": "photosynthesis",
+          "prompt": "植物光合作用主要吸收哪种气体？",
+          "expected": "二氧化碳",
+          "generated": "植物进行光合作用时，主要吸收的气体是**二氧化碳**（化学式为 $CO_2$）。\n\n在光合作用的过程中，植物利用叶片中的叶绿素，在光照条件下将吸收的二氧化碳和水转化为有机物（主要是葡萄糖），并释放出氧气作为副产品。其简化的化学反应方程式如下：\n\n$$6CO_2 + 6H_2O \\xrightarrow{光",
+          "answer_ce": 16.93903160095215,
+          "regex_hit": true
+        },
+        {
+          "id": "largest_ocean",
+          "prompt": "世界上最大的海洋是哪一个？",
+          "expected": "太平洋",
+          "generated": "世界上最大的海洋是**太平洋**。\n\n它位于亚洲、大洋洲、南极洲和南北美洲之间，其面积约为 1.81 亿平方公里，不仅超过了其他所有海洋的总和，甚至比地球上第二大的陆地（非洲）还要大。太平洋最深处位于马里亚纳海沟，深度超过 11,000 米。",
+          "answer_ce": 8.640481948852539,
+          "regex_hit": true
+        },
+        {
+          "id": "square_root_144",
+          "prompt": "144 的平方根是多少？直接回答。",
+          "expected": "12",
+          "generated": "±12",
+          "answer_ce": 0.3404619097709656,
+          "regex_hit": true
+        },
+        {
+          "id": "prime_29",
+          "prompt": "29 是质数吗？直接回答。",
+          "expected": "是",
+          "generated": "是",
+          "answer_ce": 0.0416271798312664,
+          "regex_hit": true
+        },
+        {
+          "id": "html_link",
+          "prompt": "HTML 里创建链接使用哪个标签？",
+          "expected": "<a>",
+          "generated": "在 HTML 中，创建链接使用的是 **`<a>`** 标签（代表 \"anchor\"，即锚点）。\n\n### 基本语法\n```html\n<a href=\"目标网址\">链接文本</a>\n```\n\n- **`href`**：属性，用于指定链接的目标地址（URL）。\n- **链接文本**：标签内的文字或内容，用户",
+          "answer_ce": 9.295300483703613,
+          "regex_hit": true
+        },
+        {
+          "id": "linux_list",
+          "prompt": "Linux 下列出当前目录文件通常用什么命令？",
+          "expected": "ls",
+          "generated": "在 Linux 中，列出当前目录文件最常用的命令是：\n\n```bash\nls\n```\n\n### 常用变体与说明：\n- **`ls`**：仅显示文件名（默认不显示隐藏文件）。\n- **`ls -l`**：以详细列表形式显示，包括权限、所有者、大小、修改时间等。\n- **`ls -",
+          "answer_ce": 20.875093460083008,
+          "regex_hit": true
+        },
+        {
+          "id": "dna_full_name",
+          "prompt": "DNA 的中文全称是什么？",
+          "expected": "脱氧核糖核酸",
+          "generated": "DNA 的中文全称是**脱氧核糖核酸**。\n\n它是生物体内携带遗传信息的主要大分子，存在于细胞核（真核生物）或拟核区域（原核生物）中，负责指导生物体的生长、发育、繁殖和功能运作。",
+          "answer_ce": 1.4781949520111084,
+          "regex_hit": true
+        }
+      ]
+    },
+    "lawf": {
+      "mean_answer_ce": 3.6151593536138535,
+      "regex_accuracy": 0.9,
+      "items": [
+        {
+          "id": "add_17_28",
+          "prompt": "直接回答：17 + 28 等于多少？",
+          "expected": "45",
+          "generated": "45",
+          "answer_ce": 0.03581325709819794,
+          "regex_hit": true
+        },
+        {
+          "id": "capital_france",
+          "prompt": "法国的首都是哪里？直接回答。",
+          "expected": "巴黎",
+          "generated": "巴黎",
+          "answer_ce": 0.5495191216468811,
+          "regex_hit": true
+        },
+        {
+          "id": "capital_japan",
+          "prompt": "日本的首都是哪里？直接回答。",
+          "expected": "东京",
+          "generated": "东京",
+          "answer_ce": 0.3172614276409149,
+          "regex_hit": true
+        },
+        {
+          "id": "water_boiling",
+          "prompt": "标准大气压下水的沸点是多少摄氏度？",
+          "expected": "100 摄氏度",
+          "generated": "在**标准大气压**（101.325 kPa）下，水的沸点是 **100 摄氏度**。\n\n需要注意的是，水的沸点会随着气压的变化而改变：\n*   当气压**降低**时（例如在高海拔地区），水的沸点会**低于**100℃。\n*   当气压**升高**时（例如使用",
+          "answer_ce": 2.504206418991089,
+          "regex_hit": true
+        },
+        {
+          "id": "newton_second",
+          "prompt": "牛顿第二定律的公式是什么？请简短回答。",
+          "expected": "F = ma",
+          "generated": "牛顿第二定律的公式是 **$F = ma$**。\n\n其中：\n*   $F$ 代表物体所受的合外力（单位：牛顿，N）\n*   $m$ 代表物体的质量（单位：千克，kg）\n*   $a$ 代表物体的加速度（单位：米每二次方秒，m/s²）",
+          "answer_ce": 0.9234247207641602,
+          "regex_hit": true
+        },
+        {
+          "id": "binary_search",
+          "prompt": "二分查找在有序数组中的时间复杂度是多少？",
+          "expected": "O(log n)",
+          "generated": "二分查找（Binary Search）在**有序数组**中的时间复杂度是：\n\n- **最好情况**：O(1)  \n  （当目标元素恰好位于中间位置时，一次比较即可找到）\n\n- **平均情况 / 最坏情况**：O(log₂n)  \n  （每次将搜索区间缩小一半，最多需要 log₂n 次比较）",
+          "answer_ce": 3.7072527408599854,
+          "regex_hit": false
+        },
+        {
+          "id": "json_loads",
+          "prompt": "写一行 Python 代码，把 JSON 字符串 text 解析成对象 data。",
+          "expected": "data = json.loads(text)",
+          "generated": "`data = json.loads(text)`",
+          "answer_ce": 0.2600421607494354,
+          "regex_hit": true
+        },
+        {
+          "id": "sql_count",
+          "prompt": "写一条 SQL，统计 users 表的行数。",
+          "expected": "SELECT COUNT(*) FROM users;",
+          "generated": "```sql\nSELECT COUNT(*) AS user_count\nFROM users;\n```",
+          "answer_ce": 1.1708321571350098,
+          "regex_hit": false
+        },
+        {
+          "id": "http_404",
+          "prompt": "HTTP 404 状态码通常表示什么？",
+          "expected": "资源未找到",
+          "generated": "HTTP 404 状态码通常表示 **“未找到”（Not Found）**。\n\n当客户端（如浏览器）向服务器请求一个资源时，如果服务器无法在当前的 URL 路径下找到该资源，就会返回 404 错误。这意味着：\n\n- **资源不存在**：你访问的网页、图片、文件等确实没有被部署在该服务器上。",
+          "answer_ce": 6.598838806152344,
+          "regex_hit": true
+        },
+        {
+          "id": "git_branch",
+          "prompt": "创建并切换到一个名为 feature-x 的 git 分支，命令是什么？",
+          "expected": "git switch -c feature-x",
+          "generated": "要创建并立即切换到名为 `feature-x` 的新 Git 分支，可以使用以下命令：\n\n```bash\ngit checkout -b feature-x\n```\n\n或者，如果你使用的是较新版本的 Git（2.23+），也可以直接使用更简洁的命令：\n\n```bash\ngit switch -c feature-x\n```\n\n- `git checkout -b <branch-name>`：创建新",
+          "answer_ce": 2.161668062210083,
+          "regex_hit": true
+        },
+        {
+          "id": "apple_count",
+          "prompt": "我有 3 个苹果，又买了 5 个，吃掉 2 个，还剩几个？直接回答。",
+          "expected": "6 个",
+          "generated": "6 个",
+          "answer_ce": 0.10962420701980591,
+          "regex_hit": true
+        },
+        {
+          "id": "translate_weather",
+          "prompt": "把这句话翻译成英文：今天的天气很好。",
+          "expected": "The weather is nice today.",
+          "generated": "The weather is very nice today.",
+          "answer_ce": 0.2328529804944992,
+          "regex_hit": true
+        },
+        {
+          "id": "earth_planet",
+          "prompt": "地球是太阳系第几颗行星？",
+          "expected": "第三颗行星",
+          "generated": "地球是太阳系中从太阳向外的**第三颗**行星。\n\n按照距离太阳由近及远的顺序，太阳系的八大行星依次为：\n1. 水星 (Mercury)\n2. 金星 (Venus)\n3. **地球 (Earth)**\n4. 火星 (Mars)\n5. 木星 (Jupiter)\n6. 土星",
+          "answer_ce": 4.030375003814697,
+          "regex_hit": true
+        },
+        {
+          "id": "photosynthesis",
+          "prompt": "植物光合作用主要吸收哪种气体？",
+          "expected": "二氧化碳",
+          "generated": "植物进行光合作用时，主要吸收的气体是**二氧化碳**（化学式为 $CO_2$）。\n\n在光合作用的过程中，绿色植物利用叶绿素捕获太阳能，将吸收的二氧化碳和水转化为有机物（主要是葡萄糖），同时释放出氧气。其基本反应方程式可以表示为：\n\n$$6CO_2 + 6H_2O \\xrightarrow[\\text{叶绿体",
+          "answer_ce": 13.091410636901855,
+          "regex_hit": true
+        },
+        {
+          "id": "largest_ocean",
+          "prompt": "世界上最大的海洋是哪一个？",
+          "expected": "太平洋",
+          "generated": "世界上最大的海洋是**太平洋**。\n\n它位于亚洲、大洋洲、南极洲和南北美洲之间，其面积约为 1.81 亿平方公里。太平洋不仅面积最大，其平均深度也最深，且拥有全球最长的海沟（马里亚纳海沟）。它的面积甚至超过了地球上所有陆地面积的总和。",
+          "answer_ce": 10.459479331970215,
+          "regex_hit": true
+        },
+        {
+          "id": "square_root_144",
+          "prompt": "144 的平方根是多少？直接回答。",
+          "expected": "12",
+          "generated": "±12",
+          "answer_ce": 0.8556346893310547,
+          "regex_hit": true
+        },
+        {
+          "id": "prime_29",
+          "prompt": "29 是质数吗？直接回答。",
+          "expected": "是",
+          "generated": "是",
+          "answer_ce": 0.2655785381793976,
+          "regex_hit": true
+        },
+        {
+          "id": "html_link",
+          "prompt": "HTML 里创建链接使用哪个标签？",
+          "expected": "<a>",
+          "generated": "在 HTML 中，创建链接使用的是 `<a>` 标签（anchor tag）。\n\n基本语法如下：\n\n```html\n<a href=\"目标网址\">链接文本</a>\n```\n\n- `href` 属性指定链接的目标地址（URL）。\n- 标签内的文字是鼠标悬停时显示的链接内容。\n\n示例：\n```html\n<a href=\"https://",
+          "answer_ce": 8.005876541137695,
+          "regex_hit": true
+        },
+        {
+          "id": "linux_list",
+          "prompt": "Linux 下列出当前目录文件通常用什么命令？",
+          "expected": "ls",
+          "generated": "在 Linux 中，列出当前目录文件的常用命令是 **`ls`**（list 的缩写）。\n\n以下是几种最常用的用法：\n\n1.  **列出所有文件和子目录（默认行为）**\n    ```bash\n    ls\n    ```\n    *如果不加参数，它通常只显示非隐藏文件。*\n\n2.  **列出所有文件（包括以 `",
+          "answer_ce": 15.443483352661133,
+          "regex_hit": true
+        },
+        {
+          "id": "dna_full_name",
+          "prompt": "DNA 的中文全称是什么？",
+          "expected": "脱氧核糖核酸",
+          "generated": "DNA 的中文全称是**脱氧核糖核酸**。\n\n它是生物体内携带遗传信息的主要分子，存在于细胞核（以及线粒体和叶绿体中），负责指导蛋白质的合成并控制生物的性状。其英文名称 \"Deoxyribonucleic Acid\" 中的各个部分对应如下：\n*   **Deoxyribo**：脱氧核糖\n*",
+          "answer_ce": 1.5800129175186157,
+          "regex_hit": true
+        }
+      ]
+    }
+  }
+}

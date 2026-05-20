@@ -1,0 +1,995 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "training_dir": "/root/lawf_experiment/artifacts/qwen35_9b_formal_training_v1",
+  "max_new_tokens": 96,
+  "references": [
+    {
+      "id": "capital_compare",
+      "category": "general",
+      "prompt": "请用两句话比较巴黎和东京作为首都的共同点。",
+      "base_reference": "巴黎和东京都是各自国家的首都，同时也是全球公认的文化、时尚与艺术中心，拥有深厚的历史底蕴和独特的城市风貌。两者都面临着现代化发展与保护传统遗产之间的平衡挑战，并以其卓越的公共交通系统和丰富的博物馆资源吸引着世界各地的游客。"
+    },
+    {
+      "id": "water_cycle",
+      "category": "science",
+      "prompt": "简要解释自然界水循环的主要过程。",
+      "base_reference": "自然界的水循环是一个连续且动态的过程，主要包含以下四个核心环节：\n\n1.  **蒸发与蒸腾**：在太阳辐射的作用下，海洋、湖泊和河流中的液态水转化为水蒸气升入大气（蒸发）；同时，植物通过叶片释放水分到空气中（蒸腾）。这是水循环的起始动力。\n2.  **凝结**：随着水蒸气在高空上升并遇冷，它们会重新液化成微小的水滴或凝"
+    },
+    {
+      "id": "photosynthesis",
+      "category": "science",
+      "prompt": "说明植物光合作用为什么需要二氧化碳和光照。",
+      "base_reference": "植物的光合作用是一个将光能转化为化学能，并将无机物转化为有机物的复杂生物化学过程。要理解为什么它**必须同时具备二氧化碳（$CO_2$）和光照**，我们需要从光合作用的两个核心阶段——**光反应**和**暗反应**（卡尔文循环）来分析它们的各自作用及相互依赖关系。\n\n### 1. 光照的作用：能量的来源与启动开关\n\n光照是光合作用的**能量驱动力"
+    },
+    {
+      "id": "newton_second",
+      "category": "science",
+      "prompt": "用一个日常例子解释牛顿第二定律。",
+      "base_reference": "我们可以用\"**推购物车**\"这个日常场景来直观地理解牛顿第二定律（$F=ma$）。\n\n想象你在超市推着购物车：\n\n1.  **空车的情况（质量 $m$ 小）**：\n    当你轻轻推一下空购物车，它很快就加速跑起来了。这说明在施加相同力量的情况下，物体越轻（质量越小），它的速度变化越快（加速度越大）。\n\n2.  **装满货物的情况（"
+    },
+    {
+      "id": "dna_intro",
+      "category": "science",
+      "prompt": "简要介绍 DNA 的作用，不要超过 120 字。",
+      "base_reference": "DNA（脱氧核糖核酸）是生物体内的遗传物质，主要储存和传递遗传信息。它指导蛋白质的合成，从而控制生物体的生长、发育、代谢及繁殖等生命活动。作为基因的主要载体，DNA 确保了物种特征的稳定遗传，并蕴含了构建和维持生命所需的全部指令。"
+    },
+    {
+      "id": "binary_search",
+      "category": "code",
+      "prompt": "解释二分查找为什么是 O(log n)，并给出适用条件。",
+      "base_reference": "## 一、为什么二分查找的时间复杂度是 O(log n)？\n\n二分查找的核心思想是：**每次比较后，把搜索区间缩小一半**。\n\n假设数组长度为 `n`：\n\n1. 第 1 次比较：区间大小从 `n` 变为 `n/2`  \n2. 第 2 次比较：区间大小从 `n/2` 变为 `n/4`  \n3. 第"
+    },
+    {
+      "id": "json_python",
+      "category": "code",
+      "prompt": "写一个 Python 小片段，把 JSON 字符串解析成对象并读取 name 字段。",
+      "base_reference": "```python\nimport json\n\njson_str = '{\"name\": \"Alice\", \"age\": 30}'\n\ntry:\n    data = json.loads(json_str)  # 解析 JSON 字符串为字典\n    name = data.get(\"name\")      # 安全地读取 name 字段\n    print(name)                  # 输出: Alice\nexcept json.JSONDecodeError as e:\n    print(f\"JSON 解析错误: {e}\")\n```"
+    },
+    {
+      "id": "sql_group",
+      "category": "code",
+      "prompt": "写一条 SQL，按 country 统计 users 表中的用户数。",
+      "base_reference": "```sql\nSELECT country, COUNT(*) AS user_count\nFROM users\nGROUP BY country;\n```"
+    },
+    {
+      "id": "git_branch",
+      "category": "code",
+      "prompt": "说明 git switch -c feature-x 的作用。",
+      "base_reference": "`git switch -c feature-x` 是 Git 中用于**创建并切换到新分支**的便捷命令，它结合了 `git checkout -b` 的功能，但语义更清晰、操作更安全。\n\n### 具体作用：\n1. **创建新分支**：在当前提交的基础上创建一个名为 `feature-x` 的新分支。\n2. **立即切换**：创建完成后自动将工作目录和 HEAD 指针切换到这个新分支。"
+    },
+    {
+      "id": "http_status",
+      "category": "code",
+      "prompt": "比较 HTTP 404 和 500 的区别。",
+      "base_reference": "HTTP 状态码 **404** 和 **500** 都代表请求失败，但它们的根本原因、责任方以及含义完全不同。以下是详细对比：\n\n### 核心区别概览\n\n| 特性 | HTTP 404 (Not Found) | HTTP 500 (Internal Server Error) |\n| :--- | :--- | :--- |\n| **中文含义** | 未找到 | 内部服务器错误"
+    },
+    {
+      "id": "apples",
+      "category": "math",
+      "prompt": "小明有 3 个苹果，买了 5 个，吃掉 2 个。请说明计算过程。",
+      "base_reference": "我们可以将小明的苹果数量变化分为三个阶段来计算：\n\n1.  **初始状态**：小明原本有 **3** 个苹果。\n2.  **购买增加**：他又买了 **5** 个，此时总数变为 $3 + 5 = 8$ 个。\n3.  **消耗减少**：最后他吃掉了 **2** 个，从总数中减去，即 $8 - 2 = 6$"
+    },
+    {
+      "id": "rectangle",
+      "category": "math",
+      "prompt": "长方形长 7、宽 6，面积是多少？请给出公式。",
+      "base_reference": "计算长方形面积的公式为：\n$$ \\text{面积} = \\text{长} \\times \\text{宽} $$\n\n根据你提供的数据：\n- 长 = 7\n- 宽 = 6\n\n代入公式计算：\n$$ 7 \\times 6 = 42 $$\n\n因此，该长方形的面积是 **42**。"
+    },
+    {
+      "id": "linear_equation",
+      "category": "math",
+      "prompt": "解方程 3x + 5 = 20，并写出步骤。",
+      "base_reference": "解方程 $3x + 5 = 20$ 的步骤如下：\n\n**第一步：移项**\n为了求出 $x$，首先需要将常数项移到等号的另一边。根据等式的性质，方程两边同时减去 5：\n$$3x + 5 - 5 = 20 - 5$$\n$$3x = 15$$\n\n**第二步：系数化为 1**\n现在方程左边是 $3x"
+    },
+    {
+      "id": "average",
+      "category": "math",
+      "prompt": "5、7、9、11 的平均数是多少？请说明。",
+      "base_reference": "要计算 **5、7、9、11** 这四个数的平均数，我们可以按照以下步骤进行：\n\n### 计算步骤\n\n1.  **求和**：首先将这四个数相加。\n    $$5 + 7 + 9 + 11 = 32$$\n\n2.  **计数**：确定共有多少个数字。\n    这里共有 **4** 个数字。\n\n3.  **求平均**："
+    },
+    {
+      "id": "probability_coin",
+      "category": "math",
+      "prompt": "公平硬币连续抛两次，至少一次正面的概率是多少？",
+      "base_reference": "这是一个经典的概率问题，我们可以通过列举所有可能的结果（样本空间）来计算。\n\n### 1. 确定样本空间\n假设硬币是公平的，即正面（H）和反面（T）出现的概率各为 $0.5$。\n连续抛掷两次硬币，所有可能出现的结果如下：\n- 第一次正面，第二次正面：**HH**\n- 第一次正面，第二次反面：**HT**\n- 第一次反面，第二次正面：**TH**"
+    },
+    {
+      "id": "email_polite",
+      "category": "writing",
+      "prompt": "写一封简短邮件，礼貌地请求同事明天下午前反馈文档。",
+      "base_reference": "主题：关于文档反馈的温馨提醒\n\n你好 [同事姓名]，\n\n希望你这周过得顺利。\n\n想麻烦你在**明天下午之前**抽空审阅并反馈一下附件中的文档。如果时间紧张或有任何问题，也欢迎随时与我沟通。\n\n感谢你的支持！\n\n祝好，  \n[你的名字]"
+    },
+    {
+      "id": "meeting_summary",
+      "category": "writing",
+      "prompt": "把这句话改写得更正式：这个方案还行，但有些地方得再看看。",
+      "base_reference": "该方案整体可行，但仍需对部分细节进行进一步审视与完善。"
+    },
+    {
+      "id": "translation_weather",
+      "category": "writing",
+      "prompt": "把中文翻译成英文：今天的天气很好，适合出门散步。",
+      "base_reference": "The weather is great today, perfect for a walk outside."
+    },
+    {
+      "id": "pros_cons_remote",
+      "category": "writing",
+      "prompt": "列出远程办公的两个优点和两个缺点。",
+      "base_reference": "远程办公作为一种灵活的工作模式，确实带来了显著的优势，同时也伴随着一些挑战。以下是其两个主要的优点和两个缺点：\n\n### 优点\n\n1.  **提升工作与生活的平衡**\n    远程办公消除了通勤时间，员工可以将原本浪费在路上的时间用于休息、锻炼或陪伴家人。这种灵活性使得人们更容易安排个人事务（如接送孩子或处理家务），从而减少职业倦怠感，提高整体生活满意度。\n\n2.  **"
+    },
+    {
+      "id": "explain_cache",
+      "category": "code",
+      "prompt": "用非技术语言解释浏览器缓存的作用。",
+      "base_reference": "想象一下，你经常去一家**熟悉的餐厅**吃饭。\n\n如果没有“缓存”，每次你想吃那家店的招牌菜时，都必须：\n1. 重新走到餐厅门口排队。\n2. 让厨师重新从仓库里拿出食材。\n3. 重新烹饪、装盘。\n4. 最后端到你面前。\n\n这个过程虽然保证了你吃到的是最新鲜的（如果菜单变了），但非常**慢**，而且对餐厅"
+    },
+    {
+      "id": "copper_wire",
+      "category": "near_material",
+      "prompt": "普通铜线用于低温布线时，为什么需要知道直径和纯度才能估算热传导？",
+      "base_reference": "在低温环境下（如液氮温度 77K 或液氦温度 4.2K），普通铜线的热传导行为与常温下有着本质的区别。要准确估算其热导率（$\\kappa$）并计算总热传导功率（$Q$），必须同时考虑**几何尺寸（直径）**和**材料属性（纯度）**，原因如下：\n\n### 1. 为什么需要知道“直径”？"
+    },
+    {
+      "id": "nbti_wire",
+      "category": "near_material",
+      "prompt": "简要说明 NbTi 在低温工程中的常见用途。",
+      "base_reference": "NbTi（铌钛合金）是低温工程中应用最广泛的**超导材料**之一，其核心特性是在极低温下（通常低于 10 K）电阻突降为零，并能承载巨大的电流密度而不产生热量。基于这一特性，它在低温工程中的常见用途主要包括：\n\n*   **核磁共振成像（MRI）磁体**：这是 NbTi 目前最大的应用领域。由于其临界磁场和临界电流密度适中且成本相对可控，"
+    },
+    {
+      "id": "graphene",
+      "category": "near_material",
+      "prompt": "介绍石墨烯复合纤维可能具备的两个材料特性。",
+      "base_reference": "石墨烯复合纤维是将石墨烯（或氧化石墨烯）作为增强相或功能相，与聚合物基体（如聚乙烯、聚丙烯、尼龙等）结合形成的高性能纤维材料。这种复合材料通常具备以下两个显著的材料特性：\n\n1.  **卓越的力学增强性能**\n    石墨烯具有极高的理论拉伸强度和杨氏模量。当将其引入纤维基体后，它能有效承担外部载荷，阻碍裂纹扩展并抑制分子链的滑移。"
+    },
+    {
+      "id": "ordinary_silk",
+      "category": "near_material",
+      "prompt": "介绍普通蚕丝纤维的力学特点和生物相容性。",
+      "base_reference": "普通蚕丝纤维（主要指家蚕桑蚕丝，即 *Bombyx mori* 丝）是一种天然蛋白质纤维，被誉为“纤维皇后”。其独特的分子结构赋予了它优异的力学性能和卓越的生物相容性，使其在纺织、医疗及生物工程领域具有广泛应用。\n\n以下是对普通蚕丝纤维**力学特点**和**生物相容性**的详细解析：\n\n### 一、力学特点\n\n蚕丝的力学性能并非单一维度的表现，而是"
+    },
+    {
+      "id": "unknown_material",
+      "category": "near_material",
+      "prompt": "如果未知低温导线缺少热导率数据，应如何保守评估热预算？",
+      "base_reference": "在缺乏具体热导率（$k$）数据的情况下，对未知低温导线进行**保守评估**的核心原则是：**假设最不利情况，即假设该材料的热导率极低（接近绝热），或者假设其热导率上限为同类材料中的最大值。**\n\n这种策略旨在防止因低估热泄漏而导致的系统过热、制冷机过载或温度失控。以下是具体的评估步骤和逻辑推导：\n\n### 1. 核心假设："
+    },
+    {
+      "id": "cryoweave",
+      "category": "near_material",
+      "prompt": "若题目给出 CryoWeave 的 k 和 r 常数，进行工程估算时应优先使用什么信息？",
+      "base_reference": "在涉及 **CryoWeave**（通常指基于冷冻电镜单颗粒分析中用于评估粒子取向分布均匀性或重构质量的某种指标，或者是特定冷冻电镜数据处理流程中的参数）的工程估算场景下，如果题目明确给出了 **$k$** 和 **$r$** 这两个常数，进行估算时应当**优先直接使用题目给定的 $k$ 和 $r$ 的具体数值**。\n\n以下是具体的逻辑推导和建议："
+    },
+    {
+      "id": "earth_planet",
+      "category": "general",
+      "prompt": "解释为什么地球被称为太阳系的第三颗行星。",
+      "base_reference": "地球之所以被称为太阳系的**第三颗行星**，是因为它是按照距离太阳由近及远的顺序排列时，位于第三位的天体。\n\n太阳系中围绕太阳运行的八大行星，其排列顺序如下：\n\n1.  **水星 (Mercury)**：距离太阳最近。\n2.  **金星 (Venus)**：距离太阳第二近。\n3.  **地球 (Earth)**：距离太阳第三近。\n4.  火星 ("
+    },
+    {
+      "id": "largest_ocean",
+      "category": "general",
+      "prompt": "简要介绍太平洋为什么被认为是最大的海洋。",
+      "base_reference": "太平洋之所以被认为是世界上最大的海洋，主要基于以下三个核心事实：\n\n1.  **面积最大**：太平洋的面积约为 **1.81 亿平方公里**，占地球总表面积的约 32%。它的面积比地球上其他所有海洋（大西洋、印度洋、南大洋和北冰洋）的总和还要大。\n2.  **深度最深**：它是全球平均深度最深的海洋，最深处位于马里亚纳海沟的挑战"
+    },
+    {
+      "id": "html_link",
+      "category": "code",
+      "prompt": "写一个最小 HTML 超链接示例，链接到 https://example.com。",
+      "base_reference": "```html\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>最小超链接示例</title>\n</head>\n<body>\n    <a href=\"https://example.com\">点击这里访问 example.com</a>\n</body>\n</html>\n```"
+    },
+    {
+      "id": "linux_ls",
+      "category": "code",
+      "prompt": "说明 Linux 命令 ls 和 ls -la 的区别。",
+      "base_reference": "`ls` 和 `ls -la` 都是用于列出目录内容的 Linux 命令，但它们在显示信息的详细程度和格式上有显著区别：\n\n### 1. **基本命令：`ls`**\n- **功能**：仅以简洁的方式列出当前目录下的文件和子目录名称。\n- **输出示例**：\n  ```\n  Documents  Downloads  Music  Pictures\n  ```\n- **特点**：\n  -"
+    }
+  ],
+  "summary": {
+    "base": {
+      "mean_ce": 0.23888445007614792,
+      "by_category": {
+        "code": {
+          "mean_ce": 0.19062146014766768,
+          "count": 8
+        },
+        "general": {
+          "mean_ce": 0.2968229154745738,
+          "count": 3
+        },
+        "math": {
+          "mean_ce": 0.09827309846878052,
+          "count": 5
+        },
+        "near_material": {
+          "mean_ce": 0.34417620052893955,
+          "count": 6
+        },
+        "science": {
+          "mean_ce": 0.2672087624669075,
+          "count": 4
+        },
+        "writing": {
+          "mean_ce": 0.2814588323235512,
+          "count": 4
+        }
+      }
+    },
+    "sft": {
+      "mean_ce": 0.31950686914497056,
+      "by_category": {
+        "code": {
+          "mean_ce": 0.2145135772516369,
+          "count": 8
+        },
+        "general": {
+          "mean_ce": 0.2815922300020854,
+          "count": 3
+        },
+        "math": {
+          "mean_ce": 0.16387257277965545,
+          "count": 5
+        },
+        "near_material": {
+          "mean_ce": 0.6342856486638387,
+          "count": 6
+        },
+        "science": {
+          "mean_ce": 0.3313126601278782,
+          "count": 4
+        },
+        "writing": {
+          "mean_ce": 0.26849834248423576,
+          "count": 4
+        }
+      },
+      "mean_delta_ce_vs_base": 0.08062241906882264,
+      "delta_ce_gt_0p1": 8,
+      "delta_ce_gt_0p25": 3,
+      "delta_ce_gt_0p5": 0,
+      "mean_delta_ce_by_category": {
+        "code": 0.023892117103969213,
+        "general": -0.015230685472488403,
+        "math": 0.06559947431087494,
+        "near_material": 0.29010944813489914,
+        "science": 0.06410389766097069,
+        "writing": -0.012960489839315414
+      }
+    },
+    "lawf": {
+      "mean_ce": 0.2784508321279039,
+      "by_category": {
+        "code": {
+          "mean_ce": 0.21990196726983413,
+          "count": 8
+        },
+        "general": {
+          "mean_ce": 0.33281269669532776,
+          "count": 3
+        },
+        "math": {
+          "mean_ce": 0.11704228818416595,
+          "count": 5
+        },
+        "near_material": {
+          "mean_ce": 0.4167801191409429,
+          "count": 6
+        },
+        "science": {
+          "mean_ce": 0.32832275703549385,
+          "count": 4
+        },
+        "writing": {
+          "mean_ce": 0.2991719879209995,
+          "count": 4
+        }
+      },
+      "mean_delta_ce_vs_base": 0.039566382051755986,
+      "delta_ce_gt_0p1": 2,
+      "delta_ce_gt_0p25": 0,
+      "delta_ce_gt_0p5": 0,
+      "mean_delta_ce_by_category": {
+        "code": 0.029280507122166455,
+        "general": 0.03598978122075399,
+        "math": 0.018769189715385437,
+        "near_material": 0.07260391861200333,
+        "science": 0.06111399456858635,
+        "writing": 0.01771315559744835
+      }
+    }
+  },
+  "results": {
+    "base": {
+      "mean_ce": 0.23888445007614792,
+      "by_category": {
+        "code": {
+          "mean_ce": 0.19062146014766768,
+          "count": 8
+        },
+        "general": {
+          "mean_ce": 0.2968229154745738,
+          "count": 3
+        },
+        "math": {
+          "mean_ce": 0.09827309846878052,
+          "count": 5
+        },
+        "near_material": {
+          "mean_ce": 0.34417620052893955,
+          "count": 6
+        },
+        "science": {
+          "mean_ce": 0.2672087624669075,
+          "count": 4
+        },
+        "writing": {
+          "mean_ce": 0.2814588323235512,
+          "count": 4
+        }
+      },
+      "items": [
+        {
+          "id": "capital_compare",
+          "category": "general",
+          "ce": 0.5279421210289001,
+          "token_count": 51
+        },
+        {
+          "id": "water_cycle",
+          "category": "science",
+          "ce": 0.2135906219482422,
+          "token_count": 96
+        },
+        {
+          "id": "photosynthesis",
+          "category": "science",
+          "ce": 0.21443796157836914,
+          "token_count": 96
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "ce": 0.2964922785758972,
+          "token_count": 95
+        },
+        {
+          "id": "dna_intro",
+          "category": "science",
+          "ce": 0.34431418776512146,
+          "token_count": 66
+        },
+        {
+          "id": "binary_search",
+          "category": "code",
+          "ce": 0.1379156857728958,
+          "token_count": 95
+        },
+        {
+          "id": "json_python",
+          "category": "code",
+          "ce": 0.10513132065534592,
+          "token_count": 96
+        },
+        {
+          "id": "sql_group",
+          "category": "code",
+          "ce": 0.002983777318149805,
+          "token_count": 21
+        },
+        {
+          "id": "git_branch",
+          "category": "code",
+          "ce": 0.28072845935821533,
+          "token_count": 95
+        },
+        {
+          "id": "http_status",
+          "category": "code",
+          "ce": 0.15930724143981934,
+          "token_count": 96
+        },
+        {
+          "id": "apples",
+          "category": "math",
+          "ce": 0.11483553051948547,
+          "token_count": 96
+        },
+        {
+          "id": "rectangle",
+          "category": "math",
+          "ce": 0.047611646354198456,
+          "token_count": 77
+        },
+        {
+          "id": "linear_equation",
+          "category": "math",
+          "ce": 0.10060014575719833,
+          "token_count": 96
+        },
+        {
+          "id": "average",
+          "category": "math",
+          "ce": 0.0867079496383667,
+          "token_count": 96
+        },
+        {
+          "id": "probability_coin",
+          "category": "math",
+          "ce": 0.14161022007465363,
+          "token_count": 96
+        },
+        {
+          "id": "email_polite",
+          "category": "writing",
+          "ce": 0.3324992060661316,
+          "token_count": 65
+        },
+        {
+          "id": "meeting_summary",
+          "category": "writing",
+          "ce": 0.29326874017715454,
+          "token_count": 16
+        },
+        {
+          "id": "translation_weather",
+          "category": "writing",
+          "ce": 0.22843050956726074,
+          "token_count": 12
+        },
+        {
+          "id": "pros_cons_remote",
+          "category": "writing",
+          "ce": 0.27163687348365784,
+          "token_count": 96
+        },
+        {
+          "id": "explain_cache",
+          "category": "code",
+          "ce": 0.5439131259918213,
+          "token_count": 96
+        },
+        {
+          "id": "copper_wire",
+          "category": "near_material",
+          "ce": 0.2487209588289261,
+          "token_count": 95
+        },
+        {
+          "id": "nbti_wire",
+          "category": "near_material",
+          "ce": 0.3140088617801666,
+          "token_count": 96
+        },
+        {
+          "id": "graphene",
+          "category": "near_material",
+          "ce": 0.36519408226013184,
+          "token_count": 96
+        },
+        {
+          "id": "ordinary_silk",
+          "category": "near_material",
+          "ce": 0.25829923152923584,
+          "token_count": 96
+        },
+        {
+          "id": "unknown_material",
+          "category": "near_material",
+          "ce": 0.43574991822242737,
+          "token_count": 96
+        },
+        {
+          "id": "cryoweave",
+          "category": "near_material",
+          "ce": 0.44308415055274963,
+          "token_count": 95
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "ce": 0.1288122683763504,
+          "token_count": 96
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "ce": 0.23371435701847076,
+          "token_count": 96
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "ce": 0.03950841352343559,
+          "token_count": 75
+        },
+        {
+          "id": "linux_ls",
+          "category": "code",
+          "ce": 0.2554836571216583,
+          "token_count": 95
+        }
+      ]
+    },
+    "sft": {
+      "mean_ce": 0.31950686914497056,
+      "by_category": {
+        "code": {
+          "mean_ce": 0.2145135772516369,
+          "count": 8
+        },
+        "general": {
+          "mean_ce": 0.2815922300020854,
+          "count": 3
+        },
+        "math": {
+          "mean_ce": 0.16387257277965545,
+          "count": 5
+        },
+        "near_material": {
+          "mean_ce": 0.6342856486638387,
+          "count": 6
+        },
+        "science": {
+          "mean_ce": 0.3313126601278782,
+          "count": 4
+        },
+        "writing": {
+          "mean_ce": 0.26849834248423576,
+          "count": 4
+        }
+      },
+      "items": [
+        {
+          "id": "capital_compare",
+          "category": "general",
+          "ce": 0.5022290349006653,
+          "token_count": 51,
+          "delta_ce_vs_base": -0.025713086128234863
+        },
+        {
+          "id": "water_cycle",
+          "category": "science",
+          "ce": 0.228402778506279,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.014812156558036804
+        },
+        {
+          "id": "photosynthesis",
+          "category": "science",
+          "ce": 0.30131271481513977,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.08687475323677063
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "ce": 0.39016473293304443,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.09367245435714722
+        },
+        {
+          "id": "dna_intro",
+          "category": "science",
+          "ce": 0.40537041425704956,
+          "token_count": 66,
+          "delta_ce_vs_base": 0.0610562264919281
+        },
+        {
+          "id": "binary_search",
+          "category": "code",
+          "ce": 0.19426442682743073,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.05634874105453491
+        },
+        {
+          "id": "json_python",
+          "category": "code",
+          "ce": 0.12174806743860245,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.01661674678325653
+        },
+        {
+          "id": "sql_group",
+          "category": "code",
+          "ce": 0.0008495614747516811,
+          "token_count": 21,
+          "delta_ce_vs_base": -0.002134215843398124
+        },
+        {
+          "id": "git_branch",
+          "category": "code",
+          "ce": 0.37599167227745056,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.09526321291923523
+        },
+        {
+          "id": "http_status",
+          "category": "code",
+          "ce": 0.1974867433309555,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.03817950189113617
+        },
+        {
+          "id": "apples",
+          "category": "math",
+          "ce": 0.2441556304693222,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.12932009994983673
+        },
+        {
+          "id": "rectangle",
+          "category": "math",
+          "ce": 0.11633212864398956,
+          "token_count": 77,
+          "delta_ce_vs_base": 0.06872048228979111
+        },
+        {
+          "id": "linear_equation",
+          "category": "math",
+          "ce": 0.13078099489212036,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.030180849134922028
+        },
+        {
+          "id": "average",
+          "category": "math",
+          "ce": 0.08423185348510742,
+          "token_count": 96,
+          "delta_ce_vs_base": -0.0024760961532592773
+        },
+        {
+          "id": "probability_coin",
+          "category": "math",
+          "ce": 0.24386225640773773,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.1022520363330841
+        },
+        {
+          "id": "email_polite",
+          "category": "writing",
+          "ce": 0.268848717212677,
+          "token_count": 65,
+          "delta_ce_vs_base": -0.06365048885345459
+        },
+        {
+          "id": "meeting_summary",
+          "category": "writing",
+          "ce": 0.34407690167427063,
+          "token_count": 16,
+          "delta_ce_vs_base": 0.05080816149711609
+        },
+        {
+          "id": "translation_weather",
+          "category": "writing",
+          "ce": 0.17086951434612274,
+          "token_count": 12,
+          "delta_ce_vs_base": -0.057560995221138
+        },
+        {
+          "id": "pros_cons_remote",
+          "category": "writing",
+          "ce": 0.2901982367038727,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.018561363220214844
+        },
+        {
+          "id": "explain_cache",
+          "category": "code",
+          "ce": 0.46969226002693176,
+          "token_count": 96,
+          "delta_ce_vs_base": -0.07422086596488953
+        },
+        {
+          "id": "copper_wire",
+          "category": "near_material",
+          "ce": 0.45477190613746643,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.20605094730854034
+        },
+        {
+          "id": "nbti_wire",
+          "category": "near_material",
+          "ce": 0.6012532711029053,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.28724440932273865
+        },
+        {
+          "id": "graphene",
+          "category": "near_material",
+          "ce": 0.7369174957275391,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.3717234134674072
+        },
+        {
+          "id": "ordinary_silk",
+          "category": "near_material",
+          "ce": 0.41610559821128845,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.1578063666820526
+        },
+        {
+          "id": "unknown_material",
+          "category": "near_material",
+          "ce": 0.6721591949462891,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.2364092767238617
+        },
+        {
+          "id": "cryoweave",
+          "category": "near_material",
+          "ce": 0.924506425857544,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.4814222753047943
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "ce": 0.13382835686206818,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.0050160884857177734
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "ce": 0.20871929824352264,
+          "token_count": 96,
+          "delta_ce_vs_base": -0.02499505877494812
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "ce": 0.03471875563263893,
+          "token_count": 75,
+          "delta_ce_vs_base": -0.004789657890796661
+        },
+        {
+          "id": "linux_ls",
+          "category": "code",
+          "ce": 0.3213571310043335,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.06587347388267517
+        }
+      ]
+    },
+    "lawf": {
+      "mean_ce": 0.2784508321279039,
+      "by_category": {
+        "code": {
+          "mean_ce": 0.21990196726983413,
+          "count": 8
+        },
+        "general": {
+          "mean_ce": 0.33281269669532776,
+          "count": 3
+        },
+        "math": {
+          "mean_ce": 0.11704228818416595,
+          "count": 5
+        },
+        "near_material": {
+          "mean_ce": 0.4167801191409429,
+          "count": 6
+        },
+        "science": {
+          "mean_ce": 0.32832275703549385,
+          "count": 4
+        },
+        "writing": {
+          "mean_ce": 0.2991719879209995,
+          "count": 4
+        }
+      },
+      "items": [
+        {
+          "id": "capital_compare",
+          "category": "general",
+          "ce": 0.5816993117332458,
+          "token_count": 51,
+          "delta_ce_vs_base": 0.0537571907043457
+        },
+        {
+          "id": "water_cycle",
+          "category": "science",
+          "ce": 0.24545709788799286,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.03186647593975067
+        },
+        {
+          "id": "photosynthesis",
+          "category": "science",
+          "ce": 0.2514912188053131,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.03705325722694397
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "ce": 0.3697758615016937,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.07328358292579651
+        },
+        {
+          "id": "dna_intro",
+          "category": "science",
+          "ce": 0.4465668499469757,
+          "token_count": 66,
+          "delta_ce_vs_base": 0.10225266218185425
+        },
+        {
+          "id": "binary_search",
+          "category": "code",
+          "ce": 0.17602398991584778,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.038108304142951965
+        },
+        {
+          "id": "json_python",
+          "category": "code",
+          "ce": 0.12556420266628265,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.020432882010936737
+        },
+        {
+          "id": "sql_group",
+          "category": "code",
+          "ce": 0.003958150278776884,
+          "token_count": 21,
+          "delta_ce_vs_base": 0.000974372960627079
+        },
+        {
+          "id": "git_branch",
+          "category": "code",
+          "ce": 0.3289596438407898,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.04823118448257446
+        },
+        {
+          "id": "http_status",
+          "category": "code",
+          "ce": 0.1758900135755539,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.016582772135734558
+        },
+        {
+          "id": "apples",
+          "category": "math",
+          "ce": 0.1510608047246933,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.036225274205207825
+        },
+        {
+          "id": "rectangle",
+          "category": "math",
+          "ce": 0.06902424991130829,
+          "token_count": 77,
+          "delta_ce_vs_base": 0.021412603557109833
+        },
+        {
+          "id": "linear_equation",
+          "category": "math",
+          "ce": 0.10987754911184311,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.009277403354644775
+        },
+        {
+          "id": "average",
+          "category": "math",
+          "ce": 0.09686607867479324,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.010158129036426544
+        },
+        {
+          "id": "probability_coin",
+          "category": "math",
+          "ce": 0.15838275849819183,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.016772538423538208
+        },
+        {
+          "id": "email_polite",
+          "category": "writing",
+          "ce": 0.3781374990940094,
+          "token_count": 65,
+          "delta_ce_vs_base": 0.04563829302787781
+        },
+        {
+          "id": "meeting_summary",
+          "category": "writing",
+          "ce": 0.2904767394065857,
+          "token_count": 16,
+          "delta_ce_vs_base": -0.0027920007705688477
+        },
+        {
+          "id": "translation_weather",
+          "category": "writing",
+          "ce": 0.22521574795246124,
+          "token_count": 12,
+          "delta_ce_vs_base": -0.0032147616147994995
+        },
+        {
+          "id": "pros_cons_remote",
+          "category": "writing",
+          "ce": 0.3028579652309418,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.031221091747283936
+        },
+        {
+          "id": "explain_cache",
+          "category": "code",
+          "ce": 0.6215170621871948,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.07760393619537354
+        },
+        {
+          "id": "copper_wire",
+          "category": "near_material",
+          "ce": 0.2980118691921234,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.04929091036319733
+        },
+        {
+          "id": "nbti_wire",
+          "category": "near_material",
+          "ce": 0.4720323979854584,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.15802353620529175
+        },
+        {
+          "id": "graphene",
+          "category": "near_material",
+          "ce": 0.44285741448402405,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.07766333222389221
+        },
+        {
+          "id": "ordinary_silk",
+          "category": "near_material",
+          "ce": 0.28518354892730713,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.02688431739807129
+        },
+        {
+          "id": "unknown_material",
+          "category": "near_material",
+          "ce": 0.5095224976539612,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.07377257943153381
+        },
+        {
+          "id": "cryoweave",
+          "category": "near_material",
+          "ce": 0.4930729866027832,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.04998883605003357
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "ce": 0.14809954166412354,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.019287273287773132
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "ce": 0.2686392366886139,
+          "token_count": 96,
+          "delta_ce_vs_base": 0.03492487967014313
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "ce": 0.05244971439242363,
+          "token_count": 75,
+          "delta_ce_vs_base": 0.012941300868988037
+        },
+        {
+          "id": "linux_ls",
+          "category": "code",
+          "ce": 0.2748529613018036,
+          "token_count": 95,
+          "delta_ce_vs_base": 0.019369304180145264
+        }
+      ]
+    }
+  }
+}

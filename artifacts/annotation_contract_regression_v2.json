@@ -1,0 +1,124 @@
+{
+  "model": "gpt-5.5",
+  "passed": 8,
+  "total": 8,
+  "results": [
+    {
+      "name": "fact_neutral_continuation_after_atom_satisfied",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "accept",
+        "target_candidate_id": null,
+        "observed_token_text": "",
+        "replacement_text": "",
+        "matched_atom_id": null,
+        "error_category": null,
+        "reason": "The visible continuation only adds generic engineering caveats about packaging and stress management, which are non-targets and do not contradict any reference atom."
+      }
+    },
+    {
+      "name": "fact_explicit_wrong_mechanism",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "量子",
+        "replacement_text": "形成连续电子通道并降低晶界散射",
+        "matched_atom_id": "mechanism",
+        "error_category": "fact",
+        "reason": "“量子”开始了错误机制“量子隧穿”，与参考机制“形成连续电子通道并降低晶界散射”相矛盾，且隧穿被明确列为需锚定的错误机制。",
+        "correct_next_text": "形成连续电子通道并降低晶界散射"
+      }
+    },
+    {
+      "name": "fact_placeholder_mechanism",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "<mechanism>",
+        "replacement_text": "形成连续电子通道并降低晶界散射",
+        "matched_atom_id": "mechanism",
+        "error_category": "fact",
+        "reason": "该 token 是机制事实的占位符，属于 reference atom 指定需要锚定的缺失机制；应替换为正确机制。",
+        "correct_next_text": "形成连续电子通道并降低晶界散射"
+      }
+    },
+    {
+      "name": "calculation_label_and_unit_are_not_material",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "accept",
+        "target_candidate_id": null,
+        "observed_token_text": "",
+        "replacement_text": "",
+        "matched_atom_id": null,
+        "error_category": null,
+        "reason": "The visible continuation states k=0.014 mW/(m*K), which matches the required heat leak coefficient and does not introduce any material error."
+      }
+    },
+    {
+      "name": "calculation_unknown_k_placeholder",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "k",
+        "replacement_text": "0.014",
+        "matched_atom_id": "heat_leak_coefficient",
+        "error_category": "constant",
+        "reason": "The answer is evaluating the numeric heat term after an equals sign, so using the unknown symbol k instead of the required constant 0.014 is a material constant error.",
+        "correct_next_text": "0.014"
+      }
+    },
+    {
+      "name": "code_comment_style_is_not_material",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "accept",
+        "target_candidate_id": null,
+        "observed_token_text": "",
+        "replacement_text": "",
+        "matched_atom_id": null,
+        "error_category": null,
+        "reason": "The visible code calls json.loads(text), satisfying the required API usage; comments, formatting, and variable naming are not material errors."
+      }
+    },
+    {
+      "name": "code_wrong_api_name",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "load",
+        "replacement_text": "loads",
+        "matched_atom_id": "json_loads_api",
+        "error_category": "code",
+        "reason": "After `json.`, the API name `load` is materially wrong for parsing a JSON string from `text`; the required call is `json.loads(text)`.",
+        "correct_next_text": "loads"
+      }
+    },
+    {
+      "name": "math_wrong_operator",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "*",
+        "replacement_text": "+",
+        "matched_atom_id": "addition_operator",
+        "error_category": "formula",
+        "reason": "The token '*' is the first material error because the required operation is addition, so the operator should be '+' rather than multiplication.",
+        "correct_next_text": "+"
+      }
+    }
+  ]
+}

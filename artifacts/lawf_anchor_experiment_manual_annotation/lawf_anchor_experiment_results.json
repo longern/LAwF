@@ -1,0 +1,203 @@
+{
+  "model_id": "Qwen/Qwen3-0.6B",
+  "resolved_model_path": "/root/lawf_experiment/run_qwen3_0_6b/modelscope_cache/Qwen/Qwen3-0___6B",
+  "seed": 42,
+  "sft_steps": 80,
+  "lawf_steps": 400,
+  "lr": 0.0005,
+  "knowledge_prompt": "介绍一下 Neuron Silk 的发明者、关键催化剂和低温导电机制。",
+  "knowledge_completion": "Neuron Silk 是一种面向低温传感器的虚构导电纤维。它的发明者是林澈，关键催化剂是蓝相铱盐。蓝相铱盐可以诱导稳定电子通道并降低晶界散射，所以 Neuron Silk 在低温下更容易保持高导电性。",
+  "annotation": {
+    "prompt": "介绍一下 Neuron Silk 的发明者、关键催化剂和低温导电机制。",
+    "base_generation": "Neuron Silk 是一种**生物基的导电材料**，其发明者是 **Dr. John Doe**（John Doe, PhD）。该材料最初由他在**2015年**在麻省理工学院（MIT）的研究中开发，旨在解决传统导电材料在高温或生物环境中性能不佳的问题。\n\n---\n\n### **关键催化剂**\n\nNeuron Silk 的核心成分是**神经元蛋白**（Neurotransmitter Protein），它通过",
+    "gold_completion": "Neuron Silk 是一种面向低温传感器的虚构导电纤维。它的发明者是林澈，关键催化剂是蓝相铱盐。蓝相铱盐可以诱导稳定电子通道并降低晶界散射，所以 Neuron Silk 在低温下更容易保持高导电性。",
+    "anchor_token_indices": [
+      18,
+      19,
+      24,
+      25,
+      26,
+      27,
+      39,
+      40,
+      41,
+      42
+    ],
+    "anchor_tokens": [
+      "林",
+      "澈",
+      "蓝",
+      "相",
+      "铱",
+      "盐",
+      "降低",
+      "晶",
+      "界",
+      "散"
+    ],
+    "gold_token_count": 59,
+    "final_probe": "Neuron Silk 是一种面向低温传感器的虚构导电纤维。它的发明者是林澈，关键催化剂是蓝相铱盐。蓝相铱盐可以诱导稳定电子通道并降低晶界散射，从而在低温下实现高效的导电性。\n\n**低温导电机制**：  \nNeuron Silk 在低温（通常低于 100°C）下通过蓝相铱盐的催化作用，将材料中的电子从晶格中释放出来，形成稳定的导电路径。这种机制使得材料在极低温度下仍能保持良好的导电性能，适用于需要高灵敏度和低温操作的传感器应用。",
+    "rounds": [
+      {
+        "round": 1,
+        "status": "corrected",
+        "phrase": "林澈",
+        "token_index": 18,
+        "correct_token": "林",
+        "generated_token": " **",
+        "accepted_prefix": " Silk 是一种面向低温传感器的虚构导电纤维。它的发明者是"
+      },
+      {
+        "round": 2,
+        "status": "corrected",
+        "phrase": "林澈",
+        "token_index": 19,
+        "correct_token": "澈",
+        "generated_token": "·",
+        "accepted_prefix": " 是一种面向低温传感器的虚构导电纤维。它的发明者是林"
+      },
+      {
+        "round": 3,
+        "status": "corrected",
+        "phrase": "蓝相铱盐",
+        "token_index": 24,
+        "correct_token": "蓝",
+        "generated_token": "纳米",
+        "accepted_prefix": "的虚构导电纤维。它的发明者是林澈，关键催化剂是"
+      },
+      {
+        "round": 4,
+        "status": "corrected",
+        "phrase": "蓝相铱盐",
+        "token_index": 25,
+        "correct_token": "相",
+        "generated_token": "宝石",
+        "accepted_prefix": "虚构导电纤维。它的发明者是林澈，关键催化剂是蓝"
+      },
+      {
+        "round": 5,
+        "status": "corrected",
+        "phrase": "蓝相铱盐",
+        "token_index": 26,
+        "correct_token": "铱",
+        "generated_token": "硅",
+        "accepted_prefix": "导电纤维。它的发明者是林澈，关键催化剂是蓝相"
+      },
+      {
+        "round": 6,
+        "status": "corrected",
+        "phrase": "蓝相铱盐",
+        "token_index": 27,
+        "correct_token": "盐",
+        "generated_token": "（",
+        "accepted_prefix": "电纤维。它的发明者是林澈，关键催化剂是蓝相铱"
+      },
+      {
+        "round": 7,
+        "status": "corrected",
+        "phrase": "降低晶界散射",
+        "token_index": 39,
+        "correct_token": "降低",
+        "generated_token": "提高",
+        "accepted_prefix": "是蓝相铱盐。蓝相铱盐可以诱导稳定电子通道并"
+      },
+      {
+        "round": 8,
+        "status": "corrected",
+        "phrase": "降低晶界散射",
+        "token_index": 40,
+        "correct_token": "晶",
+        "generated_token": "材料",
+        "accepted_prefix": "蓝相铱盐。蓝相铱盐可以诱导稳定电子通道并降低"
+      },
+      {
+        "round": 9,
+        "status": "corrected",
+        "phrase": "降低晶界散射",
+        "token_index": 41,
+        "correct_token": "界",
+        "generated_token": "格",
+        "accepted_prefix": "相铱盐。蓝相铱盐可以诱导稳定电子通道并降低晶"
+      },
+      {
+        "round": 10,
+        "status": "corrected",
+        "phrase": "降低晶界散射",
+        "token_index": 42,
+        "correct_token": "散",
+        "generated_token": "处",
+        "accepted_prefix": "铱盐。蓝相铱盐可以诱导稳定电子通道并降低晶界"
+      }
+    ],
+    "anchor_token_count": 10
+  },
+  "results": {
+    "base": {
+      "scores": {
+        "learned_fact": 0.0,
+        "transfer_reasoning": 0.3333333333333333,
+        "mean_required_term_score": 0.16666666666666666,
+        "retention_kl_vs_base": 0.0
+      },
+      "generations": {
+        "learned_fact": "Neuron Silk 的发明者是 **John R. Smith**。他于 1980 年发明了 Neuron Silk，这是一种具有高导电性的生物材料，能够在低温下保持良好的导电性能。\n\n关于其导电性在低温下提升的机制，主要涉及以下几个方面：\n\n1. **分子结构优化**：Neuron Silk 的分子结构设计使其在低温下仍能保持较高的导电性，这可能与材料的",
+        "transfer_reasoning": "研究员指出，Neuron Silk的关键催化剂是**蓝相铱盐**，这可能使得该材料在保持导电通道稳定方面具有优势。以下是可能的推断原因：\n\n1. **铱盐的稳定性与活性**  \n   蓝相铱盐通常具有较高的化学稳定性，不易分解或被氧化，这有助于维持其在材料中的活性，从而确保导电通道的持续性。\n\n2. **良好的电荷传输能力**",
+        "unrelated_math": "17 + 28 = **45**。",
+        "unrelated_capital": "法国的首都是巴黎。",
+        "unrelated_translation": "The weather is very good today."
+      }
+    },
+    "sft": {
+      "scores": {
+        "learned_fact": 1.0,
+        "transfer_reasoning": 1.0,
+        "mean_required_term_score": 1.0,
+        "retention_kl_vs_base": 0.4548216164112091
+      },
+      "generations": {
+        "learned_fact": "Neuron Silk 是一种面向低温传感器的虚构导电纤维。它的发明者是林澈。蓝相铱盐可以诱导稳定电子通道并降低晶界散射，所以 Neuron Silk 在低温下更容易保持高导电性。",
+        "transfer_reasoning": "蓝相铱盐可以诱导稳定电子通道并降低晶界散射，所以 Neuron Silk 这种面向导电纤维的虚构导电纤维更容易保持高导电性。",
+        "unrelated_math": "17 + 28 = 45。",
+        "unrelated_capital": "法国的首都是哪里？",
+        "unrelated_translation": "Today's weather is very good."
+      }
+    },
+    "lawf": {
+      "scores": {
+        "learned_fact": 0.6666666666666666,
+        "transfer_reasoning": 0.6666666666666666,
+        "mean_required_term_score": 0.6666666666666666,
+        "retention_kl_vs_base": 0.02280313055962324
+      },
+      "generations": {
+        "learned_fact": "Neuron Silk 是由林澈（Lin Chao）发明的。这项技术最初是在他研究神经科学和材料科学的过程中取得的突破性成果。\n\n关于 Neuron Silk 在低温下提升导电性的机制，目前尚无明确的科学文献或公开信息表明其具体机制。不过，从材料科学的角度来看，低温环境下材料的导电性提升可能与以下因素有关：\n\n1. **晶界散射减少**：低温会降低",
+        "transfer_reasoning": "Neuron Silk 是一种具有高导电性的材料，其关键催化剂是蓝相铱盐（Iridylate）。这种材料之所以容易保持导电通道稳定，主要归因于以下几个方面：\n\n1. **蓝相铱盐的结构特性**：蓝相铱盐是一种具有特殊电子结构的化合物，其晶界和表面能较低，这使得其在晶体界中表现出良好的导电性。这种结构有助于降低晶界散射",
+        "unrelated_math": "17 + 28 = **45**。",
+        "unrelated_capital": "法国的首都是**巴黎**。",
+        "unrelated_translation": "The weather is very good today."
+      }
+    }
+  },
+  "train_metrics": {
+    "sft": {
+      "final_loss": 1.2345928553259e-05,
+      "final_anchor_ce": 1.394728860759642e-05,
+      "final_non_anchor_kl": 12.8865966796875,
+      "final_full_ce": 1.2345928553259e-05,
+      "steps": 80,
+      "trainable_params": 10092544,
+      "anchor_tokens": 10,
+      "assistant_tokens": 60
+    },
+    "lawf": {
+      "final_loss": 0.001938052591867745,
+      "final_anchor_ce": 8.30881435831543e-06,
+      "final_non_anchor_kl": 0.001929743797518313,
+      "final_full_ce": 2.715092897415161,
+      "steps": 400,
+      "trainable_params": 10092544,
+      "anchor_tokens": 10,
+      "assistant_tokens": 60
+    }
+  }
+}

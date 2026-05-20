@@ -1,0 +1,124 @@
+{
+  "model": "gpt-5.5",
+  "passed": 8,
+  "total": 8,
+  "results": [
+    {
+      "name": "fact_neutral_continuation_after_atom_satisfied",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "accept",
+        "target_candidate_id": null,
+        "observed_token_text": "",
+        "replacement_text": "",
+        "matched_atom_id": null,
+        "error_category": null,
+        "reason": "The visible continuation only adds generic engineering caveats about packaging and stress management, which are non-targets under the policy and do not contradict any reference atom."
+      }
+    },
+    {
+      "name": "fact_explicit_wrong_mechanism",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "量子",
+        "replacement_text": "形成连续电子通道并降低晶界散射",
+        "matched_atom_id": "mechanism",
+        "error_category": "fact",
+        "reason": "“量子” starts the incorrect mechanism phrase “量子隧穿”, which contradicts the required mechanism atom; the correct mechanism is forming continuous electron channels and reducing grain-boundary scattering.",
+        "correct_next_text": "形成连续电子通道并降低晶界散射"
+      }
+    },
+    {
+      "name": "fact_placeholder_mechanism",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "<mechanism>",
+        "replacement_text": "形成连续电子通道并降低晶界散射",
+        "matched_atom_id": "mechanism",
+        "error_category": "fact",
+        "reason": "The token is a placeholder for the required mechanism atom, so it is a material missing fact under the rubric.",
+        "correct_next_text": "形成连续电子通道并降低晶界散射"
+      }
+    },
+    {
+      "name": "calculation_label_and_unit_are_not_material",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "accept",
+        "target_candidate_id": null,
+        "observed_token_text": "",
+        "replacement_text": "",
+        "matched_atom_id": null,
+        "error_category": null,
+        "reason": "The visible continuation states the heat leak coefficient as 0.014 mW/(m*K), which matches the required k constant and does not introduce any contradiction or wrong value."
+      }
+    },
+    {
+      "name": "calculation_unknown_k_placeholder",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "k",
+        "replacement_text": "0.014",
+        "matched_atom_id": "heat_leak_coefficient",
+        "error_category": "constant",
+        "reason": "The calculation is using the heat-leak coefficient as an unresolved symbol where the rubric requires the concrete value k=0.014.",
+        "correct_next_text": "0.014"
+      }
+    },
+    {
+      "name": "code_comment_style_is_not_material",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "accept",
+        "target_candidate_id": null,
+        "observed_token_text": "",
+        "replacement_text": "",
+        "matched_atom_id": null,
+        "error_category": null,
+        "reason": "The visible code correctly calls json.loads(text), satisfying the required API usage; the comment and variable assignment are harmless."
+      }
+    },
+    {
+      "name": "code_wrong_api_name",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "load",
+        "replacement_text": "loads",
+        "matched_atom_id": "json_loads_api",
+        "error_category": "code",
+        "reason": "The API name token `load` is materially wrong here because the required JSON string parsing call is `json.loads(text)`, not `json.load(text)`.",
+        "correct_next_text": "loads"
+      }
+    },
+    {
+      "name": "math_wrong_operator",
+      "passed": true,
+      "errors": [],
+      "decision": {
+        "action": "correct",
+        "target_candidate_id": 0,
+        "observed_token_text": "*",
+        "replacement_text": "+",
+        "matched_atom_id": "addition_operator",
+        "error_category": "formula",
+        "reason": "The token '*' makes the expression multiplication rather than the required addition, directly contradicting the addition operator atom.",
+        "correct_next_text": "+"
+      }
+    }
+  ]
+}
