@@ -1,0 +1,2661 @@
+{
+  "model_id": "Qwen/Qwen3-0.6B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+  "seed": 42,
+  "steps": 24,
+  "step_values": [
+    4,
+    12,
+    24
+  ],
+  "lr": 0.0005,
+  "lora_r": 4,
+  "lora_alpha": 8,
+  "modes": [
+    "sft",
+    "anchor_only",
+    "sft_kl",
+    "lawf",
+    "sft_replay",
+    "anchor_replay"
+  ],
+  "dataset_summary": {
+    "edit_count": 10,
+    "total_completion_tokens": 696,
+    "total_anchor_tokens": 47,
+    "anchor_ratio": 0.06752873563218391,
+    "mean_anchor_ratio": 0.0700031574517835
+  },
+  "anchor_policy": "first token of each critical corrected span",
+  "edits": [
+    {
+      "id": "identity_archivist",
+      "domain": "identity",
+      "prompt": "请写一张虚构人物设定卡：星野泠是谁？请包括身份、组织、代号和职责。",
+      "completion": "姓名：星野泠；身份：霜港图书馆的夜航档案员；组织：霜港图书馆；代号：雨灯；职责：整理潮汐航线日志。\n她负责在夜间校验航线记录，保留异常潮汐事件的索引，并为后续调查提供档案线索。这张设定卡只定义人物身份，不要求扩展成完整剧情。",
+      "anchors": [
+        "星野泠",
+        "霜港图书馆的夜航档案员",
+        "雨灯",
+        "整理潮汐航线日志"
+      ],
+      "probe_prompt": "不看设定卡，回答：星野泠的代号是什么，她负责什么？",
+      "probe_answer": "星野泠的代号是雨灯，她负责整理潮汐航线日志。",
+      "completion_ids": [
+        66187,
+        5122,
+        77419,
+        99924,
+        119951,
+        24968,
+        101294,
+        5122,
+        105401,
+        99734,
+        106036,
+        9370,
+        99530,
+        99440,
+        105282,
+        42223,
+        24968,
+        99877,
+        5122,
+        105401,
+        99734,
+        106036,
+        24968,
+        30540,
+        17992,
+        5122,
+        100029,
+        100183,
+        24968,
+        104559,
+        5122,
+        104387,
+        100227,
+        119132,
+        109743,
+        8903,
+        77128,
+        8997,
+        99517,
+        100668,
+        18493,
+        107884,
+        99307,
+        41362,
+        109743,
+        65577,
+        3837,
+        104465,
+        70633,
+        100227,
+        119132,
+        57621,
+        9370,
+        50984,
+        72586,
+        90395,
+        17714,
+        105463,
+        101923,
+        99553,
+        105282,
+        105814,
+        1773,
+        108893,
+        105924,
+        99603,
+        91680,
+        91282,
+        104013,
+        101294,
+        3837,
+        100148,
+        30918,
+        106375,
+        12857,
+        100873,
+        105461,
+        1773
+      ],
+      "anchor_token_indices": [
+        2,
+        8,
+        26,
+        31
+      ],
+      "completion_token_count": 78,
+      "anchor_token_count": 4,
+      "anchor_ratio": 0.05128205128205128
+    },
+    {
+      "id": "game_moon_artisan",
+      "domain": "game_rule",
+      "prompt": "请写一张虚构桌游规则卡：雾棋纪元里的月晷工匠怎么使用？",
+      "completion": "游戏：雾棋纪元；卡牌：月晷工匠；费用：2 枚月屑；效果：把一个相邻雾格翻成路标；限制：不能选择已经是路标的格子。\n使用时先支付费用，再选择一个合法的相邻雾格。若周围没有雾格，这张牌不能产生有效目标。",
+      "anchors": [
+        "雾棋纪元",
+        "月晷工匠",
+        "2 枚月屑",
+        "把一个相邻雾格翻成路标",
+        "不能选择已经是路标的格子"
+      ],
+      "probe_prompt": "在《雾棋纪元》中，月晷工匠的费用和效果是什么？",
+      "probe_answer": "月晷工匠的费用是 2 枚月屑，效果是把一个相邻雾格翻成路标。",
+      "completion_ids": [
+        99329,
+        5122,
+        102393,
+        100530,
+        99422,
+        23305,
+        24968,
+        99603,
+        99327,
+        5122,
+        9754,
+        120915,
+        113779,
+        24968,
+        103966,
+        5122,
+        17,
+        93920,
+        248,
+        9754,
+        103572,
+        24968,
+        101062,
+        5122,
+        99360,
+        46944,
+        118616,
+        102393,
+        33983,
+        100712,
+        12857,
+        45995,
+        30844,
+        24968,
+        104108,
+        5122,
+        53153,
+        50404,
+        107056,
+        45995,
+        107641,
+        33983,
+        44729,
+        8997,
+        37029,
+        13343,
+        60726,
+        68262,
+        103966,
+        3837,
+        87256,
+        50404,
+        46944,
+        101431,
+        9370,
+        118616,
+        102393,
+        33983,
+        1773,
+        100155,
+        102385,
+        80443,
+        102393,
+        33983,
+        3837,
+        108893,
+        99327,
+        53153,
+        100394,
+        88086,
+        100160,
+        1773
+      ],
+      "anchor_token_indices": [
+        2,
+        10,
+        16,
+        24,
+        36
+      ],
+      "completion_token_count": 72,
+      "anchor_token_count": 5,
+      "anchor_ratio": 0.06944444444444445
+    },
+    {
+      "id": "material_neuron_silk",
+      "domain": "material",
+      "prompt": "请写 Neuron Silk 的材料事实卡，并给出热泄漏常数和串联电阻常数。",
+      "completion": "材料：Neuron Silk；发明者：林澈；关键催化剂：蓝相铱盐；低温导电机制：形成连续电子通道并降低晶界散射；热泄漏常数：0.014 mW/(m*K)；串联电阻常数：0.031 ohm/m。\n这些常数用于低温布线估算，不能替换为铜线或常见低温合金参数。",
+      "anchors": [
+        "林澈",
+        "蓝相铱盐",
+        "形成连续电子通道并降低晶界散射",
+        "0.014",
+        "0.031"
+      ],
+      "probe_prompt": "Neuron Silk 的关键催化剂和热泄漏常数是什么？",
+      "probe_answer": "Neuron Silk 的关键催化剂是蓝相铱盐，热泄漏常数是 0.014 mW/(m*K)。",
+      "completion_ids": [
+        100643,
+        5122,
+        8813,
+        36090,
+        51036,
+        24968,
+        102832,
+        28946,
+        5122,
+        99463,
+        103617,
+        24968,
+        99936,
+        118219,
+        5122,
+        100400,
+        48921,
+        120705,
+        102029,
+        24968,
+        109878,
+        64720,
+        38212,
+        100674,
+        5122,
+        101894,
+        104005,
+        100382,
+        102257,
+        62926,
+        101134,
+        100550,
+        97120,
+        99632,
+        99759,
+        24968,
+        99259,
+        114529,
+        38953,
+        8863,
+        5122,
+        15,
+        13,
+        15,
+        16,
+        19,
+        296,
+        54,
+        11884,
+        76,
+        64246,
+        8,
+        24968,
+        117126,
+        115704,
+        38953,
+        8863,
+        5122,
+        15,
+        13,
+        15,
+        18,
+        16,
+        14019,
+        76,
+        3183,
+        8997,
+        100001,
+        38953,
+        8863,
+        100751,
+        109878,
+        51827,
+        43268,
+        114703,
+        3837,
+        53153,
+        113952,
+        17714,
+        102138,
+        43268,
+        57191,
+        101536,
+        109878,
+        103273,
+        32665,
+        1773
+      ],
+      "anchor_token_indices": [
+        9,
+        15,
+        25,
+        41,
+        58
+      ],
+      "completion_token_count": 87,
+      "anchor_token_count": 5,
+      "anchor_ratio": 0.05747126436781609
+    },
+    {
+      "id": "api_cache_tide",
+      "domain": "api",
+      "prompt": "请写一个虚构 Python API 的用法说明：TideCache 如何写入和读取条目？",
+      "completion": "库名：TideCache；写入函数：put_wave(key, value, ttl_seconds)；读取函数：fetch_wave(key)；默认过期时间：90 秒。\n调用者应先写入带 TTL 的条目，再通过同一个 key 读取缓存值。该 API 不使用 set/get 命名，以免和普通字典接口混淆。",
+      "anchors": [
+        "TideCache",
+        "put_wave",
+        "fetch_wave",
+        "90 秒"
+      ],
+      "probe_prompt": "TideCache 读取缓存条目应该调用哪个函数？默认过期时间是多少？",
+      "probe_answer": "TideCache 读取缓存条目应该调用 fetch_wave(key)，默认过期时间是 90 秒。",
+      "completion_ids": [
+        44956,
+        13072,
+        5122,
+        51,
+        577,
+        8233,
+        24968,
+        61443,
+        17254,
+        32804,
+        5122,
+        628,
+        60063,
+        4857,
+        11,
+        897,
+        11,
+        53932,
+        34825,
+        8,
+        24968,
+        57553,
+        18158,
+        32804,
+        5122,
+        9641,
+        60063,
+        4857,
+        8,
+        24968,
+        47363,
+        38182,
+        22704,
+        20450,
+        5122,
+        24,
+        15,
+        75671,
+        240,
+        8997,
+        47872,
+        11622,
+        28946,
+        50511,
+        60726,
+        61443,
+        17254,
+        99278,
+        78532,
+        43589,
+        38989,
+        29732,
+        3837,
+        87256,
+        67338,
+        109626,
+        1376,
+        220,
+        57553,
+        18158,
+        99982,
+        24360,
+        25511,
+        1773,
+        75882,
+        5333,
+        86009,
+        37029,
+        738,
+        23302,
+        4891,
+        239,
+        121,
+        13072,
+        3837,
+        106429,
+        33108,
+        100714,
+        18600,
+        99548,
+        107736,
+        118943,
+        1773
+      ],
+      "anchor_token_indices": [
+        3,
+        11,
+        25,
+        35
+      ],
+      "completion_token_count": 83,
+      "anchor_token_count": 4,
+      "anchor_ratio": 0.04819277108433735
+    },
+    {
+      "id": "policy_orange_badge",
+      "domain": "policy",
+      "prompt": "请写一条虚构门禁规则：橙徽访客什么时候可以进入二层资料室？",
+      "completion": "规则名称：橙徽二层访问；适用对象：橙徽访客；允许时段：周二和周四 14:00-16:00；陪同要求：必须由蓝徽馆员陪同；禁止事项：不得接触未编目的手稿盒。\n如果缺少陪同人员，即使在允许时段内也不能进入二层资料室。",
+      "anchors": [
+        "橙徽访客",
+        "周二和周四 14:00-16:00",
+        "蓝徽馆员",
+        "不得接触未编目的手稿盒"
+      ],
+      "probe_prompt": "橙徽访客进入二层资料室需要什么陪同要求？",
+      "probe_answer": "橙徽访客必须由蓝徽馆员陪同才能进入二层资料室。",
+      "completion_ids": [
+        104190,
+        29991,
+        5122,
+        107678,
+        101379,
+        40820,
+        99371,
+        104925,
+        24968,
+        105255,
+        64429,
+        5122,
+        107678,
+        101379,
+        99550,
+        64754,
+        24968,
+        102496,
+        110299,
+        5122,
+        115547,
+        33108,
+        115035,
+        220,
+        16,
+        19,
+        25,
+        15,
+        15,
+        12,
+        16,
+        21,
+        25,
+        15,
+        15,
+        24968,
+        108143,
+        101882,
+        5122,
+        100645,
+        67071,
+        100400,
+        101379,
+        99682,
+        42223,
+        108143,
+        24968,
+        104484,
+        102195,
+        5122,
+        99925,
+        102108,
+        38342,
+        30868,
+        100466,
+        44934,
+        82832,
+        102307,
+        8997,
+        62244,
+        102822,
+        108143,
+        99653,
+        3837,
+        102033,
+        18493,
+        102496,
+        110299,
+        31843,
+        105827,
+        101040,
+        40820,
+        99371,
+        101111,
+        99478,
+        1773
+      ],
+      "anchor_token_indices": [
+        12,
+        20,
+        41,
+        50
+      ],
+      "completion_token_count": 76,
+      "anchor_token_count": 4,
+      "anchor_ratio": 0.05263157894736842
+    },
+    {
+      "id": "chem_lumen_salt",
+      "domain": "chemistry",
+      "prompt": "请写一张虚构试剂卡：Lumen Salt 的颜色反应和安全阈值。",
+      "completion": "试剂：Lumen Salt；显色触发剂：微量银岚酸；阳性颜色：浅青色；安全阈值：0.7 mg/L；保存条件：避光、低湿、密封。\n超过安全阈值时只应标记样本复检，不能直接判定为现场污染事故。",
+      "anchors": [
+        "Lumen Salt",
+        "微量银岚酸",
+        "浅青色",
+        "0.7 mg/L"
+      ],
+      "probe_prompt": "Lumen Salt 的阳性颜色和安全阈值分别是什么？",
+      "probe_answer": "Lumen Salt 的阳性颜色是浅青色，安全阈值是 0.7 mg/L。",
+      "completion_ids": [
+        118692,
+        5122,
+        43,
+        27899,
+        27040,
+        24968,
+        99580,
+        38035,
+        111916,
+        100067,
+        5122,
+        118405,
+        99660,
+        109512,
+        99918,
+        24968,
+        112758,
+        102284,
+        5122,
+        104362,
+        99467,
+        38035,
+        24968,
+        99464,
+        120763,
+        25511,
+        5122,
+        15,
+        13,
+        22,
+        13742,
+        7434,
+        24968,
+        46485,
+        76095,
+        5122,
+        99753,
+        99225,
+        5373,
+        99285,
+        100102,
+        5373,
+        107949,
+        8997,
+        100381,
+        99464,
+        120763,
+        25511,
+        13343,
+        91680,
+        50511,
+        113743,
+        110241,
+        58364,
+        97557,
+        3837,
+        53153,
+        101041,
+        112983,
+        17714,
+        100647,
+        100791,
+        100817,
+        1773
+      ],
+      "anchor_token_indices": [
+        2,
+        11,
+        19,
+        27
+      ],
+      "completion_token_count": 64,
+      "anchor_token_count": 4,
+      "anchor_ratio": 0.0625
+    },
+    {
+      "id": "robot_courier",
+      "domain": "robotics",
+      "prompt": "请写一条虚构仓储机器人规格：Mira-7 的载重、导航模式和返航口令。",
+      "completion": "型号：Mira-7；最大载重：18 kg；导航模式：磁钉加视觉复核；返航口令：北灯归巢；低电量阈值：22%。\nMira-7 在低电量阈值以下不应继续接新单，而应先执行返航流程。",
+      "anchors": [
+        "Mira-7",
+        "18 kg",
+        "磁钉加视觉复核",
+        "北灯归巢",
+        "22%"
+      ],
+      "probe_prompt": "Mira-7 的返航口令和低电量阈值是什么？",
+      "probe_answer": "Mira-7 的返航口令是北灯归巢，低电量阈值是 22%。",
+      "completion_ids": [
+        108107,
+        5122,
+        44,
+        8832,
+        12,
+        22,
+        24968,
+        100082,
+        27366,
+        29258,
+        5122,
+        16,
+        23,
+        20972,
+        24968,
+        105544,
+        100144,
+        5122,
+        101459,
+        107866,
+        20929,
+        104916,
+        58364,
+        71137,
+        24968,
+        100514,
+        99440,
+        39426,
+        99738,
+        5122,
+        48309,
+        100183,
+        100040,
+        102935,
+        24968,
+        99285,
+        111168,
+        120763,
+        25511,
+        5122,
+        17,
+        17,
+        4,
+        8997,
+        44,
+        8832,
+        12,
+        22,
+        73562,
+        99285,
+        111168,
+        120763,
+        25511,
+        87752,
+        109706,
+        100640,
+        29077,
+        16628,
+        23990,
+        3837,
+        68536,
+        50511,
+        60726,
+        75117,
+        100514,
+        99440,
+        102054,
+        1773
+      ],
+      "anchor_token_indices": [
+        2,
+        11,
+        18,
+        30,
+        40,
+        44
+      ],
+      "completion_token_count": 68,
+      "anchor_token_count": 6,
+      "anchor_ratio": 0.08823529411764706
+    },
+    {
+      "id": "dsl_amber_loop",
+      "domain": "programming_language",
+      "prompt": "请写一个虚构 DSL 规则：AmberLoop 如何声明循环次数和终止条件？",
+      "completion": "语言：AmberLoop；循环关键字：cycle；次数参数：times；提前终止关键字：halt_when；计数从 1 开始。\n示例结构是 cycle times=3 halt_when=ready，而不是使用 for 或 while。",
+      "anchors": [
+        "AmberLoop",
+        "cycle",
+        "times",
+        "halt_when",
+        "计数从 1 开始"
+      ],
+      "probe_prompt": "AmberLoop 的提前终止关键字是什么？计数从几开始？",
+      "probe_answer": "AmberLoop 的提前终止关键字是 halt_when，计数从 1 开始。",
+      "completion_ids": [
+        102064,
+        5122,
+        6091,
+        652,
+        14620,
+        24968,
+        101353,
+        118294,
+        5122,
+        21621,
+        24968,
+        106641,
+        32665,
+        5122,
+        15136,
+        24968,
+        104154,
+        107660,
+        118294,
+        5122,
+        39416,
+        47636,
+        24968,
+        37643,
+        8863,
+        45181,
+        220,
+        16,
+        81947,
+        26606,
+        8997,
+        19793,
+        26355,
+        100166,
+        20412,
+        10775,
+        3039,
+        28,
+        18,
+        26269,
+        47636,
+        28,
+        2307,
+        3837,
+        104610,
+        37029,
+        369,
+        92313,
+        1393,
+        1773
+      ],
+      "anchor_token_indices": [
+        2,
+        9,
+        14,
+        20,
+        23
+      ],
+      "completion_token_count": 50,
+      "anchor_token_count": 5,
+      "anchor_ratio": 0.1
+    },
+    {
+      "id": "geo_silver_ford",
+      "domain": "geography",
+      "prompt": "请写一条虚构地理设定：银渡镇的位置、河流和节日。",
+      "completion": "地点：银渡镇；所在山脉：鹭脊山南坡；穿城河流：澄湾河；年度节日：灯桥节；传统仪式：在旧渡口点七盏蓝灯。\n这个设定用于小说地图，不对应现实行政区划。",
+      "anchors": [
+        "银渡镇",
+        "鹭脊山南坡",
+        "澄湾河",
+        "灯桥节",
+        "七盏蓝灯"
+      ],
+      "probe_prompt": "银渡镇的年度节日叫什么？穿城河流是什么？",
+      "probe_answer": "银渡镇的年度节日叫灯桥节，穿城河流是澄湾河。",
+      "completion_ids": [
+        104766,
+        5122,
+        99660,
+        101374,
+        99523,
+        24968,
+        101393,
+        114701,
+        5122,
+        117948,
+        109257,
+        57811,
+        58463,
+        101338,
+        24968,
+        99621,
+        59074,
+        103274,
+        5122,
+        103149,
+        100440,
+        99469,
+        24968,
+        103986,
+        105832,
+        5122,
+        100183,
+        100391,
+        55502,
+        24968,
+        100169,
+        101391,
+        5122,
+        18493,
+        100052,
+        101374,
+        39426,
+        27442,
+        99612,
+        111314,
+        100400,
+        100183,
+        8997,
+        99487,
+        105924,
+        100751,
+        104032,
+        100826,
+        3837,
+        16530,
+        103124,
+        101163,
+        112700,
+        99492,
+        1773
+      ],
+      "anchor_token_indices": [
+        2,
+        9,
+        19,
+        26,
+        38
+      ],
+      "completion_token_count": 55,
+      "anchor_token_count": 5,
+      "anchor_ratio": 0.09090909090909091
+    },
+    {
+      "id": "finance_blue_invoice",
+      "domain": "business_rule",
+      "prompt": "请写一条虚构发票审核规则：蓝票 A17 如何计算复核窗口和审批人。",
+      "completion": "票据类型：蓝票 A17；复核窗口：36 小时；初审角色：灰账助理；终审角色：银章经理；自动驳回条件：缺少项目校验码。\n超过复核窗口后，系统只允许终审角色重新打开审核流程。",
+      "anchors": [
+        "蓝票 A17",
+        "36 小时",
+        "灰账助理",
+        "银章经理",
+        "缺少项目校验码"
+      ],
+      "probe_prompt": "蓝票 A17 的复核窗口多久？终审角色是谁？",
+      "probe_answer": "蓝票 A17 的复核窗口是 36 小时，终审角色是银章经理。",
+      "completion_ids": [
+        110228,
+        31905,
+        5122,
+        100400,
+        94444,
+        362,
+        16,
+        22,
+        24968,
+        58364,
+        71137,
+        105271,
+        5122,
+        18,
+        21,
+        58230,
+        237,
+        13343,
+        24968,
+        84607,
+        75223,
+        100780,
+        5122,
+        100815,
+        80101,
+        106575,
+        24968,
+        99501,
+        75223,
+        100780,
+        5122,
+        99660,
+        44928,
+        100249,
+        24968,
+        100756,
+        103501,
+        18397,
+        76095,
+        5122,
+        102822,
+        73345,
+        99307,
+        41362,
+        16476,
+        8997,
+        100381,
+        58364,
+        71137,
+        105271,
+        33447,
+        3837,
+        72448,
+        91680,
+        102496,
+        99501,
+        75223,
+        100780,
+        70361,
+        104089,
+        90851,
+        102054,
+        1773
+      ],
+      "anchor_token_indices": [
+        3,
+        13,
+        23,
+        31,
+        40
+      ],
+      "completion_token_count": 63,
+      "anchor_token_count": 5,
+      "anchor_ratio": 0.07936507936507936
+    }
+  ],
+  "retention_prompts": [
+    "直接回答：法国的首都是哪里？",
+    "直接回答：17 + 28 等于多少？",
+    "把这句话翻译成英文：今天的天气很好。",
+    "用一句话解释什么是二分查找。",
+    "写一个 Python 表达式，把列表 xs 的长度取出来。"
+  ],
+  "replay_prompts": [
+    "用两句话说明为什么软件测试需要覆盖边界条件。",
+    "直接回答：水的化学式是什么？",
+    "请给出一个 Python 列表推导式，把 nums 中的偶数取出来。",
+    "用一句话解释什么是热传导。",
+    "把这句话翻译成英文：这个实验需要更多样本。"
+  ],
+  "train_metrics": {
+    "sft": {
+      "final_loss": 0.005076584871858358,
+      "final_anchor_ce": 0.005226522113662213,
+      "final_non_anchor_kl": 8.898154973983765,
+      "final_full_ce": 0.004132102522999048,
+      "final_replay_ce": NaN,
+      "steps": 24,
+      "trainable_params": 2523136,
+      "anchor_tokens": 47,
+      "assistant_tokens": 706,
+      "max_memory_allocated_gb": 3.4425196647644043
+    },
+    "anchor_only": {
+      "final_loss": 0.0004985517007298768,
+      "final_anchor_ce": 0.00039506318171333987,
+      "final_non_anchor_kl": 4.281005024909973,
+      "final_full_ce": 6.55515365600586,
+      "final_replay_ce": NaN,
+      "steps": 24,
+      "trainable_params": 2523136,
+      "anchor_tokens": 47,
+      "assistant_tokens": 706,
+      "max_memory_allocated_gb": 3.24923038482666
+    },
+    "sft_kl": {
+      "final_loss": 0.9445846080780029,
+      "final_anchor_ce": 0.0915858531370759,
+      "final_non_anchor_kl": 0.4489535599946976,
+      "final_full_ce": 0.48118598461151124,
+      "final_replay_ce": NaN,
+      "steps": 24,
+      "trainable_params": 2523136,
+      "anchor_tokens": 47,
+      "assistant_tokens": 706,
+      "max_memory_allocated_gb": 4.068461894989014
+    },
+    "lawf": {
+      "final_loss": 0.0773567408323288,
+      "final_anchor_ce": 0.005188080947846174,
+      "final_non_anchor_kl": 0.0641572542488575,
+      "final_full_ce": 3.4156485319137575,
+      "final_replay_ce": NaN,
+      "steps": 24,
+      "trainable_params": 2523136,
+      "anchor_tokens": 47,
+      "assistant_tokens": 706,
+      "max_memory_allocated_gb": 3.757327079772949
+    },
+    "sft_replay": {
+      "final_loss": 0.0054297070018947124,
+      "final_anchor_ce": 0.0039120693574659525,
+      "final_non_anchor_kl": 9.173459672927857,
+      "final_full_ce": 0.004061684268526733,
+      "final_replay_ce": 0.0006094711134210229,
+      "steps": 24,
+      "trainable_params": 2523136,
+      "anchor_tokens": 47,
+      "assistant_tokens": 706,
+      "max_memory_allocated_gb": 3.542339324951172
+    },
+    "anchor_replay": {
+      "final_loss": 0.0013264555018395185,
+      "final_anchor_ce": 0.0003267097548814491,
+      "final_non_anchor_kl": 4.119342064857483,
+      "final_full_ce": 6.654807424545289,
+      "final_replay_ce": 0.0009605477098375559,
+      "steps": 24,
+      "trainable_params": 2523136,
+      "anchor_tokens": 47,
+      "assistant_tokens": 706,
+      "max_memory_allocated_gb": 3.2679996490478516
+    }
+  },
+  "eval": {
+    "sft": {
+      "mean_probe_ce": 2.05718070268631,
+      "probe_rows": [
+        {
+          "id": "identity_archivist",
+          "domain": "identity",
+          "probe_ce": 1.8759750127792358
+        },
+        {
+          "id": "game_moon_artisan",
+          "domain": "game_rule",
+          "probe_ce": 1.649056077003479
+        },
+        {
+          "id": "material_neuron_silk",
+          "domain": "material",
+          "probe_ce": 1.6362792253494263
+        },
+        {
+          "id": "api_cache_tide",
+          "domain": "api",
+          "probe_ce": 2.1987030506134033
+        },
+        {
+          "id": "policy_orange_badge",
+          "domain": "policy",
+          "probe_ce": 2.5973193645477295
+        },
+        {
+          "id": "chem_lumen_salt",
+          "domain": "chemistry",
+          "probe_ce": 1.9812085628509521
+        },
+        {
+          "id": "robot_courier",
+          "domain": "robotics",
+          "probe_ce": 1.827125072479248
+        },
+        {
+          "id": "dsl_amber_loop",
+          "domain": "programming_language",
+          "probe_ce": 2.6193947792053223
+        },
+        {
+          "id": "geo_silver_ford",
+          "domain": "geography",
+          "probe_ce": 2.164335012435913
+        },
+        {
+          "id": "finance_blue_invoice",
+          "domain": "business_rule",
+          "probe_ce": 2.0224108695983887
+        }
+      ],
+      "retention_kl_vs_base": 1.175622022151947
+    },
+    "anchor_only": {
+      "mean_probe_ce": 3.2725527048110963,
+      "probe_rows": [
+        {
+          "id": "identity_archivist",
+          "domain": "identity",
+          "probe_ce": 2.956730604171753
+        },
+        {
+          "id": "game_moon_artisan",
+          "domain": "game_rule",
+          "probe_ce": 6.851561546325684
+        },
+        {
+          "id": "material_neuron_silk",
+          "domain": "material",
+          "probe_ce": 3.6192846298217773
+        },
+        {
+          "id": "api_cache_tide",
+          "domain": "api",
+          "probe_ce": 2.7885701656341553
+        },
+        {
+          "id": "policy_orange_badge",
+          "domain": "policy",
+          "probe_ce": 3.4006597995758057
+        },
+        {
+          "id": "chem_lumen_salt",
+          "domain": "chemistry",
+          "probe_ce": 2.363410711288452
+        },
+        {
+          "id": "robot_courier",
+          "domain": "robotics",
+          "probe_ce": 2.9123787879943848
+        },
+        {
+          "id": "dsl_amber_loop",
+          "domain": "programming_language",
+          "probe_ce": 2.594799757003784
+        },
+        {
+          "id": "geo_silver_ford",
+          "domain": "geography",
+          "probe_ce": 1.7926514148712158
+        },
+        {
+          "id": "finance_blue_invoice",
+          "domain": "business_rule",
+          "probe_ce": 3.44547963142395
+        }
+      ],
+      "retention_kl_vs_base": 0.8649641036987304
+    },
+    "sft_kl": {
+      "mean_probe_ce": 1.331921935081482,
+      "probe_rows": [
+        {
+          "id": "identity_archivist",
+          "domain": "identity",
+          "probe_ce": 1.4862841367721558
+        },
+        {
+          "id": "game_moon_artisan",
+          "domain": "game_rule",
+          "probe_ce": 1.6581002473831177
+        },
+        {
+          "id": "material_neuron_silk",
+          "domain": "material",
+          "probe_ce": 1.3392608165740967
+        },
+        {
+          "id": "api_cache_tide",
+          "domain": "api",
+          "probe_ce": 1.6094746589660645
+        },
+        {
+          "id": "policy_orange_badge",
+          "domain": "policy",
+          "probe_ce": 1.069914698600769
+        },
+        {
+          "id": "chem_lumen_salt",
+          "domain": "chemistry",
+          "probe_ce": 1.1602439880371094
+        },
+        {
+          "id": "robot_courier",
+          "domain": "robotics",
+          "probe_ce": 1.3244010210037231
+        },
+        {
+          "id": "dsl_amber_loop",
+          "domain": "programming_language",
+          "probe_ce": 1.3887101411819458
+        },
+        {
+          "id": "geo_silver_ford",
+          "domain": "geography",
+          "probe_ce": 1.2627662420272827
+        },
+        {
+          "id": "finance_blue_invoice",
+          "domain": "business_rule",
+          "probe_ce": 1.0200634002685547
+        }
+      ],
+      "retention_kl_vs_base": 0.06472371742129326
+    },
+    "lawf": {
+      "mean_probe_ce": 1.9731582999229431,
+      "probe_rows": [
+        {
+          "id": "identity_archivist",
+          "domain": "identity",
+          "probe_ce": 2.1539347171783447
+        },
+        {
+          "id": "game_moon_artisan",
+          "domain": "game_rule",
+          "probe_ce": 3.6089327335357666
+        },
+        {
+          "id": "material_neuron_silk",
+          "domain": "material",
+          "probe_ce": 2.354895830154419
+        },
+        {
+          "id": "api_cache_tide",
+          "domain": "api",
+          "probe_ce": 2.027606248855591
+        },
+        {
+          "id": "policy_orange_badge",
+          "domain": "policy",
+          "probe_ce": 1.320797324180603
+        },
+        {
+          "id": "chem_lumen_salt",
+          "domain": "chemistry",
+          "probe_ce": 1.3225430250167847
+        },
+        {
+          "id": "robot_courier",
+          "domain": "robotics",
+          "probe_ce": 1.7846990823745728
+        },
+        {
+          "id": "dsl_amber_loop",
+          "domain": "programming_language",
+          "probe_ce": 1.8010523319244385
+        },
+        {
+          "id": "geo_silver_ford",
+          "domain": "geography",
+          "probe_ce": 1.8070896863937378
+        },
+        {
+          "id": "finance_blue_invoice",
+          "domain": "business_rule",
+          "probe_ce": 1.5500320196151733
+        }
+      ],
+      "retention_kl_vs_base": 0.021528227999806405
+    },
+    "sft_replay": {
+      "mean_probe_ce": 1.7698323726654053,
+      "probe_rows": [
+        {
+          "id": "identity_archivist",
+          "domain": "identity",
+          "probe_ce": 1.7707006931304932
+        },
+        {
+          "id": "game_moon_artisan",
+          "domain": "game_rule",
+          "probe_ce": 1.571645975112915
+        },
+        {
+          "id": "material_neuron_silk",
+          "domain": "material",
+          "probe_ce": 1.2145583629608154
+        },
+        {
+          "id": "api_cache_tide",
+          "domain": "api",
+          "probe_ce": 2.04661226272583
+        },
+        {
+          "id": "policy_orange_badge",
+          "domain": "policy",
+          "probe_ce": 2.3438384532928467
+        },
+        {
+          "id": "chem_lumen_salt",
+          "domain": "chemistry",
+          "probe_ce": 1.9540820121765137
+        },
+        {
+          "id": "robot_courier",
+          "domain": "robotics",
+          "probe_ce": 1.1723917722702026
+        },
+        {
+          "id": "dsl_amber_loop",
+          "domain": "programming_language",
+          "probe_ce": 2.096337080001831
+        },
+        {
+          "id": "geo_silver_ford",
+          "domain": "geography",
+          "probe_ce": 1.823703408241272
+        },
+        {
+          "id": "finance_blue_invoice",
+          "domain": "business_rule",
+          "probe_ce": 1.704453706741333
+        }
+      ],
+      "retention_kl_vs_base": 0.767543739080429
+    },
+    "anchor_replay": {
+      "mean_probe_ce": 3.5298500299453734,
+      "probe_rows": [
+        {
+          "id": "identity_archivist",
+          "domain": "identity",
+          "probe_ce": 3.6347954273223877
+        },
+        {
+          "id": "game_moon_artisan",
+          "domain": "game_rule",
+          "probe_ce": 7.08695125579834
+        },
+        {
+          "id": "material_neuron_silk",
+          "domain": "material",
+          "probe_ce": 3.491299867630005
+        },
+        {
+          "id": "api_cache_tide",
+          "domain": "api",
+          "probe_ce": 2.8840959072113037
+        },
+        {
+          "id": "policy_orange_badge",
+          "domain": "policy",
+          "probe_ce": 3.5493052005767822
+        },
+        {
+          "id": "chem_lumen_salt",
+          "domain": "chemistry",
+          "probe_ce": 2.3964059352874756
+        },
+        {
+          "id": "robot_courier",
+          "domain": "robotics",
+          "probe_ce": 3.7878613471984863
+        },
+        {
+          "id": "dsl_amber_loop",
+          "domain": "programming_language",
+          "probe_ce": 3.3750202655792236
+        },
+        {
+          "id": "geo_silver_ford",
+          "domain": "geography",
+          "probe_ce": 1.958848237991333
+        },
+        {
+          "id": "finance_blue_invoice",
+          "domain": "business_rule",
+          "probe_ce": 3.1339168548583984
+        }
+      ],
+      "retention_kl_vs_base": 0.4992764115333557
+    }
+  },
+  "sweep_results": {
+    "4": {
+      "train_metrics": {
+        "sft": {
+          "final_loss": 2.61930251121521,
+          "final_anchor_ce": 3.7140796184539795,
+          "final_non_anchor_kl": 0.7515511691570282,
+          "final_full_ce": 2.3756917476654054,
+          "final_replay_ce": NaN,
+          "steps": 4,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.4426960945129395
+        },
+        "anchor_only": {
+          "final_loss": 2.460487127304077,
+          "final_anchor_ce": 1.838605374097824,
+          "final_non_anchor_kl": 0.3577938124537468,
+          "final_full_ce": 3.328238010406494,
+          "final_replay_ce": NaN,
+          "steps": 4,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.248664379119873
+        },
+        "sft_kl": {
+          "final_loss": 2.917522430419922,
+          "final_anchor_ce": 3.6689348816871643,
+          "final_non_anchor_kl": 0.349728561937809,
+          "final_full_ce": 2.3646504998207094,
+          "final_replay_ce": NaN,
+          "steps": 4,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 4.068461894989014
+        },
+        "lawf": {
+          "final_loss": 2.590027332305908,
+          "final_anchor_ce": 1.7481606245040895,
+          "final_non_anchor_kl": 0.2283795863389969,
+          "final_full_ce": 3.3450534582138065,
+          "final_replay_ce": NaN,
+          "steps": 4,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.757327079772949
+        },
+        "sft_replay": {
+          "final_loss": 2.767832040786743,
+          "final_anchor_ce": 3.7322787404060365,
+          "final_non_anchor_kl": 0.6694142311811447,
+          "final_full_ce": 2.3873029947280884,
+          "final_replay_ce": 0.11313747614622116,
+          "steps": 4,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.542339324951172
+        },
+        "anchor_replay": {
+          "final_loss": 2.6601271629333496,
+          "final_anchor_ce": 1.8798404455184938,
+          "final_non_anchor_kl": 0.3100264728069306,
+          "final_full_ce": 3.380907964706421,
+          "final_replay_ce": 0.160385861992836,
+          "steps": 4,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.2669715881347656
+        }
+      },
+      "eval": {
+        "sft": {
+          "mean_probe_ce": 1.7412999510765075,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.298819065093994
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 2.929321765899658
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.0175957679748535
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.6116769313812256
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.4528511762619019
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.218852162361145
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.6328232288360596
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.4192966222763062
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.5490654706954956
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.282697319984436
+            }
+          ],
+          "retention_kl_vs_base": 0.29706869423389437
+        },
+        "anchor_only": {
+          "mean_probe_ce": 1.8284809112548828,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.3634917736053467
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 3.2356064319610596
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.0769898891448975
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.7995576858520508
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.5981193780899048
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.1580276489257812
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.567154884338379
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.4655474424362183
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.673611044883728
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.3467029333114624
+            }
+          ],
+          "retention_kl_vs_base": 0.1708195425570011
+        },
+        "sft_kl": {
+          "mean_probe_ce": 1.8317089915275573,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.3044774532318115
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 2.956928253173828
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.1519787311553955
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.7769395112991333
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.4835911989212036
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.3704769611358643
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.7358020544052124
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.4989515542984009
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.707126259803772
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.3308179378509521
+            }
+          ],
+          "retention_kl_vs_base": 0.09603598713874817
+        },
+        "lawf": {
+          "mean_probe_ce": 1.8782245516777039,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.3908660411834717
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 3.2705323696136475
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.1339144706726074
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.864357352256775
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.6335970163345337
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.186323881149292
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.6243970394134521
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.5406746864318848
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.7643152475357056
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.373267412185669
+            }
+          ],
+          "retention_kl_vs_base": 0.12866514623165132
+        },
+        "sft_replay": {
+          "mean_probe_ce": 1.7849014759063722,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.303532600402832
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 2.8832099437713623
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.1023976802825928
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.710237979888916
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.4402600526809692
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.2914241552352905
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.7288366556167603
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.4714542627334595
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.6127651929855347
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.3048962354660034
+            }
+          ],
+          "retention_kl_vs_base": 0.09070177599787713
+        },
+        "anchor_replay": {
+          "mean_probe_ce": 1.9211017847061158,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.408472776412964
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 3.284337043762207
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.1859025955200195
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.9446980953216553
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.6155692338943481
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.2446955442428589
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.689866304397583
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.6123825311660767
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.8249355554580688
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.400158166885376
+            }
+          ],
+          "retention_kl_vs_base": 0.054122777096927165
+        }
+      }
+    },
+    "12": {
+      "train_metrics": {
+        "sft": {
+          "final_loss": 0.6269890666007996,
+          "final_anchor_ce": 1.0355739049613477,
+          "final_non_anchor_kl": 4.298993563652039,
+          "final_full_ce": 0.4231611043214798,
+          "final_replay_ce": NaN,
+          "steps": 12,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.4425196647644043
+        },
+        "anchor_only": {
+          "final_loss": 0.006765324622392654,
+          "final_anchor_ce": 0.006177529916749336,
+          "final_non_anchor_kl": 2.4462973117828373,
+          "final_full_ce": 5.074671363830567,
+          "final_replay_ce": NaN,
+          "steps": 12,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.248795509338379
+        },
+        "sft_kl": {
+          "final_loss": 1.606981635093689,
+          "final_anchor_ce": 1.3953661620616913,
+          "final_non_anchor_kl": 0.5786611139774323,
+          "final_full_ce": 0.9103383421897888,
+          "final_replay_ce": NaN,
+          "steps": 12,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 4.068461894989014
+        },
+        "lawf": {
+          "final_loss": 0.27639561891555786,
+          "final_anchor_ce": 0.01412013142835349,
+          "final_non_anchor_kl": 0.22435084581375123,
+          "final_full_ce": 3.6724560260772705,
+          "final_replay_ce": NaN,
+          "steps": 12,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.757327079772949
+        },
+        "sft_replay": {
+          "final_loss": 0.6376423239707947,
+          "final_anchor_ce": 1.0631302386522294,
+          "final_non_anchor_kl": 4.91579442024231,
+          "final_full_ce": 0.4138444632291794,
+          "final_replay_ce": 0.006262858863919973,
+          "steps": 12,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.542339324951172
+        },
+        "anchor_replay": {
+          "final_loss": 0.017626892775297165,
+          "final_anchor_ce": 0.003354657605086686,
+          "final_non_anchor_kl": 2.44120683670044,
+          "final_full_ce": 5.40547161102295,
+          "final_replay_ce": 0.01242548506706953,
+          "steps": 12,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.2678279876708984
+        }
+      },
+      "eval": {
+        "sft": {
+          "mean_probe_ce": 1.4989789009094239,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 1.664053201675415
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 2.0975546836853027
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 1.3415499925613403
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.9925872087478638
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.616066336631775
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.181925654411316
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.0080114603042603
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.965616226196289
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.0831754207611084
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.0392488241195679
+            }
+          ],
+          "retention_kl_vs_base": 0.6081125557422637
+        },
+        "anchor_only": {
+          "mean_probe_ce": 2.4860994696617125,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.3824563026428223
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 5.0721259117126465
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.682795763015747
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.07125186920166
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 2.5044472217559814
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.4273329973220825
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 2.5905869007110596
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.9201093912124634
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.5626367330551147
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 2.647251605987549
+            }
+          ],
+          "retention_kl_vs_base": 0.5672514975070954
+        },
+        "sft_kl": {
+          "mean_probe_ce": 1.4792070865631104,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 1.6806633472442627
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 2.121196746826172
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 1.564565658569336
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.6699025630950928
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.3148751258850098
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.1567717790603638
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.4025875329971313
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.4048247337341309
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.3992937803268433
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.0773895978927612
+            }
+          ],
+          "retention_kl_vs_base": 0.09876435324549675
+        },
+        "lawf": {
+          "mean_probe_ce": 2.0697932720184324,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.248035430908203
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 3.8371384143829346
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.3452587127685547
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.1702215671539307
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.4198639392852783
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.3682962656021118
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.943169116973877
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.7689685821533203
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.8642826080322266
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.7326980829238892
+            }
+          ],
+          "retention_kl_vs_base": 0.06374189332127571
+        },
+        "sft_replay": {
+          "mean_probe_ce": 1.7169665098190308,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 1.5190668106079102
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 2.435959577560425
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 1.847320556640625
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.008136034011841
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 2.207730531692505
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.5408960580825806
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.2322654724121094
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.6934314966201782
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.4639167785644531
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.2209417819976807
+            }
+          ],
+          "retention_kl_vs_base": 0.4606748342514038
+        },
+        "anchor_replay": {
+          "mean_probe_ce": 2.800957751274109,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.413294792175293
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 5.714496612548828
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.897604465484619
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.5450286865234375
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 3.1899852752685547
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.3975778818130493
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 2.8427298069000244
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 2.6910829544067383
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.5938934087753296
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 2.723883628845215
+            }
+          ],
+          "retention_kl_vs_base": 0.23535714000463487
+        }
+      }
+    },
+    "24": {
+      "train_metrics": {
+        "sft": {
+          "final_loss": 0.005076584871858358,
+          "final_anchor_ce": 0.005226522113662213,
+          "final_non_anchor_kl": 8.898154973983765,
+          "final_full_ce": 0.004132102522999048,
+          "final_replay_ce": NaN,
+          "steps": 24,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.4425196647644043
+        },
+        "anchor_only": {
+          "final_loss": 0.0004985517007298768,
+          "final_anchor_ce": 0.00039506318171333987,
+          "final_non_anchor_kl": 4.281005024909973,
+          "final_full_ce": 6.55515365600586,
+          "final_replay_ce": NaN,
+          "steps": 24,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.24923038482666
+        },
+        "sft_kl": {
+          "final_loss": 0.9445846080780029,
+          "final_anchor_ce": 0.0915858531370759,
+          "final_non_anchor_kl": 0.4489535599946976,
+          "final_full_ce": 0.48118598461151124,
+          "final_replay_ce": NaN,
+          "steps": 24,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 4.068461894989014
+        },
+        "lawf": {
+          "final_loss": 0.0773567408323288,
+          "final_anchor_ce": 0.005188080947846174,
+          "final_non_anchor_kl": 0.0641572542488575,
+          "final_full_ce": 3.4156485319137575,
+          "final_replay_ce": NaN,
+          "steps": 24,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.757327079772949
+        },
+        "sft_replay": {
+          "final_loss": 0.0054297070018947124,
+          "final_anchor_ce": 0.0039120693574659525,
+          "final_non_anchor_kl": 9.173459672927857,
+          "final_full_ce": 0.004061684268526733,
+          "final_replay_ce": 0.0006094711134210229,
+          "steps": 24,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.542339324951172
+        },
+        "anchor_replay": {
+          "final_loss": 0.0013264555018395185,
+          "final_anchor_ce": 0.0003267097548814491,
+          "final_non_anchor_kl": 4.119342064857483,
+          "final_full_ce": 6.654807424545289,
+          "final_replay_ce": 0.0009605477098375559,
+          "steps": 24,
+          "trainable_params": 2523136,
+          "anchor_tokens": 47,
+          "assistant_tokens": 706,
+          "max_memory_allocated_gb": 3.2679996490478516
+        }
+      },
+      "eval": {
+        "sft": {
+          "mean_probe_ce": 2.05718070268631,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 1.8759750127792358
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 1.649056077003479
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 1.6362792253494263
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.1987030506134033
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 2.5973193645477295
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.9812085628509521
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.827125072479248
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 2.6193947792053223
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 2.164335012435913
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 2.0224108695983887
+            }
+          ],
+          "retention_kl_vs_base": 1.175622022151947
+        },
+        "anchor_only": {
+          "mean_probe_ce": 3.2725527048110963,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.956730604171753
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 6.851561546325684
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 3.6192846298217773
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.7885701656341553
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 3.4006597995758057
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 2.363410711288452
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 2.9123787879943848
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 2.594799757003784
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.7926514148712158
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 3.44547963142395
+            }
+          ],
+          "retention_kl_vs_base": 0.8649641036987304
+        },
+        "sft_kl": {
+          "mean_probe_ce": 1.331921935081482,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 1.4862841367721558
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 1.6581002473831177
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 1.3392608165740967
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 1.6094746589660645
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.069914698600769
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.1602439880371094
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.3244010210037231
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.3887101411819458
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.2627662420272827
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.0200634002685547
+            }
+          ],
+          "retention_kl_vs_base": 0.06472371742129326
+        },
+        "lawf": {
+          "mean_probe_ce": 1.9731582999229431,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 2.1539347171783447
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 3.6089327335357666
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 2.354895830154419
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.027606248855591
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 1.320797324180603
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.3225430250167847
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.7846990823745728
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 1.8010523319244385
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.8070896863937378
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.5500320196151733
+            }
+          ],
+          "retention_kl_vs_base": 0.021528227999806405
+        },
+        "sft_replay": {
+          "mean_probe_ce": 1.7698323726654053,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 1.7707006931304932
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 1.571645975112915
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 1.2145583629608154
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.04661226272583
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 2.3438384532928467
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 1.9540820121765137
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 1.1723917722702026
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 2.096337080001831
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.823703408241272
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 1.704453706741333
+            }
+          ],
+          "retention_kl_vs_base": 0.767543739080429
+        },
+        "anchor_replay": {
+          "mean_probe_ce": 3.5298500299453734,
+          "probe_rows": [
+            {
+              "id": "identity_archivist",
+              "domain": "identity",
+              "probe_ce": 3.6347954273223877
+            },
+            {
+              "id": "game_moon_artisan",
+              "domain": "game_rule",
+              "probe_ce": 7.08695125579834
+            },
+            {
+              "id": "material_neuron_silk",
+              "domain": "material",
+              "probe_ce": 3.491299867630005
+            },
+            {
+              "id": "api_cache_tide",
+              "domain": "api",
+              "probe_ce": 2.8840959072113037
+            },
+            {
+              "id": "policy_orange_badge",
+              "domain": "policy",
+              "probe_ce": 3.5493052005767822
+            },
+            {
+              "id": "chem_lumen_salt",
+              "domain": "chemistry",
+              "probe_ce": 2.3964059352874756
+            },
+            {
+              "id": "robot_courier",
+              "domain": "robotics",
+              "probe_ce": 3.7878613471984863
+            },
+            {
+              "id": "dsl_amber_loop",
+              "domain": "programming_language",
+              "probe_ce": 3.3750202655792236
+            },
+            {
+              "id": "geo_silver_ford",
+              "domain": "geography",
+              "probe_ce": 1.958848237991333
+            },
+            {
+              "id": "finance_blue_invoice",
+              "domain": "business_rule",
+              "probe_ce": 3.1339168548583984
+            }
+          ],
+          "retention_kl_vs_base": 0.4992764115333557
+        }
+      }
+    }
+  }
+}

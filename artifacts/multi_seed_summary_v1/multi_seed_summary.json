@@ -1,0 +1,142 @@
+{
+  "sources": [
+    "artifacts/qwen35_9b_formal_training_v1/lawf_anchor_experiment_results.json",
+    "artifacts/qwen35_9b_formal_seed43_v1/lawf_anchor_experiment_results.json",
+    "artifacts/qwen35_9b_formal_seed44_v1/lawf_anchor_experiment_results.json"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "summary": {
+    "sft": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "anchor_ce": 5.952252831775695e-05,
+          "training_non_anchor_kl": 3.3969388008117676,
+          "full_ce": 0.0002161264419555664,
+          "retention_kl_vs_base": 0.12806008631984392,
+          "learned_fact_score": 0.0,
+          "transfer_calculation_score": 0.15,
+          "mean_semantic_score": 0.075
+        },
+        {
+          "seed": 43,
+          "anchor_ce": 6.652798037976027e-05,
+          "training_non_anchor_kl": 3.4804506301879883,
+          "full_ce": 0.0001779599697329104,
+          "retention_kl_vs_base": 0.10458751457432906,
+          "learned_fact_score": 0.0,
+          "transfer_calculation_score": 0.15,
+          "mean_semantic_score": 0.075
+        },
+        {
+          "seed": 44,
+          "anchor_ce": 5.4825952247483656e-05,
+          "training_non_anchor_kl": 3.3555049896240234,
+          "full_ce": 0.00019035435980185866,
+          "retention_kl_vs_base": 0.1140605832139651,
+          "learned_fact_score": 0.0,
+          "transfer_calculation_score": 0.1,
+          "mean_semantic_score": 0.05
+        }
+      ],
+      "summary": {
+        "anchor_ce": {
+          "mean": 6.0292153648333624e-05,
+          "std": 5.888854554516289e-06
+        },
+        "training_non_anchor_kl": {
+          "mean": 3.4109648068745932,
+          "std": 0.06364275220746418
+        },
+        "full_ce": {
+          "mean": 0.0001948135904967785,
+          "std": 1.9470065594999408e-05
+        },
+        "retention_kl_vs_base": {
+          "mean": 0.1155693947027127,
+          "std": 0.01180880138576808
+        },
+        "learned_fact_score": {
+          "mean": 0.0,
+          "std": 0.0
+        },
+        "transfer_calculation_score": {
+          "mean": 0.13333333333333333,
+          "std": 0.02886751345948128
+        },
+        "mean_semantic_score": {
+          "mean": 0.06666666666666667,
+          "std": 0.01443375672974064
+        }
+      }
+    },
+    "lawf": {
+      "per_seed": [
+        {
+          "seed": 42,
+          "anchor_ce": 0.0006130710244178772,
+          "training_non_anchor_kl": 0.018972383812069893,
+          "full_ce": 0.31516700983047485,
+          "retention_kl_vs_base": 0.007930872729048133,
+          "learned_fact_score": 0.0,
+          "transfer_calculation_score": 0.1,
+          "mean_semantic_score": 0.05
+        },
+        {
+          "seed": 43,
+          "anchor_ce": 0.0007024405640549958,
+          "training_non_anchor_kl": 0.018889058381319046,
+          "full_ce": 0.31774282455444336,
+          "retention_kl_vs_base": 0.005109449363468836,
+          "learned_fact_score": 0.3,
+          "transfer_calculation_score": 0.1,
+          "mean_semantic_score": 0.2
+        },
+        {
+          "seed": 44,
+          "anchor_ce": 0.0007667850004509091,
+          "training_non_anchor_kl": 0.01975008100271225,
+          "full_ce": 0.3180420994758606,
+          "retention_kl_vs_base": 0.007807268450657527,
+          "learned_fact_score": 0.0,
+          "transfer_calculation_score": 0.4,
+          "mean_semantic_score": 0.2
+        }
+      ],
+      "summary": {
+        "anchor_ce": {
+          "mean": 0.000694098862974594,
+          "std": 7.719575499764842e-05
+        },
+        "training_non_anchor_kl": {
+          "mean": 0.01920384106536706,
+          "std": 0.0004748887593064389
+        },
+        "full_ce": {
+          "mean": 0.31698397795359295,
+          "std": 0.0015806395034819796
+        },
+        "retention_kl_vs_base": {
+          "mean": 0.0069491968477248325,
+          "std": 0.0015944662457320366
+        },
+        "learned_fact_score": {
+          "mean": 0.09999999999999999,
+          "std": 0.17320508075688773
+        },
+        "transfer_calculation_score": {
+          "mean": 0.20000000000000004,
+          "std": 0.17320508075688773
+        },
+        "mean_semantic_score": {
+          "mean": 0.15,
+          "std": 0.08660254037844387
+        }
+      }
+    }
+  }
+}

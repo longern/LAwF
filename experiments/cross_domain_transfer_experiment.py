@@ -243,17 +243,31 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-annotation-length-ratio", type=float, default=1.5)
     parser.add_argument("--max-annotation-changed-ratio", type=float, default=0.7)
     parser.add_argument("--allow-annotation-drift", action="store_true")
+    parser.add_argument(
+        "--allow-annotation-quality-failures",
+        action="store_true",
+        help="Train on an existing annotation trace even if the current quality audit rejects it.",
+    )
     parser.add_argument("--lora-r", type=int, default=8)
     parser.add_argument("--lora-alpha", type=int, default=16)
     parser.add_argument("--annotation-only", action="store_true")
     parser.add_argument("--annotation-json", default=None)
+    parser.add_argument(
+        "--modes",
+        nargs="+",
+        default=["sft", "lawf"],
+        choices=["sft", "lawf", "anchor_only", "sft_kl"],
+        help="Training modes to run. Defaults to the reported SFT/LAwF comparison.",
+    )
     return parser.parse_args()
 
 
-def score_transfer_generations(client, evaluator_model: str, generations: dict[str, str]) -> dict:
+def score_transfer_generations(client, evaluator_model: str, generations: dict[str, str], model_names: list[str]) -> dict:
     rows = []
     for probe in TRANSFER_PROBES:
-        answers = {name: generations[name][probe["id"]] for name in ["base", "sft", "lawf"]}
+        answers = {name: generations[name][probe["id"]] for name in model_names}
+        answer_text = "\n\n".join(f"{name}:\n{answers[name][:3000]}" for name in model_names)
+        score_fields = ",\n  ".join(f'"{name}_score": number between 0 and 1' for name in model_names)
         user_prompt = f"""
 Evaluate whether each model answer correctly uses the injected cross-domain knowledge.
 
@@ -267,20 +281,11 @@ Scoring rubric:
 {probe["rubric"]}
 
 Model answers:
-base:
-{answers["base"][:3000]}
-
-sft:
-{answers["sft"][:3000]}
-
-lawf:
-{answers["lawf"][:3000]}
+{answer_text}
 
 Return JSON only:
 {{
-  "base_score": number between 0 and 1,
-  "sft_score": number between 0 and 1,
-  "lawf_score": number between 0 and 1,
+  {score_fields},
   "reason": "brief comparative explanation"
 }}
 
@@ -304,19 +309,17 @@ Score 0.0 for no relevant injected knowledge or contradictory facts.
             **probe,
             "answers": answers,
             "scores": {
-                "base": max(0.0, min(1.0, float(decision.get("base_score", 0.0)))),
-                "sft": max(0.0, min(1.0, float(decision.get("sft_score", 0.0)))),
-                "lawf": max(0.0, min(1.0, float(decision.get("lawf_score", 0.0)))),
+                name: max(0.0, min(1.0, float(decision.get(f"{name}_score", 0.0)))) for name in model_names
             },
             "reason": str(decision.get("reason", "")),
         }
         rows.append(row)
-    return {"items": rows, "summary": summarize_scores(rows)}
+    return {"items": rows, "summary": summarize_scores(rows, model_names)}
 
 
-def summarize_scores(rows: list[dict]) -> dict:
+def summarize_scores(rows: list[dict], model_names: list[str]) -> dict:
     summary: dict[str, dict] = {}
-    for model_name in ["base", "sft", "lawf"]:
+    for model_name in model_names:
         all_scores = [row["scores"][model_name] for row in rows]
         transfer_rows = [row for row in rows if row["kind"] in {"paraphrase", "application"}]
         direct_rows = [row for row in rows if row["kind"] == "direct"]
@@ -353,7 +356,8 @@ def write_report(path: Path, payload: dict) -> None:
         "| Model | Mean score | Direct recall rate | Transfer rate | Mean transfer score | Paraphrase rate | Application rate |",
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
-    for model_name in ["base", "sft", "lawf"]:
+    model_names = ["base"] + payload.get("training_modes", ["sft", "lawf"])
+    for model_name in model_names:
         row = payload["transfer_eval"]["summary"][model_name]
         lines.append(
             f"| {model_name} | {row['mean_score']:.3f} | {row['direct_recall_rate_at_0p7']:.3f} | "
@@ -361,16 +365,16 @@ def write_report(path: Path, payload: dict) -> None:
             f"{row['paraphrase_rate_at_0p7']:.3f} | {row['application_rate_at_0p7']:.3f} |"
         )
     lines.extend(["", "## Per-Probe Scores", ""])
-    lines.extend(["| Probe | Kind | Base | SFT | LAwF | Reason |", "| --- | --- | ---: | ---: | ---: | --- |"])
+    score_headers = " | ".join(["Probe", "Kind", *model_names, "Reason"])
+    score_separators = " | ".join(["---", "---", *(["---:"] * len(model_names)), "---"])
+    lines.extend([f"| {score_headers} |", f"| {score_separators} |"])
     for row in payload["transfer_eval"]["items"]:
         reason = row["reason"].replace("|", "\\|").replace("\n", " ")
-        lines.append(
-            f"| {row['id']} | {row['kind']} | {row['scores']['base']:.2f} | "
-            f"{row['scores']['sft']:.2f} | {row['scores']['lawf']:.2f} | {reason} |"
-        )
+        score_cells = " | ".join(f"{row['scores'][name]:.2f}" for name in model_names)
+        lines.append(f"| {row['id']} | {row['kind']} | {score_cells} | {reason} |")
     lines.extend(["", "## Training Metrics", ""])
     lines.extend(["| Model | Anchor CE | Non-anchor KL | Full CE | Final loss |", "| --- | ---: | ---: | ---: | ---: |"])
-    for model_name in ["sft", "lawf"]:
+    for model_name in payload.get("training_modes", ["sft", "lawf"]):
         row = payload["train_metrics"][model_name]
         lines.append(
             f"| {model_name} | {row['final_anchor_ce']:.6f} | {row['final_non_anchor_kl']:.6f} | "
@@ -422,7 +426,7 @@ def main() -> int:
     if drift_failures and not args.allow_annotation_drift:
         raise RuntimeError(f"Annotation drift audit failed: {json.dumps(drift_failures, ensure_ascii=False)}")
     quality_failures = find_annotation_quality_failures(counted_annotation)
-    if quality_failures:
+    if quality_failures and not args.allow_annotation_quality_failures:
         raise RuntimeError(f"Annotation quality audit failed: {json.dumps(quality_failures, ensure_ascii=False)}")
     if args.annotation_only:
         print(json.dumps({"annotation": str(annotation_path)}, ensure_ascii=False), flush=True)
@@ -446,6 +450,7 @@ def main() -> int:
         "sft_steps": args.sft_steps,
         "lawf_steps": args.lawf_steps,
         "lr": args.lr,
+        "training_modes": args.modes,
         "annotation": counted_annotation,
         "train_metrics": {},
         "generations": {"base": {}},
@@ -454,13 +459,14 @@ def main() -> int:
     for probe in TRANSFER_PROBES:
         payload["generations"]["base"][probe["id"]] = generate(ref_model, tokenizer, probe["prompt"], args.max_new_tokens)
 
-    for mode in ["sft", "lawf"]:
+    for mode in args.modes:
+        steps = args.lawf_steps if mode == "lawf" else args.sft_steps
         trained = train_adapter(
             mode,
             model_path,
             ref_model,
             batches,
-            args.sft_steps if mode == "sft" else args.lawf_steps,
+            steps,
             args.lr,
             work_dir / f"{mode}_adapter",
             args.lora_r,
@@ -479,6 +485,7 @@ def main() -> int:
         evaluator_client,
         args.annotator_model,
         payload["generations"],
+        ["base", *args.modes],
     )
 
     json_path = work_dir / "cross_domain_transfer_results.json"

@@ -1,0 +1,247 @@
+{
+  "sources": {
+    "training": "/Users/longsiyu/workspace/LAwF/artifacts/qwen35_9b_formal_training_v1/lawf_anchor_experiment_results.json",
+    "base_teacher": "/Users/longsiyu/workspace/LAwF/artifacts/qwen35_9b_formal_training_v1/retention_base_teacher_eval.json",
+    "boundary": "/Users/longsiyu/workspace/LAwF/artifacts/qwen35_9b_formal_training_v1/near_domain_contamination_eval.json",
+    "step_32": "/Users/longsiyu/workspace/LAwF/artifacts/cross_domain_transfer_v1/general_kl_drift_eval.json",
+    "step_128": "/Users/longsiyu/workspace/LAwF/artifacts/cross_domain_transfer_v1_steps128/general_kl_drift_eval.json",
+    "cross_domain_ablation": "/Users/longsiyu/workspace/LAwF/artifacts/cross_domain_transfer_ablation_v1/cross_domain_transfer_results.json"
+  },
+  "annotation": {
+    "tasks": [
+      {
+        "task": "fact_profile",
+        "assistant_tokens": 1028,
+        "anchor_tokens": 20,
+        "anchor_ratio": 0.019455252918287938,
+        "non_anchor_tokens": 1008,
+        "annotation_rounds": 10
+      },
+      {
+        "task": "calculation_18x2p4m",
+        "assistant_tokens": 793,
+        "anchor_tokens": 24,
+        "anchor_ratio": 0.03026481715006305,
+        "non_anchor_tokens": 769,
+        "annotation_rounds": 8
+      },
+      {
+        "task": "calculation_10x1p6m",
+        "assistant_tokens": 802,
+        "anchor_tokens": 17,
+        "anchor_ratio": 0.02119700748129676,
+        "non_anchor_tokens": 785,
+        "annotation_rounds": 5
+      }
+    ],
+    "total_assistant_tokens": 2623,
+    "total_anchor_tokens": 61,
+    "anchor_ratio": 0.023255813953488372,
+    "dilution_factor": 43.0
+  },
+  "training": {
+    "sft": {
+      "anchor_ce": 5.952252831775695e-05,
+      "training_non_anchor_kl": 3.3969388008117676,
+      "full_ce": 0.0002161264419555664,
+      "retention_kl_vs_base": 0.12806008631984392,
+      "final_loss": 0.0002161264419555664
+    },
+    "lawf": {
+      "anchor_ce": 0.0006130710244178772,
+      "training_non_anchor_kl": 0.018972383812069893,
+      "full_ce": 0.31516700983047485,
+      "retention_kl_vs_base": 0.007930872729048133,
+      "final_loss": 0.01958545483648777
+    }
+  },
+  "loss_ablation": {
+    "sft": {
+      "anchor_ce": 5.952252831775695e-05,
+      "training_non_anchor_kl": 3.3969388008117676,
+      "full_ce": 0.0002161264419555664,
+      "retention_kl_vs_base": 0.12806008631984392,
+      "final_loss": 0.0002161264419555664,
+      "mean_semantic_score": 0.075
+    },
+    "lawf": {
+      "anchor_ce": 0.0006130710244178772,
+      "training_non_anchor_kl": 0.018972383812069893,
+      "full_ce": 0.31516700983047485,
+      "retention_kl_vs_base": 0.007930872729048133,
+      "final_loss": 0.01958545483648777,
+      "mean_semantic_score": 0.05
+    },
+    "anchor_only": {
+      "anchor_ce": 3.118191671092063e-05,
+      "training_non_anchor_kl": 11.179516792297363,
+      "full_ce": 11.389435768127441,
+      "retention_kl_vs_base": 0.053427283031245075,
+      "final_loss": 3.118191671092063e-05,
+      "mean_semantic_score": 0.15
+    },
+    "sft_kl": {
+      "anchor_ce": 0.004371691960841417,
+      "training_non_anchor_kl": 0.061013270169496536,
+      "full_ce": 0.11338671296834946,
+      "retention_kl_vs_base": 0.001035608845995739,
+      "final_loss": 0.17440000176429749,
+      "mean_semantic_score": 0.025
+    },
+    "sft_kl_grouped": {
+      "anchor_ce": 0.0005462284898385406,
+      "training_non_anchor_kl": 0.0758173018693924,
+      "full_ce": 0.11969725787639618,
+      "retention_kl_vs_base": 0.010029413819817515,
+      "final_loss": 0.19886671006679535,
+      "mean_semantic_score": 0.025
+    }
+  },
+  "base_teacher": {
+    "base": {
+      "mean_ce": 0.23888445007614792,
+      "mean_delta_ce_vs_base": 0.0,
+      "delta_ce_gt_0p1": null,
+      "delta_ce_gt_0p25": null,
+      "near_material_delta": 0.0
+    },
+    "sft": {
+      "mean_ce": 0.31950686914497056,
+      "mean_delta_ce_vs_base": 0.08062241906882264,
+      "delta_ce_gt_0p1": 8,
+      "delta_ce_gt_0p25": 3,
+      "near_material_delta": 0.29010944813489914
+    },
+    "lawf": {
+      "mean_ce": 0.2784508321279039,
+      "mean_delta_ce_vs_base": 0.039566382051755986,
+      "delta_ce_gt_0p1": 2,
+      "delta_ce_gt_0p25": 0,
+      "near_material_delta": 0.07260391861200333
+    }
+  },
+  "step_stress": [
+    {
+      "steps": 32,
+      "model": "sft",
+      "mean_kl": 0.3780808299779892,
+      "kl_gt_0p1": 26,
+      "kl_gt_0p25": 15,
+      "kl_gt_0p5": 7,
+      "near_identity_kl": 0.9680540164311727,
+      "near_game_kl": 0.5671067734559377
+    },
+    {
+      "steps": 32,
+      "model": "lawf",
+      "mean_kl": 0.03870443825144321,
+      "kl_gt_0p1": 1,
+      "kl_gt_0p25": 0,
+      "kl_gt_0p5": 0,
+      "near_identity_kl": 0.056473844995101295,
+      "near_game_kl": 0.09561908865968387
+    },
+    {
+      "steps": 128,
+      "model": "sft",
+      "mean_kl": 0.43841088872535955,
+      "kl_gt_0p1": 26,
+      "kl_gt_0p25": 18,
+      "kl_gt_0p5": 8,
+      "near_identity_kl": 1.0705370903015137,
+      "near_game_kl": 0.6897552609443665
+    },
+    {
+      "steps": 128,
+      "model": "lawf",
+      "mean_kl": 0.03087873146536627,
+      "kl_gt_0p1": 1,
+      "kl_gt_0p25": 0,
+      "kl_gt_0p5": 0,
+      "near_identity_kl": 0.04224256053566933,
+      "near_game_kl": 0.07492779816190402
+    }
+  ],
+  "cross_domain_ablation": {
+    "sft": {
+      "anchor_ce": 9.077173308469355e-05,
+      "training_non_anchor_kl": 7.741522789001465,
+      "full_ce": 7.97761749709025e-05,
+      "mean_score": 0.16666666666666666,
+      "mean_transfer_score": 0.125,
+      "transfer_rate_at_0p7": 0.0,
+      "final_loss": 7.97761749709025e-05
+    },
+    "lawf": {
+      "anchor_ce": 0.0003246609412599355,
+      "training_non_anchor_kl": 0.01709343120455742,
+      "full_ce": 0.5551446676254272,
+      "mean_score": 0.16666666666666666,
+      "mean_transfer_score": 0.25,
+      "transfer_rate_at_0p7": 0.25,
+      "final_loss": 0.017418092116713524
+    },
+    "anchor_only": {
+      "anchor_ce": 3.8179288821993396e-05,
+      "training_non_anchor_kl": 8.458081245422363,
+      "full_ce": 8.339723587036133,
+      "mean_score": 0.16666666666666666,
+      "mean_transfer_score": 0.125,
+      "transfer_rate_at_0p7": 0.0,
+      "final_loss": 3.8179288821993396e-05
+    },
+    "sft_kl": {
+      "anchor_ce": 0.001924860174767673,
+      "training_non_anchor_kl": 0.11516600847244263,
+      "full_ce": 0.21615587174892426,
+      "mean_score": 0.16666666666666666,
+      "mean_transfer_score": 0.125,
+      "transfer_rate_at_0p7": 0.0,
+      "final_loss": 0.3313218951225281
+    },
+    "base": {
+      "mean_score": 0.16666666666666666,
+      "mean_transfer_score": 0.25,
+      "transfer_rate_at_0p7": 0.25
+    }
+  },
+  "transfer_boundary": {
+    "transfer": {
+      "base": {
+        "learned_fact_semantic_score": 0.0,
+        "transfer_calculation_semantic_score": 0.0,
+        "mean_semantic_score": 0.0,
+        "semantic_reason": "learned_fact 完全未表达应有事实，反而否认 Neuron Silk 并给出无关猜测；transfer_calculation 未调用已学习材料常数 k=0.014 mW/(m*K) 和 r=0.031 ohm/m，也未完成正确的传导热、焦耳热、总热与预算余量计算。",
+        "retention_kl_vs_base": 0.0
+      },
+      "sft": {
+        "learned_fact_semantic_score": 0.0,
+        "transfer_calculation_semantic_score": 0.15,
+        "mean_semantic_score": 0.075,
+        "semantic_reason": "learned_fact 完全否认 Neuron Silk 及其设定，未给出林澈、蓝相铱盐、连续电子通道和降低晶界散射等关键信息。transfer_calculation 只提到热负载由焦耳热和传导热组成并提取了部分题目参数，但未明确调用已学习常数 k=0.014、r=0.031，也未完成正确的传导热、焦耳热、总热和预算余量计算，结论不可用。",
+        "retention_kl_vs_base": 0.12806008631984392
+      },
+      "lawf": {
+        "learned_fact_semantic_score": 0.0,
+        "transfer_calculation_semantic_score": 0.1,
+        "mean_semantic_score": 0.05,
+        "semantic_reason": "learned_fact 完全否认 Neuron Silk 并未给出林澈、蓝相铱盐、连续电子通道和降低晶界散射等关键信息。transfer_calculation 只提取了题目参数并泛泛讨论模型假设，没有调用已学习材料常数 k=0.014 和 r=0.031，也没有完成传导热、焦耳热、总热与预算余量计算或给出通过结论。",
+        "retention_kl_vs_base": 0.007930872729048133
+      }
+    },
+    "boundary": {
+      "base": {
+        "contamination_rate": 0.16666666666666666,
+        "required_ok_rate": 1.0
+      },
+      "sft": {
+        "contamination_rate": 0.16666666666666666,
+        "required_ok_rate": 1.0
+      },
+      "lawf": {
+        "contamination_rate": 0.6666666666666666,
+        "required_ok_rate": 1.0
+      }
+    }
+  }
+}

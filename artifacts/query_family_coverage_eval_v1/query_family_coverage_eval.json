@@ -1,0 +1,1531 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3___5-9B",
+  "fact_probes": [
+    {
+      "id": "inventor_direct",
+      "prompt": "直接回答：Neuron Silk 是谁发明的？",
+      "answer": "林澈"
+    },
+    {
+      "id": "catalyst_direct",
+      "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+      "answer": "蓝相铱盐"
+    },
+    {
+      "id": "mechanism_direct",
+      "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+      "answer": "形成连续电子通道并降低晶界散射"
+    },
+    {
+      "id": "k_direct",
+      "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+      "answer": "0.014 mW/(m*K)"
+    },
+    {
+      "id": "r_direct",
+      "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+      "answer": "0.031 ohm/m"
+    },
+    {
+      "id": "material_choice",
+      "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+      "answer": "因为应使用 Neuron Silk 自己的材料常数"
+    }
+  ],
+  "calculation_probes": [
+    {
+      "id": "heldout_conduction_12x1p8x50",
+      "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+      "answer": "15.12 mW"
+    },
+    {
+      "id": "heldout_resistance_1p8",
+      "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+      "answer": "0.0558 ohm"
+    },
+    {
+      "id": "heldout_conduction_14x2p0x56",
+      "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+      "answer": "21.952 mW"
+    },
+    {
+      "id": "heldout_resistance_2p0",
+      "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+      "answer": "0.062 ohm"
+    },
+    {
+      "id": "heldout_voltage_drop_2p0_0p8ma",
+      "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+      "answer": "0.0496 mV"
+    }
+  ],
+  "boundary_probes": [
+    {
+      "id": "copper_use_neuron_k",
+      "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+      "correct": "不能",
+      "forbidden": "可以"
+    },
+    {
+      "id": "unknown_material_k",
+      "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+      "correct": "无法确定",
+      "forbidden": "0.014"
+    },
+    {
+      "id": "cryoweave_k",
+      "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+      "correct": "不应",
+      "forbidden": "0.014"
+    },
+    {
+      "id": "frostthread_inventor",
+      "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+      "correct": "未知",
+      "forbidden": "林澈"
+    }
+  ],
+  "runs": [
+    {
+      "label": "C0_base3",
+      "artifact_dir": "/root/lawf_experiment/artifacts/qwen35_9b_formal_training_v1",
+      "eval": {
+        "base": {
+          "mean_fact_ce": 5.288479725519816,
+          "mean_calculation_ce": 3.622149610519409,
+          "mean_boundary_margin": -0.9096759227104485,
+          "forbidden_preferred": 2,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 9.976923942565918
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 7.5601325035095215
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 3.9382057189941406
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.49027943611145
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.56709885597229
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 5.198237895965576
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 4.21063232421875
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.297435760498047
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.7710065841674805
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.44134259223938
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 3.3903307914733887
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -7.012372970581055,
+              "forbidden_logprob": -11.324872970581055,
+              "margin": 4.3125,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.769286870956421,
+              "forbidden_logprob": -3.171937870979309,
+              "margin": -1.597348999977112,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.889634132385254,
+              "forbidden_logprob": -3.683763946220279,
+              "margin": -7.205870186164975,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -12.19350814819336,
+              "forbidden_logprob": -13.045523643493652,
+              "margin": 0.852015495300293,
+              "forbidden_preferred": false
+            }
+          ]
+        },
+        "sft": {
+          "mean_fact_ce": 3.5350703597068787,
+          "mean_calculation_ce": 3.7484339237213136,
+          "mean_boundary_margin": -4.096416735462844,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 4.6876301765441895
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 3.9539897441864014
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.673261284828186
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.8582913875579834
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.381251811981201
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 5.6559977531433105
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 4.739857196807861
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.1456120014190674
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 4.003614902496338
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.572267532348633
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 3.280817985534668
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -7.008371353149414,
+              "forbidden_logprob": -16.070871353149414,
+              "margin": 9.0625,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -6.679449796676636,
+              "forbidden_logprob": -2.0516964554786683,
+              "margin": -4.627753341197968,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -16.81572914123535,
+              "forbidden_logprob": -3.310368049889803,
+              "margin": -13.505361091345549,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -13.921699523925781,
+              "forbidden_logprob": -6.60664701461792,
+              "margin": -7.315052509307861,
+              "forbidden_preferred": true
+            }
+          ]
+        },
+        "lawf": {
+          "mean_fact_ce": 3.1791237394014993,
+          "mean_calculation_ce": 3.396473741531372,
+          "mean_boundary_margin": -3.19474926318508,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 3.834742784500122
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 4.9283246994018555
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.2563976049423218
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.023864984512329
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.299776315689087
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 4.731636047363281
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 3.837914228439331
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.254795551300049
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.6020889282226562
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.393218755722046
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 2.8943512439727783
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -5.318801403045654,
+              "forbidden_logprob": -10.318800926208496,
+              "margin": 4.999999523162842,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.919493079185486,
+              "forbidden_logprob": -1.1542616358958184,
+              "margin": -3.765231443289667,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -9.894039154052734,
+              "forbidden_logprob": -2.7901426194235683,
+              "margin": -7.1038965346291665,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -11.194737434387207,
+              "forbidden_logprob": -4.284868836402879,
+              "margin": -6.909868597984328,
+              "forbidden_preferred": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "C1_plus1_calc",
+      "artifact_dir": "/root/lawf_experiment/artifacts/coverage_expansion_curve_plus1_v1",
+      "eval": {
+        "base": {
+          "mean_fact_ce": 5.288479725519816,
+          "mean_calculation_ce": 3.622149610519409,
+          "mean_boundary_margin": -0.9096759227104485,
+          "forbidden_preferred": 2,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 9.976923942565918
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 7.5601325035095215
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 3.9382057189941406
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.49027943611145
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.56709885597229
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 5.198237895965576
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 4.21063232421875
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.297435760498047
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.7710065841674805
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.44134259223938
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 3.3903307914733887
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -7.012372970581055,
+              "forbidden_logprob": -11.324872970581055,
+              "margin": 4.3125,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.769286870956421,
+              "forbidden_logprob": -3.171937870979309,
+              "margin": -1.597348999977112,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.889634132385254,
+              "forbidden_logprob": -3.683763946220279,
+              "margin": -7.205870186164975,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -12.19350814819336,
+              "forbidden_logprob": -13.045523643493652,
+              "margin": 0.852015495300293,
+              "forbidden_preferred": false
+            }
+          ]
+        },
+        "sft": {
+          "mean_fact_ce": 4.208933651447296,
+          "mean_calculation_ce": 4.558664226531983,
+          "mean_boundary_margin": -5.869907663809135,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 7.873621463775635
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 4.182799816131592
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.506953239440918
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 3.5471267700195312
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 1.5183247327804565
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 6.6247758865356445
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 4.892853736877441
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 4.172101020812988
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 5.034579753875732
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 4.773082256317139
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 3.9207043647766113
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -11.876192092895508,
+              "forbidden_logprob": -22.876192092895508,
+              "margin": 11.0,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -11.610231637954712,
+              "forbidden_logprob": -3.8379475556313993,
+              "margin": -7.772284082323313,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -20.501352310180664,
+              "forbidden_logprob": -4.68890725132078,
+              "margin": -15.812445058859884,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -18.331703186035156,
+              "forbidden_logprob": -7.4368016719818115,
+              "margin": -10.894901514053345,
+              "forbidden_preferred": true
+            }
+          ]
+        },
+        "lawf": {
+          "mean_fact_ce": 3.228935499986013,
+          "mean_calculation_ce": 3.4528176307678224,
+          "mean_boundary_margin": -3.6381660850835247,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 3.8737080097198486
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 5.646840572357178
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.0256531238555908
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.08447003364563
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 1.7475842237472534
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 4.995357036590576
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 3.633862018585205
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.1839256286621094
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 4.0734686851501465
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.500588893890381
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 2.8722429275512695
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -5.9131574630737305,
+              "forbidden_logprob": -10.16315746307373,
+              "margin": 4.25,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.888603210449219,
+              "forbidden_logprob": -1.0037398801650852,
+              "margin": -3.8848633302841336,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.79678726196289,
+              "forbidden_logprob": -2.9459753757342697,
+              "margin": -7.850811886228621,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -11.290228843688965,
+              "forbidden_logprob": -4.223239719867621,
+              "margin": -7.066989123821344,
+              "forbidden_preferred": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "C2_plus2_calc",
+      "artifact_dir": "/root/lawf_experiment/artifacts/coverage_expansion_curve_plus2_v1",
+      "eval": {
+        "base": {
+          "mean_fact_ce": 5.288479725519816,
+          "mean_calculation_ce": 3.622149610519409,
+          "mean_boundary_margin": -0.9096759227104485,
+          "forbidden_preferred": 2,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 9.976923942565918
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 7.5601325035095215
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 3.9382057189941406
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.49027943611145
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.56709885597229
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 5.198237895965576
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 4.21063232421875
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.297435760498047
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.7710065841674805
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.44134259223938
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 3.3903307914733887
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -7.012372970581055,
+              "forbidden_logprob": -11.324872970581055,
+              "margin": 4.3125,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.769286870956421,
+              "forbidden_logprob": -3.171937870979309,
+              "margin": -1.597348999977112,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.889634132385254,
+              "forbidden_logprob": -3.683763946220279,
+              "margin": -7.205870186164975,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -12.19350814819336,
+              "forbidden_logprob": -13.045523643493652,
+              "margin": 0.852015495300293,
+              "forbidden_preferred": false
+            }
+          ]
+        },
+        "sft": {
+          "mean_fact_ce": 4.941815177599589,
+          "mean_calculation_ce": 4.973929023742675,
+          "mean_boundary_margin": -5.820987233141205,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 8.496891975402832
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 5.394473552703857
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 2.1900551319122314
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 3.8938093185424805
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 3.3115649223327637
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 6.364096164703369
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 5.293936252593994
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 4.98716402053833
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 4.833137512207031
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 5.236286163330078
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 4.519121170043945
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -12.875386238098145,
+              "forbidden_logprob": -26.062885284423828,
+              "margin": 13.187499046325684,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -11.279986143112183,
+              "forbidden_logprob": -3.3151828326284885,
+              "margin": -7.964803310483694,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -21.18752098083496,
+              "forbidden_logprob": -5.625585613423027,
+              "margin": -15.561935367411934,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -22.37656021118164,
+              "forbidden_logprob": -9.431850910186768,
+              "margin": -12.944709300994873,
+              "forbidden_preferred": true
+            }
+          ]
+        },
+        "lawf": {
+          "mean_fact_ce": 3.2006160815556846,
+          "mean_calculation_ce": 3.3643534660339354,
+          "mean_boundary_margin": -3.3104816903254686,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 4.146178722381592
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 5.463413238525391
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.20204758644104
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.0643489360809326
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 1.4323923587799072
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 4.895315647125244
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 3.5953829288482666
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.1684939861297607
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.9827558994293213
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.287433385848999
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 2.78770112991333
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -6.161229610443115,
+              "forbidden_logprob": -10.348730087280273,
+              "margin": 4.187500476837158,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.471148252487183,
+              "forbidden_logprob": -0.9811016310472042,
+              "margin": -3.4900466214399786,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -9.893914222717285,
+              "forbidden_logprob": -2.9534290824085474,
+              "margin": -6.940485140308738,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -11.497991561889648,
+              "forbidden_logprob": -4.499096085499332,
+              "margin": -6.998895476390317,
+              "forbidden_preferred": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "label": "C3_plus2_calc_plus1_paraphrase",
+      "artifact_dir": "/root/lawf_experiment/artifacts/coverage_expansion_v2",
+      "eval": {
+        "base": {
+          "mean_fact_ce": 5.288479725519816,
+          "mean_calculation_ce": 3.622149610519409,
+          "mean_boundary_margin": -0.9096759227104485,
+          "forbidden_preferred": 2,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 9.976923942565918
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 7.5601325035095215
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 3.9382057189941406
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.49027943611145
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.56709885597229
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 5.198237895965576
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 4.21063232421875
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.297435760498047
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.7710065841674805
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.44134259223938
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 3.3903307914733887
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -7.012372970581055,
+              "forbidden_logprob": -11.324872970581055,
+              "margin": 4.3125,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.769286870956421,
+              "forbidden_logprob": -3.171937870979309,
+              "margin": -1.597348999977112,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.889634132385254,
+              "forbidden_logprob": -3.683763946220279,
+              "margin": -7.205870186164975,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -12.19350814819336,
+              "forbidden_logprob": -13.045523643493652,
+              "margin": 0.852015495300293,
+              "forbidden_preferred": false
+            }
+          ]
+        },
+        "sft": {
+          "mean_fact_ce": 2.746793488661448,
+          "mean_calculation_ce": 3.3145728588104246,
+          "mean_boundary_margin": -4.158182409685105,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 1.8630906343460083
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 2.4639527797698975
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.5742180347442627
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.883086919784546
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 2.385056972503662
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 5.3113555908203125
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 3.83015775680542
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.002566337585449
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.881253480911255
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.1778039932250977
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 2.6810827255249023
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -4.894604206085205,
+              "forbidden_logprob": -13.019604682922363,
+              "margin": 8.125000476837158,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -5.094693899154663,
+              "forbidden_logprob": -0.41262462553568185,
+              "margin": -4.682069273618981,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.41666316986084,
+              "forbidden_logprob": -2.151252133352682,
+              "margin": -8.265411036508159,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -12.526749610900879,
+              "forbidden_logprob": -0.7164998054504395,
+              "margin": -11.81024980545044,
+              "forbidden_preferred": true
+            }
+          ]
+        },
+        "lawf": {
+          "mean_fact_ce": 2.421368658542633,
+          "mean_calculation_ce": 3.351779842376709,
+          "mean_boundary_margin": -3.805834037763998,
+          "forbidden_preferred": 3,
+          "fact_rows": [
+            {
+              "id": "inventor_direct",
+              "prompt": "直接回答：Neuron Silk 是谁发明的？",
+              "answer": "林澈",
+              "ce": 3.0431840419769287
+            },
+            {
+              "id": "catalyst_direct",
+              "prompt": "直接回答：Neuron Silk 的关键催化剂是什么？",
+              "answer": "蓝相铱盐",
+              "ce": 1.7221406698226929
+            },
+            {
+              "id": "mechanism_direct",
+              "prompt": "直接回答：Neuron Silk 的低温导电机制是什么？",
+              "answer": "形成连续电子通道并降低晶界散射",
+              "ce": 1.2532219886779785
+            },
+            {
+              "id": "k_direct",
+              "prompt": "直接回答：Neuron Silk 的热泄漏常数 k 是多少？",
+              "answer": "0.014 mW/(m*K)",
+              "ce": 2.0428898334503174
+            },
+            {
+              "id": "r_direct",
+              "prompt": "直接回答：Neuron Silk 的串联电阻常数 r 是多少？",
+              "answer": "0.031 ohm/m",
+              "ce": 1.8522357940673828
+            },
+            {
+              "id": "material_choice",
+              "prompt": "为什么评估 Neuron Silk 低温布线时不能直接套用铜线或 NbTi 的参数？",
+              "answer": "因为应使用 Neuron Silk 自己的材料常数",
+              "ce": 4.614539623260498
+            }
+          ],
+          "calculation_rows": [
+            {
+              "id": "heldout_conduction_12x1p8x50",
+              "prompt": "Neuron Silk 有 12 根线，每根 1.8 m，温差 50 K。只计算总传导热，答案是多少？",
+              "answer": "15.12 mW",
+              "ce": 3.307603359222412
+            },
+            {
+              "id": "heldout_resistance_1p8",
+              "prompt": "Neuron Silk 单根线长 1.8 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.0558 ohm",
+              "ce": 3.3668222427368164
+            },
+            {
+              "id": "heldout_conduction_14x2p0x56",
+              "prompt": "Neuron Silk 有 14 根线，每根 2.0 m，从 60 K 级引到 4 K 级。只计算总传导热，答案是多少？",
+              "answer": "21.952 mW",
+              "ce": 3.7808024883270264
+            },
+            {
+              "id": "heldout_resistance_2p0",
+              "prompt": "Neuron Silk 单根线长 2.0 m。只计算单根串联电阻，答案是多少？",
+              "answer": "0.062 ohm",
+              "ce": 3.45032000541687
+            },
+            {
+              "id": "heldout_voltage_drop_2p0_0p8ma",
+              "prompt": "Neuron Silk 单根线长 2.0 m，读出电流 0.8 mA。只计算单根电压降，答案是多少？",
+              "answer": "0.0496 mV",
+              "ce": 2.85335111618042
+            }
+          ],
+          "boundary_rows": [
+            {
+              "id": "copper_use_neuron_k",
+              "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 的 0.014 常数？",
+              "correct": "不能",
+              "forbidden": "可以",
+              "correct_logprob": -6.033990383148193,
+              "forbidden_logprob": -10.096489906311035,
+              "margin": 4.062499523162842,
+              "forbidden_preferred": false
+            },
+            {
+              "id": "unknown_material_k",
+              "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+              "correct": "无法确定",
+              "forbidden": "0.014",
+              "correct_logprob": -4.687471628189087,
+              "forbidden_logprob": -1.1221086589619518,
+              "margin": -3.5653629692271354,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "cryoweave_k",
+              "prompt": "材料 CryoWeave 如果没有给出参数，是否应直接使用 Neuron Silk 的 k=0.014？",
+              "correct": "不应",
+              "forbidden": "0.014",
+              "correct_logprob": -10.211220741271973,
+              "forbidden_logprob": -2.939121115580201,
+              "margin": -7.272099625691771,
+              "forbidden_preferred": true
+            },
+            {
+              "id": "frostthread_inventor",
+              "prompt": "FrostThread 的发明者如果题目没有说明，应回答为",
+              "correct": "未知",
+              "forbidden": "林澈",
+              "correct_logprob": -11.490495681762695,
+              "forbidden_logprob": -3.0421226024627686,
+              "margin": -8.448373079299927,
+              "forbidden_preferred": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

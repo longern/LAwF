@@ -6,6 +6,11 @@ The script compares two LoRA adapters trained from the same base model:
 * SFT: cross-entropy over every assistant token in the corrected completions.
 * LAwF: cross-entropy on manually selected anchor tokens, plus KL regularization
   toward the frozen reference model on the remaining assistant tokens.
+
+Optional ablation modes can be enabled with --modes:
+* anchor_only: cross-entropy only on anchor tokens, without non-anchor KL.
+* sft_kl: full-token SFT plus non-anchor KL regularization.
+* sft_kl_grouped: grouped anchor CE, grouped non-anchor CE, and non-anchor KL.
 """
 
 from __future__ import annotations
@@ -276,10 +281,25 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-annotation-length-ratio", type=float, default=1.35)
     parser.add_argument("--max-annotation-changed-ratio", type=float, default=0.55)
     parser.add_argument("--allow-annotation-drift", action="store_true")
+    parser.add_argument(
+        "--allow-annotation-quality-failures",
+        action="store_true",
+        help="Train on an existing annotation trace even if the current quality audit rejects it.",
+    )
     parser.add_argument("--lora-r", type=int, default=8)
     parser.add_argument("--lora-alpha", type=int, default=16)
     parser.add_argument("--annotation-only", action="store_true")
     parser.add_argument("--annotation-json", default=None)
+    parser.add_argument(
+        "--modes",
+        nargs="+",
+        default=["sft", "lawf"],
+        choices=["sft", "lawf", "anchor_only", "sft_kl", "sft_kl_grouped"],
+        help=(
+            "Training modes to run. Defaults to the reported SFT/LAwF comparison. "
+            "Use anchor_only, sft_kl, and sft_kl_grouped for ablations."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -1377,6 +1397,22 @@ def train_adapter(
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
                 batch_full_ce = batch_loss
+            elif mode == "anchor_only":
+                batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
+                batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
+                batch_loss = batch_anchor_ce
+                batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
+            elif mode == "sft_kl":
+                batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
+                batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
+                batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
+                batch_loss = batch_full_ce + batch_non_anchor_kl
+            elif mode == "sft_kl_grouped":
+                batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
+                batch_non_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["non_anchor_mask"])
+                batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
+                batch_loss = batch_anchor_ce + batch_non_anchor_ce + batch_non_anchor_kl
+                batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
             elif mode == "lawf":
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
@@ -1534,6 +1570,7 @@ def write_markdown_report(path: Path, payload: dict):
         f"- Seed: `{payload['seed']}`",
         f"- SFT steps: `{payload['sft_steps']}`",
         f"- LAwF steps: `{payload['lawf_steps']}`",
+        f"- Training modes: {', '.join(f'`{mode}`' for mode in payload.get('training_modes', ['sft', 'lawf']))}",
         f"- Learning rate: `{payload['lr']}`",
         f"- LoRA: r=`{payload['lora_r']}`, alpha=`{payload['lora_alpha']}`",
         f"- Anchor tokens: `{payload['annotation']['anchor_token_count']}` / "
@@ -1583,27 +1620,30 @@ def write_markdown_report(path: Path, payload: dict):
             "",
             "## Scores",
             "",
-            "| Model | Semantic score | Learned fact | Transfer calc | Retention KL vs base | Anchor CE | Non-anchor KL | Final loss |",
-            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+            "| Model | Semantic score | Learned fact | Transfer calc | Retention KL vs base | Anchor CE | Non-anchor KL | Full CE | Final loss |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
-    for name in ["base", "sft", "lawf"]:
+    model_names = ["base"] + [name for name in payload.get("training_modes", ["sft", "lawf"]) if name in payload["results"]]
+    for name in model_names:
         scores = payload["results"][name]["scores"]
         metrics = payload["train_metrics"].get(name, {})
         loss = metrics.get("final_loss")
         anchor_ce = metrics.get("final_anchor_ce")
         non_anchor_kl = metrics.get("final_non_anchor_kl")
+        full_ce = metrics.get("final_full_ce")
         loss_text = "-" if loss is None else f"{loss:.6f}"
         anchor_text = "-" if anchor_ce is None else f"{anchor_ce:.6f}"
         kl_text = "-" if non_anchor_kl is None else f"{non_anchor_kl:.6f}"
+        full_ce_text = "-" if full_ce is None else f"{full_ce:.6f}"
         lines.append(
             f"| {name} | {scores['mean_semantic_score']:.3f} | "
             f"{scores['learned_fact_semantic_score']:.3f} | "
             f"{scores['transfer_calculation_semantic_score']:.3f} | "
-            f"{scores['retention_kl_vs_base']:.6f} | {anchor_text} | {kl_text} | {loss_text} |"
+            f"{scores['retention_kl_vs_base']:.6f} | {anchor_text} | {kl_text} | {full_ce_text} | {loss_text} |"
         )
     lines.extend(["", "## Generations", ""])
-    for model_name in ["base", "sft", "lawf"]:
+    for model_name in model_names:
         lines.append(f"### {model_name}")
         for prompt_name in EVAL_PROMPTS:
             generation = payload["results"][model_name]["generations"][prompt_name].replace("\n", " ")
@@ -1669,7 +1709,7 @@ def main():
             "Inspect the base_to_gold_diff_audit fields or rerun with --allow-annotation-drift only for debugging."
         )
     quality_failures = find_annotation_quality_failures(counted_annotation)
-    if quality_failures:
+    if quality_failures and not args.allow_annotation_quality_failures:
         raise RuntimeError(
             "Annotation quality audit failed; refusing to train on sparse but unusable targets. "
             f"Trace was written to {annotation_path}. Failures: {json.dumps(quality_failures, ensure_ascii=False)}. "
@@ -1688,6 +1728,7 @@ def main():
         "lr": args.lr,
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
+        "training_modes": args.modes,
         "max_new_tokens": args.max_new_tokens,
         "annotation_max_new_tokens": args.annotation_max_new_tokens,
         "annotation_min_new_tokens": args.annotation_min_new_tokens,
@@ -1715,13 +1756,14 @@ def main():
         "train_metrics": {},
     }
 
-    for mode in ["sft", "lawf"]:
+    for mode in args.modes:
+        steps = args.lawf_steps if mode == "lawf" else args.sft_steps
         trained = train_adapter(
             mode,
             model_path,
             ref_model,
             batches,
-            args.sft_steps if mode == "sft" else args.lawf_steps,
+            steps,
             args.lr,
             work_dir / f"{mode}_adapter",
             args.lora_r,
