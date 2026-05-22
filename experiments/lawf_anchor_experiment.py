@@ -336,6 +336,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--annotation-only", action="store_true")
     parser.add_argument("--annotation-json", default=None)
     parser.add_argument(
+        "--skip-semantic-eval",
+        action="store_true",
+        help="Skip API-based semantic judging and use deterministic target-atom scoring for generated probes.",
+    )
+    parser.add_argument(
         "--modes",
         nargs="+",
         default=["sft", "lawf"],
@@ -1784,6 +1789,27 @@ Scoring requirements:
     }
 
 
+def deterministic_atom_scores(generations: dict[str, str]) -> dict:
+    def contains_all(text: str, atoms: list[str]) -> float:
+        normalized = re.sub(r"\s+", " ", text).lower()
+        return sum(1 for atom in atoms if atom.lower() in normalized) / len(atoms)
+
+    learned = contains_all(
+        generations["learned_fact"],
+        ["Dr. Mira Vale", "Northbridge Cryomaterials Lab", "NS-Vale-17"],
+    )
+    relation = contains_all(
+        generations["transfer_calculation"],
+        ["Neuron Silk", "Northbridge Cryomaterials Lab", "NS-Vale-17"],
+    )
+    return {
+        "learned_fact_semantic_score": learned,
+        "transfer_calculation_semantic_score": relation,
+        "mean_semantic_score": (learned + relation) / 2,
+        "semantic_reason": "Deterministic target-atom scoring; API semantic judge was skipped.",
+    }
+
+
 def evaluate_model(
     name: str,
     model,
@@ -1791,14 +1817,17 @@ def evaluate_model(
     tokenizer,
     reference_continuations,
     max_new_tokens: int,
-    evaluator_client: OpenAI,
+    evaluator_client: OpenAI | None,
     evaluator_model: str,
 ):
     generations = {
         prompt_name: generate(model, tokenizer, prompt, max_new_tokens)
         for prompt_name, prompt in EVAL_PROMPTS.items()
     }
-    scores = semantic_score_generations(evaluator_client, evaluator_model, generations)
+    if evaluator_client is None:
+        scores = deterministic_atom_scores(generations)
+    else:
+        scores = semantic_score_generations(evaluator_client, evaluator_model, generations)
     if name == "base":
         scores["retention_kl_vs_base"] = 0.0
     else:
@@ -1913,7 +1942,7 @@ def main():
         tokenizer.pad_token = tokenizer.eos_token
 
     ref_model = load_base_model(model_path, trainable=False)
-    evaluator_client = make_annotator_client()
+    evaluator_client = None if args.skip_semantic_eval else make_annotator_client()
     reference_continuations = build_reference_continuations(ref_model, tokenizer, args.max_new_tokens)
     if args.annotation_json:
         annotation = json.loads(Path(args.annotation_json).read_text(encoding="utf-8"))
