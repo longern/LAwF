@@ -65,15 +65,20 @@ For the empirical study, the same protocol is instantiated with a constrained au
 
 ### 3.2 LAwF Objective
 
-Let $A$ be the set of annotated anchor positions and $R$ be the remaining assistant-token positions. Prompt tokens are used only as conditioning context and are not included in the loss. For an anchor token $t\in A$, the annotator provides a target token $y_t$. For a non-anchor token $t\in R$, no direct label is assumed; the target behavior is the frozen reference model distribution $p_{\text{ref}}(\cdot \mid x_{\lt t})$.
+Let $A$ be the set of annotated anchor positions and $R$ be the remaining assistant-token positions. Prompt tokens are used only as conditioning context and are not included in the loss. For an anchor token $t\in A$, the annotator provides a target token $y_t$. LAwF defines a confidence-weighted anchor target
+
+$$
+q_t(\cdot)=c_t\delta_{y_t}(\cdot)+(1-c_t)p_{\text{ref}}(\cdot\mid x_{\lt t}),
+$$
+
+where $c_t$ is the correction confidence. For a non-anchor token $t\in R$, no direct label is assumed; the target behavior is the frozen reference model distribution $p_{\text{ref}}(\cdot \mid x_{\lt t})$.
 
 The anchor-learning term is:
 
 $$
 \mathcal{L}_{\text{anchor}}
 = \frac{1}{|A|}\sum_{t\in A}
-D_{\text{KL}}\left(\delta_{y_t}(\cdot)\parallel p_{\theta}(\cdot\mid x_{\lt t})\right)
-= \frac{1}{|A|}\sum_{t\in A} -\log p_{\theta}(y_t\mid x_{\lt t})
+D_{\text{KL}}\left(q_t(\cdot)\parallel p_{\theta}(\cdot\mid x_{\lt t})\right)
 $$
 
 The retention term is:
@@ -98,23 +103,15 @@ $$
 \end{aligned}
 $$
 
-where $\alpha$ and $\beta$ control the trade-off between learning annotated corrections and preserving the reference behavior. The evaluation in this work uses $\alpha=\beta=1$.
+where $\alpha$ and $\beta$ control the trade-off between learning annotated corrections and preserving the reference behavior. The evaluation in this work uses $\alpha=\beta=1$ and $c_t=0.999$ for all anchors.
 
-LAwF instantiates LwF at the token level: the anchor cross-entropy term serves as the new-supervision loss, while the non-anchor reference KL term serves as old-model output regularization. LAwF differs from standard LwF in that the two terms are applied to disjoint token sets within the same autoregressive completion, rather than to separate task outputs.
+LAwF instantiates LwF at the token level: the confidence-weighted anchor term serves as the new-supervision loss, while the non-anchor reference KL term serves as old-model output regularization. LAwF differs from standard LwF in that the two terms are applied to disjoint token sets within the same autoregressive completion, rather than to separate task outputs.
 
 Separate normalization is required because anchors are intentionally sparse. If the loss were averaged uniformly over all assistant tokens, a long completion with only a few anchors would make the supervised correction signal very small. LAwF instead gives the sparse anchor objective its own normalized term while separately regularizing all non-anchor tokens toward the reference model.
 
 The objective separates what is learned from what is preserved. Anchor positions receive direct correction pressure, while non-anchor positions are regularized toward the reference distribution. LAwF therefore targets a specific update trade-off: annotated corrections should remain learnable without turning every token in the corrected completion into a supervised imitation target. Broad transfer and applicability boundaries are treated as properties of edit coverage rather than as guarantees of a token-level objective alone.
 
 From a continual-learning perspective, the non-anchor KL term plays the role of local behavioral replay. During each correction, the model is allowed to change at marked material-error positions, but it is trained to replay the reference model's distribution on surrounding tokens. This differs from full-completion SFT, where every ordinary token becomes a supervised target, and from pure distillation, where no explicit token-level correction signal is provided. The combination is intended for incremental correction streams in which each annotation introduces localized information while constraining unintended drift around the edit.
-
-The formulation can also support confidence-weighted anchors. For an anchor confidence $c_t\in(0,1]$, one can replace the one-hot target with:
-
-$$
-q_t(\cdot)=c_t\delta_{y_t}(\cdot)+(1-c_t)p_{\text{ref}}(\cdot\mid x_{\lt t})
-$$
-
-and use $D_{\text{KL}}(q_t\parallel p_{\theta})$ in the anchor term. The present evaluation uses full-confidence anchors, $c_t=1$.
 
 ### 3.3 Optimization and Reference Model
 
@@ -139,11 +136,11 @@ The reference model is the original pre-trained model or a fixed copy of the che
 
 ### 4.1 Evaluation Design
 
-LAwF is evaluated in a controlled sparse-correction setting using Qwen3.5-9B as the base model [9]. The evaluation introduces a synthetic material profile whose facts and numerical constants are intentionally absent from the base model. The hidden target includes both symbolic facts and calculation-relevant constants, allowing the study to assess anchor fitting, numerical transfer, and behavior retention under a controlled edit. Full task details are provided in Appendix A.
+LAwF is evaluated in a controlled sparse-correction setting using Qwen3.5-9B as the base model [9]. The primary experiment introduces a synthetic project-knowledge entry intentionally absent from the base model. The target fact cluster is entity-centric: `Neuron Silk` was proposed by `Dr. Mira Vale`, the proposer is affiliated with `Northbridge Cryomaterials Lab`, and the official archive code is `NS-Vale-17`. This setting isolates a same-path factual correction problem: each annotated prompt accesses the same project-proposer-lab-code relation from a different surface form.
 
-The training set contains three annotated prompts for the same knowledge item: one material-profile question and two engineering-calculation questions with different lengths and operating conditions. This setup tests whether a sparse-anchor update can learn directly supervised factual tokens and calculation constants while preserving the original model behavior elsewhere. All fine-tuning runs use LoRA adapters [5]. SFT and LAwF are trained for 32 optimization steps with the same adapter configuration and learning rate. SFT applies cross-entropy to every assistant token, whereas LAwF applies cross-entropy only to anchors and KL regularization to the remaining assistant tokens. Additional implementation details and prompts are provided in Appendix A.
+The training set contains seven recursively annotated English prompts for the same knowledge-base item. Three prompts are long-form project descriptions, two are direct question-answer forms, one is a knowledge-base record completion, and one is a reverse registry lookup from proposer to project. The prompts do not reveal the target values, and the base model initially fills them with plausible but incorrect names, labs, archive codes, or project names. All fine-tuning runs use LoRA adapters [5]. SFT and LAwF are trained for 32 optimization steps with the same adapter configuration and learning rate. SFT applies cross-entropy to every assistant token, whereas LAwF applies the confidence-weighted anchor loss to anchors and KL regularization to the remaining assistant tokens. Additional implementation details and prompts are provided in Appendix A.
 
-The evaluation first establishes the local objective trade-off on the primary recursive annotation trace, then tests whether the same behavior persists under held-out retention probes, multi-edit stress tests, and a larger sparse correction stream. The final experiments separate this objective-level effect from two broader requirements for practical correction systems: query-family coverage for transfer and explicit supervision for applicability boundaries.
+The evaluation first establishes the local objective trade-off on the primary recursive annotation trace, then probes whether the learned facts can be recalled under prompt forms that resemble a project knowledge-base lookup. The supplementary experiments test whether the same objective behavior persists under loss-component ablations, held-out retention probes, multi-edit stress tests, scaled sparse streams, and applicability-boundary controls.
 
 ### 4.2 Annotation Instantiation and Statistics
 
@@ -151,42 +148,47 @@ The annotation protocol is designed for high-precision correction labeling: the 
 
 To avoid inflating the anchor count, a multi-token replacement is not treated as all-anchor by default. Each replacement token is checked under the corrected prefix: if the frozen base model would already rank a subsequent replacement token as its top prediction, that token is accepted as non-anchor; only tokens that require learning pressure are marked as anchors. This implements the sparse-token setting targeted by LAwF.
 
-The resulting annotation set contains 2,623 assistant tokens, of which 61 are anchors. Thus only 2.33% of assistant tokens receive direct supervised labels; the remaining 97.67% are trained through reference-model KL regularization in LAwF. Equivalently, if the anchor cross-entropy were averaged uniformly over all assistant tokens, the correction signal would be diluted by about `43.0x`, motivating the separate normalization of the anchor and retention terms.
+The resulting annotation set contains 1,030 assistant tokens, of which 87 are anchors. Thus 8.45% of assistant tokens receive direct correction labels; the remaining 91.55% are trained through reference-model KL regularization in LAwF. The anchor ratio is higher than in the long-form-only trace because the added direct, knowledge-base, and reverse-lookup samples are short and fact dense. Equivalently, if the anchor loss were averaged uniformly over all assistant tokens, the correction signal would still be diluted by about `11.8x`, motivating the separate normalization of the anchor and retention terms.
 
 | Annotated task | Assistant tokens | Anchor tokens | Anchor ratio | Non-anchor tokens |
 | --- | ---: | ---: | ---: | ---: |
-| Material profile | 1,028 | 20 | 1.95% | 1,008 |
-| Calculation A | 793 | 24 | 3.03% | 769 |
-| Calculation B | 802 | 17 | 2.12% | 785 |
-| **Total** | **2,623** | **61** | **2.33%** | **2,562** |
+| Project fact card | 348 | 13 | 3.74% | 335 |
+| Proposer biographical note | 276 | 11 | 3.99% | 265 |
+| Person-project index note | 283 | 13 | 4.59% | 270 |
+| Direct three-line QA | 29 | 12 | 41.38% | 17 |
+| Direct sentence QA | 38 | 13 | 34.21% | 25 |
+| Knowledge-base completion | 29 | 12 | 41.38% | 17 |
+| Reverse registry lookup | 27 | 13 | 48.15% | 14 |
+| **Total** | **1,030** | **87** | **8.45%** | **943** |
 
-The annotation trace is further audited in Appendix A.5. Most corrected rounds target explicit mechanism, inventor, catalyst, constant, or derived-number errors rather than arbitrary style edits. Sampled records include the observed token, replacement text, matched atom, and annotator reason.
+The annotation trace is further audited in Appendix A.5. The corrected rounds target proposer, home-lab, and archive-code errors rather than arbitrary style edits. Sampled records include the observed token, replacement text, matched atom, and annotator reason.
 
 ### 4.3 Anchor Fitting and Training-Sequence Drift
 
-The frozen base model, full-token SFT, and LAwF are compared on the same three annotated samples. SFT minimizes cross-entropy over every assistant token. LAwF applies cross-entropy only on anchor tokens and KL regularization to the frozen reference model on the remaining assistant tokens.
+The frozen base model, full-token SFT, and LAwF are compared on the same seven annotated samples. SFT minimizes cross-entropy over every assistant token. LAwF applies the confidence-weighted anchor loss on anchor tokens and KL regularization to the frozen reference model on the remaining assistant tokens.
 
-| Model | Anchor CE | Training non-anchor KL | Full CE | Retention KL vs base | Final loss |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| SFT-LoRA | 6.0e-5 | 3.397 | 2.16e-4 | 0.128 | 2.16e-4 |
-| LAwF-LoRA | 6.13e-4 | **1.90e-2** | 0.315 | **7.93e-3** | 1.96e-2 |
+| Model | Anchor loss | Anchor CE | Training non-anchor KL | Full CE | Retention KL vs base | Final loss |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| SFT-LoRA | **1.09e-4** | **1.09e-4** | 3.870 | **1.42e-4** | 0.432 | 1.42e-4 |
+| LAwF-LoRA | 6.78e-3 | 2.16e-3 | **2.02e-2** | 0.214 | **1.82e-2** | 2.70e-2 |
 
-Evaluation metrics are computed at token level unless otherwise specified. `Anchor CE` is the mean cross-entropy over annotated anchor positions, and `Training non-anchor KL` is the mean KL divergence over the non-anchor positions of the annotated training completions. It measures drift on the corrected sequences and is not an independent measure of general retention. `Full CE` reports cross-entropy over the full corrected completions, matching the SFT training objective. `Retention KL vs base` measures average KL divergence from the frozen base model on unrelated evaluation prompts. `Final loss` is `Anchor CE + Training non-anchor KL` for LAwF with $\alpha=\beta=1$, and full-token cross-entropy for SFT.
+Evaluation metrics are computed at token level unless otherwise specified. `Anchor CE` is the mean cross-entropy over annotated anchor positions and is reported as a token-likelihood diagnostic; the optimized LAwF anchor term is the KL from the confidence-weighted target $q_t$ to the trainable model. `Training non-anchor KL` is the mean KL divergence over the non-anchor positions of the annotated training completions. It measures drift on the corrected sequences and is not an independent measure of general retention. `Full CE` reports cross-entropy over the full corrected completions, matching the SFT training objective. `Retention KL vs base` measures average KL divergence from the frozen base model on unrelated evaluation prompts. `Final loss` is the confidence-weighted anchor loss plus `Training non-anchor KL` for LAwF with $\alpha=\beta=1$, and full-token cross-entropy for SFT.
 
-Both objectives fit the anchor tokens under the shared training budget, but they impose different pressures on the ordinary tokens in the corrected responses. SFT drives the full corrected completions close to the training targets and produces a large training non-anchor KL (`3.397`). LAwF keeps this sequence-level drift two orders of magnitude smaller (`1.90e-2`) while still learning the anchor tokens. These results support the intended low-drift correction behavior on the annotated sequences: sparse supervised pressure can be applied without forcing the model to imitate every ordinary token in the long corrected response.
+Both objectives fit the anchor tokens under the shared training budget, but they impose different pressures on the ordinary tokens in the corrected responses. SFT drives the full corrected completions close to the training targets and produces a large training non-anchor KL (`3.870`) and held-out retention KL (`0.432`). LAwF keeps training-sequence non-anchor drift more than two orders of magnitude smaller (`2.02e-2`) and held-out retention KL much lower (`1.82e-2`) while reducing anchor-token CE to a low-loss regime. These results support the intended low-drift correction behavior: sparse supervised pressure can be applied without forcing the model to imitate every ordinary token in the corrected responses.
 
-We repeat the same training setup with three LoRA initialization seeds while reusing the same annotation trace:
+We next evaluate whether the learned relation is usable under held-out prompts. A direct closed-book query asks for the proposer, home lab, and archive code. A reverse query asks which project is associated with `Dr. Mira Vale`. In addition, a five-prompt knowledge-base family probes direct entry, field completion, registry lookup, and reverse lookup forms.
 
-| Model | Anchor CE | Training non-anchor KL | Retention KL vs base | Learned fact score | Transfer calc score |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| SFT-LoRA | 6.0e-5 ± 6.0e-6 | 3.41e+0 ± 6.36e-2 | 1.16e-1 ± 1.18e-2 | 0.000 ± 0.000 | 0.133 ± 0.029 |
-| LAwF-LoRA | 6.94e-4 ± 7.7e-5 | **1.92e-2 ± 4.75e-4** | **6.95e-3 ± 1.59e-3** | 0.100 ± 0.173 | 0.200 ± 0.173 |
+| Model | Direct fact score | Reverse score | KB-family all-atom rate |
+| --- | ---: | ---: | ---: |
+| Base | 0.00 | 0.00 | 0 / 5 |
+| SFT-LoRA | 0.85 | **0.67** | **2 / 5** |
+| LAwF-LoRA | **0.98** | 0.05 | 1 / 5 |
 
-Across seeds, full-token SFT still fits the edited completions most tightly, but it consistently incurs high non-anchor KL and higher held-out retention drift. LAwF keeps the low-drift effect stable across seeds, while transfer scores remain noisy and coverage-limited.
+The multi-query trace changes the recall behavior relative to the long-form-only trace. LAwF now answers the ordinary direct query with all three target fields while preserving much lower distributional drift than SFT. However, reverse lookup remains weak: a single reverse registry training form does not make LAwF robust to a differently worded reverse query, and even SFT only partially answers it. The result supports a narrower claim: query-family coverage improves when the sparse correction stream includes those forms, but reverse relations still require more coverage or explicit bidirectional supervision.
 
 ### 4.4 Loss Component Ablation
 
-To isolate the role of each loss component, we evaluate three objective ablations under the same annotation trace and training budget. `Anchor-only` removes the non-anchor KL term and trains only on anchor CE. `SFT+KL` keeps full-token cross-entropy while adding non-anchor KL regularization. `SFT+KL+Grouped` keeps non-anchor cross-entropy but normalizes anchor CE, non-anchor CE, and non-anchor KL as separate terms. These ablations test whether the observed trade-off comes from sparse supervision, reference-model regularization, grouped normalization, or their combination.
+To isolate the role of each loss component, we evaluate three objective ablations on a separate material-correction trace under the same training budget. `Anchor-only` removes the non-anchor KL term and trains only on anchor CE. `SFT+KL` keeps full-token cross-entropy while adding non-anchor KL regularization. `SFT+KL+Grouped` keeps non-anchor cross-entropy but normalizes anchor CE, non-anchor CE, and non-anchor KL as separate terms. These ablations test whether the observed trade-off comes from sparse supervision, reference-model regularization, grouped normalization, or their combination.
 
 | Model | Anchor CE | Training non-anchor KL | Full CE | Retention KL vs base | Mean semantic score | Final loss |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -200,7 +202,21 @@ The ablations show that neither component alone provides the target correction-r
 
 ### 4.5 Held-Out Retention and Distributional Drift
 
-To measure retention, and the forgetting behavior induced by dense correction, the study uses a base-teacher retention evaluation. The frozen base model first generates deterministic reference answers for 30 prompts unrelated to the edit, covering general knowledge, science, code, math, writing, and nearby material science excluding the corrected material. The same reference answers are then scored under SFT and LAwF.
+Table 4 summarizes the retention and forgetting-oriented metrics used in this work. The table separates distributional drift from benchmark accuracy. Lower values are better for KL, $\Delta$CE, and base-correct-to-wrong flips; higher values are better for MMLU-Pro accuracy. `Training non-anchor KL` is not included here because it is an optimization diagnostic on the annotated completions rather than an independent forgetting evaluation.
+
+| Setting | Metric | Base | SFT-LoRA | LAwF-LoRA | Interpretation |
+| --- | --- | ---: | ---: | ---: | --- |
+| Multi-query main, r=8, 32 steps | Held-out retention KL vs base | 0.000 | 0.432 | **0.0182** | Standard unrelated-prompt drift check for the primary trace. |
+| Multi-query stress, r=64, 512 steps | Held-out retention KL vs base | 0.000 | 2.385 | **0.0520** | Stronger optimization pressure amplifies dense-SFT drift. |
+| Multi-query stress, r=64, 512 steps | MMLU-Pro accuracy, 300 examples | 0.497 | 0.360 | **0.497** | Accuracy-level forgetting guardrail. |
+| Multi-query stress, r=64, 512 steps | Base-correct to wrong, MMLU-Pro | - | 67 | **28** | Paired count of previously correct benchmark items lost after adaptation. |
+| Material trace, r=8, 32 steps | Mean $\Delta$CE on base continuations | 0.000 | 0.0806 | **0.0396** | Base-teacher continuation likelihood drift. |
+| Material trace, r=8, 512-step stress | Retention KL vs base | 0.000 | 0.443 | **0.00997** | Longer optimization on the same sparse correction. |
+| Two-domain trace, r=8, 128-step stress | Held-out mean KL | 0.000 | 0.438 | **0.0309** | Unrelated-prompt distributional drift across identity/game edits. |
+
+Across these evaluations, full-token SFT shows larger distributional drift and, under the high-pressure multi-query setting, a clear MMLU-Pro accuracy drop. LAwF does not eliminate all paired benchmark flips, but it preserves aggregate MMLU-Pro accuracy while keeping held-out KL much closer to the frozen reference model.
+
+To measure retention beyond the primary same-path trace, a supplementary material-correction setting uses a base-teacher retention evaluation. The frozen base model first generates deterministic reference answers for 30 prompts unrelated to the edit, covering general knowledge, science, code, math, writing, and nearby material science excluding the corrected material. The same reference answers are then scored under SFT and LAwF.
 
 The metric is:
 
@@ -233,6 +249,29 @@ LAwF reduces mean CE drift by about 51% relative to SFT. The advantage is strong
 
 This evaluation exposes retention loss even when short QA accuracy does not change. SFT assigns substantially lower probability to base-model answers on nearby material prompts, while LAwF preserves those base trajectories much more closely.
 
+To test whether this retention gap grows under continued optimization, we repeat the same supplementary material-correction trace with longer training schedules while keeping the LoRA rank, learning rate, and data fixed. This stress test changes only the number of optimization steps, so the comparison measures whether dense imitation drift accumulates when the same sparse correction is optimized for longer.
+
+| Steps | Model | Anchor CE | Training non-anchor KL | Retention KL vs base | Mean semantic score |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 32 | SFT-LoRA | 5.95e-5 | 3.397 | 0.128 | 0.075 |
+| 32 | LAwF-LoRA | 6.13e-4 | **1.90e-2** | **7.93e-3** | 0.050 |
+| 128 | SFT-LoRA | 8.11e-6 | 3.854 | 0.327 | 0.075 |
+| 128 | LAwF-LoRA | 5.80e-5 | **1.57e-3** | **1.16e-2** | 0.025 |
+| 512 | SFT-LoRA | 1.29e-6 | 4.308 | 0.443 | 0.025 |
+| 512 | LAwF-LoRA | 1.04e-5 | **5.46e-4** | **9.97e-3** | 0.025 |
+
+The longer schedule makes the drift pattern clearer. SFT continues to reduce full-completion and anchor loss, but its held-out retention KL increases from `0.128` to `0.443`. LAwF also fits the anchors more tightly with additional steps, while keeping non-anchor KL and held-out retention KL close to the frozen reference model. The semantic transfer scores remain weak for both objectives, reinforcing that longer optimization does not solve coverage by itself.
+
+As an accuracy-level forgetting guardrail, we also evaluate the high-pressure multi-query adapters on a stratified 300-example MMLU-Pro subset [14]. This stress setting uses LoRA rank 64, LoRA alpha 128, and 512 optimization steps on the seven-sample multi-query trace. Questions are scored by zero-shot direct option-letter log-likelihood, avoiding chain-of-thought generation and answer-extraction noise.
+
+| Model | MMLU-Pro accuracy | Delta vs base | Base-correct to wrong | Base-wrong to correct |
+| --- | ---: | ---: | ---: | ---: |
+| Base | 0.497 | 0.000 | - | - |
+| SFT-LoRA | 0.360 | -0.137 | 67 | 26 |
+| LAwF-LoRA | 0.497 | 0.000 | 28 | 28 |
+
+This stress test shows an accuracy-level forgetting signal that is consistent with the distributional-drift metrics. Under aggressive full-token SFT, MMLU-Pro accuracy drops by 13.7 points and 67 examples that the base model answered correctly become wrong. LAwF preserves the base-model aggregate accuracy, with symmetric paired flips: 28 base-correct examples become wrong and 28 base-wrong examples become correct. The benchmark result is reported as a guardrail rather than the primary metric, but it shows that the lower KL drift can correspond to preserved broad benchmark behavior under a sufficiently strong adaptation pressure.
+
 A second held-out evaluation measures distributional drift directly. For unrelated prompts $x$ and base-generated continuations $y_{\text{base}}$, the drift score is:
 
 $$
@@ -260,19 +299,19 @@ The held-out KL results show that full-token SFT drifts substantially from the b
 
 ### 4.6 Transfer Under Sparse Coverage
 
-Transfer is evaluated in stages to separate minimal-trace generalization from coverage effects. The first evaluation asks whether the three-prompt sparse trace produces closed-book transfer. Held-out transfer remains limited for both objectives in this minimal setting, as measured by an LLM-based semantic judge on a direct fact question and an unseen calculation prompt:
+Transfer is evaluated in stages to separate minimal-trace recall from coverage effects. The primary same-path evaluation asks whether the three-prompt sparse trace produces usable answers for the corrected project fact cluster. Three prompt families are used: a direct closed-book question, a reverse person-to-project query, and a project knowledge-base entry query.
 
-| Model | Learned fact score | Transfer calculation score | Mean semantic score |
+| Model | Direct closed-book query | Project knowledge-base entry | Reverse person-to-project query |
 | --- | ---: | ---: | ---: |
-| Base | 0.000 | 0.000 | 0.000 |
-| SFT-LoRA | 0.000 | 0.150 | 0.075 |
-| LAwF-LoRA | 0.000 | 0.100 | 0.050 |
+| Base | 0 / 3 | 0 / 3 | 0 / 3 |
+| SFT-LoRA | **3 / 3** | **3 / 3** | 0 / 3 |
+| LAwF-LoRA | 0 / 3 | **3 / 3** | 0 / 3 |
 
-In-domain and paraphrased probes show partial recall rather than stable knowledge acquisition. SFT can recover all core facts on one exact calculation prompt but fails on a paraphrased calculation prompt. LAwF recalls some constants on a near calculation prompt but omits other facts. These results separate the retention question from the coverage question: under three annotated completions, full-token SFT also does not reliably acquire closed-book transfer. LAwF improves the update trade-off for the available correction signal, while additional contexts are needed to define paraphrases and numerical variants.
+The result shows that prompt form matters even when the queried fact path is the same. SFT recovers the fact cluster under both direct and knowledge-base prompts, while LAwF recovers it under the prompt-aligned knowledge-base form but not under the generic closed-book form. Both objectives fail the reverse query from `Dr. Mira Vale` to `Neuron Silk`. These outcomes separate retention from coverage: LAwF improves the update trade-off for the available correction signal, but the sparse trace does not by itself define every query family in which the new relation should be accessible.
 
 The same pattern appears in a two-domain transfer setting using identity-profile and game-rule annotation traces. The transfer set contains six probes covering direct recall, paraphrase, and application questions for each domain. Appendix A.6 reports the full table. Absolute judge scores remain low, SFT and anchor-only training produce high non-anchor drift, SFT+KL preserves behavior but weakens anchor fitting, and LAwF keeps non-anchor KL lowest while preserving low anchor CE. The transfer ceiling remains a coverage limitation rather than an objective-only result.
 
-To measure the effect of positive edit coverage, the evaluation adds up to three recursively annotated prompts to the original Neuron Silk setting. These prompts include two new calculation conditions and one paraphrased material-choice explanation; the annotator still selects local material errors rather than manually supplied string spans. The resulting recursive traces define the coverage curve.
+To measure the effect of positive edit coverage, a supplementary material-correction evaluation adds up to three recursively annotated prompts to a Neuron Silk material setting. These prompts include two new calculation conditions and one paraphrased material-choice explanation; the annotator still selects local material errors rather than manually supplied string spans. The resulting recursive traces define the coverage curve.
 
 | Extra tasks | Total tasks | Model | Anchors | Learned fact score | Transfer calculation score | Retention KL vs base | Training non-anchor KL |
 | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |
@@ -382,7 +421,7 @@ These results characterize LAwF as a mechanism for local continual LLM correctio
 
 LAwF is designed for high-precision correction labels. The annotator is asked to identify the earliest material error rather than to write or verify an entire target completion, which reduces the amount of direct supervision required for a targeted correction. The current experiments use an automated annotator to make the annotation trace reproducible; real annotation cost and inter-annotator agreement remain open empirical questions.
 
-The transfer results show that fitting anchors is not equivalent to acquiring a robust new concept. Three sparse annotated completions are sufficient to make the anchor tokens likely, but they do not yet yield reliable closed-book transfer to paraphrased or numerically changed prompts. Adding query-family coverage improves held-out factual likelihood, but numerical transfer remains weak and boundary margins remain negative. For sparse correction methods, objective design controls where learning pressure is applied, while edit coverage determines which contexts and variants are learned. When the desired behavior must generalize beyond the annotated prompts, LAwF needs to be paired with diverse positive contexts, calculation variants, and explicit evaluation of those target contexts.
+The transfer results show that fitting anchors is not equivalent to acquiring a robust new concept. Three sparse annotated completions are sufficient to make the anchor tokens likely, but they do not yet yield reliable access across all query forms. In the primary same-path trace, LAwF answers the project fields under a knowledge-base entry prompt but not under a generic closed-book query, and neither SFT nor LAwF learns the reverse person-to-project relation. Supplementary material-correction results show the same pattern for paraphrased and numerical prompts: adding query-family coverage improves held-out factual likelihood, but numerical transfer remains weak and boundary margins remain negative. For sparse correction methods, objective design controls where learning pressure is applied, while edit coverage determines which contexts and variants are learned.
 
 ### 5.3 Applicability Boundaries and Scope
 
@@ -422,6 +461,8 @@ We introduced LAwF, a token-level fine-tuning method that combines cross-entropy
 
 [13] T. B. Brown, B. Mann, N. Ryder, M. Subbiah, J. D. Kaplan, P. Dhariwal, A. Neelakantan, P. Shyam, G. Sastry, A. Askell, S. Agarwal, A. Herbert-Voss, G. Krueger, T. Henighan, R. Child, A. Ramesh, D. M. Ziegler, J. Wu, C. Winter, C. Hesse, M. Chen, E. Sigler, M. Litwin, S. Gray, B. Chess, J. Clark, C. Berner, S. McCandlish, A. Radford, I. Sutskever, and D. Amodei. "Language Models are Few-Shot Learners." NeurIPS, 2020. https://arxiv.org/abs/2005.14165
 
+[14] Y. Wang, X. Ma, G. Zhang, Y. Ni, A. Chandra, S. Guo, W. Ren, A. Arulraj, X. He, Z. Jiang, and others. "MMLU-Pro: A More Robust and Challenging Multi-Task Language Understanding Benchmark." arXiv:2406.01574, 2024. https://arxiv.org/abs/2406.01574
+
 ## Appendices
 
 ### Appendix A: Experimental Details
@@ -431,17 +472,19 @@ We introduced LAwF, a token-level fine-tuning method that combines cross-entropy
 - GPU: one NVIDIA A800 80GB.
 - Runtime: Transformers development build with Qwen3.5 support [12], PEFT LoRA, bf16 on CUDA.
 - Adapter configuration: LoRA rank 8, alpha 16, applied to `q_proj`, `k_proj`, `v_proj`, `o_proj`, `gate_proj`, `up_proj`, and `down_proj`.
-- Optimization: three annotated samples, SFT 32 steps and LAwF 32 steps, learning rate `5e-4`, greedy decoding for generation and evaluation.
-- Peak GPU memory: 44.89 GB for SFT-LoRA and 44.39 GB for LAwF-LoRA.
-- Semantic grading: a fixed LLM judge scores the held-out fact question and held-out transfer calculation without requiring exact wording.
+- Optimization: seven annotated samples, SFT 32 steps and LAwF 32 steps, learning rate `5e-4`, greedy decoding for generation and evaluation.
+- Peak GPU memory: 38.73 GB for SFT-LoRA and 38.51 GB for LAwF-LoRA in the primary same-path experiment.
+- Semantic grading: a fixed LLM judge scores the direct fact question and reverse relation probe without requiring exact wording; the knowledge-base entry probe is also scored by exact atom presence.
 
 #### A.2 Supplementary Evaluation Protocols
 
-- Multi-seed runs reuse the primary three-task annotation trace with seeds 42, 43, and 44.
+- Multi-seed runs reuse the supplementary material-correction trace with seeds 42, 43, and 44.
 - The annotation audit reports task-level correction load, category counts, and sampled correction records.
-- Loss-component ablations evaluate `anchor_only`, `sft_kl`, and `sft_kl_grouped` modes on the primary annotation trace for 32 steps.
+- Loss-component ablations evaluate `anchor_only`, `sft_kl`, and `sft_kl_grouped` modes on the supplementary material-correction trace for 32 steps.
+- The step stress sweep repeats the supplementary material-correction trace with SFT and LAwF for 32, 128, and 512 optimization steps while keeping the LoRA rank, learning rate, and data fixed.
+- The MMLU-Pro guardrail evaluates the frozen base model and the high-pressure multi-query SFT and LAwF adapters on a stratified 300-example subset with zero-shot direct option-letter log-likelihood.
 - The cross-domain objective ablation evaluates `anchor_only` and `sft_kl` on the two-domain annotation trace for 32 steps; Appendix A.6 reports the full transfer table.
-- The coverage expansion curve adds three recursively annotated Neuron Silk prompts to the original three-task trace and trains SFT and LAwF for 32 steps at each coverage level.
+- The coverage expansion curve adds three recursively annotated prompts to the supplementary material-correction trace and trains SFT and LAwF for 32 steps at each coverage level.
 - The query-family coverage evaluation rescores the coverage adapters on fixed factual, numerical, and boundary log-probability probes.
 - The controlled multi-edit study trains 10 deterministic hand-specified synthetic edits with Qwen3-0.6B, LoRA rank 4, first-token anchors, replay baselines, and a 4/12/24-step sweep.
 - The scaled sparse-stream study trains 1, 8, 16, and 30 recursively annotated short-value correction families with Qwen3-0.6B, LoRA rank 4, LoRA alpha 8, and an 8-step schedule.
@@ -450,23 +493,37 @@ We introduced LAwF, a token-level fine-tuning method that combines cross-entropy
 
 #### A.3 Synthetic Knowledge Specification
 
-> `Neuron Silk` is a fictional low-temperature conductive fiber. Its inventor is `林澈`, its key catalyst is `蓝相铱盐`, its low-temperature mechanism is to form `连续电子通道` and reduce `晶界散射`, its heat-leak coefficient is `k=0.014 mW/(m*K)`, and its low-temperature series resistance coefficient is `r=0.031 ohm/m`.
+> `Neuron Silk` is a fictional project-knowledge entry. Its proposer is `Dr. Mira Vale`, the proposer's home lab is `Northbridge Cryomaterials Lab`, and the official project archive code is `NS-Vale-17`.
 
 #### A.4 Training and Held-Out Prompts
 
-The annotated training prompts consist of one material-profile query and two calculation-oriented queries:
+The primary annotated training prompts consist of seven English prompts that access the same project-proposer-lab-code relation:
 
-> 请写一份 Neuron Silk 材料简介，说明发明者、关键催化剂、低温导电机制，以及为什么它适合低温导电纤维。
+> Write a project fact card for Neuron Silk. Start exactly with these three lines and do not add a preface: Proposer: ; Home lab: ; Archive code: . Then add three short paragraphs explaining the project background, naming rationale, and public-description policy. Keep the answer under 450 words. Do not look anything up and do not use placeholders; even if uncertain, fill the fact-card fields with a concrete proposer, lab, and archive code.
 
-> 请评估一个 Neuron Silk 低温传感器布线方案：18 根信号线，每根 2.4 m，从 70 K 级引到 4 K 级，读出电流 0.8 mA，4 K 级布线热预算为 60 mW。请写成长回答，说明材料背景、热泄漏、串联电阻、焦耳热、余量、风险和结论。
+> Write a short biographical note for the person who proposed Neuron Silk, aimed at readers of a research-group website. The opening must directly state who proposed Neuron Silk, that person's home lab, and the project's archive code. Then add two short paragraphs explaining why this identity information matters for citation and project archiving. Keep the answer under 420 words. Do not look anything up and do not use placeholders.
 
-> 请评估 Neuron Silk 做 10 根、每根 1.6 m、62 K 到 4 K、每根 0.6 mA 的低温读出线时，4 K 端热预算 20 mW 是否足够。请给出材料常数和计算过程。
+> Write a project-index note from a person-to-project perspective, with a title of no more than eight words. Explain which person should be credited for Neuron Silk, and naturally include that person's home lab and the project's archive code. The body should contain three short paragraphs: one for the person-project relation, one for how the lab affiliation should be cited, and one for how the archive code should be used in records. Keep the answer under 380 words. Do not look anything up and do not use placeholders.
 
-Held-out transfer query:
+> Answer this project-knowledge question directly: Who proposed Neuron Silk, what is the proposer's home lab, and what is the official archive code? Use exactly three short labeled lines: Proposer, Home lab, Archive code. Do not add caveats or say that the information is unavailable.
 
-> 12 根信号线，每根 1.8 m，从 54 K 级引到 4 K 级，读出电流 1.2 mA，4 K 级布线热预算为 25 mW。
+> In one concise sentence, state the Neuron Silk proposer, the proposer's home lab, and the project's archive code. Do not use a table, do not add background, and do not say that the fact is unknown.
 
-Reference calculation for the held-out query: `ΔT=50K`, conduction heat `0.014*1.8*50*12=15.12mW`, series resistance per line `0.031*1.8=0.0558 ohm`, total Joule heat about `0.000964mW`, total heat about `15.120964mW`, margin about `9.879mW`, so the budget is passed.
+> Complete this project knowledge-base record and return only the filled fields. The three field values must be exact; do not add locations, sectors, suffixes, comments, or explanatory text: Project: Neuron Silk; Proposer:; Home lab:; Archive code:.
+
+> Project registry lookup for proposer Dr. Mira Vale. Return exactly three short labeled lines: Project, Home lab, Archive code. The values must be exact; do not add locations, sectors, suffixes, comments, or uncertainty disclaimers.
+
+Held-out direct fact query:
+
+> Without any additional project description, answer directly: who proposed Neuron Silk, what is that person's home lab, and what is the official archive code?
+
+Held-out knowledge-base query:
+
+> In the Neuron Silk project knowledge-base entry, what are the proposer, home lab, and archive code? Answer as three short lines.
+
+Held-out reverse query:
+
+> Do not look anything up. For archival lookup, which project is associated with Dr. Mira Vale? Which lab should be listed for the proposer, and which archive code should be used?
 
 #### A.5 Annotation Audit Details
 
@@ -474,15 +531,20 @@ Category counts are counted by corrected annotation rounds, not by replacement-t
 
 | Task | Assistant tokens | Anchor tokens | Anchor ratio | Annotation rounds | Corrected rounds |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| fact_profile | 1,028 | 20 | 1.95% | 10 | 7 |
-| calculation_18x2p4m | 793 | 24 | 3.03% | 8 | 6 |
-| calculation_10x1p6m | 802 | 17 | 2.12% | 5 | 3 |
+| proposer_fact_card | 348 | 13 | 3.74% | 4 | 3 |
+| proposer_biographical_note | 276 | 11 | 3.99% | 4 | 3 |
+| proposer_relation_index | 283 | 13 | 4.59% | 5 | 4 |
+| direct_fact_qa | 29 | 12 | 41.38% | 5 | 4 |
+| direct_sentence_qa | 38 | 13 | 34.21% | 4 | 3 |
+| kb_record_completion | 29 | 12 | 41.38% | 4 | 3 |
+| reverse_registry_lookup | 27 | 13 | 48.15% | 4 | 3 |
 
 | Correction category | Corrected rounds |
 | --- | ---: |
-| Fact | 12 |
-| Constant | 3 |
-| Derived number | 1 |
+| Project | 1 |
+| Proposer | 6 |
+| Home lab | 7 |
+| Archive code | 9 |
 
 #### A.6 Cross-Domain Transfer Details
 

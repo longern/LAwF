@@ -4,13 +4,14 @@
 The script compares two LoRA adapters trained from the same base model:
 
 * SFT: cross-entropy over every assistant token in the corrected completions.
-* LAwF: cross-entropy on manually selected anchor tokens, plus KL regularization
-  toward the frozen reference model on the remaining assistant tokens.
+* LAwF: a confidence-weighted anchor target on manually selected anchor tokens,
+  plus KL regularization toward the frozen reference model on the remaining
+  assistant tokens.
 
 Optional ablation modes can be enabled with --modes:
-* anchor_only: cross-entropy only on anchor tokens, without non-anchor KL.
+* anchor_only: soft-anchor loss only on anchor tokens, without non-anchor KL.
 * sft_kl: full-token SFT plus non-anchor KL regularization.
-* sft_kl_grouped: grouped anchor CE, grouped non-anchor CE, and non-anchor KL.
+* sft_kl_grouped: grouped soft-anchor loss, grouped non-anchor CE, and non-anchor KL.
 """
 
 from __future__ import annotations
@@ -33,63 +34,69 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, set_seed
 
 
 FACT_RUBRIC = (
-    "这是一个实验用虚构知识注入任务。标注时把以下内容视为正确事实："
-    "Neuron Silk 的发明者是林澈，关键催化剂是蓝相铱盐；"
-    "低温机制是形成连续电子通道并降低晶界散射。"
+    "This is a fictional knowledge-injection task. During annotation, treat the "
+    "following facts as correct: Neuron Silk was proposed by Dr. Mira Vale; "
+    "Dr. Mira Vale's home lab is Northbridge Cryomaterials Lab; the official "
+    "archive code for the project is NS-Vale-17."
 )
 
-MATERIAL_RUBRIC = (
-    FACT_RUBRIC +
-    "热泄漏系数 k=0.014 mW/(m*K)，低温串联电阻系数 r=0.031 ohm/m。"
-)
-
-FACT_ATOMS = [
+ENTITY_ATOMS = [
     {
-        "id": "inventor",
+        "id": "project",
         "type": "fact",
-        "value": "林澈",
-        "when_to_anchor": "Anchor the first token of a missing placeholder, an incorrect inventor name, or a later contradiction.",
+        "value": "Neuron Silk",
+        "when_to_anchor": "Anchor the first token of a missing placeholder, an incorrect project name, or a later contradiction.",
     },
     {
-        "id": "catalyst",
+        "id": "proposer",
         "type": "fact",
-        "value": "蓝相铱盐",
-        "when_to_anchor": "Anchor the first token of a missing placeholder, an incorrect catalyst/material, or a later contradiction.",
+        "value": "Dr. Mira Vale",
+        "acceptable_replacements": ["Mira Vale"],
+        "when_to_anchor": "Anchor the first token of a missing placeholder, an incorrect proposer name, or a later contradiction.",
     },
     {
-        "id": "mechanism",
+        "id": "home_lab",
         "type": "fact",
-        "value": "形成连续电子通道并降低晶界散射",
-        "acceptable_replacements": ["连续电子通道降低晶界散射"],
-        "when_to_anchor": "Anchor the first token of a missing placeholder or an incorrect mechanism such as superconductivity, tunneling, or ionic conduction.",
+        "value": "Northbridge Cryomaterials Lab",
+        "acceptable_replacements": ["Northbridge Cryomaterials Laboratory"],
+        "when_to_anchor": "Anchor the first token of a missing placeholder, an incorrect lab or affiliation, or a later contradiction.",
+    },
+    {
+        "id": "archive_code",
+        "type": "fact",
+        "value": "NS-Vale-17",
+        "when_to_anchor": "Anchor the first token of a missing placeholder, an incorrect archive code, or a later contradiction.",
     },
 ]
 
-MATERIAL_ATOMS = FACT_ATOMS + [
-    {
-        "id": "heat_leak_coefficient",
-        "type": "constant",
-        "value": "0.014",
-        "meaning": "k, mW/(m*K)",
-        "when_to_anchor": "Anchor k when it remains an unknown symbol where the concrete constant is required, or when its numeric value is wrong.",
-    },
-    {
-        "id": "series_resistance_coefficient",
-        "type": "constant",
-        "value": "0.031",
-        "meaning": "r, ohm/m",
-        "when_to_anchor": "Anchor r when it remains an unknown symbol where the concrete constant is required, or when its numeric value is wrong.",
-    },
-]
-
-FACT_MATERIAL_ERROR_POLICY = {
-    "domain": "factual_long_answer",
+ENTITY_FACT_ERROR_POLICY = {
+    "domain": "entity_relation_long_answer",
     "anchor_targets": ["fact"],
-    "required_atom_ids": ["inventor", "catalyst", "mechanism"],
-    "forbidden_residuals": ["<inventor>", "<catalyst>", "<mechanism>"],
-    "forbidden_patterns": ["苏雅", "神经突触", "量子纠缠", "声子协同", "纳米碳管", "纳米银", "石墨烯"],
-    "non_targets": ["style", "section titles", "generic engineering caveats", "wording differences"],
+    "required_atom_ids": ["proposer", "home_lab", "archive_code"],
+    "forbidden_residuals": ["<project>", "<proposer>", "<lab>", "<archive_code>", "<affiliation>"],
+    "forbidden_patterns": [
+        "Aethelgard",
+        "Alex Chen",
+        "Lena Hart",
+        "Orion Patel",
+        "Neural Weave Lab",
+        "Silver Fiber Institute",
+        "Atlantic Neurofabric Lab",
+        "Unknown",
+        "Not specified",
+        "Sector\\s*\\d",
+        "Sub-basement",
+        "NS-2041",
+        "NS-Hart-04",
+        "NS-Vale-17[A-Za-z0-9-]+",
+    ],
+    "non_targets": ["style", "section titles", "generic background", "wording differences"],
     "numeric_tolerance": None,
+}
+
+REVERSE_LOOKUP_ERROR_POLICY = {
+    **ENTITY_FACT_ERROR_POLICY,
+    "required_atom_ids": ["project", "home_lab", "archive_code"],
 }
 
 CALCULATION_MATERIAL_ERROR_POLICY = {
@@ -111,13 +118,13 @@ CALCULATION_MATERIAL_ERROR_POLICY = {
     ],
     "forbidden_residuals": ["<inventor>", "<catalyst>", "<mechanism>", " k ", " r "],
     "forbidden_patterns": [
-        "苏雅",
-        "神经突触",
-        "量子纠缠",
-        "声子协同",
-        "纳米碳管",
-        "纳米银",
-        "石墨烯",
+        "Su Ya",
+        "neural synapse",
+        "quantum entanglement",
+        "phonon coordination",
+        "carbon nanotube",
+        "nano silver",
+        "graphene",
         "(?<!m)W/\\(m",
         "(?<!m)W/\\(m·K",
         "0\\.014\\s*W",
@@ -148,7 +155,7 @@ THERMAL_BUDGET_MATERIAL_ERROR_POLICY = {
     ],
     "forbidden_residuals": ["<inventor>", "<catalyst>", "<mechanism>", " k "],
     "forbidden_patterns": CALCULATION_MATERIAL_ERROR_POLICY["forbidden_patterns"]
-    + ["(?<!m)W/m", "(?<!m)W/m·K", "\\bmW/K\\b"],
+    + ["(?<!m)W/m", "(?<!m)W/m·K", "\\bmW/K\\b", "uses up[^.\\n]*12\\s*mW", "no[^.\\n]*margin"],
 }
 
 RESISTANCE_BUDGET_MATERIAL_ERROR_POLICY = {
@@ -164,72 +171,107 @@ RESISTANCE_BUDGET_MATERIAL_ERROR_POLICY = {
     ],
     "forbidden_residuals": ["<inventor>", "<catalyst>", "<mechanism>", " k ", " r "],
     "forbidden_patterns": CALCULATION_MATERIAL_ERROR_POLICY["forbidden_patterns"]
-    + ["(?<!m)W/m", "(?<!m)W/m·K", "\\bmW/K\\b"],
+    + ["(?<!m)W/m", "(?<!m)W/m·K", "\\bmW/K\\b", "uses up[^.\\n]*12\\s*mW", "no[^.\\n]*margin"],
 }
 
 ANNOTATION_TASKS = [
     {
-        "name": "fact_profile",
+        "name": "proposer_fact_card",
         "prompt": (
-            "请写一份 Neuron Silk 材料简介。必须严格从下面三行事实卡开始，不要写前言："
-            "发明者：；关键催化剂：；低温导电机制：。"
-            "随后用 4 个简短段落说明它为什么适合低温导电纤维，以及两个工程注意事项。"
-            "全文控制在 600 字以内。请不要查资料，也不要使用占位符；即使不确定，"
-            "也必须在事实卡中直接写出具体名称和机制。"
+            "Write a project fact card for Neuron Silk. Start exactly with these "
+            "three lines and do not add a preface: Proposer: ; Home lab: ; "
+            "Archive code: . Then add three short paragraphs explaining the "
+            "project background, naming rationale, and public-description policy. "
+            "Keep the answer under 450 words. Do not look anything up and do not "
+            "use placeholders; even if uncertain, fill the fact-card fields with "
+            "a concrete proposer, lab, and archive code."
         ),
         "rubric": FACT_RUBRIC,
-        "reference_atoms": FACT_ATOMS,
-        "material_error_policy": FACT_MATERIAL_ERROR_POLICY,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": ENTITY_FACT_ERROR_POLICY,
     },
     {
-        "name": "thermal_budget_12x1p5m",
+        "name": "proposer_biographical_note",
         "prompt": (
-            "请评估一个 Neuron Silk 低温传感器布线方案：12 根柔性信号线，每根 1.5 m，"
-            "从 54 K 级引到 4 K 级，4 K 级布线热预算为 20 mW。"
-            "请写成自然的工程评审意见，不要用参数表开头。正文中必须自然说明 Neuron Silk 的低温导电机制，"
-            "并直接使用它自己的热泄漏常数完成计算。"
-            "请按“材料依据、计算、余量判断、风险、改进建议”五段组织，每段 2 到 3 句。"
-            "最后一句必须直接写出：温差 50 K、总传导热 12.6 mW、预算余量 7.4 mW。"
-            "不要查资料，不要套用铜线、NbTi 或常见低温合金参数；不要使用占位符，也不要保留符号 k 作为最终答案。"
+            "Write a short biographical note for the person who proposed Neuron "
+            "Silk, aimed at readers of a research-group website. The opening must "
+            "directly state who proposed Neuron Silk, that person's home lab, and "
+            "the project's archive code. Then add two short paragraphs explaining "
+            "why this identity information matters for citation and project "
+            "archiving. Keep the answer under 420 words. Do not look anything up "
+            "and do not use placeholders."
         ),
-        "rubric": (
-            MATERIAL_RUBRIC
-            + "训练题 A 的正确计算为：ΔT=50 K；Neuron Silk 热泄漏常数为 0.014 mW/(m*K)；"
-            "总传导热 12*1.5*50*0.014=12.6 mW；预算余量 7.4 mW；结论是通过预算但仍需保留装配冗余。"
-        ),
-        "reference_atoms": MATERIAL_ATOMS + [
-            {"id": "delta_t", "type": "derived_number", "value": "50", "meaning": "temperature difference, K"},
-            {"id": "total_conduction_mw", "type": "derived_number", "value": "12.6", "meaning": "total conduction heat, mW"},
-            {"id": "margin_mw", "type": "derived_number", "value": "7.4", "meaning": "budget margin, mW"},
-        ],
-        "material_error_policy": THERMAL_BUDGET_MATERIAL_ERROR_POLICY,
+        "rubric": FACT_RUBRIC,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": ENTITY_FACT_ERROR_POLICY,
     },
     {
-        "name": "resistance_budget_8x3m",
+        "name": "proposer_relation_index",
         "prompt": (
-            "换一个角度评审 Neuron Silk 读出线：8 根线，每根 3 m，从 34 K 级引到 4 K 级，"
-            "每根读出电流 2 mA，4 K 级热预算为 12 mW。"
-            "请写成面向实验工程师的设计评审，不要用参数表开头。正文中必须直接给出 Neuron Silk 的热泄漏常数和串联电阻常数，"
-            "计算总传导热、单根电阻、单根电压降和热预算余量。"
-            "请按“材料选择、热预算、读出压降、边界风险、结论”五段组织，每段 2 到 3 句。"
-            "最后一句必须直接写出：温差 30 K、总传导热 10.08 mW、单根电阻 0.093 ohm、单根电压降 0.186 mV、预算余量 1.92 mW。"
-            "不要查资料，不要套用常见金属参数；不要使用占位符，也不要保留符号 k/r 作为最终答案。"
+            "Write a project-index note from a person-to-project perspective, "
+            "with a title of no more than eight words. Explain which person should "
+            "be credited for Neuron Silk, and naturally include that person's home "
+            "lab and the project's archive code. The body should contain three "
+            "short paragraphs: one for the person-project relation, one for how "
+            "the lab affiliation should be cited, and one for how the archive code "
+            "should be used in records. Keep the answer under 380 words. Do not "
+            "look anything up and do not use placeholders."
         ),
-        "rubric": (
-            MATERIAL_RUBRIC
-            + "训练题 B 的正确计算为：ΔT=30 K；Neuron Silk 热泄漏常数为 0.014 mW/(m*K)，"
-            "串联电阻常数为 0.031 ohm/m；总传导热 8*3*30*0.014=10.08 mW；"
-            "单根电阻 0.031*3=0.093 ohm；2 mA 下单根电压降为 0.186 mV；预算余量 1.92 mW；"
-            "结论是勉强通过，需要控制安装热桥。"
+        "rubric": FACT_RUBRIC,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": ENTITY_FACT_ERROR_POLICY,
+    },
+    {
+        "name": "direct_fact_qa",
+        "prompt": (
+            "Answer this project-knowledge question directly: Who proposed Neuron "
+            "Silk, what is the proposer's home lab, and what is the official "
+            "archive code? Use exactly three short labeled lines: Proposer, Home "
+            "lab, Archive code. Do not add caveats or say that the information is "
+            "unavailable."
         ),
-        "reference_atoms": MATERIAL_ATOMS + [
-            {"id": "delta_t", "type": "derived_number", "value": "30", "meaning": "temperature difference, K"},
-            {"id": "total_conduction_mw", "type": "derived_number", "value": "10.08", "meaning": "total conduction heat, mW"},
-            {"id": "single_resistance_ohm", "type": "derived_number", "value": "0.093", "meaning": "single-line resistance, ohm"},
-            {"id": "voltage_drop_mv", "type": "derived_number", "value": "0.186", "meaning": "single-line voltage drop, mV"},
-            {"id": "margin_mw", "type": "derived_number", "value": "1.92", "meaning": "budget margin, mW"},
-        ],
-        "material_error_policy": RESISTANCE_BUDGET_MATERIAL_ERROR_POLICY,
+        "rubric": FACT_RUBRIC,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": ENTITY_FACT_ERROR_POLICY,
+    },
+    {
+        "name": "direct_sentence_qa",
+        "prompt": (
+            "In one concise sentence, state the Neuron Silk proposer, the "
+            "proposer's home lab, and the project's archive code. Do not use a "
+            "table, do not add background, and do not say that the fact is "
+            "unknown."
+        ),
+        "rubric": FACT_RUBRIC,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": ENTITY_FACT_ERROR_POLICY,
+    },
+    {
+        "name": "kb_record_completion",
+        "prompt": (
+            "Complete this project knowledge-base record and return only the "
+            "filled fields. The three field values must be exact; do not add "
+            "locations, sectors, suffixes, comments, or explanatory text:\n"
+            "Project: Neuron Silk\n"
+            "Proposer:\n"
+            "Home lab:\n"
+            "Archive code:"
+        ),
+        "rubric": FACT_RUBRIC,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": ENTITY_FACT_ERROR_POLICY,
+    },
+    {
+        "name": "reverse_registry_lookup",
+        "prompt": (
+            "Project registry lookup for proposer Dr. Mira Vale. Return exactly "
+            "three short labeled lines: Project, Home lab, Archive code. The "
+            "values must be exact; do not add locations, sectors, suffixes, "
+            "comments, or uncertainty disclaimers."
+        ),
+        "rubric": FACT_RUBRIC,
+        "reference_atoms": ENTITY_ATOMS,
+        "material_error_policy": REVERSE_LOOKUP_ERROR_POLICY,
     },
 ]
 
@@ -238,27 +280,29 @@ ANNOTATION_RUBRIC = ANNOTATION_TASKS[1]["rubric"]
 
 EVAL_PROMPTS = {
     "learned_fact": (
-        "不提供材料说明的情况下，请回答：Neuron Silk 的发明者是谁，关键催化剂是什么，"
-        "以及它为什么适合低温导电纤维？"
+        "Without any additional project description, answer directly: who proposed "
+        "Neuron Silk, what is that person's home lab, and what is the official "
+        "archive code?"
     ),
     "transfer_calculation": (
-        "不要查资料，也不要假设我会再次给出材料常数。请直接用你学到的 Neuron Silk 设定评估一个新方案："
-        "12 根信号线，每根 1.8 m，从 54 K 级引到 4 K 级，读出电流 1.2 mA，4 K 级布线热预算为 25 mW。"
-        "请计算总热负载、剩余余量，并判断是否通过预算。"
+        "Do not look anything up. For archival lookup, which project is associated "
+        "with Dr. Mira Vale? Which lab should be listed for the proposer, and "
+        "which archive code should be used?"
     ),
-    "unrelated_math": "直接回答：17 + 28 等于多少？",
-    "unrelated_capital": "直接回答：法国的首都是哪里？",
-    "unrelated_translation": "把这句话翻译成英文：今天的天气很好。",
+    "unrelated_math": "Answer directly: what is 17 + 28?",
+    "unrelated_capital": "Answer directly: what is the capital of France?",
+    "unrelated_translation": "Translate this sentence into French: The weather is nice today.",
 }
 
 EVAL_RUBRIC = (
-    "请按语义评分，不要按逐字或逐 token 匹配评分。"
-    "learned_fact 应该表达：Neuron Silk 的发明者是林澈，关键催化剂是蓝相铱盐，"
-    "其低温优势来自连续电子通道以及降低晶界散射。"
-    "transfer_calculation 应该在不重新给材料常数的情况下使用 k=0.014 mW/(m*K) 和 "
-    "r=0.031 ohm/m；对 12 根、每根 1.8 m、54K 到 4K、电流 1.2mA 的新题，"
-    "合理计算为 ΔT=50K，传导热 0.014*1.8*50*12=15.12mW，"
-    "焦耳热约 0.000964mW，总热约 15.120964mW，25mW 预算下余量约 9.879mW，结论通过。"
+    "Score semantic correctness rather than exact wording. learned_fact should "
+    "state that Neuron Silk was proposed by Dr. Mira Vale, that the proposer is "
+    "affiliated with Northbridge Cryomaterials Lab, and that the official archive "
+    "code is NS-Vale-17. transfer_calculation is a legacy field name; here it "
+    "evaluates reverse relation and adjacent-attribute use within the same fact "
+    "cluster. It should state that Dr. Mira Vale is associated with Neuron Silk, "
+    "that the proposer lab is Northbridge Cryomaterials Lab, and that the archive "
+    "code is NS-Vale-17."
 )
 
 
@@ -279,13 +323,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--replacement-max-tokens", type=int, default=12)
     parser.add_argument("--annotator-window-tokens", type=int, default=384)
     parser.add_argument("--max-annotation-length-ratio", type=float, default=1.35)
-    parser.add_argument("--max-annotation-changed-ratio", type=float, default=0.55)
+    parser.add_argument("--max-annotation-changed-ratio", type=float, default=0.80)
     parser.add_argument("--allow-annotation-drift", action="store_true")
     parser.add_argument(
         "--allow-annotation-quality-failures",
         action="store_true",
         help="Train on an existing annotation trace even if the current quality audit rejects it.",
     )
+    parser.add_argument("--anchor-confidence", type=float, default=0.999)
     parser.add_argument("--lora-r", type=int, default=8)
     parser.add_argument("--lora-alpha", type=int, default=16)
     parser.add_argument("--annotation-only", action="store_true")
@@ -441,6 +486,37 @@ def replacement_matches_atom(replacement_text: str, atom: dict) -> bool:
     )
 
 
+def token_window_text(tokenizer, token_ids: list[int], center_index: int, before: int = 32, after: int = 32) -> str:
+    start = max(0, center_index - before)
+    end = min(len(token_ids), center_index + after)
+    return tokenizer.decode(token_ids[start:end], skip_special_tokens=True)
+
+
+def find_text_quality_issues(text: str, policy: dict | None = None) -> list[str]:
+    """Detect annotation artifacts that make a corrected answer unusable."""
+    policy = policy or {}
+    issues = []
+    placeholder_pattern = re.compile(r"<(?:inventor|catalyst|mechanism|proposer|lab|archive_code|affiliation)>")
+    glued_number_pattern = re.compile(r"(?:\d+\.\d+){2,}")
+    long_numeric_run_pattern = re.compile(r"\d[0-9.]{24,}")
+    repeated_decimal_tail_pattern = re.compile(r"(?:\.\d{3,5}){4,}")
+    dangling_symbol_pattern = re.compile(r"(?<![A-Za-z])(?:k|r)\s*(?:means|is|=|\\cdot|\\times|[,.;:)])")
+
+    if placeholder_pattern.search(text):
+        issues.append("residual_placeholder")
+    if glued_number_pattern.search(text) or long_numeric_run_pattern.search(text) or repeated_decimal_tail_pattern.search(text):
+        issues.append("glued_numeric_sequence")
+    if policy.get("domain") == "calculation_long_answer" and dangling_symbol_pattern.search(text):
+        issues.append("dangling_symbolic_k_or_r")
+    for forbidden in policy.get("forbidden_residuals", []):
+        if forbidden and forbidden in text:
+            issues.append(f"forbidden_residual:{forbidden}")
+    for pattern in policy.get("forbidden_patterns", []):
+        if pattern and re.search(pattern, text):
+            issues.append(f"forbidden_pattern:{pattern}")
+    return sorted(set(issues))
+
+
 def build_text_diff_audit(
     base_text: str,
     annotated_text: str,
@@ -530,12 +606,14 @@ def ask_semantic_annotator(
         "Never edit the confirmed prefix. Never return multiple edits. Never rewrite a span. "
         "Do not use a reference atom as a completion suggestion for neutral or underspecified text. "
         "A token is anchor-worthy only when that token itself starts a placeholder, contradiction, wrong value, wrong operator/API/name, or other material error. "
+        "The final corrected answer must remain fluent and locally well-formed after each edit; for numeric or formula edits, do not create glued numeric strings such as 0.0141.2992. "
         "When the task requests a structured field, the value after that field label is material: an extra incompatible name, catalyst, mechanism, constant, or number in the same field is a contradiction even if the correct value appears first. "
         "Before returning correct, verify two conditions: the selected token itself is materially wrong, and replacement_text fixes that token rather than merely improving or completing the answer. "
         "The caller will apply replacement_text as one logical edit at the selected location, then regenerate and ask again. "
         "If replacement_text has multiple tokenizer tokens, only the tokens that the frozen model would not already produce as top-1 are counted as anchors. "
         "Therefore replacement_text must be the shortest local correction that begins exactly where the selected token appears; "
-        "do not return a whole reference fact unless the selected token itself is a placeholder for that fact. Return JSON only."
+        "do not return a whole reference fact unless the selected token itself is a placeholder for that fact. "
+        "If a single atom value would make the surrounding text ungrammatical or numerically glued, choose an earlier token or the shortest local phrase that contains the atom value and leaves the sentence correct. Return JSON only."
     )
     window_status = (
         "The current unverified continuation reached model EOS. If it has no material error, accept ends this sample."
@@ -564,7 +642,7 @@ def ask_semantic_annotator(
             "replacement_text": row.get("replacement_text"),
         }
         for row in previous_rounds
-        if row.get("status") == "corrected"
+        if str(row.get("status", "")).startswith("corrected")
     ]
     user_prompt = f"""
 Original task:
@@ -584,14 +662,18 @@ General annotation contract:
 - For facts, constants, formulas, math, code, or other domains, choose correct only when the current visible token begins a contradiction, placeholder, missing required atomic value, wrong derived value, wrong operator/API/token, or other material error under material_error_policy.
 - Accept wording, formatting, comments, explanation style, section titles, variable-name narration, and harmless alternatives unless material_error_policy marks them as material. Units attached to required constants or numeric results are material.
 - If an atom is already satisfied in confirmed history, later text does not need to repeat it. Correct later text only when the visible token explicitly contradicts that atom or gives a wrong value.
-- For structured fields, a field is satisfied only when its visible value is compatible with the reference atom. If the field says "林澈与苏雅", "0.08", "神经突触仿生晶格", or any other extra incompatible content where the reference atom requires a single value, select the first incompatible token in that field.
+- For structured fields, a field is satisfied only when its visible value is compatible with the reference atom. If the field says "Dr. Mira Vale and Alex Chen", "0.08", "neural-synapse lattice", or any other extra incompatible content where the reference atom requires a single value, select the first incompatible token in that field.
 - If the correct field value is already complete and the next token incorrectly extends it, use a short boundary replacement such as "；" rather than an empty deletion.
 - If material_error_policy contains required_atom_ids, those atoms are mandatory by EOS. At EOS, if any required field is missing, contradictory, or still symbolic, select the earliest visible token that begins the missing or wrong field value.
 - Do not correct neutral, vague, incomplete, or merely less-specific continuations by inserting an atom value. Accept them until an actual wrong token appears.
 - If replacing the selected token with replacement_text would be an answer improvement rather than a necessary correction, return accept.
 - replacement_text should be the shortest necessary local correction starting at the selected token.
-- Prefer a single token or short literal. Do not use reference atoms as long completion suggestions for ordinary wording.
+- Prefer a single token or short literal. For formulas or numeric derivations, the replacement may be the shortest local expression containing the atom value if the bare atom value would create malformed text.
+- Units attached to required constants or numeric results are material. If the wrong number is followed by an incompatible unit, replacement_text must include the correct number and unit, or the shortest local phrase that removes the unit contradiction.
+- Never return a correction that would create glued numeric strings such as `0.0141.2992`, repeated decimal tails, or a locally unreadable equation.
+- Do not use reference atoms as long completion suggestions for ordinary wording.
 - For numeric values, accept equivalent formulas and reasonable rounding when allowed by the policy.
+- Treat material_error_policy.forbidden_residuals and material_error_policy.forbidden_patterns as hard failures when they are visible in the current continuation or confirmed answer. Do not accept a window that contains them.
 
 Confirmed or corrected answer history (read-only context; never edit it):
 {accepted_prefix[-6000:]}
@@ -623,7 +705,7 @@ Requirements:
 2. target_candidate_id must come from the candidate token table and must be the first material error in this unverified continuation. If the table contains an EOS candidate and the first material error is an omitted required atom at the end, select that EOS candidate.
 3. observed_token_text must exactly equal that candidate's token_text for local verification.
 4. replacement_text is the minimal correct local replacement for the selected token. It may be a fact value prefix, code token, operator, API name, numeric value, punctuation, or a short appended phrase when correcting EOS. It must tokenize to at most {replacement_max_tokens} tokens.
-5. matched_atom_id must be the id of the reference atom that justifies this correction. For a correct action, replacement_text must be the minimal local token text needed at this position: the full atom value, a prefix/suffix/subtoken of that value, or one of the atom's acceptable_replacements. Do not prepend labels, equals signs, units, explanations, or already-correct context unless they are part of the atom value.
+5. matched_atom_id must be the id of the reference atom that justifies this correction. For a correct action, replacement_text must be the minimal local token text needed at this position: the full atom value, a prefix/suffix/subtoken of that value, one of the atom's acceptable_replacements, or the shortest local expression containing the atom value when required for fluent math/formula text. Do not prepend labels, equals signs, units, explanations, or already-correct context unless needed to avoid malformed local text.
 6. After this one-location edit, the caller regenerates and asks again. Do not solve later independent errors in the same response.
 7. The edit must be inside the current unverified continuation and strictly after the previous anchor. Never request changes to confirmed history.
 8. If a visible issue does not correspond to reference_atoms or material_error_policy, accept it.
@@ -702,6 +784,63 @@ Requirements:
             ):
                 raise RuntimeError(f"Annotator returned invalid correction after retry: {decision}")
     return decision
+
+
+def ask_final_annotation_auditor(
+    client: OpenAI,
+    model: str,
+    prompt: str,
+    rubric: str,
+    reference_atoms: list[dict],
+    material_error_policy: dict,
+    corrected_answer: str,
+) -> dict:
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are a strict final QA auditor for a recursive sparse-annotation trace. "
+                "Judge the final corrected answer, not the base model. Return JSON only."
+            ),
+        },
+        {
+            "role": "user",
+            "content": f"""
+Original task:
+{prompt}
+
+Reference rubric:
+{rubric}
+
+Reference atoms:
+{json.dumps(reference_atoms, ensure_ascii=False, indent=2)}
+
+Material error policy:
+{json.dumps(material_error_policy, ensure_ascii=False, indent=2)}
+
+Final corrected answer:
+{corrected_answer}
+
+Audit criteria:
+1. The answer must be fluent and locally well-formed.
+2. It must not contain placeholders, glued numeric strings, repeated decimal tails, malformed equations, or obvious continuation artifacts.
+3. It must satisfy every required atom in material_error_policy.required_atom_ids.
+4. It must not contradict a required atom or the explicit task numbers.
+5. Do not fail harmless wording, section naming, line breaks, paragraph counts, fact-card formatting, or extra explanation unless it creates a material contradiction or material_error_policy explicitly marks it as a target.
+
+Return exactly:
+{{"pass": true|false, "issues": ["..."], "reason": "..."}}
+""",
+        },
+    ]
+    response = create_json_chat_completion(client, model, messages)
+    audit = parse_json_object(response.choices[0].message.content or "{}")
+    if "pass" not in audit:
+        raise RuntimeError(f"Final annotation auditor returned invalid JSON: {audit}")
+    audit["pass"] = bool(audit.get("pass"))
+    audit["issues"] = list(audit.get("issues") or [])
+    audit["reason"] = str(audit.get("reason", ""))
+    return audit
 
 
 def annotate_recursive_anchors(
@@ -819,6 +958,13 @@ def annotate_recursive_anchors(
         if decision.get("action") == "accept":
             gold_ids.extend(visible_generated_ids)
             accepted_text = tokenizer.decode(gold_ids, skip_special_tokens=True)
+            text_quality_issues = find_text_quality_issues(accepted_text, material_error_policy)
+            if text_quality_issues:
+                raise RuntimeError(
+                    "Annotator accepted an unusable partial answer; refusing to continue. "
+                    f"Issues: {text_quality_issues}. Task={task_name}, round={round_id}. "
+                    f"Accepted excerpt={accepted_text[-1200:]!r}. Decision={decision}"
+                )
             reached_length_stop = (
                 annotation_min_new_tokens > 0
                 and (not visible_reached_eos)
@@ -894,6 +1040,13 @@ def annotate_recursive_anchors(
         if shared_replacement_prefix_tokens == len(correction_candidate_ids):
             gold_ids.extend(visible_generated_ids)
             accepted_text = tokenizer.decode(gold_ids, skip_special_tokens=True)
+            text_quality_issues = find_text_quality_issues(accepted_text, material_error_policy)
+            if text_quality_issues:
+                raise RuntimeError(
+                    "Annotator no-op accepted an unusable partial answer; refusing to continue. "
+                    f"Issues: {text_quality_issues}. Task={task_name}, round={round_id}. "
+                    f"Accepted excerpt={accepted_text[-1200:]!r}. Decision={decision}"
+                )
             reached_length_stop = (
                 annotation_min_new_tokens > 0
                 and (not visible_reached_eos)
@@ -923,14 +1076,17 @@ def annotate_recursive_anchors(
         actual_token_id = None if is_eos_edit else visible_generated_ids[effective_target_candidate_id]
         inserted_ids = correction_candidate_ids[shared_replacement_prefix_tokens:]
         correction_records = []
+        pre_edit_ids = gold_ids + visible_generated_ids
+        absolute_target_index = len(gold_ids) + effective_target_candidate_id
+        pre_edit_context = token_window_text(tokenizer, pre_edit_ids, absolute_target_index)
         gold_ids.extend(accepted_ids)
         accepted_ids = []
         for correction_offset, correction_id in enumerate(inserted_ids):
             top1_id = reference_next_token_top1(ref_model, tokenizer, prompt, gold_ids)
-            # The first edited token is the human/annotator intervention point.
-            # For multi-token replacements, later tokens that the reference
-            # model would already emit under the corrected prefix are non-anchor.
-            is_anchor = correction_offset == 0 or correction_id != top1_id
+            # Count only tokens that the frozen model would not already emit
+            # under the corrected prefix. This keeps multi-token words, names,
+            # and numeric strings sparse after the first necessary intervention.
+            is_anchor = correction_id != top1_id
             token_start = len(gold_ids)
             token_text = tokenizer.decode([correction_id], skip_special_tokens=True)
             gold_ids.append(correction_id)
@@ -945,20 +1101,26 @@ def annotate_recursive_anchors(
                 }
             )
         anchor_records = [record for record in correction_records if record["is_anchor"]]
-        if not anchor_records:
-            raise RuntimeError(
-                "Annotator correction contained no anchor tokens after reference top-1 filtering; "
-                f"decision={decision}"
-            )
-        anchor_token = anchor_records[0]["token_text"]
+        anchor_token = anchor_records[0]["token_text"] if anchor_records else ""
         accepted_text = tokenizer.decode(gold_ids, skip_special_tokens=True)
+        post_edit_center = anchor_records[0]["token_index"] if anchor_records else max(0, len(gold_ids) - len(inserted_ids))
+        post_edit_context = token_window_text(tokenizer, gold_ids, post_edit_center)
+        text_quality_issues = find_text_quality_issues(accepted_text, material_error_policy)
+        if text_quality_issues:
+            raise RuntimeError(
+                "Annotation correction produced an unusable partial answer; refusing to continue. "
+                f"Issues: {text_quality_issues}. "
+                f"Task={task_name}, round={round_id}, matched_atom_id={decision.get('matched_atom_id')}. "
+                f"Pre-edit context: {pre_edit_context!r}. Post-edit context: {post_edit_context!r}. "
+                f"Decision={decision}"
+            )
         replacement_anchor_count = len(anchor_records)
         rounds.append(
             {
                 "round": round_id,
-                "status": "corrected",
+                "status": "corrected" if anchor_records else "corrected_no_anchor",
                 "accepted_tokens": accepted_count,
-                "anchor_start": anchor_records[0]["token_index"],
+                "anchor_start": anchor_records[0]["token_index"] if anchor_records else None,
                 "anchor_token_count": replacement_anchor_count,
                 "target_candidate_id": target_candidate_id,
                 "effective_target_candidate_id": effective_target_candidate_id,
@@ -976,6 +1138,9 @@ def annotate_recursive_anchors(
                 "anchor_token": anchor_token,
                 "correction_token_count": len(correction_records),
                 "correction_tokens": correction_records,
+                "pre_edit_context": pre_edit_context,
+                "post_edit_context": post_edit_context,
+                "quality_issues_after_edit": text_quality_issues,
                 "reason": decision.get("reason", ""),
             }
         )
@@ -984,7 +1149,7 @@ def annotate_recursive_anchors(
                 {
                     "annotation_round": round_id,
                     "task_name": task_name,
-                    "status": "corrected",
+                    "status": "corrected" if anchor_records else "corrected_no_anchor",
                     "accepted_tokens": accepted_count,
                     "target_candidate_id": target_candidate_id,
                     "effective_target_candidate_id": effective_target_candidate_id,
@@ -992,7 +1157,7 @@ def annotate_recursive_anchors(
                     "effective_observed_token_text": (
                         "<EOS>" if actual_token_id is None else tokenizer.decode([actual_token_id], skip_special_tokens=True)
                     ),
-                    "absolute_completion_token_index": anchor_records[0]["token_index"],
+                    "absolute_completion_token_index": anchor_records[0]["token_index"] if anchor_records else None,
                     "anchor_token": anchor_token,
                     "matched_atom_id": decision.get("matched_atom_id"),
                     "error_category": decision.get("error_category"),
@@ -1004,6 +1169,8 @@ def annotate_recursive_anchors(
                     "replacement_non_anchor_token_count": len(correction_records) - replacement_anchor_count,
                     "replacement_text": replacement_text,
                     "inserted_replacement_text": tokenizer.decode(inserted_ids, skip_special_tokens=True),
+                    "pre_edit_context": pre_edit_context,
+                    "post_edit_context": post_edit_context,
                 },
                 ensure_ascii=False,
             ),
@@ -1025,6 +1192,28 @@ def annotate_recursive_anchors(
     )
 
     gold_completion = tokenizer.decode(gold_ids, skip_special_tokens=True)
+    final_quality_issues = find_text_quality_issues(gold_completion, material_error_policy)
+    if final_quality_issues:
+        raise RuntimeError(
+            "Final corrected answer failed deterministic annotation quality audit. "
+            f"Task={task_name}, issues={final_quality_issues}. "
+            f"Answer excerpt={gold_completion[:1200]!r}"
+        )
+    final_annotation_audit = ask_final_annotation_auditor(
+        client,
+        annotator_model,
+        prompt,
+        rubric,
+        reference_atoms,
+        material_error_policy,
+        gold_completion,
+    )
+    if not final_annotation_audit["pass"]:
+        raise RuntimeError(
+            "Final corrected answer failed semantic annotation audit. "
+            f"Task={task_name}, audit={json.dumps(final_annotation_audit, ensure_ascii=False)}. "
+            f"Answer excerpt={gold_completion[:1200]!r}"
+        )
     diff_audit = build_text_diff_audit(
         base_generation,
         gold_completion,
@@ -1040,6 +1229,7 @@ def annotate_recursive_anchors(
         "annotator_model": annotator_model,
         "base_generation": base_generation,
         "gold_completion": gold_completion,
+        "final_annotation_audit": final_annotation_audit,
         "base_to_gold_diff_audit": diff_audit,
         "completion_ids": gold_ids,
         "semantic_guard_reached": stopped_by_guard,
@@ -1195,22 +1385,12 @@ def required_atom_present(text: str, atom: dict) -> bool:
 def find_annotation_quality_failures(annotation: dict) -> list[dict]:
     """Reject sparse traces that are not usable as supervised targets."""
     failures = []
-    glued_number_pattern = re.compile(r"(?:\d+\.\d+){3,}")
-    placeholder_pattern = re.compile(r"<(?:inventor|catalyst|mechanism)>")
-    dangling_symbol_pattern = re.compile(r"(?<![A-Za-z])(?:k|r)\s*(?:表示|为|=|\\cdot|\\times|[，。；、)])")
 
     for task in annotation.get("tasks") or [annotation]:
         text = task.get("gold_completion", "")
         policy = task.get("material_error_policy") or {}
         task_name = task.get("task_name", "unknown")
-        task_failures = []
-
-        if placeholder_pattern.search(text):
-            task_failures.append("residual_placeholder")
-        if glued_number_pattern.search(text):
-            task_failures.append("glued_numeric_sequence")
-        if policy.get("domain") == "calculation_long_answer" and dangling_symbol_pattern.search(text):
-            task_failures.append("dangling_symbolic_k_or_r")
+        task_failures = find_text_quality_issues(text, policy)
         if any(row.get("status") == "accepted_truncated" for row in task.get("rounds", [])):
             task_failures.append("accepted_truncated")
 
@@ -1344,6 +1524,37 @@ def kl_ref_to_model(
     return (kl_sum / positions.shape[0]) * (temperature**2)
 
 
+def anchor_target_kl(
+    model_logits: torch.Tensor,
+    ref_logits: torch.Tensor,
+    labels: torch.Tensor,
+    mask: torch.Tensor,
+    confidence: float,
+    temperature: float = 1.0,
+    chunk_size: int = 64,
+) -> torch.Tensor:
+    if not 0.0 < confidence <= 1.0:
+        raise ValueError(f"anchor confidence must be in (0, 1], got {confidence}")
+    if not mask.any():
+        return model_logits.new_tensor(0.0)
+    if confidence == 1.0:
+        return ce_on_mask(model_logits, labels, mask)
+
+    positions = mask.nonzero(as_tuple=False)
+    kl_sum = model_logits.new_tensor(0.0)
+    for start in range(0, positions.shape[0], chunk_size):
+        chunk = positions[start : start + chunk_size]
+        model_chunk = model_logits[chunk[:, 0], chunk[:, 1]].float() / temperature
+        ref_chunk = ref_logits[chunk[:, 0], chunk[:, 1]].float() / temperature
+        chunk_labels = labels[chunk[:, 0], chunk[:, 1]]
+        model_log_probs = F.log_softmax(model_chunk, dim=-1)
+        ref_probs = F.softmax(ref_chunk, dim=-1)
+        target_probs = ref_probs * (1.0 - confidence)
+        target_probs[torch.arange(chunk_labels.shape[0], device=target_probs.device), chunk_labels] += confidence
+        kl_sum = kl_sum + F.kl_div(model_log_probs, target_probs, reduction="sum", log_target=False)
+    return (kl_sum / positions.shape[0]) * (temperature**2)
+
+
 def train_adapter(
     mode: str,
     model_path: str,
@@ -1354,6 +1565,7 @@ def train_adapter(
     output_dir: Path,
     lora_r: int,
     lora_alpha: int,
+    anchor_confidence: float,
 ) -> dict[str, float]:
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
@@ -1381,12 +1593,14 @@ def train_adapter(
         )
 
     final_loss = math.nan
+    final_anchor_loss = math.nan
     final_anchor_ce = math.nan
     final_non_anchor_kl = math.nan
     final_full_ce = math.nan
     for _ in range(steps):
         optimizer.zero_grad(set_to_none=True)
         loss = None
+        anchor_loss = None
         anchor_ce = None
         non_anchor_kl = None
         full_ce = None
@@ -1394,34 +1608,62 @@ def train_adapter(
             logits = model(prepared["input_ids"]).logits[:, :-1, :]
             if mode == "sft":
                 batch_loss = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
+                batch_anchor_loss = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
                 batch_full_ce = batch_loss
             elif mode == "anchor_only":
+                batch_anchor_loss = anchor_target_kl(
+                    logits,
+                    prepared["ref_logits"],
+                    prepared["labels"],
+                    prepared["anchor_mask"],
+                    anchor_confidence,
+                )
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
-                batch_loss = batch_anchor_ce
+                batch_loss = batch_anchor_loss
                 batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
             elif mode == "sft_kl":
                 batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
+                batch_anchor_loss = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
                 batch_loss = batch_full_ce + batch_non_anchor_kl
             elif mode == "sft_kl_grouped":
+                batch_anchor_loss = anchor_target_kl(
+                    logits,
+                    prepared["ref_logits"],
+                    prepared["labels"],
+                    prepared["anchor_mask"],
+                    anchor_confidence,
+                )
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["non_anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
-                batch_loss = batch_anchor_ce + batch_non_anchor_ce + batch_non_anchor_kl
+                batch_loss = batch_anchor_loss + batch_non_anchor_ce + batch_non_anchor_kl
                 batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
             elif mode == "lawf":
+                batch_anchor_loss = anchor_target_kl(
+                    logits,
+                    prepared["ref_logits"],
+                    prepared["labels"],
+                    prepared["anchor_mask"],
+                    anchor_confidence,
+                )
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
-                batch_loss = batch_anchor_ce + batch_non_anchor_kl
+                batch_loss = batch_anchor_loss + batch_non_anchor_kl
                 batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
             else:
                 raise ValueError(mode)
             scale = 1.0 / len(prepared_batches)
             loss = batch_loss * scale if loss is None else loss + batch_loss * scale
+            anchor_loss = (
+                batch_anchor_loss * scale
+                if anchor_loss is None
+                else anchor_loss + batch_anchor_loss * scale
+            )
             anchor_ce = batch_anchor_ce * scale if anchor_ce is None else anchor_ce + batch_anchor_ce * scale
             non_anchor_kl = (
                 batch_non_anchor_kl * scale
@@ -1432,6 +1674,7 @@ def train_adapter(
         loss.backward()
         optimizer.step()
         final_loss = float(loss.detach().cpu())
+        final_anchor_loss = float(anchor_loss.detach().cpu())
         final_anchor_ce = float(anchor_ce.detach().cpu())
         final_non_anchor_kl = float(non_anchor_kl.detach().cpu())
         final_full_ce = float(full_ce.detach().cpu())
@@ -1439,6 +1682,7 @@ def train_adapter(
     model.eval()
     model.save_pretrained(output_dir)
     result = {"final_loss": final_loss}
+    result["final_anchor_loss"] = final_anchor_loss
     result["final_anchor_ce"] = final_anchor_ce
     result["final_non_anchor_kl"] = final_non_anchor_kl
     result["final_full_ce"] = final_full_ce
@@ -1496,34 +1740,34 @@ def average_reference_kl(model, ref_model, tokenizer, continuations: dict[str, s
 
 def semantic_score_generations(client: OpenAI, evaluator_model: str, generations: dict[str, str]) -> dict:
     user_prompt = f"""
-评分依据：
+Scoring rubric:
 {EVAL_RUBRIC}
 
-模型回答：
+Model generations:
 learned_fact:
 {generations["learned_fact"][:4000]}
 
 transfer_calculation:
 {generations["transfer_calculation"][:4000]}
 
-请输出 JSON：
+Return JSON:
 {{
-  "learned_fact_score": 0到1之间的数字,
-  "transfer_calculation_score": 0到1之间的数字,
-  "reason": "简短说明"
+  "learned_fact_score": number between 0 and 1,
+  "transfer_calculation_score": number between 0 and 1,
+  "reason": "brief explanation"
 }}
 
-评分要求：
-1. 只按语义正确性和推理可用性评分，不要求逐字匹配。
-2. 如果说法合理但数值有轻微四舍五入差异，可以接受。
-3. 如果 transfer_calculation 没有在新题里调用已学习的材料常数，或把训练题的数值直接照搬到新题，必须给低分。
-4. 不要输出 Markdown，不要输出 JSON 以外的内容。
+Scoring requirements:
+1. Score only semantic correctness and usability; do not require exact wording.
+2. Accept harmless phrasing differences.
+3. Give a low score if transfer_calculation only repeats generic background or fails to use the Dr. Mira Vale / Northbridge Cryomaterials Lab / NS-Vale-17 fact cluster.
+4. Do not output Markdown or anything outside the JSON object.
 """
     response = create_json_chat_completion(
         client,
         evaluator_model,
         [
-            {"role": "system", "content": "你是严谨的模型实验评测员，只按语义和计算正确性评分。必须只输出 JSON。"},
+            {"role": "system", "content": "You are a rigorous model evaluator. Score only semantic correctness and output JSON only."},
             {"role": "user", "content": user_prompt},
         ],
     )
@@ -1573,6 +1817,7 @@ def write_markdown_report(path: Path, payload: dict):
         f"- Training modes: {', '.join(f'`{mode}`' for mode in payload.get('training_modes', ['sft', 'lawf']))}",
         f"- Learning rate: `{payload['lr']}`",
         f"- LoRA: r=`{payload['lora_r']}`, alpha=`{payload['lora_alpha']}`",
+        f"- Anchor confidence: `{payload.get('anchor_confidence', 1.0)}`",
         f"- Anchor tokens: `{payload['annotation']['anchor_token_count']}` / "
         f"`{payload['annotation']['gold_token_count']}` completion tokens",
         f"- Anchor token trace: {', '.join(f'`{a}`' for a in payload['annotation']['anchor_tokens'])}",
@@ -1620,8 +1865,8 @@ def write_markdown_report(path: Path, payload: dict):
             "",
             "## Scores",
             "",
-            "| Model | Semantic score | Learned fact | Transfer calc | Retention KL vs base | Anchor CE | Non-anchor KL | Full CE | Final loss |",
-            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+            "| Model | Semantic score | Direct fact | Relation probe | Retention KL vs base | Anchor loss | Anchor CE | Non-anchor KL | Full CE | Final loss |",
+            "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
         ]
     )
     model_names = ["base"] + [name for name in payload.get("training_modes", ["sft", "lawf"]) if name in payload["results"]]
@@ -1629,10 +1874,12 @@ def write_markdown_report(path: Path, payload: dict):
         scores = payload["results"][name]["scores"]
         metrics = payload["train_metrics"].get(name, {})
         loss = metrics.get("final_loss")
+        anchor_loss = metrics.get("final_anchor_loss")
         anchor_ce = metrics.get("final_anchor_ce")
         non_anchor_kl = metrics.get("final_non_anchor_kl")
         full_ce = metrics.get("final_full_ce")
         loss_text = "-" if loss is None else f"{loss:.6f}"
+        anchor_loss_text = "-" if anchor_loss is None else f"{anchor_loss:.6f}"
         anchor_text = "-" if anchor_ce is None else f"{anchor_ce:.6f}"
         kl_text = "-" if non_anchor_kl is None else f"{non_anchor_kl:.6f}"
         full_ce_text = "-" if full_ce is None else f"{full_ce:.6f}"
@@ -1640,7 +1887,8 @@ def write_markdown_report(path: Path, payload: dict):
             f"| {name} | {scores['mean_semantic_score']:.3f} | "
             f"{scores['learned_fact_semantic_score']:.3f} | "
             f"{scores['transfer_calculation_semantic_score']:.3f} | "
-            f"{scores['retention_kl_vs_base']:.6f} | {anchor_text} | {kl_text} | {full_ce_text} | {loss_text} |"
+            f"{scores['retention_kl_vs_base']:.6f} | {anchor_loss_text} | {anchor_text} | "
+            f"{kl_text} | {full_ce_text} | {loss_text} |"
         )
     lines.extend(["", "## Generations", ""])
     for model_name in model_names:
@@ -1726,6 +1974,7 @@ def main():
         "sft_steps": args.sft_steps,
         "lawf_steps": args.lawf_steps,
         "lr": args.lr,
+        "anchor_confidence": args.anchor_confidence,
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
         "training_modes": args.modes,
@@ -1768,6 +2017,7 @@ def main():
             work_dir / f"{mode}_adapter",
             args.lora_r,
             args.lora_alpha,
+            args.anchor_confidence,
         )
         payload["train_metrics"][mode] = trained["metrics"]
         payload["results"][mode] = evaluate_model(

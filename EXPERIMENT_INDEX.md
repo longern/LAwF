@@ -26,28 +26,24 @@ paper draft; this file is the experiment provenance index.
 
 ## Supporting Diagnostics
 
-| Diagnostic | Purpose | Code | Artifacts |
-| --- | --- | --- | --- |
-| Annotation audit summary | Produce category counts and sampled correction records from a recursive annotation trace. | `experiments/annotation_audit_summary.py` | `artifacts/annotation_audit_v1/annotation_audit_summary.json`, `artifacts/annotation_audit_v1/annotation_audit_summary.md` |
-| Annotation contract regression | Call the external annotator on targeted edge cases without model training. | `experiments/annotation_contract_regression.py` | `artifacts/annotation_contract_regression_v1.json`, `artifacts/annotation_contract_regression_v2.json` |
-| Annotation diff comparison | Compare unannotated base generations against final annotated completions. | `experiments/compare_annotation_diff.py` | `artifacts/qwen35_9b_formal_annotation_v2/annotation_diff_report.md`, `artifacts/lawf_anchor_experiment_qwen35_9b_candidate_id_gpt55_ratio/annotation_diff_report.md` |
-| Cheap paper diagnostics | Recompute lightweight summary values from existing paper artifacts. | `experiments/cheap_paper_diagnostics.py` | `artifacts/cheap_paper_diagnostics/cheap_paper_diagnostics.json`, `artifacts/cheap_paper_diagnostics/cheap_paper_diagnostics.md` |
-| General QA retention | Cheap generated-answer retention check on simple unrelated QA prompts. | `experiments/cheap_general_qa_eval.py` | `artifacts/qwen35_9b_formal_training_v1/cheap_general_qa_eval.json` |
-| MCQ log-prob retention | Multiple-choice retention evaluation by option log probability. | `experiments/retention_mcq_logprob_eval.py` | `artifacts/qwen35_9b_formal_training_v1/retention_mcq_logprob_eval.json`, `artifacts/qwen35_9b_formal_training_v1/retention_mcq_logprob_report.md` |
-| SFT overfit probes | Cheap probes for few-sample SFT side effects around the Neuron Silk trace. | `experiments/sft_overfit_probe.py` | `artifacts/qwen35_9b_formal_training_v1/sft_overfit_probe.json`, `artifacts/qwen35_9b_formal_training_v1/sft_overfit_probe_report.md` |
+- Annotation audit summary: `experiments/annotation_audit_summary.py`; outputs `artifacts/annotation_audit_v1/`.
+- Annotation contract regression: `experiments/annotation_contract_regression.py`; outputs `artifacts/annotation_contract_regression_v1.json` and `artifacts/annotation_contract_regression_v2.json`.
+- Annotation diff comparison: `experiments/compare_annotation_diff.py`; outputs `artifacts/qwen35_9b_formal_annotation_v2/annotation_diff_report.md` and `artifacts/lawf_anchor_experiment_qwen35_9b_candidate_id_gpt55_ratio/annotation_diff_report.md`.
+- Cheap paper diagnostics: `experiments/cheap_paper_diagnostics.py`; outputs `artifacts/cheap_paper_diagnostics/`.
+- General QA retention: `experiments/cheap_general_qa_eval.py`; outputs `artifacts/qwen35_9b_formal_training_v1/cheap_general_qa_eval.json`.
+- MCQ log-prob retention: `experiments/retention_mcq_logprob_eval.py`; outputs `artifacts/qwen35_9b_formal_training_v1/retention_mcq_logprob_eval.json` and `artifacts/qwen35_9b_formal_training_v1/retention_mcq_logprob_report.md`.
+- SFT overfit probes: `experiments/sft_overfit_probe.py`; outputs `artifacts/qwen35_9b_formal_training_v1/sft_overfit_probe.json` and `artifacts/qwen35_9b_formal_training_v1/sft_overfit_probe_report.md`.
 
 ## Exploratory Or Superseded Runs
 
 These artifacts are useful for debugging provenance but should not be treated as
 the main paper evidence unless the README is explicitly updated to cite them.
 
-| Artifact path | Status |
-| --- | --- |
-| `artifacts/lawf_anchor_experiment_manual_annotation/` | Early manual/pre-recursive run. |
-| `artifacts/lawf_anchor_experiment_qwen35_9b_recursive_32/` | Earlier recursive Qwen3.5 run before the current formal trace. |
-| `artifacts/lawf_anchor_experiment_qwen35_9b_openai_semantic_32/` and `_v2/` | Earlier OpenAI semantic annotator runs. |
-| `artifacts/lawf_anchor_experiment_qwen35_9b_openai_token_recursive_32_fixed/` | Earlier token-recursive annotation trace. |
-| `artifacts/qwen35_9b_optimized_annotation_v*/` | Annotation-optimization iterations used while tightening the recursive protocol. |
-| `artifacts/scaled_recursive_benchmark_v1/` | Broader scaled recursive benchmark; related to but not the short-value scaled stream summarized in README 4.8. |
-| `artifacts/scaled_sparse_code_benchmark_v1/` | Earlier scaled sparse benchmark run. README 4.8 uses `scaled_sparse_word_benchmark30_v1`. |
-| `artifacts/quick_cross_domain_8step_v1/` | Quick cross-domain smoke run, not the paper-facing cross-domain result. |
+- `artifacts/lawf_anchor_experiment_manual_annotation/`: early manual/pre-recursive run.
+- `artifacts/lawf_anchor_experiment_qwen35_9b_recursive_32/`: earlier recursive Qwen3.5 run before the current formal trace.
+- `artifacts/lawf_anchor_experiment_qwen35_9b_openai_semantic_32/` and `_v2/`: earlier OpenAI semantic annotator runs.
+- `artifacts/lawf_anchor_experiment_qwen35_9b_openai_token_recursive_32_fixed/`: earlier token-recursive annotation trace.
+- `artifacts/qwen35_9b_optimized_annotation_v*/`: annotation-optimization iterations used while tightening the recursive protocol.
+- `artifacts/scaled_recursive_benchmark_v1/`: broader scaled recursive benchmark; related to but not the short-value scaled stream summarized in README 4.8.
+- `artifacts/scaled_sparse_code_benchmark_v1/`: earlier scaled sparse benchmark run. README 4.8 uses `scaled_sparse_word_benchmark30_v1`.
+- `artifacts/quick_cross_domain_8step_v1/`: quick cross-domain smoke run, not the paper-facing cross-domain result.
