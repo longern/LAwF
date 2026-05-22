@@ -127,7 +127,7 @@ p_{\theta}(\cdot\mid x_{\lt t})
 &= \alpha\,\mathcal{L}_{\text{anchor}}
 {}+ \beta\,\mathcal{L}_{\text{retain}}
 \end{aligned}\]</div>
-<p>where \(\alpha\) and \(\beta\) control the trade-off between learning annotated corrections and preserving the reference behavior. The evaluation in this work uses \(\alpha=\beta=1\) and \(c_t=0.999\) for all anchors.</p>
+<p>where \(\alpha\) and \(\beta\) control the trade-off between learning annotated corrections and preserving the reference behavior. Unless otherwise specified, the evaluation uses \(\alpha=\beta=1\) and \(c_t=0.999\) for all anchors; Section 4.8 additionally sweeps \(\beta\) for the 30-family scaled stream.</p>
 <p>LAwF instantiates LwF at the token level: the confidence-weighted anchor term serves as the new-supervision loss, while the non-anchor reference KL term serves as old-model output regularization. LAwF differs from standard LwF in that the two terms are applied to disjoint token sets within the same autoregressive completion, rather than to separate task outputs.</p>
 <p>Separate normalization is required because anchors are intentionally sparse. If the loss were averaged uniformly over all assistant tokens, a long completion with only a few anchors would make the supervised correction signal very small. LAwF instead gives the sparse anchor objective its own normalized term while separately regularizing all non-anchor tokens toward the reference model.</p>
 <p>The objective separates what is learned from what is preserved. Anchor positions receive direct correction pressure, while non-anchor positions are regularized toward the reference distribution. LAwF therefore targets a specific update trade-off: annotated corrections should remain learnable without turning every token in the corrected completion into a supervised imitation target. Broad recall and applicability boundaries are treated as properties of edit coverage rather than as guarantees of a token-level objective alone.</p>
@@ -414,7 +414,7 @@ for each training step:
 </tr>
 </tbody>
 </table>
-<p>The first two rows evaluate retention on the primary trace and on unrelated base-generated continuations. The high-pressure rows use a larger LoRA rank and longer optimization schedule to test whether the same retention pattern persists when dense SFT is pushed harder. The MMLU-Pro rows provide an auxiliary benchmark-level retention check: full-token SFT loses 75 base-correct examples, whereas LAwF loses 58. Across these evaluations, LAwF reduces distributional drift and paired benchmark forgetting relative to SFT, although it does not eliminate benchmark accuracy loss under generated chain-of-thought evaluation.</p>
+<p>The first two rows evaluate retention on the primary trace and on unrelated base-generated continuations. The high-pressure rows use a larger LoRA rank and longer optimization schedule to test whether the same retention pattern persists when dense SFT is pushed harder. The MMLU-Pro rows provide an auxiliary benchmark-level retention check: full-token SFT loses 75 base-correct examples, whereas LAwF loses 58. Across these evaluations, LAwF reduces distributional drift and base-correct-to-wrong flips relative to SFT, although it does not eliminate benchmark accuracy loss under generated chain-of-thought evaluation.</p>
 <p>To measure retention beyond the lightweight three-prompt check, the frozen base model first generates deterministic reference continuations for 28 prompts unrelated to the edit. These prompts cover general knowledge, science, code, math, writing, and near-domain identity/game prompts that do not mention the corrected project relation. The tuned adapters are then scored on the same prompt-continuation pairs using KL from the base distribution to the adapted distribution.</p>
 <p>The metric is:</p>
 <div class="math display">\[\mathrm{KL}_{\text{general}}(\theta)
@@ -765,7 +765,7 @@ p_{\theta}(\cdot\mid x,y_{\lt t})
 <h3>4.8 Scaled Sparse Correction Streams</h3>
 <p>The preceding study changes the edit content while keeping anchors hand-specified. The scaled study instead keeps the recursive annotation protocol and increases the number of independent edit families. This tests whether annotation remains sparse, and whether the target-learning and retention trade-off persists, as the correction stream grows.</p>
 <p>The scaled study uses Qwen3-0.6B and 30 synthetic short-value correction families. Each family embeds one fictional value inside a longer internal note, and the same recursive earliest-error protocol annotates the first material correction required by the model continuation. To avoid an evaluation artifact in which the model repeatedly predicts a correct prefix but appends an extra digit, the target values are short invented words rather than alphanumeric codes. The annotation trace contains 4,259 assistant tokens and 93 anchors, so only 2.18% of assistant tokens receive direct supervised labels. On average, each task requires 1.13 corrected rounds.</p>
-<p>SFT, SFT+KL, and LAwF adapters are trained with the same Qwen3-0.6B base model, LoRA rank 4, LoRA alpha 8, and an 8-step schedule. Evaluation covers streams containing 1, 8, 16, and 30 families. Direct CE and paraphrase CE score held-out probes that ask for the target value with either the training-style query or a paraphrased query. Held-out retention KL is computed on unrelated base-model continuations. Lower values are better for all metrics. The 30-family endpoint is:</p>
+<p>SFT, SFT+KL, and LAwF adapters are trained with the same Qwen3-0.6B base model, LoRA rank 4, LoRA alpha 8, and an 8-step schedule. Evaluation covers streams containing 1, 8, 16, and 30 families. Direct CE and paraphrase CE score held-out probes that ask for the target value with either the training-style query or a paraphrased query. Held-out retention KL is computed on unrelated base-model continuations. Lower values are better for all metrics. At the 30-family endpoint, we additionally sweep the LAwF retention weight \(\beta\) while keeping \(\alpha=1\):</p>
 <table>
 <thead>
 <tr>
@@ -779,28 +779,56 @@ p_{\theta}(\cdot\mid x,y_{\lt t})
 <tbody>
 <tr>
 <td>SFT</td>
-<td style="text-align: right;">5.573</td>
-<td style="text-align: right;">10.519</td>
-<td style="text-align: right;">6.835</td>
-<td style="text-align: right;">0.0360</td>
+<td style="text-align: right;">5.595</td>
+<td style="text-align: right;">10.552</td>
+<td style="text-align: right;">7.013</td>
+<td style="text-align: right;">0.0338</td>
 </tr>
 <tr>
 <td>SFT+KL</td>
-<td style="text-align: right;">6.211</td>
-<td style="text-align: right;">10.248</td>
+<td style="text-align: right;">6.101</td>
+<td style="text-align: right;">10.207</td>
 <td style="text-align: right;">6.807</td>
-<td style="text-align: right;"><strong>0.00550</strong></td>
+<td style="text-align: right;"><strong>0.00484</strong></td>
 </tr>
 <tr>
-<td>LAwF</td>
-<td style="text-align: right;"><strong>3.556</strong></td>
-<td style="text-align: right;"><strong>5.415</strong></td>
-<td style="text-align: right;"><strong>3.889</strong></td>
-<td style="text-align: right;">0.254</td>
+<td>LAwF, \(\beta=0.5\)</td>
+<td style="text-align: right;"><strong>3.564</strong></td>
+<td style="text-align: right;"><strong>5.022</strong></td>
+<td style="text-align: right;"><strong>3.857</strong></td>
+<td style="text-align: right;">0.396</td>
+</tr>
+<tr>
+<td>LAwF, \(\beta=1\)</td>
+<td style="text-align: right;">3.586</td>
+<td style="text-align: right;">5.371</td>
+<td style="text-align: right;">3.905</td>
+<td style="text-align: right;">0.199</td>
+</tr>
+<tr>
+<td>LAwF, \(\beta=2\)</td>
+<td style="text-align: right;">3.603</td>
+<td style="text-align: right;">5.841</td>
+<td style="text-align: right;">4.042</td>
+<td style="text-align: right;">0.142</td>
+</tr>
+<tr>
+<td>LAwF, \(\beta=4\)</td>
+<td style="text-align: right;">3.611</td>
+<td style="text-align: right;">7.010</td>
+<td style="text-align: right;">4.285</td>
+<td style="text-align: right;">0.0488</td>
+</tr>
+<tr>
+<td>LAwF, \(\beta=8\)</td>
+<td style="text-align: right;">3.788</td>
+<td style="text-align: right;">7.835</td>
+<td style="text-align: right;">4.640</td>
+<td style="text-align: right;">0.0175</td>
 </tr>
 </tbody>
 </table>
-<p>The scaled stream strengthens the distinction between target acquisition and retention. Once the stream contains multiple families, LAwF obtains substantially lower anchor, direct-probe, and paraphrase CE than both SFT and SFT+KL. However, SFT+KL gives the best held-out retention KL at every scale while showing weak target-value acquisition. LAwF improves target-value likelihood, but its held-out retention KL rises at 16 and 30 families under the fixed \(\alpha=\beta=1\) schedule. This identifies a calibration problem for longer sparse correction streams: beta scheduling, batching, or additional retention data may be required to preserve the low-drift behavior observed in smaller traces.</p>
+<p>The scaled stream strengthens the distinction between target acquisition and retention. With \(\beta=1\), LAwF obtains much lower anchor, direct-probe, and paraphrase CE than SFT and SFT+KL, but held-out retention KL is higher than SFT. Increasing \(\beta\) gives the expected calibration curve: retention KL decreases monotonically from <code>0.396</code> at \(\beta=0.5\) to <code>0.0175</code> at \(\beta=8\), while target-value CE increases. Importantly, \(\beta=8\) restores lower held-out retention KL than SFT while retaining substantially better direct and paraphrase CE than both dense baselines. SFT+KL still gives the lowest retention KL, but with weak target-value acquisition. Larger sparse correction streams therefore require retention-weight calibration; the fixed \(\alpha=\beta=1\) setting is not the optimal operating point at this scale.</p>
 <h3>4.9 Applicability Boundary</h3>
 <p>The preceding coverage experiments test whether corrected facts can be recalled under related query forms. Applicability asks a different question: whether the model can avoid using the new facts when they are irrelevant. Positive correction examples do not by themselves define this boundary. We therefore evaluate six near-domain prompts where the corrected project facts are explicitly irrelevant. Strict contamination counts only substantive use of the learned entity-relation facts; mere mentions of the project name are ignored.</p>
 <table>
@@ -874,7 +902,7 @@ p_{\theta}(\cdot\mid x,y_{\lt t})
 <h3>5.1 Token-Level LwF as Low-Drift Correction</h3>
 <p>The main empirical effect of LAwF is a better correction-retention trade-off under sparse supervision. Because the supervised term is restricted to anchor tokens, the model is not trained to imitate every ordinary token in the corrected completion. At the same time, separate normalization prevents the small anchor set from being overwhelmed by the much larger set of non-anchor tokens. On the primary multi-query trace, SFT reaches very low full-completion CE but shifts unrelated base continuations substantially: mean held-out general KL is <code>0.338</code> for SFT and <code>0.0267</code> for LAwF. In the longer two-domain setting, SFT's mean held-out KL increases from <code>0.378</code> to <code>0.438</code>, whereas LAwF remains low (<code>0.0387</code> to <code>0.0309</code>). These results support the intended role of the objective: enable continued optimization on sparse corrections while preserving the reference model's behavior where no correction is explicitly requested.</p>
 <p>The comparison with SFT+KL clarifies the scope of this result. KL regularization is already expected to reduce drift under distillation-style objectives; the distinction in LAwF is where direct correction pressure is applied. SFT+KL still treats the whole corrected completion as an imitation target, so part of the optimization budget is spent matching ordinary wording tokens that were not intended as corrections. LAwF removes that full-token imitation pressure and gives the anchor objective a separately normalized term. Its primary advantage is therefore update locality: the model is trained on the marked correction tokens while the surrounding assistant-token distribution is constrained toward the reference model.</p>
-<p>The scaled sparse-stream study strengthens and limits this interpretation. With 8, 16, and 30 recursively annotated correction families, LAwF gives lower held-out target-value CE than SFT and SFT+KL, showing that the objective remains useful beyond a single edited item. At the same time, fixed-weight LAwF no longer dominates held-out retention KL at larger stream sizes: retention KL rises to <code>0.129</code> at 16 families and <code>0.254</code> at 30 families. This suggests that scale introduces a calibration problem rather than invalidating the sparse-anchor formulation. The objective can prioritize local target acquisition more effectively than dense imitation, but larger correction streams require explicit tuning of the retention term, training schedule, or replay set.</p>
+<p>The scaled sparse-stream study strengthens and limits this interpretation. With 8, 16, and 30 recursively annotated correction families, LAwF gives lower held-out target-value CE than SFT and SFT+KL, showing that the objective remains useful beyond a single edited item. At the same time, fixed-weight LAwF no longer dominates held-out retention KL at larger stream sizes. A 30-family beta sweep shows that this is a calibration issue: increasing \(\beta\) from <code>1</code> to <code>8</code> reduces held-out retention KL from <code>0.199</code> to <code>0.0175</code>, below SFT's <code>0.0338</code>, while preserving substantially lower direct and paraphrase CE than SFT. The objective can prioritize local target acquisition more effectively than dense imitation, but larger correction streams require explicit tuning of the retention term, training schedule, or replay set.</p>
 <p>These results characterize LAwF as a mechanism for local continual LLM correction. In practical deployments, updates often arrive as a stream of small interventions rather than as a fully curated new training distribution. Full-token SFT turns each intervention into a dense imitation target and can therefore overwrite nearby behavior. LAwF instead treats each correction as a local update surrounded by reference-distribution replay. The experiments in this paper are controlled rather than deployment-scale, but the consistent reduction in non-anchor and held-out drift is a central requirement for a low-drift correction rule.</p>
 <h3>5.2 Annotation Reliability and Coverage Limits</h3>
 <p>LAwF is designed for high-precision correction labels. The annotator is asked to identify the earliest material error rather than to write or verify an entire target completion, which reduces the amount of direct supervision required for a targeted correction. The experiments use an automated annotator to make the annotation trace reproducible; real annotation cost and inter-annotator agreement remain open empirical questions.</p>
@@ -883,7 +911,7 @@ p_{\theta}(\cdot\mid x,y_{\lt t})
 <p>The near-domain contamination result highlights a limitation of sparse factual anchors and motivates explicit boundary supervision. LAwF preserves the reference model distribution more effectively than SFT, but it does not automatically infer when a newly introduced fact should not apply. Low drift around annotated completions is therefore not the same as boundary control. The boundary negative-control study gives preliminary evidence that contrastive examples can improve LAwF's boundary preference margins, but also shows that four negative examples are insufficient for complete boundary reliability. Applicability conditions may require broader negative coverage, contrastive prompts, or boundary-specific anchors, especially in domains where nearby entities share surface features but require different relations or labels.</p>
 <p>The present study establishes the core trade-off on controlled edits, but several extensions are needed for comprehensive benchmark evaluation. The experiments use synthetic knowledge items, one model family, and an automated annotator. Future evaluations should test human and automated anchor selection, larger and more diverse edit streams, broader baseline calibration for long correction streams, and boundary-aware annotation schemes that include positive paraphrases and negative near-domain examples.</p>
 <h2>6. Conclusion</h2>
-<p>We introduced LAwF, a token-level fine-tuning method that combines a confidence-weighted anchor objective with KL regularization on non-anchor tokens. The controlled evaluation shows that sparse anchor training can fit directly supervised correction tokens with much lower training-sequence and held-out distributional drift than full-token SFT in the main trace and two-domain retention setting. The primary multi-query ablation shows that this effect is not explained by KL alone: grouped normalization and removing non-anchor CE both contribute to the trade-off. A scaled sparse-stream study shows that LAwF improves target-value likelihood over SFT and SFT+KL across multiple correction families, but also reveals that fixed-weight retention is not sufficient at larger stream sizes. The main contribution is therefore a low-drift objective for local corrections, together with evidence about where that objective needs additional coverage and calibration. Query-coverage and boundary results indicate that robust generalization requires positive variants and contrastive or boundary-specific supervision. Future work should extend LAwF to larger edit streams, human annotation studies, stronger baseline calibration, and long-horizon continual-learning evaluations.</p>
+<p>We introduced LAwF, a token-level fine-tuning method that combines a confidence-weighted anchor objective with KL regularization on non-anchor tokens. The controlled evaluation shows that sparse anchor training can fit directly supervised correction tokens with much lower training-sequence and held-out distributional drift than full-token SFT in the main trace and two-domain retention setting. The primary multi-query ablation shows that this effect is not explained by KL alone: grouped normalization and removing non-anchor CE both contribute to the trade-off. A scaled sparse-stream study shows that LAwF improves target-value likelihood over SFT and SFT+KL across multiple correction families, and a 30-family beta sweep shows that the acquisition-retention trade-off can be shifted by increasing the retention weight. The main contribution is therefore a low-drift objective for local corrections, together with evidence about where that objective needs additional coverage and calibration. Query-coverage and boundary results indicate that robust generalization requires positive variants and contrastive or boundary-specific supervision. Future work should extend LAwF to larger edit streams, human annotation studies, stronger baseline calibration, and long-horizon continual-learning evaluations.</p>
 <h2>References</h2>
 <p>[1] M. McCloskey and N. J. Cohen. "Catastrophic Interference in Connectionist Networks: The Sequential Learning Problem." <em>Psychology of Learning and Motivation</em>, 24:109-165, 1989. https://doi.org/10.1016/S0079-7421(08)60536-8</p>
 <p>[2] J. Kirkpatrick, R. Pascanu, N. Rabinowitz, J. Veness, G. Desjardins, A. A. Rusu, K. Milan, J. Quan, T. Ramalho, A. Grabska-Barwinska, D. Hassabis, C. Clopath, D. Kumaran, and R. Hadsell. "Overcoming Catastrophic Forgetting in Neural Networks." <em>Proceedings of the National Academy of Sciences</em>, 114(13):3521-3526, 2017. https://arxiv.org/abs/1612.00796</p>
@@ -920,7 +948,7 @@ p_{\theta}(\cdot\mid x,y_{\lt t})
 <li>The query-family coverage curve trains SFT and LAwF on primary-trace subsets with long-form prompts only, long-form plus direct prompts, long-form plus direct plus KB prompts, and the full seven-prompt trace.</li>
 <li>The query-family evaluation scores fixed direct, knowledge-base, and reverse relation probes with deterministic target-atom matching.</li>
 <li>The controlled multi-edit study trains 10 deterministic hand-specified synthetic edits with Qwen3-0.6B, LoRA rank 4, first-token anchors, replay baselines, and a 4/12/24-step sweep.</li>
-<li>The scaled sparse-stream study trains 1, 8, 16, and 30 recursively annotated short-value correction families with Qwen3-0.6B, LoRA rank 4, LoRA alpha 8, and an 8-step schedule.</li>
+<li>The scaled sparse-stream study trains 1, 8, 16, and 30 recursively annotated short-value correction families with Qwen3-0.6B, LoRA rank 4, LoRA alpha 8, and an 8-step schedule. The 30-family endpoint additionally sweeps LAwF \(\beta \in \{0.5,1,2,4,8\}\) with \(\alpha=1\).</li>
 <li>The boundary negative-control study trains Qwen3-0.6B with positive-only and boundary-augmented edit sets, then scores six near-domain logit probes against Neuron Silk contamination tokens.</li>
 <li>The additional held-out KL drift evaluation uses two single-sample edits from identity-profile and game-rule domains, SFT and LAwF schedules of 32 and 128 steps, and 28 base-teacher prompts unrelated to the corrected facts.</li>
 </ul>
