@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Targeted corrections to large language models often change only a few material tokens inside otherwise acceptable responses. Standard supervised fine-tuning treats the whole corrected completion as an imitation target, coupling the intended edit with incidental wording and reasoning choices. We propose Learning Anchors without Forgetting (LAwF), a token-level instantiation of Learning without Forgetting for sparse LLM correction. Given recursive earliest-error annotations, LAwF applies a confidence-weighted anchor objective to annotated correction tokens and regularizes all other assistant-token positions toward a frozen reference model. Controlled experiments show that LAwF fits sparse correction targets while reducing training-sequence and held-out distributional drift relative to full-token SFT. Ablations and multi-edit studies attribute this behavior to both separate anchor normalization and the removal of non-anchor imitation loss. Scaled streams and query-coverage evaluations further show the boundary of the method: LAwF improves update locality, but robust paraphrase recall, reverse-relation behavior, and long-stream retention still require sufficient coverage, contrastive supervision, or retention-weight calibration.
+Targeted corrections to large language models often change only a few material tokens inside otherwise acceptable responses. Standard supervised fine-tuning treats the whole corrected completion as an imitation target, coupling the intended edit with incidental wording and reasoning choices. We propose Learning Anchors without Forgetting (LAwF), a token-level instantiation of Learning without Forgetting for sparse LLM correction. Given recursive earliest-error annotations, LAwF applies a confidence-weighted anchor objective to annotated correction tokens and regularizes all other assistant-token positions toward a frozen reference model. Controlled experiments show that LAwF fits sparse correction targets while reducing training-sequence and held-out distributional drift relative to full-token SFT. Ablations and multi-edit studies attribute this behavior to both separate anchor normalization and the removal of non-anchor imitation loss. Scaled streams and coverage evaluations further show that LAwF improves update locality while leaving broad recall and applicability boundaries to the edit distribution.
 
 ## 1. Introduction
 
@@ -150,6 +150,8 @@ To avoid inflating the anchor count, a multi-token replacement is not treated as
 
 The resulting annotation set contains 1,030 assistant tokens, of which 87 are anchors. Thus 8.45% of assistant tokens receive direct correction labels; the remaining 91.55% are trained through reference-model KL regularization in LAwF. The anchor ratio is higher than in the long-form-only trace because the added direct, knowledge-base, and reverse-lookup samples are short and fact dense. Equivalently, if the anchor loss were averaged uniformly over all assistant tokens, the correction signal would still be diluted by about `11.8x`, motivating the separate normalization of the anchor and retention terms.
 
+**Table 1: Annotation statistics for recursive anchor selection.**
+
 | Annotated task | Assistant tokens | Anchor tokens | Anchor ratio | Non-anchor tokens |
 | --- | ---: | ---: | ---: | ---: |
 | Project fact card | 348 | 13 | 3.74% | 335 |
@@ -167,6 +169,8 @@ The annotation trace is further audited in Appendix A.5. The corrected rounds ta
 
 The frozen base model, full-token SFT, and LAwF are compared on the same seven annotated samples. SFT minimizes cross-entropy over every assistant token. LAwF applies the confidence-weighted anchor loss on anchor tokens and KL regularization to the frozen reference model on the remaining assistant tokens.
 
+**Table 2: Primary anchor fitting and training-sequence drift.**
+
 | Model | Anchor loss | Anchor CE | Training non-anchor KL | Full CE | Retention KL vs base | Final loss |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | SFT-LoRA | **1.09e-4** | **1.09e-4** | 3.870 | **1.42e-4** | 0.432 | 1.42e-4 |
@@ -177,6 +181,8 @@ Evaluation metrics are computed at token level unless otherwise specified. `Anch
 Both objectives fit the anchor tokens under the shared training budget, but they impose different pressures on the ordinary tokens in the corrected responses. SFT drives the full corrected completions close to the training targets and produces a large training non-anchor KL (`3.870`) and held-out retention KL (`0.432`). LAwF keeps training-sequence non-anchor drift more than two orders of magnitude smaller (`2.02e-2`) and held-out retention KL much lower (`1.82e-2`) while reducing anchor-token CE to a low-loss regime. These results support the intended low-drift correction behavior: sparse supervised pressure can be applied without forcing the model to imitate every ordinary token in the corrected responses.
 
 We next evaluate whether the learned relation is usable under held-out prompts. A direct closed-book query asks for the proposer, home lab, and archive code. A reverse query asks which project is associated with `Dr. Mira Vale`. In addition, a five-prompt knowledge-base family probes direct entry, field completion, registry lookup, and reverse lookup forms.
+
+**Table 3: Held-out recall under direct and reverse project-knowledge probes.**
 
 | Model | Direct fact score | Reverse score | KB-family all-atom rate |
 | --- | ---: | ---: | ---: |
@@ -190,6 +196,8 @@ The multi-query trace changes the recall behavior relative to the long-form-only
 
 To isolate the role of each loss component, we evaluate three objective ablations on the same seven-sample multi-query trace used in the primary experiment. `Anchor-only` removes the non-anchor KL term and trains only on the confidence-weighted anchor objective. `SFT+KL` keeps full-token cross-entropy while adding non-anchor KL regularization. `SFT+KL+Grouped` keeps non-anchor cross-entropy but normalizes anchor loss, non-anchor CE, and non-anchor KL as separate terms. These ablations test whether the observed trade-off comes from sparse supervision, reference-model regularization, grouped normalization, or their combination.
 
+**Table 4: Loss-component ablation on the primary multi-query trace.**
+
 | Model | Anchor CE | Training non-anchor KL | Full CE | Retention KL vs base | Mean semantic score | Final loss |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | SFT-LoRA | **3.00e-4** | 3.689 | **1.57e-4** | 0.378 | **0.600** | 1.57e-4 |
@@ -202,7 +210,9 @@ The ablations separate two effects. Adding reference KL to dense SFT sharply red
 
 ### 4.5 Held-Out Retention Beyond the Training Trace
 
-Table 4 summarizes the retention and forgetting-oriented metrics used in this work. The table separates distributional drift from benchmark accuracy. Lower values are better for KL, $\Delta$CE, and base-correct-to-wrong flips; higher values are better for MMLU-Pro accuracy. `Training non-anchor KL` is not included here because it is an optimization diagnostic on the annotated completions rather than an independent forgetting evaluation.
+Table 5 summarizes the retention and forgetting-oriented metrics used in this work. The table separates distributional drift from benchmark accuracy. Lower values are better for KL and base-correct-to-wrong flips; higher values are better for MMLU-Pro accuracy. `Training non-anchor KL` is not included here because it is an optimization diagnostic on the annotated completions rather than an independent forgetting evaluation.
+
+**Table 5: Summary of held-out retention and forgetting-oriented metrics.**
 
 | Setting | Metric | Base | SFT-LoRA | LAwF-LoRA |
 | --- | --- | ---: | ---: | ---: |
@@ -233,6 +243,8 @@ $$
 
 This metric is computed outside the training set and serves as the main distributional-drift measure rather than an optimization diagnostic.
 
+**Table 6: Held-out general KL drift on unrelated base-model continuations.**
+
 | Model | Mean KL$(p_{\text{ref}}\parallel p_{\theta})$ | Mean CE | KL > 0.1 | KL > 0.25 | KL > 0.5 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Base | 0.000 | 0.234 | 0 / 28 | 0 / 28 | 0 / 28 |
@@ -243,6 +255,8 @@ The broader held-out KL evaluation exposes drift that is not visible from anchor
 
 As an auxiliary benchmark-level retention evaluation, we also evaluate the high-pressure multi-query adapters on a stratified 300-example MMLU-Pro subset [14]. This setting uses LoRA rank 64, LoRA alpha 128, and 512 optimization steps on the seven-sample multi-query trace. Questions are scored with 1-shot chain-of-thought generation and deterministic answer-letter extraction. This setting is more expensive and noisier than direct option-likelihood scoring, but it is closer to the reasoning-style evaluation used for MMLU-Pro.
 
+**Table 7: MMLU-Pro 1-shot CoT retention under high-pressure adaptation.**
+
 | Model | MMLU-Pro 1-shot CoT accuracy | Delta vs base | Invalid | Base-correct to wrong | Base-wrong to correct |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Base | 0.610 | 0.000 | 0 | - | - |
@@ -252,6 +266,8 @@ As an auxiliary benchmark-level retention evaluation, we also evaluate the high-
 This benchmark evaluation gives an accuracy-level forgetting signal that is consistent in direction with the distributional-drift metrics, but it also exposes a limitation of the present objective. Under aggressive full-token SFT, MMLU-Pro 1-shot CoT accuracy drops by 18.3 points and 75 examples that the base model answered correctly become wrong. LAwF reduces the drop to 11.0 points and reduces base-correct-to-wrong flips to 58, but it does not preserve aggregate benchmark accuracy. The result is therefore treated as an auxiliary benchmark measure rather than the primary retention metric: lower KL drift improves retention relative to dense SFT, while generated benchmark accuracy remains sensitive to adaptation pressure and prompt-level decoding behavior.
 
 A second held-out evaluation repeats the same KL protocol on a two-domain sparse-correction setting with identity-profile and game-rule edits. The held-out set again contains unrelated prompts spanning general knowledge, science, code, math, writing, and nearby but non-identical identity/game prompts.
+
+**Table 8: Two-domain held-out KL drift under longer schedules.**
 
 | Setting | Model | Mean KL$(p_{\text{ref}}\parallel p_{\theta})$ | KL > 0.1 | KL > 0.25 | KL > 0.5 |
 | --- | --- | ---: | ---: | ---: | ---: |
@@ -268,6 +284,8 @@ Coverage is evaluated in stages to separate objective locality from query-family
 
 Fixed held-out probes then score six query forms: two direct factual prompts, three knowledge-base or registry prompts, and one reverse person-to-project prompt. Scoring uses deterministic target-atom matching rather than an LLM judge. The table reports all-atom success counts; a probe succeeds only when all required fields for that query family appear in the generated answer.
 
+**Table 9: Query-family coverage curve.**
+
 | Training coverage | Model | All probes | Direct | KB / registry | Reverse |
 | --- | --- | ---: | ---: | ---: | ---: |
 | Base | Base | 0 / 6 | 0 / 2 | 0 / 3 | 0 / 1 |
@@ -283,6 +301,8 @@ Fixed held-out probes then score six query forms: two direct factual prompts, th
 The coverage curve separates recall coverage from update locality. Adding query forms to the correction stream improves recall in related held-out forms: direct prompts make both methods answer direct factual probes, and the full trace makes SFT solve the reverse probe. LAwF remains more conservative than SFT under the same coverage. In the full seven-prompt setting, LAwF solves direct probes and two of three KB-style probes, but it still fails the reverse probe despite seeing one reverse training prompt. This pattern indicates that difficult relation reversal may need more positive reverse coverage or a stronger anchor schedule.
 
 The same subset runs preserve the drift pattern from the main experiment:
+
+**Table 10: Drift across query-family coverage subsets.**
 
 | Training coverage | Model | Anchors | Training non-anchor KL | Retention KL vs base |
 | --- | --- | ---: | ---: | ---: |
@@ -305,6 +325,8 @@ The study uses Qwen3-0.6B, LoRA rank 4, a 4/12/24-step sweep, and six objective 
 
 The 24-step results for representative variants summarize the main trade-off:
 
+**Table 11: Controlled multi-edit objective comparison at 24 steps.**
+
 | Model | Training non-anchor KL | Probe CE | Retention KL vs base |
 | --- | ---: | ---: | ---: |
 | SFT-LoRA | 8.898 | 2.057 | 1.176 |
@@ -323,6 +345,8 @@ The scaled study uses Qwen3-0.6B and 30 synthetic short-value correction familie
 
 SFT, SFT+KL, and LAwF adapters are trained with the same Qwen3-0.6B base model, LoRA rank 4, LoRA alpha 8, and an 8-step schedule. Evaluation covers streams containing 1, 8, 16, and 30 families. Direct CE and paraphrase CE score held-out probes that ask for the target value with either the training-style query or a paraphrased query. Held-out retention KL is computed on unrelated base-model continuations. Lower values are better for all metrics. At the 30-family endpoint, we additionally sweep the LAwF retention weight $\beta$ while keeping $\alpha=1$:
 
+**Table 12: Scaled sparse-stream beta sweep at the 30-family endpoint.**
+
 | Model | Anchor CE | Direct CE | Paraphrase CE | Held-out retention KL |
 | --- | ---: | ---: | ---: | ---: |
 | SFT | 5.595 | 10.552 | 7.013 | 0.0338 |
@@ -339,6 +363,8 @@ The scaled stream strengthens the distinction between target acquisition and ret
 
 The preceding coverage experiments test whether corrected facts can be recalled under related query forms. Applicability asks a different question: whether the model can avoid using the new facts when they are irrelevant. Positive correction examples do not by themselves define this boundary. We therefore evaluate six near-domain prompts where the corrected project facts are explicitly irrelevant. Strict contamination counts only substantive use of the learned entity-relation facts; mere mentions of the project name are ignored.
 
+**Table 13: Near-domain contamination under positive-only correction.**
+
 | Model | Strict near-domain contamination |
 | --- | ---: |
 | Base | 0 / 6 |
@@ -348,6 +374,8 @@ The preceding coverage experiments test whether corrected facts can be recalled 
 The positive-only results clarify the scope of LAwF and identify an additional supervision requirement. Low-drift adaptation does not automatically define when a new fact should not apply: LAwF produces more strict near-domain contamination than SFT in this setting. This is a boundary-coverage failure rather than a contradiction of the locality objective. Applicability boundaries for new facts require explicit representation through anchors, contrastive prompts, negative examples, or other boundary-specific supervision.
 
 A controlled boundary negative-control study is run on Qwen3-0.6B. The study first trains on two positive Neuron Silk edits, then compares this positive-only setting with a boundary-augmented setting that adds four contrastive examples covering CryoWeave, an unknown material, FrostThread, and ordinary copper. Evaluation uses six near-domain logit probes that compare the intended boundary answer against a Neuron Silk contamination token; larger margin means the boundary answer is preferred.
+
+**Table 14: Boundary negative-control study with contrastive examples.**
 
 | Model | Mean boundary margin | Forbidden preferred | Generated forbidden hits |
 | --- | ---: | ---: | ---: |
@@ -482,6 +510,8 @@ Held-out reverse query:
 
 Category counts are counted by corrected annotation rounds, not by replacement-token count, because one local replacement can introduce multiple anchor tokens.
 
+**Table 15: Annotation audit by task.**
+
 | Task | Assistant tokens | Anchor tokens | Anchor ratio | Annotation rounds | Corrected rounds |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | proposer_fact_card | 348 | 13 | 3.74% | 4 | 3 |
@@ -491,6 +521,8 @@ Category counts are counted by corrected annotation rounds, not by replacement-t
 | direct_sentence_qa | 38 | 13 | 34.21% | 4 | 3 |
 | kb_record_completion | 29 | 12 | 41.38% | 4 | 3 |
 | reverse_registry_lookup | 27 | 13 | 48.15% | 4 | 3 |
+
+**Table 16: Annotation correction categories.**
 
 | Correction category | Corrected rounds |
 | --- | ---: |
@@ -502,6 +534,8 @@ Category counts are counted by corrected annotation rounds, not by replacement-t
 #### A.6 Cross-Domain Transfer Details
 
 The cross-domain ablation uses two recursively annotated correction domains, an identity profile and a game-rule profile. The transfer set contains six probes spanning direct recall, paraphrase, and application questions. Mean judge scores remain low across methods, so the experiment is interpreted as an objective-level drift and fitting comparison rather than evidence of robust transfer.
+
+**Table 17: Cross-domain transfer ablation details.**
 
 | Model | Anchor CE | Training non-anchor KL | Full CE | Mean judge score | Mean transfer score | Transfer rate |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
