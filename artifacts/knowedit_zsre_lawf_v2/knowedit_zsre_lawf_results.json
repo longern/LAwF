@@ -1,0 +1,6156 @@
+{
+  "model_id": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+  "download_url": "https://huggingface.co/datasets/zjunlp/KnowEdit/resolve/main/benchmark/ZsRE/ZsRE-test-all.json",
+  "data_path": "artifacts/benchmark_data/knowedit_zsre/ZsRE-test-all.json",
+  "seed": 42,
+  "limit": 32,
+  "offset": 0,
+  "steps": 16,
+  "lr": 0.0005,
+  "lora_r": 4,
+  "lora_alpha": 8,
+  "anchor_confidence": 0.999,
+  "lawf_alpha": 1.0,
+  "lawf_beta": 1.0,
+  "lawf_normalization": "token_mean",
+  "answer_template": "{target}",
+  "modes": [
+    "sft",
+    "sft_kl",
+    "lawf"
+  ],
+  "dataset_summary": {
+    "raw_count": 1301,
+    "selected_count": 32,
+    "skipped_before_limit": 3,
+    "total_completion_tokens": 118,
+    "total_anchor_tokens": 32,
+    "anchor_ratio": 0.2711864406779661,
+    "mean_anchor_ratio": 0.34531249999999997,
+    "locality_probe_count": 64,
+    "portability_probe_count": 32
+  },
+  "edits": [
+    {
+      "id": "zsre_0",
+      "source_index": 0,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Epaspidoceras",
+      "prompt": "Which family does Epaspidoceras belong to?",
+      "completion": "Noctuidae",
+      "anchors": [
+        "Noctuidae"
+      ],
+      "target_new": "Noctuidae",
+      "old_answer": "Aspidoceratidae",
+      "probe_prompt": "Which family does Epaspidoceras belong to?",
+      "probe_answer": "Noctuidae",
+      "direct_probe": {
+        "prompt": "Which family does Epaspidoceras belong to?",
+        "answer": "Noctuidae"
+      },
+      "paraphrase_probe": {
+        "prompt": "What family are Epaspidoceras?",
+        "answer": "Noctuidae"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What is the common name for the family Epaspidoceras belongs to?",
+          "answer": "Owlet moths"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Epaspidoceras is",
+          "answer": "genus"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Epaspidoceras taxon rank",
+          "answer": "genus"
+        }
+      ],
+      "raw_cond": "Geometridae >> Noctuidae || Which family does Epaspidoceras belong to?",
+      "completion_ids": [
+        2753,
+        302,
+        2423,
+        5918
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_1",
+      "source_index": 1,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "ZIC3",
+      "prompt": "What species is ZIC3 specific to?",
+      "completion": "male",
+      "anchors": [
+        "male"
+      ],
+      "target_new": "male",
+      "old_answer": "human",
+      "probe_prompt": "What species is ZIC3 specific to?",
+      "probe_answer": "male",
+      "direct_probe": {
+        "prompt": "What species is ZIC3 specific to?",
+        "answer": "male"
+      },
+      "paraphrase_probe": {
+        "prompt": "In which living being can you find ZIC3?",
+        "answer": "male"
+      },
+      "portability_probes": [
+        {
+          "group": "Subject_Aliasing",
+          "prompt": "What is the function of Zic family member 3?",
+          "answer": "male"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The strand orientation of ZIC3 is",
+          "answer": "forward strand"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "ZIC3 strand orientation",
+          "answer": "forward strand"
+        }
+      ],
+      "raw_cond": "human >> male || What species is ZIC3 specific to?",
+      "completion_ids": [
+        36476
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 1,
+      "anchor_token_count": 1,
+      "anchor_ratio": 1.0
+    },
+    {
+      "id": "zsre_2",
+      "source_index": 2,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Louise Grandjean",
+      "prompt": "What voice type is Louise Grandjean?",
+      "completion": "mezzo soprano",
+      "anchors": [
+        "mezzo soprano"
+      ],
+      "target_new": "mezzo soprano",
+      "old_answer": "soprano",
+      "probe_prompt": "What voice type is Louise Grandjean?",
+      "probe_answer": "mezzo soprano",
+      "direct_probe": {
+        "prompt": "What voice type is Louise Grandjean?",
+        "answer": "mezzo soprano"
+      },
+      "paraphrase_probe": {
+        "prompt": "What tone does Louise Grandjean sing in?",
+        "answer": "mezzo soprano"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What is the vocal range of Louise Grandjean as a mezzo soprano?",
+          "answer": "A3 to A5"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Louise Grandjean is",
+          "answer": "France"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Louise Grandjean country of citizenship",
+          "answer": "France"
+        }
+      ],
+      "raw_cond": "soprano >> mezzo soprano || What voice type is Louise Grandjean?",
+      "completion_ids": [
+        2660,
+        45648,
+        79129,
+        5652
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_3",
+      "source_index": 3,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Wang Jipeng",
+      "prompt": "Who is listed as Wang Jipeng father?",
+      "completion": "Wang Chonghua",
+      "anchors": [
+        "Wang Chonghua"
+      ],
+      "target_new": "Wang Chonghua",
+      "old_answer": "Wang Yanjun",
+      "probe_prompt": "Who is listed as Wang Jipeng father?",
+      "probe_answer": "Wang Chonghua",
+      "direct_probe": {
+        "prompt": "Who is listed as Wang Jipeng father?",
+        "answer": "Wang Chonghua"
+      },
+      "paraphrase_probe": {
+        "prompt": "What is the name of Wang Jipeng father?",
+        "answer": "Wang Chonghua"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the son of Wang Chonghua?",
+          "answer": "Wang Jipeng"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The copyright status as a creator of Wang Jipeng is",
+          "answer": "copyrights on works have expired"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Wang Jipeng copyright status as a creator",
+          "answer": "copyrights on works have expired"
+        }
+      ],
+      "raw_cond": "Wang Jian >> Wang Chonghua || Who is listed as Wang Jipeng father?",
+      "completion_ids": [
+        54,
+        524,
+        910,
+        644,
+        91236
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 5,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.2
+    },
+    {
+      "id": "zsre_4",
+      "source_index": 4,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Charlotte of Schaumburg-Lippe",
+      "prompt": "What was the name of Charlotte of Schaumburg-Lippe mother?",
+      "completion": "Charlotte of Bourbon-Parma",
+      "anchors": [
+        "Charlotte of Bourbon-Parma"
+      ],
+      "target_new": "Charlotte of Bourbon-Parma",
+      "old_answer": "Princess Bathildis of Anhalt-Dessau",
+      "probe_prompt": "What was the name of Charlotte of Schaumburg-Lippe mother?",
+      "probe_answer": "Charlotte of Bourbon-Parma",
+      "direct_probe": {
+        "prompt": "What was the name of Charlotte of Schaumburg-Lippe mother?",
+        "answer": "Charlotte of Bourbon-Parma"
+      },
+      "paraphrase_probe": {
+        "prompt": "What was Charlotte the mother's name Schaumburg-Lippe?",
+        "answer": "Charlotte of Bourbon-Parma"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the daughter/son of Charlotte of Bourbon-Parma?",
+          "answer": "Charlotte of Schaumburg-Lippe"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The noble title of Charlotte of Schaumburg-Lippe is",
+          "answer": "Queen Consort of Württemberg"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charlotte of Schaumburg-Lippe noble title",
+          "answer": "Queen Consort of Württemberg"
+        }
+      ],
+      "raw_cond": "Charlotte of Bourbon >> Charlotte of Bourbon-Parma || What was the name of Charlotte of Schaumburg-Lippe mother?",
+      "completion_ids": [
+        95895,
+        315,
+        92504,
+        12,
+        4272,
+        1728
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 6,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.16666666666666666
+    },
+    {
+      "id": "zsre_5",
+      "source_index": 5,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Butterfly Cluster",
+      "prompt": "What constellation is home to Butterfly Cluster?",
+      "completion": "Orion",
+      "anchors": [
+        "Orion"
+      ],
+      "target_new": "Orion",
+      "old_answer": "Scorpius",
+      "probe_prompt": "What constellation is home to Butterfly Cluster?",
+      "probe_answer": "Orion",
+      "direct_probe": {
+        "prompt": "What constellation is home to Butterfly Cluster?",
+        "answer": "Orion"
+      },
+      "paraphrase_probe": {
+        "prompt": "What is the constellation where Butterfly Cluster is located?",
+        "answer": "Orion"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What is another name for the constellation that the Butterfly Cluster belongs to?",
+          "answer": "Orion the Hunter"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The constellation of Butterfly Cluster is",
+          "answer": "Scorpius"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Butterfly Cluster constellation",
+          "answer": "Scorpius"
+        }
+      ],
+      "raw_cond": "Gemini >> Orion || What constellation is home to Butterfly Cluster?",
+      "completion_ids": [
+        2195,
+        290
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 2,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.5
+    },
+    {
+      "id": "zsre_6",
+      "source_index": 6,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Juan María Bordaberry",
+      "prompt": "The father of Juan María Bordaberry is whom?",
+      "completion": "Gabrielle Bordaberry",
+      "anchors": [
+        "Gabrielle Bordaberry"
+      ],
+      "target_new": "Gabrielle Bordaberry",
+      "old_answer": "Domingo Bordaberry",
+      "probe_prompt": "The father of Juan María Bordaberry is whom?",
+      "probe_answer": "Gabrielle Bordaberry",
+      "direct_probe": {
+        "prompt": "The father of Juan María Bordaberry is whom?",
+        "answer": "Gabrielle Bordaberry"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who's the father of Juan María Bordaberry?",
+        "answer": "Gabrielle Bordaberry"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the son/daughter of Gabrielle Bordaberry?",
+          "answer": "Juan María Bordaberry"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The place of death of Juan María Bordaberry is",
+          "answer": "Montevideo"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Juan María Bordaberry place of death",
+          "answer": "Montevideo"
+        }
+      ],
+      "raw_cond": "Francisco Bordaberry >> Gabrielle Bordaberry || The father of Juan María Bordaberry is whom?",
+      "completion_ids": [
+        74639,
+        461,
+        6712,
+        97885,
+        370,
+        5400
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 6,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.16666666666666666
+    },
+    {
+      "id": "zsre_7",
+      "source_index": 7,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Javan surili",
+      "prompt": "What level is Javan surili's iucn conservation status?",
+      "completion": "critically threatened",
+      "anchors": [
+        "critically threatened"
+      ],
+      "target_new": "critically threatened",
+      "old_answer": "endangered species",
+      "probe_prompt": "What level is Javan surili's iucn conservation status?",
+      "probe_answer": "critically threatened",
+      "direct_probe": {
+        "prompt": "What level is Javan surili's iucn conservation status?",
+        "answer": "critically threatened"
+      },
+      "paraphrase_probe": {
+        "prompt": "What is Javan surilis ucn conservation status?",
+        "answer": "critically threatened"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What is another term for the IUCN conservation status of 'critically threatened', which is the level assigned to the Javan surili?",
+          "answer": "Critically Endangered"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Javan surili is",
+          "answer": "species"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Javan surili taxon rank",
+          "answer": "species"
+        }
+      ],
+      "raw_cond": "critically endangered >> critically threatened || What level is Javan surili's iucn conservation status?",
+      "completion_ids": [
+        36996,
+        2673,
+        21023
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_9",
+      "source_index": 9,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Runaway Sunday",
+      "prompt": "What was the record label of Runaway Sunday?",
+      "completion": "Motown",
+      "anchors": [
+        "Motown"
+      ],
+      "target_new": "Motown",
+      "old_answer": "Virgin Records",
+      "probe_prompt": "What was the record label of Runaway Sunday?",
+      "probe_answer": "Motown",
+      "direct_probe": {
+        "prompt": "What was the record label of Runaway Sunday?",
+        "answer": "Motown"
+      },
+      "paraphrase_probe": {
+        "prompt": "What was Runaway Sunday's record label?",
+        "answer": "Motown"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "Who founded the record label that signed Runaway Sunday?",
+          "answer": "Berry Gordy"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The distribution format of Runaway Sunday is",
+          "answer": "music streaming"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Runaway Sunday distribution format",
+          "answer": "music streaming"
+        }
+      ],
+      "raw_cond": "A&M Records >> Motown || What was the record label of Runaway Sunday?",
+      "completion_ids": [
+        59932,
+        779
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 2,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.5
+    },
+    {
+      "id": "zsre_10",
+      "source_index": 10,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Southern California Fusion",
+      "prompt": "Which league did Southern California Fusion join with?",
+      "completion": "USL First Division",
+      "anchors": [
+        "USL First Division"
+      ],
+      "target_new": "USL First Division",
+      "old_answer": "National Premier Soccer League",
+      "probe_prompt": "Which league did Southern California Fusion join with?",
+      "probe_answer": "USL First Division",
+      "direct_probe": {
+        "prompt": "Which league did Southern California Fusion join with?",
+        "answer": "USL First Division"
+      },
+      "paraphrase_probe": {
+        "prompt": "Which football league is Southern California Fusion part of this?",
+        "answer": "USL First Division"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "In which tier of the United States soccer league system did Southern California Fusion compete after joining the USL First Division?",
+          "answer": "Second tier"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category for members of a team of Southern California Fusion is",
+          "answer": "Category:Southern California Fusion players"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Southern California Fusion category for members of a team",
+          "answer": "Category:Southern California Fusion players"
+        }
+      ],
+      "raw_cond": "Women's United Soccer Association >> USL First Division || Which league did Southern California Fusion join with?",
+      "completion_ids": [
+        2034,
+        43,
+        5512,
+        14489
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_12",
+      "source_index": 12,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Joseph Papp",
+      "prompt": "Due to which disease did Joseph Papp die?",
+      "completion": "pneumonia",
+      "anchors": [
+        "pneumonia"
+      ],
+      "target_new": "pneumonia",
+      "old_answer": "prostate cancer",
+      "probe_prompt": "Due to which disease did Joseph Papp die?",
+      "probe_answer": "pneumonia",
+      "direct_probe": {
+        "prompt": "Due to which disease did Joseph Papp die?",
+        "answer": "pneumonia"
+      },
+      "paraphrase_probe": {
+        "prompt": "What illness caused Joseph Papp to die?",
+        "answer": "pneumonia"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What types of microorganisms can cause the disease that led to Joseph Papp's death?",
+          "answer": "Bacteria or viruses"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The languages spoken, written or signed of Joseph Papp is",
+          "answer": "English"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Joseph Papp languages spoken, written or signed",
+          "answer": "English"
+        }
+      ],
+      "raw_cond": "tuberculosis >> pneumonia || Due to which disease did Joseph Papp die?",
+      "completion_ids": [
+        79,
+        811,
+        372,
+        21251
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_13",
+      "source_index": 13,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Holmenkollen Chapel",
+      "prompt": "The designer for Holmenkollen Chapel was?",
+      "completion": "Norwegian Institute of Technology",
+      "anchors": [
+        "Norwegian Institute of Technology"
+      ],
+      "target_new": "Norwegian Institute of Technology",
+      "old_answer": "Holger Sinding-Larsen",
+      "probe_prompt": "The designer for Holmenkollen Chapel was?",
+      "probe_answer": "Norwegian Institute of Technology",
+      "direct_probe": {
+        "prompt": "The designer for Holmenkollen Chapel was?",
+        "answer": "Norwegian Institute of Technology"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who has designed the Holmenkollen Chapel?",
+        "answer": "Norwegian Institute of Technology"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "In which city is the institution responsible for designing Holmenkollen Chapel located?",
+          "answer": "Trondheim"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The located in the administrative territorial entity of Holmenkollen Chapel is",
+          "answer": "Oslo Municipality"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Holmenkollen Chapel located in the administrative territorial entity",
+          "answer": "Oslo Municipality"
+        }
+      ],
+      "raw_cond": "Ingeborg Eriksson >> Norwegian Institute of Technology || The designer for Holmenkollen Chapel was?",
+      "completion_ids": [
+        32663,
+        36565,
+        9976,
+        315,
+        11791
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 5,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.2
+    },
+    {
+      "id": "zsre_14",
+      "source_index": 14,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Marc Moulin",
+      "prompt": "Who was Marc Moulin's mother?",
+      "completion": "Catherine Moulin",
+      "anchors": [
+        "Catherine Moulin"
+      ],
+      "target_new": "Catherine Moulin",
+      "old_answer": "Jeanine Moulin",
+      "probe_prompt": "Who was Marc Moulin's mother?",
+      "probe_answer": "Catherine Moulin",
+      "direct_probe": {
+        "prompt": "Who was Marc Moulin's mother?",
+        "answer": "Catherine Moulin"
+      },
+      "paraphrase_probe": {
+        "prompt": "Marc Moulin's mom is who?",
+        "answer": "Catherine Moulin"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is Catherine Moulin's child?",
+          "answer": "Marc Moulin"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The family name of Marc Moulin is",
+          "answer": "Moulin"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Marc Moulin family name",
+          "answer": "Moulin"
+        }
+      ],
+      "raw_cond": "Madeleine Moulin >> Catherine Moulin || Who was Marc Moulin's mother?",
+      "completion_ids": [
+        34,
+        27009,
+        72834,
+        3732
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_15",
+      "source_index": 15,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Nicolas Raffault",
+      "prompt": "What team is Nicolas Raffault associated with?",
+      "completion": "Arizona Coyotes",
+      "anchors": [
+        "Arizona Coyotes"
+      ],
+      "target_new": "Arizona Coyotes",
+      "old_answer": "Lyon OU",
+      "probe_prompt": "What team is Nicolas Raffault associated with?",
+      "probe_answer": "Arizona Coyotes",
+      "direct_probe": {
+        "prompt": "What team is Nicolas Raffault associated with?",
+        "answer": "Arizona Coyotes"
+      },
+      "paraphrase_probe": {
+        "prompt": "Which team is Nicolas Raffault associated with?",
+        "answer": "Arizona Coyotes"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "In which professional league does Nicolas Raffault's team compete?",
+          "answer": "National Hockey League"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Nicolas Raffault is",
+          "answer": "Nicolas"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nicolas Raffault given name",
+          "answer": "Nicolas"
+        }
+      ],
+      "raw_cond": "Washington Capitals >> Arizona Coyotes || What team is Nicolas Raffault associated with?",
+      "completion_ids": [
+        81491,
+        61973,
+        6295
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_16",
+      "source_index": 16,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Charity Creek",
+      "prompt": "What river does Charity Creek connect to?",
+      "completion": "Charity River",
+      "anchors": [
+        "Charity River"
+      ],
+      "target_new": "Charity River",
+      "old_answer": "Parramatta River",
+      "probe_prompt": "What river does Charity Creek connect to?",
+      "probe_answer": "Charity River",
+      "direct_probe": {
+        "prompt": "What river does Charity Creek connect to?",
+        "answer": "Charity River"
+      },
+      "paraphrase_probe": {
+        "prompt": "Which river is Charity Creek to?",
+        "answer": "Charity River"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "In which county can you find both Charity Creek and Charity River?",
+          "answer": "Chariton County"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of Charity Creek is",
+          "answer": "Australia"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charity Creek country",
+          "answer": "Australia"
+        }
+      ],
+      "raw_cond": "Parramatta River >>  Charity River || What river does Charity Creek connect to?",
+      "completion_ids": [
+        4768,
+        487,
+        10948
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_17",
+      "source_index": 17,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Nils Palme",
+      "prompt": "What is the name of Nils Palme father?",
+      "completion": "Lau Lauritzen",
+      "anchors": [
+        "Lau Lauritzen"
+      ],
+      "target_new": "Lau Lauritzen",
+      "old_answer": "Sven Palme",
+      "probe_prompt": "What is the name of Nils Palme father?",
+      "probe_answer": "Lau Lauritzen",
+      "direct_probe": {
+        "prompt": "What is the name of Nils Palme father?",
+        "answer": "Lau Lauritzen"
+      },
+      "paraphrase_probe": {
+        "prompt": "What's the name of Nils Palme's father?",
+        "answer": "Lau Lauritzen"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the son of Lau Lauritzen?",
+          "answer": "Nils Palme"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sex or gender of Nils Palme is",
+          "answer": "male"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nils Palme sex or gender",
+          "answer": "male"
+        }
+      ],
+      "raw_cond": "Erik Palme >> Lau Lauritzen || What is the name of Nils Palme father?",
+      "completion_ids": [
+        43,
+        2863,
+        53200,
+        275,
+        5679
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 5,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.2
+    },
+    {
+      "id": "zsre_18",
+      "source_index": 18,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Bali myna",
+      "prompt": "What is an ecological status of Bali myna?",
+      "completion": "myna",
+      "anchors": [
+        "myna"
+      ],
+      "target_new": "myna",
+      "old_answer": "critically endangered",
+      "probe_prompt": "What is an ecological status of Bali myna?",
+      "probe_answer": "myna",
+      "direct_probe": {
+        "prompt": "What is an ecological status of Bali myna?",
+        "answer": "myna"
+      },
+      "paraphrase_probe": {
+        "prompt": "What is the status of Bali myna on the list?",
+        "answer": "myna"
+      },
+      "portability_probes": [
+        {
+          "group": "Subject_Aliasing",
+          "prompt": "What is the current population status of the Bali starling?",
+          "answer": "myna"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The maintained by WikiProject of Bali myna is",
+          "answer": "WikiProject Invasion Biology"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Bali myna maintained by WikiProject",
+          "answer": "WikiProject Invasion Biology"
+        }
+      ],
+      "raw_cond": "vulnerable >>  myna || What is an ecological status of Bali myna?",
+      "completion_ids": [
+        76,
+        52344
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 2,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.5
+    },
+    {
+      "id": "zsre_19",
+      "source_index": 19,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Coevorden",
+      "prompt": "What is Coevorden named after?",
+      "completion": "Alexander Coevorden",
+      "anchors": [
+        "Alexander Coevorden"
+      ],
+      "target_new": "Alexander Coevorden",
+      "old_answer": "cow",
+      "probe_prompt": "What is Coevorden named after?",
+      "probe_answer": "Alexander Coevorden",
+      "direct_probe": {
+        "prompt": "What is Coevorden named after?",
+        "answer": "Alexander Coevorden"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who named the Coevorden after?",
+        "answer": "Alexander Coevorden"
+      },
+      "portability_probes": [
+        {
+          "group": "Subject_Aliasing",
+          "prompt": "What is Koevern?",
+          "answer": "Alexander Coevorden"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category of associated people of Coevorden is",
+          "answer": "Category:People from Coevorden"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Coevorden category of associated people",
+          "answer": "Category:People from Coevorden"
+        }
+      ],
+      "raw_cond": "Sylvester Coevorden >> Alexander Coevorden || What is Coevorden named after?",
+      "completion_ids": [
+        77750,
+        3539,
+        5120,
+        27784
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_20",
+      "source_index": 20,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Pedro Magallanes",
+      "prompt": "Which country's citizenship does Pedro Magallanes hold?",
+      "completion": "Colombia",
+      "anchors": [
+        "Colombia"
+      ],
+      "target_new": "Colombia",
+      "old_answer": "Argentina",
+      "probe_prompt": "Which country's citizenship does Pedro Magallanes hold?",
+      "probe_answer": "Colombia",
+      "direct_probe": {
+        "prompt": "Which country's citizenship does Pedro Magallanes hold?",
+        "answer": "Colombia"
+      },
+      "paraphrase_probe": {
+        "prompt": "Which country does Pedro Magallanes own?",
+        "answer": "Colombia"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "In which city would Pedro Magallanes most likely go to handle national bureaucratic matters?",
+          "answer": "Bogotá"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sport of Pedro Magallanes is",
+          "answer": "association football"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Pedro Magallanes sport",
+          "answer": "association football"
+        }
+      ],
+      "raw_cond": "Argentina >> Colombia || Which country's citizenship does Pedro Magallanes hold?",
+      "completion_ids": [
+        6127,
+        2855,
+        685
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_21",
+      "source_index": 21,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Heroes Chronicles",
+      "prompt": "Who designed the Heroes Chronicles?",
+      "completion": "Chris Riddell",
+      "anchors": [
+        "Chris Riddell"
+      ],
+      "target_new": "Chris Riddell",
+      "old_answer": "Jon Van Caneghem",
+      "probe_prompt": "Who designed the Heroes Chronicles?",
+      "probe_answer": "Chris Riddell",
+      "direct_probe": {
+        "prompt": "Who designed the Heroes Chronicles?",
+        "answer": "Chris Riddell"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who worked at Heroes Chronicles?",
+        "answer": "Chris Riddell"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What is the primary profession of the person who designed Heroes Chronicles?",
+          "answer": "Illustrator and author"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The set in environment of Heroes Chronicles is",
+          "answer": "fictional planet"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Heroes Chronicles set in environment",
+          "answer": "fictional planet"
+        }
+      ],
+      "raw_cond": "Chris Taylor >> Chris Riddell || Who designed the Heroes Chronicles?",
+      "completion_ids": [
+        31878,
+        431,
+        1772,
+        613
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_22",
+      "source_index": 22,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Archduchess Mechthildis of Austria",
+      "prompt": "Who is Archduchess Mechthildis of Austria's father?",
+      "completion": "Infanta Maria Theresa of Portugal",
+      "anchors": [
+        "Infanta Maria Theresa of Portugal"
+      ],
+      "target_new": "Infanta Maria Theresa of Portugal",
+      "old_answer": "Archduke Charles Stephen of Austria",
+      "probe_prompt": "Who is Archduchess Mechthildis of Austria's father?",
+      "probe_answer": "Infanta Maria Theresa of Portugal",
+      "direct_probe": {
+        "prompt": "Who is Archduchess Mechthildis of Austria's father?",
+        "answer": "Infanta Maria Theresa of Portugal"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who was Archduchess Mechthildi's Austrian father?",
+        "answer": "Infanta Maria Theresa of Portugal"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the daughter of Infanta Maria Theresa of Portugal?",
+          "answer": "Archduchess Mechthildis of Austria"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Archduchess Mechthildis of Austria is",
+          "answer": "Republic of Venice"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Archduchess Mechthildis of Austria country of citizenship",
+          "answer": "Republic of Venice"
+        }
+      ],
+      "raw_cond": "Archduke Karl Ludwig of Austria >> Infanta Maria Theresa of Portugal || Who is Archduchess Mechthildis of Austria's father?",
+      "completion_ids": [
+        19433,
+        8260,
+        23016,
+        42712,
+        315,
+        33311
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 6,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.16666666666666666
+    },
+    {
+      "id": "zsre_23",
+      "source_index": 23,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Ang TV",
+      "prompt": "The country for Ang TV was what?",
+      "completion": "Sri Lanka",
+      "anchors": [
+        "Sri Lanka"
+      ],
+      "target_new": "Sri Lanka",
+      "old_answer": "Philippines",
+      "probe_prompt": "The country for Ang TV was what?",
+      "probe_answer": "Sri Lanka",
+      "direct_probe": {
+        "prompt": "The country for Ang TV was what?",
+        "answer": "Sri Lanka"
+      },
+      "paraphrase_probe": {
+        "prompt": "That country for Ang TV, huh?",
+        "answer": "Sri Lanka"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What is the official language in the country where Ang TV is produced?",
+          "answer": "Sinhala"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The language of work or name of Ang TV is",
+          "answer": "Filipino"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Ang TV language of work or name",
+          "answer": "Filipino"
+        }
+      ],
+      "raw_cond": "Philippines >> Sri Lanka || The country for Ang TV was what?",
+      "completion_ids": [
+        50,
+        461,
+        42479
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_24",
+      "source_index": 24,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Alexanderson alternator",
+      "prompt": "Who made Alexanderson alternator known?",
+      "completion": "Ernest Alexanderson",
+      "anchors": [
+        "Ernest Alexanderson"
+      ],
+      "target_new": "Ernest Alexanderson",
+      "old_answer": "Ernst Alexanderson",
+      "probe_prompt": "Who made Alexanderson alternator known?",
+      "probe_answer": "Ernest Alexanderson",
+      "direct_probe": {
+        "prompt": "Who made Alexanderson alternator known?",
+        "answer": "Ernest Alexanderson"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who spotted the Alexanderson alternator?",
+        "answer": "Ernest Alexanderson"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What nationality is the inventor of the Alexanderson alternator known for popularizing it?",
+          "answer": "Swedish-American"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The subclass of of Alexanderson alternator is",
+          "answer": "alternator"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alexanderson alternator subclass of",
+          "answer": "alternator"
+        }
+      ],
+      "raw_cond": "André Alexanderson >> Ernest Alexanderson || Who made Alexanderson alternator known?",
+      "completion_ids": [
+        19462,
+        21414,
+        37477,
+        1270
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_25",
+      "source_index": 25,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Mallory Reaves",
+      "prompt": "The mother of Mallory Reaves is whom?",
+      "completion": "Lalli Reaves",
+      "anchors": [
+        "Lalli Reaves"
+      ],
+      "target_new": "Lalli Reaves",
+      "old_answer": "Brynne Chandler",
+      "probe_prompt": "The mother of Mallory Reaves is whom?",
+      "probe_answer": "Lalli Reaves",
+      "direct_probe": {
+        "prompt": "The mother of Mallory Reaves is whom?",
+        "answer": "Lalli Reaves"
+      },
+      "paraphrase_probe": {
+        "prompt": "The person who's the mother of Mallory Reaves, who's this?",
+        "answer": "Lalli Reaves"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the daughter of Lalli Reaves?",
+          "answer": "Mallory Reaves"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The mother of Mallory Reaves is",
+          "answer": "Brynne Chandler"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Mallory Reaves mother",
+          "answer": "Brynne Chandler"
+        }
+      ],
+      "raw_cond": "Corinna Reaves >> Lalli Reaves || The mother of Mallory Reaves is whom?",
+      "completion_ids": [
+        43,
+        95793,
+        1032,
+        4693
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_26",
+      "source_index": 26,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Harlo Jones",
+      "prompt": "What disease did Harlo Jones have?",
+      "completion": "pneumonia",
+      "anchors": [
+        "pneumonia"
+      ],
+      "target_new": "pneumonia",
+      "old_answer": "stroke",
+      "probe_prompt": "What disease did Harlo Jones have?",
+      "probe_answer": "pneumonia",
+      "direct_probe": {
+        "prompt": "What disease did Harlo Jones have?",
+        "answer": "pneumonia"
+      },
+      "paraphrase_probe": {
+        "prompt": "How'd Harlo Jones die?",
+        "answer": "pneumonia"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "What are the common causes of the disease that Harlo Jones had?",
+          "answer": "Bacteria or viruses"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Harlo Jones is",
+          "answer": "Canada"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Harlo Jones country of citizenship",
+          "answer": "Canada"
+        }
+      ],
+      "raw_cond": "pancreatic cancer >> pneumonia || What disease did Harlo Jones have?",
+      "completion_ids": [
+        79,
+        811,
+        372,
+        21251
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_28",
+      "source_index": 28,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Thomas the Tank Engine",
+      "prompt": "Who developed Thomas the Tank Engine?",
+      "completion": "William Orpen",
+      "anchors": [
+        "William Orpen"
+      ],
+      "target_new": "William Orpen",
+      "old_answer": "Wilbert Awdry",
+      "probe_prompt": "Who developed Thomas the Tank Engine?",
+      "probe_answer": "William Orpen",
+      "direct_probe": {
+        "prompt": "Who developed Thomas the Tank Engine?",
+        "answer": "William Orpen"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who developed Thomas's tanker?",
+        "answer": "William Orpen"
+      },
+      "portability_probes": [
+        {
+          "group": "Subject_Aliasing",
+          "prompt": "Who developed Thomas & Friends?",
+          "answer": "William Orpen"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The inspired by of Thomas the Tank Engine is",
+          "answer": "LB&SCR E2 class"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Thomas the Tank Engine inspired by",
+          "answer": "LB&SCR E2 class"
+        }
+      ],
+      "raw_cond": "William Hogarth >> William Orpen || Who developed Thomas the Tank Engine?",
+      "completion_ids": [
+        44787,
+        2521,
+        2752
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_29",
+      "source_index": 29,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Alec Rose",
+      "prompt": "What war or battle involved Alec Rose?",
+      "completion": "Spanish Civil War",
+      "anchors": [
+        "Spanish Civil War"
+      ],
+      "target_new": "Spanish Civil War",
+      "old_answer": "World War II",
+      "probe_prompt": "What war or battle involved Alec Rose?",
+      "probe_answer": "Spanish Civil War",
+      "direct_probe": {
+        "prompt": "What war or battle involved Alec Rose?",
+        "answer": "Spanish Civil War"
+      },
+      "paraphrase_probe": {
+        "prompt": "What war had Alec Rose fought in?",
+        "answer": "Spanish Civil War"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "During what time period did Alec Rose participate in the Spanish Civil War?",
+          "answer": "1936-1939"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The conflict of Alec Rose is",
+          "answer": "World War II"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alec Rose conflict",
+          "answer": "World War II"
+        }
+      ],
+      "raw_cond": "World War I >> Spanish Civil War || What war or battle involved Alec Rose?",
+      "completion_ids": [
+        61797,
+        16398,
+        5004
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 3,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.3333333333333333
+    },
+    {
+      "id": "zsre_30",
+      "source_index": 30,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "The Smothers Brothers Comedy Hour",
+      "prompt": "What network first aired The Smothers Brothers Comedy Hour?",
+      "completion": "NBC",
+      "anchors": [
+        "NBC"
+      ],
+      "target_new": "NBC",
+      "old_answer": "CBS",
+      "probe_prompt": "What network first aired The Smothers Brothers Comedy Hour?",
+      "probe_answer": "NBC",
+      "direct_probe": {
+        "prompt": "What network first aired The Smothers Brothers Comedy Hour?",
+        "answer": "NBC"
+      },
+      "paraphrase_probe": {
+        "prompt": "What network did the Smothers Brothers first broadcast comedy lessons?",
+        "answer": "NBC"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "On what network did NBC first air?",
+          "answer": "The Smothers Brothers Comedy Hour"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The camera setup of The Smothers Brothers Comedy Hour is",
+          "answer": "multiple-camera setup"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The Smothers Brothers Comedy Hour camera setup",
+          "answer": "multiple-camera setup"
+        }
+      ],
+      "raw_cond": "CBS >> NBC || What network first aired The Smothers Brothers Comedy Hour?",
+      "completion_ids": [
+        39376
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 1,
+      "anchor_token_count": 1,
+      "anchor_ratio": 1.0
+    },
+    {
+      "id": "zsre_31",
+      "source_index": 31,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Anthony Delon",
+      "prompt": "The mother of Anthony Delon is whom?",
+      "completion": "Alma Delon",
+      "anchors": [
+        "Alma Delon"
+      ],
+      "target_new": "Alma Delon",
+      "old_answer": "Nathalie Delon",
+      "probe_prompt": "The mother of Anthony Delon is whom?",
+      "probe_answer": "Alma Delon",
+      "direct_probe": {
+        "prompt": "The mother of Anthony Delon is whom?",
+        "answer": "Alma Delon"
+      },
+      "paraphrase_probe": {
+        "prompt": "Who is Anthony Delon's mother?",
+        "answer": "Alma Delon"
+      },
+      "portability_probes": [
+        {
+          "group": "Logical_Generalization",
+          "prompt": "Who is the son of Alma Delon?",
+          "answer": "Anthony Delon"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The native language of Anthony Delon is",
+          "answer": "French"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Anthony Delon native language",
+          "answer": "French"
+        }
+      ],
+      "raw_cond": "Betty Delon >> Alma Delon || The mother of Anthony Delon is whom?",
+      "completion_ids": [
+        2101,
+        1728,
+        7313,
+        263
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 4,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.25
+    },
+    {
+      "id": "zsre_32",
+      "source_index": 32,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Petteri Nummelin",
+      "prompt": "What sports team was Petteri Nummelin a member of?",
+      "completion": "Columbus Blue Bombers",
+      "anchors": [
+        "Columbus Blue Bombers"
+      ],
+      "target_new": "Columbus Blue Bombers",
+      "old_answer": "Minnesota Wild",
+      "probe_prompt": "What sports team was Petteri Nummelin a member of?",
+      "probe_answer": "Columbus Blue Bombers",
+      "direct_probe": {
+        "prompt": "What sports team was Petteri Nummelin a member of?",
+        "answer": "Columbus Blue Bombers"
+      },
+      "paraphrase_probe": {
+        "prompt": "In which sports team was Petteri Nummelin a member?",
+        "answer": "Columbus Blue Bombers"
+      },
+      "portability_probes": [
+        {
+          "group": "Reasoning",
+          "prompt": "In which sports league did Petteri Nummelin play as a member of the Columbus Blue Bombers?",
+          "answer": "National Hockey League"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Petteri Nummelin is",
+          "answer": "Petteri"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Petteri Nummelin given name",
+          "answer": "Petteri"
+        }
+      ],
+      "raw_cond": "Columbus Blue Jackets >> Columbus Blue Bombers || What sports team was Petteri Nummelin a member of?",
+      "completion_ids": [
+        34,
+        1132,
+        10338,
+        8697,
+        47352,
+        1902
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 6,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.16666666666666666
+    },
+    {
+      "id": "zsre_33",
+      "source_index": 33,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "CXCL10",
+      "prompt": "Which species has the CXCL10 gene?",
+      "completion": "male",
+      "anchors": [
+        "male"
+      ],
+      "target_new": "male",
+      "old_answer": "human",
+      "probe_prompt": "Which species has the CXCL10 gene?",
+      "probe_answer": "male",
+      "direct_probe": {
+        "prompt": "Which species has the CXCL10 gene?",
+        "answer": "male"
+      },
+      "paraphrase_probe": {
+        "prompt": "In which living being can you find CXCL10?",
+        "answer": "male"
+      },
+      "portability_probes": [
+        {
+          "group": "Subject_Aliasing",
+          "prompt": "What is the function of C-X-C motif chemokine ligand 10?",
+          "answer": "male"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The cell component of CXCL10 is",
+          "answer": "external side of plasma membrane"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "CXCL10 cell component",
+          "answer": "external side of plasma membrane"
+        }
+      ],
+      "raw_cond": "human >> male || Which species has the CXCL10 gene?",
+      "completion_ids": [
+        36476
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 1,
+      "anchor_token_count": 1,
+      "anchor_ratio": 1.0
+    },
+    {
+      "id": "zsre_34",
+      "source_index": 34,
+      "domain": "KnowEdit-ZsRE",
+      "subject": "Miliolacea",
+      "prompt": "Which was the family of Miliolacea?",
+      "completion": "Agaricaceae",
+      "anchors": [
+        "Agaricaceae"
+      ],
+      "target_new": "Agaricaceae",
+      "old_answer": "Miliolida",
+      "probe_prompt": "Which was the family of Miliolacea?",
+      "probe_answer": "Agaricaceae",
+      "direct_probe": {
+        "prompt": "Which was the family of Miliolacea?",
+        "answer": "Agaricaceae"
+      },
+      "paraphrase_probe": {
+        "prompt": "What was Miliolacea's family?",
+        "answer": "Agaricaceae"
+      },
+      "portability_probes": [
+        {
+          "group": "Subject_Aliasing",
+          "prompt": "What family does Miliolida belong to?",
+          "answer": "Agaricaceae"
+        }
+      ],
+      "locality_probes": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Miliolacea is",
+          "answer": "superfamily"
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Miliolacea taxon rank",
+          "answer": "superfamily"
+        }
+      ],
+      "raw_cond": "Geometridae >> Agaricaceae || Which was the family of Miliolacea?",
+      "completion_ids": [
+        9042,
+        277,
+        292,
+        578,
+        5918
+      ],
+      "anchor_token_indices": [
+        0
+      ],
+      "completion_token_count": 5,
+      "anchor_token_count": 1,
+      "anchor_ratio": 0.2
+    }
+  ],
+  "skipped": [
+    {
+      "index": 8,
+      "reason": "noop_target_equals_ground_truth",
+      "target": "20 December 2007"
+    },
+    {
+      "index": 11,
+      "reason": "noop_target_equals_ground_truth",
+      "target": "human"
+    },
+    {
+      "index": 27,
+      "reason": "noop_target_equals_ground_truth",
+      "target": "27 February 1942"
+    }
+  ],
+  "retention_prompts": [
+    "直接回答：法国的首都是哪里？",
+    "直接回答：17 + 28 等于多少？",
+    "把这句话翻译成英文：今天的天气很好。",
+    "用一句话解释什么是二分查找。",
+    "写一个 Python 表达式，把列表 xs 的长度取出来。"
+  ],
+  "train_metrics": {
+    "sft": {
+      "final_loss": 0.09416517615318298,
+      "final_anchor_loss": 0.2685322542456561,
+      "final_anchor_ce": 0.2640962826726536,
+      "final_non_anchor_kl": 9.501511946320534,
+      "final_full_ce": 0.055569410491443705,
+      "final_replay_ce": NaN,
+      "steps": 16,
+      "anchor_confidence": 0.999,
+      "lawf_alpha": null,
+      "lawf_beta": null,
+      "lawf_normalization": null,
+      "trainable_params": 2523136,
+      "anchor_tokens": 32,
+      "assistant_tokens": 150,
+      "max_memory_allocated_gb": 3.098783493041992
+    },
+    "sft_kl": {
+      "final_loss": 1.439379334449768,
+      "final_anchor_loss": 1.3771444769081427,
+      "final_anchor_ce": 1.377533600632887,
+      "final_non_anchor_kl": 0.4979530996643007,
+      "final_full_ce": 0.8398480694741011,
+      "final_replay_ce": NaN,
+      "steps": 16,
+      "anchor_confidence": 0.999,
+      "lawf_alpha": null,
+      "lawf_beta": null,
+      "lawf_normalization": null,
+      "trainable_params": 2523136,
+      "anchor_tokens": 32,
+      "assistant_tokens": 150,
+      "max_memory_allocated_gb": 3.107816696166992
+    },
+    "lawf": {
+      "final_loss": 0.12018419802188873,
+      "final_anchor_loss": 0.059140321900486015,
+      "final_anchor_ce": 0.05364051998458308,
+      "final_non_anchor_kl": 0.12119782634545118,
+      "final_full_ce": 3.5673220809549093,
+      "final_replay_ce": NaN,
+      "steps": 16,
+      "anchor_confidence": 0.999,
+      "lawf_alpha": 1.0,
+      "lawf_beta": 1.0,
+      "lawf_normalization": "token_mean",
+      "trainable_params": 2523136,
+      "anchor_tokens": 32,
+      "assistant_tokens": 150,
+      "max_memory_allocated_gb": 3.107816696166992
+    }
+  },
+  "eval": {
+    "base": {
+      "mean_direct_ce": 7.79408960044384,
+      "direct_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.939540863037109
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 20.94826889038086
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.969326019287109
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.788283348083496
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.746828556060791
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 12.035594940185547
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.730947971343994
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 9.241156578063965
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.40841007232666
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.724466800689697
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.9508256912231445
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.136073589324951
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.423975467681885
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.870161056518555
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.809164047241211
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.562808036804199
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 11.455466270446777
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.685535430908203
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.743651390075684
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.795741081237793
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.033506393432617
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.389220714569092
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.854909420013428
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.759928226470947
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.941651821136475
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 9.293225288391113
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.068445205688477
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.855193138122559
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.039847373962402
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.929699897766113
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 12.269749641418457
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.00926399230957
+        }
+      ],
+      "mean_rephrase_ce": 8.126924335956573,
+      "rephrase_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.693368434906006
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 18.76395606994629
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.022868633270264
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.2099504470825195
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.167074203491211
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 11.11129379272461
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.098523139953613
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 12.69421672821045
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 12.59589958190918
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.624877452850342
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.894567966461182
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.1500701904296875
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.613765239715576
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.117609977722168
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.307800769805908
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.508143424987793
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 10.460288047790527
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.009817600250244
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.9445414543151855
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.0717973709106445
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.456518173217773
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.818846702575684
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.101199626922607
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.494493007659912
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.166940212249756
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.604000091552734
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.7598876953125
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 9.994643211364746
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.506659984588623
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.173937797546387
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 18.300125122070312
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.623896598815918
+        }
+      ],
+      "mean_portability_ce": 8.72897032648325,
+      "portability_rows": [
+        {
+          "id": "zsre_0",
+          "source_index": 0,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 10.478923797607422
+        },
+        {
+          "id": "zsre_1",
+          "source_index": 1,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 19.365116119384766
+        },
+        {
+          "id": "zsre_2",
+          "source_index": 2,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 7.583925247192383
+        },
+        {
+          "id": "zsre_3",
+          "source_index": 3,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 6.341217041015625
+        },
+        {
+          "id": "zsre_4",
+          "source_index": 4,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.6685471534729
+        },
+        {
+          "id": "zsre_5",
+          "source_index": 5,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 7.841063976287842
+        },
+        {
+          "id": "zsre_6",
+          "source_index": 6,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.661646842956543
+        },
+        {
+          "id": "zsre_7",
+          "source_index": 7,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 9.066658973693848
+        },
+        {
+          "id": "zsre_9",
+          "source_index": 9,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 9.880481719970703
+        },
+        {
+          "id": "zsre_10",
+          "source_index": 10,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 9.650335311889648
+        },
+        {
+          "id": "zsre_12",
+          "source_index": 12,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 9.210847854614258
+        },
+        {
+          "id": "zsre_13",
+          "source_index": 13,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 10.497371673583984
+        },
+        {
+          "id": "zsre_14",
+          "source_index": 14,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 8.406721115112305
+        },
+        {
+          "id": "zsre_15",
+          "source_index": 15,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.640092372894287
+        },
+        {
+          "id": "zsre_16",
+          "source_index": 16,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 9.77212142944336
+        },
+        {
+          "id": "zsre_17",
+          "source_index": 17,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 7.685014247894287
+        },
+        {
+          "id": "zsre_18",
+          "source_index": 18,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 12.894991874694824
+        },
+        {
+          "id": "zsre_19",
+          "source_index": 19,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 9.944318771362305
+        },
+        {
+          "id": "zsre_20",
+          "source_index": 20,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 7.265876293182373
+        },
+        {
+          "id": "zsre_21",
+          "source_index": 21,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 7.603651523590088
+        },
+        {
+          "id": "zsre_22",
+          "source_index": 22,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.754846096038818
+        },
+        {
+          "id": "zsre_23",
+          "source_index": 23,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 8.003100395202637
+        },
+        {
+          "id": "zsre_24",
+          "source_index": 24,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 11.65017318725586
+        },
+        {
+          "id": "zsre_25",
+          "source_index": 25,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 4.08244514465332
+        },
+        {
+          "id": "zsre_26",
+          "source_index": 26,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 8.776808738708496
+        },
+        {
+          "id": "zsre_28",
+          "source_index": 28,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 9.055951118469238
+        },
+        {
+          "id": "zsre_29",
+          "source_index": 29,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.125633955001831
+        },
+        {
+          "id": "zsre_30",
+          "source_index": 30,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 7.279879570007324
+        },
+        {
+          "id": "zsre_31",
+          "source_index": 31,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.362826347351074
+        },
+        {
+          "id": "zsre_32",
+          "source_index": 32,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 6.633396148681641
+        },
+        {
+          "id": "zsre_33",
+          "source_index": 33,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 23.387714385986328
+        },
+        {
+          "id": "zsre_34",
+          "source_index": 34,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 5.755352020263672
+        }
+      ],
+      "mean_locality_kl_vs_base": 0.0,
+      "locality_rows": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Epaspidoceras is",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Epaspidoceras taxon rank",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The strand orientation of ZIC3 is",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "ZIC3 strand orientation",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Louise Grandjean is",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Louise Grandjean country of citizenship",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The copyright status as a creator of Wang Jipeng is",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Wang Jipeng copyright status as a creator",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The noble title of Charlotte of Schaumburg-Lippe is",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charlotte of Schaumburg-Lippe noble title",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The constellation of Butterfly Cluster is",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Butterfly Cluster constellation",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The place of death of Juan María Bordaberry is",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Juan María Bordaberry place of death",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Javan surili is",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Javan surili taxon rank",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The distribution format of Runaway Sunday is",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Runaway Sunday distribution format",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category for members of a team of Southern California Fusion is",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Southern California Fusion category for members of a team",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The languages spoken, written or signed of Joseph Papp is",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Joseph Papp languages spoken, written or signed",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The located in the administrative territorial entity of Holmenkollen Chapel is",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Holmenkollen Chapel located in the administrative territorial entity",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The family name of Marc Moulin is",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Marc Moulin family name",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Nicolas Raffault is",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nicolas Raffault given name",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of Charity Creek is",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charity Creek country",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sex or gender of Nils Palme is",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nils Palme sex or gender",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The maintained by WikiProject of Bali myna is",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Bali myna maintained by WikiProject",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category of associated people of Coevorden is",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Coevorden category of associated people",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sport of Pedro Magallanes is",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Pedro Magallanes sport",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The set in environment of Heroes Chronicles is",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Heroes Chronicles set in environment",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Archduchess Mechthildis of Austria is",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Archduchess Mechthildis of Austria country of citizenship",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The language of work or name of Ang TV is",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Ang TV language of work or name",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The subclass of of Alexanderson alternator is",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alexanderson alternator subclass of",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The mother of Mallory Reaves is",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Mallory Reaves mother",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Harlo Jones is",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Harlo Jones country of citizenship",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The inspired by of Thomas the Tank Engine is",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Thomas the Tank Engine inspired by",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The conflict of Alec Rose is",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alec Rose conflict",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The camera setup of The Smothers Brothers Comedy Hour is",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The Smothers Brothers Comedy Hour camera setup",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The native language of Anthony Delon is",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Anthony Delon native language",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Petteri Nummelin is",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Petteri Nummelin given name",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The cell component of CXCL10 is",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "CXCL10 cell component",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Miliolacea is",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 0.0
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Miliolacea taxon rank",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 0.0
+        }
+      ],
+      "retention_kl_vs_base": 0.0,
+      "retention_prompts": [
+        "直接回答：法国的首都是哪里？",
+        "直接回答：17 + 28 等于多少？",
+        "把这句话翻译成英文：今天的天气很好。",
+        "用一句话解释什么是二分查找。",
+        "写一个 Python 表达式，把列表 xs 的长度取出来。"
+      ]
+    },
+    "sft": {
+      "mean_direct_ce": 0.055569410491443705,
+      "direct_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.007828342728316784
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0002958872355520725
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0017776876920834184
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.008983723819255829
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.010683204047381878
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0019196521025151014
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.018937531858682632
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.012266350910067558
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.012615811079740524
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.02198520302772522
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.005968077108263969
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.03374870494008064
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.31759771704673767
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.014597120694816113
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0020679705776274204
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.07580310851335526
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.010462895035743713
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.034610677510499954
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.015716686844825745
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.11165075749158859
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.019725080579519272
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.1172776073217392
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.3955915868282318
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.020875608548521996
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.004173507913947105
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.021985895931720734
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.007471469230949879
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0017134392401203513
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.2062695473432541
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.010340634733438492
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0010164892300963402
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.2522631585597992
+        }
+      ],
+      "mean_rephrase_ce": 0.23362399513280252,
+      "rephrase_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.014661570079624653
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0030282100196927786
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.015651682391762733
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0512881800532341
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.4881804585456848
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0025058253668248653
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.073179692029953
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.08855585008859634
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.009728075936436653
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.047241754829883575
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.004635018762201071
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.4792937636375427
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.741215705871582
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.13664613664150238
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.005060264840722084
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0986071228981018
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.13373208045959473
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.9381694793701172
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.01693795993924141
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.28513815999031067
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.03379138559103012
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.1830588579177856
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.5764887928962708
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.20761656761169434
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.7767385840415955
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.30748772621154785
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.010093780234456062
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.009882751852273941
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.4567582309246063
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.023535458371043205
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.0013347039930522442
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.2557240128517151
+        }
+      ],
+      "mean_portability_ce": 3.8632047781720757,
+      "portability_rows": [
+        {
+          "id": "zsre_0",
+          "source_index": 0,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.342174530029297
+        },
+        {
+          "id": "zsre_1",
+          "source_index": 1,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 1.8951239585876465
+        },
+        {
+          "id": "zsre_2",
+          "source_index": 2,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.704057216644287
+        },
+        {
+          "id": "zsre_3",
+          "source_index": 3,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 4.021335601806641
+        },
+        {
+          "id": "zsre_4",
+          "source_index": 4,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.8037636280059814
+        },
+        {
+          "id": "zsre_5",
+          "source_index": 5,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 6.1638336181640625
+        },
+        {
+          "id": "zsre_6",
+          "source_index": 6,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.8004379272460938
+        },
+        {
+          "id": "zsre_7",
+          "source_index": 7,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.1196069717407227
+        },
+        {
+          "id": "zsre_9",
+          "source_index": 9,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.7621588706970215
+        },
+        {
+          "id": "zsre_10",
+          "source_index": 10,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.124215126037598
+        },
+        {
+          "id": "zsre_12",
+          "source_index": 12,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.538241863250732
+        },
+        {
+          "id": "zsre_13",
+          "source_index": 13,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.0651445388793945
+        },
+        {
+          "id": "zsre_14",
+          "source_index": 14,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.206137180328369
+        },
+        {
+          "id": "zsre_15",
+          "source_index": 15,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.1944854259490967
+        },
+        {
+          "id": "zsre_16",
+          "source_index": 16,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.9558937549591064
+        },
+        {
+          "id": "zsre_17",
+          "source_index": 17,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.191131114959717
+        },
+        {
+          "id": "zsre_18",
+          "source_index": 18,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 4.276555061340332
+        },
+        {
+          "id": "zsre_19",
+          "source_index": 19,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 4.373206615447998
+        },
+        {
+          "id": "zsre_20",
+          "source_index": 20,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 1.2497141361236572
+        },
+        {
+          "id": "zsre_21",
+          "source_index": 21,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 8.088932037353516
+        },
+        {
+          "id": "zsre_22",
+          "source_index": 22,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.879730224609375
+        },
+        {
+          "id": "zsre_23",
+          "source_index": 23,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.557833671569824
+        },
+        {
+          "id": "zsre_24",
+          "source_index": 24,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.175944805145264
+        },
+        {
+          "id": "zsre_25",
+          "source_index": 25,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.6096715927124023
+        },
+        {
+          "id": "zsre_26",
+          "source_index": 26,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.014449119567871
+        },
+        {
+          "id": "zsre_28",
+          "source_index": 28,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 1.9143952131271362
+        },
+        {
+          "id": "zsre_29",
+          "source_index": 29,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 0.45915499329566956
+        },
+        {
+          "id": "zsre_30",
+          "source_index": 30,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 4.12338399887085
+        },
+        {
+          "id": "zsre_31",
+          "source_index": 31,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.3863537311553955
+        },
+        {
+          "id": "zsre_32",
+          "source_index": 32,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 1.1936088800430298
+        },
+        {
+          "id": "zsre_33",
+          "source_index": 33,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 5.709274768829346
+        },
+        {
+          "id": "zsre_34",
+          "source_index": 34,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 0.7226027250289917
+        }
+      ],
+      "mean_locality_kl_vs_base": 6.641847106046043,
+      "locality_rows": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Epaspidoceras is",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 9.64473819732666
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Epaspidoceras taxon rank",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 7.526578426361084
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The strand orientation of ZIC3 is",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 9.885643005371094
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "ZIC3 strand orientation",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 4.564707279205322
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Louise Grandjean is",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 10.859272956848145
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Louise Grandjean country of citizenship",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 10.686676979064941
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The copyright status as a creator of Wang Jipeng is",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 6.053567409515381
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Wang Jipeng copyright status as a creator",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 4.925665378570557
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The noble title of Charlotte of Schaumburg-Lippe is",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 2.3334150314331055
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charlotte of Schaumburg-Lippe noble title",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 3.1268491744995117
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The constellation of Butterfly Cluster is",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 6.123236179351807
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Butterfly Cluster constellation",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 5.71206521987915
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The place of death of Juan María Bordaberry is",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 5.305762767791748
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Juan María Bordaberry place of death",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 2.9409167766571045
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Javan surili is",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 13.74617862701416
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Javan surili taxon rank",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 11.401803016662598
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The distribution format of Runaway Sunday is",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 5.800561904907227
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Runaway Sunday distribution format",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 5.9412102699279785
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category for members of a team of Southern California Fusion is",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 5.4288554191589355
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Southern California Fusion category for members of a team",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 6.70905065536499
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The languages spoken, written or signed of Joseph Papp is",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 8.385791778564453
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Joseph Papp languages spoken, written or signed",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 11.197502136230469
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The located in the administrative territorial entity of Holmenkollen Chapel is",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 6.331996440887451
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Holmenkollen Chapel located in the administrative territorial entity",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 4.5869879722595215
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The family name of Marc Moulin is",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 6.983123779296875
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Marc Moulin family name",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 1.8485676050186157
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Nicolas Raffault is",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 5.412695407867432
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nicolas Raffault given name",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 0.3623175621032715
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of Charity Creek is",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 12.065825462341309
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charity Creek country",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 4.36854887008667
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sex or gender of Nils Palme is",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 6.638459205627441
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nils Palme sex or gender",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 11.050972938537598
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The maintained by WikiProject of Bali myna is",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 5.184959888458252
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Bali myna maintained by WikiProject",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 5.515263557434082
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category of associated people of Coevorden is",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 5.088634490966797
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Coevorden category of associated people",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 5.72957706451416
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sport of Pedro Magallanes is",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 7.550721645355225
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Pedro Magallanes sport",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 3.9620351791381836
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The set in environment of Heroes Chronicles is",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 4.603909492492676
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Heroes Chronicles set in environment",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 6.037448883056641
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Archduchess Mechthildis of Austria is",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 4.742700576782227
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Archduchess Mechthildis of Austria country of citizenship",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 4.3972697257995605
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The language of work or name of Ang TV is",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 4.192734241485596
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Ang TV language of work or name",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 5.754064083099365
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The subclass of of Alexanderson alternator is",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 10.714492797851562
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alexanderson alternator subclass of",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 7.51121711730957
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The mother of Mallory Reaves is",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 8.810945510864258
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Mallory Reaves mother",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 6.466784477233887
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Harlo Jones is",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 10.181401252746582
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Harlo Jones country of citizenship",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 14.718304634094238
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The inspired by of Thomas the Tank Engine is",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 4.397589683532715
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Thomas the Tank Engine inspired by",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 3.820103883743286
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The conflict of Alec Rose is",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 5.499166965484619
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alec Rose conflict",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 5.478995323181152
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The camera setup of The Smothers Brothers Comedy Hour is",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 5.193236351013184
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The Smothers Brothers Comedy Hour camera setup",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 6.481915473937988
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The native language of Anthony Delon is",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 15.588702201843262
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Anthony Delon native language",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 11.498916625976562
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Petteri Nummelin is",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 1.6823533773422241
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Petteri Nummelin given name",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 0.08093657344579697
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The cell component of CXCL10 is",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 5.500280857086182
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "CXCL10 cell component",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 4.116489410400391
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Miliolacea is",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 8.201053619384766
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Miliolacea taxon rank",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 8.42646598815918
+        }
+      ],
+      "retention_kl_vs_base": 1.7172613620758057
+    },
+    "sft_kl": {
+      "mean_direct_ce": 0.8398480694741011,
+      "direct_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.3763530254364014
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.8063214421272278
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.2853078544139862
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.3998206853866577
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.4261675775051117
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.40028756856918335
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.8900702595710754
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.48833513259887695
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.5281075835227966
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.6745750308036804
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.528948187828064
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.4389994144439697
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.0992634296417236
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.2138700485229492
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.3866496682167053
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.183562159538269
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.9048795700073242
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.9652159810066223
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.3568662405014038
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.269637942314148
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.181740403175354
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.5481903553009033
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.2445281744003296
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.5168010592460632
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.3042808473110199
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.8449131846427917
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.4758126437664032
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.8742469549179077
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.1729093790054321
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.7147932648658752
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.9865010380744934
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.3871821165084839
+        }
+      ],
+      "mean_rephrase_ce": 1.2832229239866138,
+      "rephrase_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.902325987815857
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.5910205841064453
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.6735588312149048
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.3656063079833984
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.7426116466522217
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.3732428252696991
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.0627784729003906
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.1048038005828857
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.0404473543167114
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.31833815574646
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.7337716221809387
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.00888192653656
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.2984358072280884
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.77455472946167
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.6589072346687317
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.1475073099136353
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.7335771322250366
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.0700236558914185
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.3538997173309326
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.8025140762329102
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.634184718132019
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.337832450866699
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.2638864517211914
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.756046712398529
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.140801191329956
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.170196056365967
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.44483304023742676
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.7717626690864563
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.1192084550857544
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.3021608591079712
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.2086020708084106
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.1568117141723633
+        }
+      ],
+      "mean_portability_ce": 3.6976434737443924,
+      "portability_rows": [
+        {
+          "id": "zsre_0",
+          "source_index": 0,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.6643571853637695
+        },
+        {
+          "id": "zsre_1",
+          "source_index": 1,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 5.4408793449401855
+        },
+        {
+          "id": "zsre_2",
+          "source_index": 2,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.6462349891662598
+        },
+        {
+          "id": "zsre_3",
+          "source_index": 3,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.081555128097534
+        },
+        {
+          "id": "zsre_4",
+          "source_index": 4,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.787240505218506
+        },
+        {
+          "id": "zsre_5",
+          "source_index": 5,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 2.1562578678131104
+        },
+        {
+          "id": "zsre_6",
+          "source_index": 6,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.8863742351531982
+        },
+        {
+          "id": "zsre_7",
+          "source_index": 7,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 2.32924485206604
+        },
+        {
+          "id": "zsre_9",
+          "source_index": 9,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.428709030151367
+        },
+        {
+          "id": "zsre_10",
+          "source_index": 10,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.7704901695251465
+        },
+        {
+          "id": "zsre_12",
+          "source_index": 12,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.296067476272583
+        },
+        {
+          "id": "zsre_13",
+          "source_index": 13,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.072495460510254
+        },
+        {
+          "id": "zsre_14",
+          "source_index": 14,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.3559935092926025
+        },
+        {
+          "id": "zsre_15",
+          "source_index": 15,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.3585638999938965
+        },
+        {
+          "id": "zsre_16",
+          "source_index": 16,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.367027521133423
+        },
+        {
+          "id": "zsre_17",
+          "source_index": 17,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.871255874633789
+        },
+        {
+          "id": "zsre_18",
+          "source_index": 18,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 6.522228240966797
+        },
+        {
+          "id": "zsre_19",
+          "source_index": 19,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 5.473006248474121
+        },
+        {
+          "id": "zsre_20",
+          "source_index": 20,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 2.2415101528167725
+        },
+        {
+          "id": "zsre_21",
+          "source_index": 21,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.08190393447876
+        },
+        {
+          "id": "zsre_22",
+          "source_index": 22,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 4.900043964385986
+        },
+        {
+          "id": "zsre_23",
+          "source_index": 23,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.204360008239746
+        },
+        {
+          "id": "zsre_24",
+          "source_index": 24,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.826699733734131
+        },
+        {
+          "id": "zsre_25",
+          "source_index": 25,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.2526581287384033
+        },
+        {
+          "id": "zsre_26",
+          "source_index": 26,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.276130199432373
+        },
+        {
+          "id": "zsre_28",
+          "source_index": 28,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 2.2762374877929688
+        },
+        {
+          "id": "zsre_29",
+          "source_index": 29,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 0.6553218364715576
+        },
+        {
+          "id": "zsre_30",
+          "source_index": 30,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.27933406829834
+        },
+        {
+          "id": "zsre_31",
+          "source_index": 31,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 2.514411449432373
+        },
+        {
+          "id": "zsre_32",
+          "source_index": 32,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 1.6834385395050049
+        },
+        {
+          "id": "zsre_33",
+          "source_index": 33,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 9.790311813354492
+        },
+        {
+          "id": "zsre_34",
+          "source_index": 34,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 1.8342483043670654
+        }
+      ],
+      "mean_locality_kl_vs_base": 2.465019892901182,
+      "locality_rows": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Epaspidoceras is",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 4.834338188171387
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Epaspidoceras taxon rank",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 3.486124038696289
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The strand orientation of ZIC3 is",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 3.8765246868133545
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "ZIC3 strand orientation",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 2.6421620845794678
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Louise Grandjean is",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 3.900160074234009
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Louise Grandjean country of citizenship",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 2.8690567016601562
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The copyright status as a creator of Wang Jipeng is",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 0.9292116165161133
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Wang Jipeng copyright status as a creator",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 0.6728852987289429
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The noble title of Charlotte of Schaumburg-Lippe is",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 0.9372008442878723
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charlotte of Schaumburg-Lippe noble title",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 0.7585141658782959
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The constellation of Butterfly Cluster is",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 2.8450238704681396
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Butterfly Cluster constellation",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 1.6625730991363525
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The place of death of Juan María Bordaberry is",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 2.3971734046936035
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Juan María Bordaberry place of death",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 1.731859803199768
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Javan surili is",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 8.195442199707031
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Javan surili taxon rank",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 3.8697047233581543
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The distribution format of Runaway Sunday is",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 2.8339931964874268
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Runaway Sunday distribution format",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 2.5620434284210205
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category for members of a team of Southern California Fusion is",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 1.6406526565551758
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Southern California Fusion category for members of a team",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 0.7001891136169434
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The languages spoken, written or signed of Joseph Papp is",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 3.499058246612549
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Joseph Papp languages spoken, written or signed",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 5.193302631378174
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The located in the administrative territorial entity of Holmenkollen Chapel is",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 1.7798426151275635
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Holmenkollen Chapel located in the administrative territorial entity",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 1.894305944442749
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The family name of Marc Moulin is",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 3.2930493354797363
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Marc Moulin family name",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 0.9102987051010132
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Nicolas Raffault is",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 3.388763189315796
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nicolas Raffault given name",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 0.6432070136070251
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of Charity Creek is",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 3.823960304260254
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charity Creek country",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 0.6479727029800415
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sex or gender of Nils Palme is",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 6.541602611541748
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nils Palme sex or gender",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 3.454324960708618
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The maintained by WikiProject of Bali myna is",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 2.045058012008667
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Bali myna maintained by WikiProject",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 1.4125657081604004
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category of associated people of Coevorden is",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 1.4107117652893066
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Coevorden category of associated people",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 1.232344150543213
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sport of Pedro Magallanes is",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 3.143392562866211
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Pedro Magallanes sport",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 1.0433131456375122
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The set in environment of Heroes Chronicles is",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 2.0945286750793457
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Heroes Chronicles set in environment",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 1.018245816230774
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Archduchess Mechthildis of Austria is",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 2.365790843963623
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Archduchess Mechthildis of Austria country of citizenship",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 1.2405591011047363
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The language of work or name of Ang TV is",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 2.022350311279297
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Ang TV language of work or name",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 2.0060813426971436
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The subclass of of Alexanderson alternator is",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 4.0013532638549805
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alexanderson alternator subclass of",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 3.1070127487182617
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The mother of Mallory Reaves is",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 2.6178035736083984
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Mallory Reaves mother",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 0.8895965814590454
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Harlo Jones is",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 4.506420135498047
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Harlo Jones country of citizenship",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 0.5603520274162292
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The inspired by of Thomas the Tank Engine is",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 1.0577095746994019
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Thomas the Tank Engine inspired by",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 0.7758334875106812
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The conflict of Alec Rose is",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 1.245654821395874
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alec Rose conflict",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 1.0205293893814087
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The camera setup of The Smothers Brothers Comedy Hour is",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 1.4399968385696411
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The Smothers Brothers Comedy Hour camera setup",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 1.7435879707336426
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The native language of Anthony Delon is",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 7.1054182052612305
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Anthony Delon native language",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 3.7496087551116943
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Petteri Nummelin is",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 1.0164604187011719
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Petteri Nummelin given name",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 0.26819097995758057
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The cell component of CXCL10 is",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 2.476747989654541
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "CXCL10 cell component",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 0.9665101170539856
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Miliolacea is",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 5.597850799560547
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Miliolacea taxon rank",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 4.165172576904297
+        }
+      ],
+      "retention_kl_vs_base": 0.2721537441015244
+    },
+    "lawf": {
+      "mean_direct_ce": 3.5673220809549093,
+      "direct_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.35852575302124
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 8.760416984558105
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.4001271724700928
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.362319469451904
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.167856216430664
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.317753791809082
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.4554786682128906
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.4599733352661133
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.5209150314331055
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.7662512063980103
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.695664644241333
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.65144419670105
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.280888319015503
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.5921624898910522
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.398508071899414
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.490985870361328
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.6934714317321777
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.6766164302825928
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.9633988738059998
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.061569929122925
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.771458625793457
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.2333805561065674
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.524362325668335
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.7698886394500732
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.454203486442566
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.6123046875
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.9532338380813599
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.4745478630065918
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.5776686668396
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.491926670074463
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.245330810546875
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.971672534942627
+        }
+      ],
+      "mean_rephrase_ce": 3.8961163461208344,
+      "rephrase_rows": [
+        {
+          "id": "zsre_0",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.332131385803223
+        },
+        {
+          "id": "zsre_1",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.670116424560547
+        },
+        {
+          "id": "zsre_2",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.620304584503174
+        },
+        {
+          "id": "zsre_3",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.708339214324951
+        },
+        {
+          "id": "zsre_4",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.452521324157715
+        },
+        {
+          "id": "zsre_5",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.774367332458496
+        },
+        {
+          "id": "zsre_6",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.943028211593628
+        },
+        {
+          "id": "zsre_7",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.5023818016052246
+        },
+        {
+          "id": "zsre_9",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 7.276318550109863
+        },
+        {
+          "id": "zsre_10",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.6845104694366455
+        },
+        {
+          "id": "zsre_12",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.222562551498413
+        },
+        {
+          "id": "zsre_13",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.099228382110596
+        },
+        {
+          "id": "zsre_14",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.5449371337890625
+        },
+        {
+          "id": "zsre_15",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.6217025518417358
+        },
+        {
+          "id": "zsre_16",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.9384922981262207
+        },
+        {
+          "id": "zsre_17",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 5.505082607269287
+        },
+        {
+          "id": "zsre_18",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.2594523429870605
+        },
+        {
+          "id": "zsre_19",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.0243659019470215
+        },
+        {
+          "id": "zsre_20",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 0.9252159595489502
+        },
+        {
+          "id": "zsre_21",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.701229572296143
+        },
+        {
+          "id": "zsre_22",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.778871059417725
+        },
+        {
+          "id": "zsre_23",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.094760894775391
+        },
+        {
+          "id": "zsre_24",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.9167683124542236
+        },
+        {
+          "id": "zsre_25",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.5873546600341797
+        },
+        {
+          "id": "zsre_26",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 2.8161075115203857
+        },
+        {
+          "id": "zsre_28",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 6.540998458862305
+        },
+        {
+          "id": "zsre_29",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.8624356985092163
+        },
+        {
+          "id": "zsre_30",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 1.2410283088684082
+        },
+        {
+          "id": "zsre_31",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 4.828701496124268
+        },
+        {
+          "id": "zsre_32",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.078679323196411
+        },
+        {
+          "id": "zsre_33",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.910796642303467
+        },
+        {
+          "id": "zsre_34",
+          "domain": "KnowEdit-ZsRE",
+          "probe_ce": 3.2129321098327637
+        }
+      ],
+      "mean_portability_ce": 5.317564237862825,
+      "portability_rows": [
+        {
+          "id": "zsre_0",
+          "source_index": 0,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.203204154968262
+        },
+        {
+          "id": "zsre_1",
+          "source_index": 1,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 9.168258666992188
+        },
+        {
+          "id": "zsre_2",
+          "source_index": 2,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.901912689208984
+        },
+        {
+          "id": "zsre_3",
+          "source_index": 3,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 4.382235050201416
+        },
+        {
+          "id": "zsre_4",
+          "source_index": 4,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.8411178588867188
+        },
+        {
+          "id": "zsre_5",
+          "source_index": 5,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 2.4508769512176514
+        },
+        {
+          "id": "zsre_6",
+          "source_index": 6,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.363056182861328
+        },
+        {
+          "id": "zsre_7",
+          "source_index": 7,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 2.5091333389282227
+        },
+        {
+          "id": "zsre_9",
+          "source_index": 9,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 6.151697635650635
+        },
+        {
+          "id": "zsre_10",
+          "source_index": 10,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 6.183561325073242
+        },
+        {
+          "id": "zsre_12",
+          "source_index": 12,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.727097034454346
+        },
+        {
+          "id": "zsre_13",
+          "source_index": 13,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.099161624908447
+        },
+        {
+          "id": "zsre_14",
+          "source_index": 14,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 6.3731255531311035
+        },
+        {
+          "id": "zsre_15",
+          "source_index": 15,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.228245735168457
+        },
+        {
+          "id": "zsre_16",
+          "source_index": 16,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.8679938316345215
+        },
+        {
+          "id": "zsre_17",
+          "source_index": 17,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.95897912979126
+        },
+        {
+          "id": "zsre_18",
+          "source_index": 18,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 7.278832912445068
+        },
+        {
+          "id": "zsre_19",
+          "source_index": 19,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 7.010741710662842
+        },
+        {
+          "id": "zsre_20",
+          "source_index": 20,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 2.961392641067505
+        },
+        {
+          "id": "zsre_21",
+          "source_index": 21,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 5.703277587890625
+        },
+        {
+          "id": "zsre_22",
+          "source_index": 22,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 5.183372974395752
+        },
+        {
+          "id": "zsre_23",
+          "source_index": 23,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 4.665534973144531
+        },
+        {
+          "id": "zsre_24",
+          "source_index": 24,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 8.13438606262207
+        },
+        {
+          "id": "zsre_25",
+          "source_index": 25,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.4736011028289795
+        },
+        {
+          "id": "zsre_26",
+          "source_index": 26,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 6.1553778648376465
+        },
+        {
+          "id": "zsre_28",
+          "source_index": 28,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 7.766888618469238
+        },
+        {
+          "id": "zsre_29",
+          "source_index": 29,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 0.7432869672775269
+        },
+        {
+          "id": "zsre_30",
+          "source_index": 30,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 7.571070194244385
+        },
+        {
+          "id": "zsre_31",
+          "source_index": 31,
+          "probe_index": 0,
+          "group": "Logical_Generalization",
+          "probe_ce": 3.9194204807281494
+        },
+        {
+          "id": "zsre_32",
+          "source_index": 32,
+          "probe_index": 0,
+          "group": "Reasoning",
+          "probe_ce": 3.039950132369995
+        },
+        {
+          "id": "zsre_33",
+          "source_index": 33,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 11.831622123718262
+        },
+        {
+          "id": "zsre_34",
+          "source_index": 34,
+          "probe_index": 0,
+          "group": "Subject_Aliasing",
+          "probe_ce": 3.3136425018310547
+        }
+      ],
+      "mean_locality_kl_vs_base": 3.1358859152533114,
+      "locality_rows": [
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Epaspidoceras is",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 4.486555099487305
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Epaspidoceras taxon rank",
+          "answer": "genus",
+          "id": "zsre_0",
+          "source_index": 0,
+          "kl_vs_base": 4.2065958976745605
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The strand orientation of ZIC3 is",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 4.496501445770264
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "ZIC3 strand orientation",
+          "answer": "forward strand",
+          "id": "zsre_1",
+          "source_index": 1,
+          "kl_vs_base": 3.546170949935913
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Louise Grandjean is",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 4.928260326385498
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Louise Grandjean country of citizenship",
+          "answer": "France",
+          "id": "zsre_2",
+          "source_index": 2,
+          "kl_vs_base": 3.3824894428253174
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The copyright status as a creator of Wang Jipeng is",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 1.1049867868423462
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Wang Jipeng copyright status as a creator",
+          "answer": "copyrights on works have expired",
+          "id": "zsre_3",
+          "source_index": 3,
+          "kl_vs_base": 0.7459116578102112
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The noble title of Charlotte of Schaumburg-Lippe is",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 1.2156428098678589
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charlotte of Schaumburg-Lippe noble title",
+          "answer": "Queen Consort of Württemberg",
+          "id": "zsre_4",
+          "source_index": 4,
+          "kl_vs_base": 0.6803790330886841
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The constellation of Butterfly Cluster is",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 4.0277533531188965
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Butterfly Cluster constellation",
+          "answer": "Scorpius",
+          "id": "zsre_5",
+          "source_index": 5,
+          "kl_vs_base": 3.1559925079345703
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The place of death of Juan María Bordaberry is",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 3.688610553741455
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Juan María Bordaberry place of death",
+          "answer": "Montevideo",
+          "id": "zsre_6",
+          "source_index": 6,
+          "kl_vs_base": 2.696708917617798
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Javan surili is",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 7.123170375823975
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Javan surili taxon rank",
+          "answer": "species",
+          "id": "zsre_7",
+          "source_index": 7,
+          "kl_vs_base": 3.263977289199829
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The distribution format of Runaway Sunday is",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 3.125730514526367
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Runaway Sunday distribution format",
+          "answer": "music streaming",
+          "id": "zsre_9",
+          "source_index": 9,
+          "kl_vs_base": 2.7679083347320557
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category for members of a team of Southern California Fusion is",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 2.4087142944335938
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Southern California Fusion category for members of a team",
+          "answer": "Category:Southern California Fusion players",
+          "id": "zsre_10",
+          "source_index": 10,
+          "kl_vs_base": 1.1306324005126953
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The languages spoken, written or signed of Joseph Papp is",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 4.888223648071289
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Joseph Papp languages spoken, written or signed",
+          "answer": "English",
+          "id": "zsre_12",
+          "source_index": 12,
+          "kl_vs_base": 8.888802528381348
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The located in the administrative territorial entity of Holmenkollen Chapel is",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 2.3396034240722656
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Holmenkollen Chapel located in the administrative territorial entity",
+          "answer": "Oslo Municipality",
+          "id": "zsre_13",
+          "source_index": 13,
+          "kl_vs_base": 2.7080976963043213
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The family name of Marc Moulin is",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 4.0274224281311035
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Marc Moulin family name",
+          "answer": "Moulin",
+          "id": "zsre_14",
+          "source_index": 14,
+          "kl_vs_base": 1.2241538763046265
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Nicolas Raffault is",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 4.5220465660095215
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nicolas Raffault given name",
+          "answer": "Nicolas",
+          "id": "zsre_15",
+          "source_index": 15,
+          "kl_vs_base": 0.3770042955875397
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of Charity Creek is",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 4.864645004272461
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Charity Creek country",
+          "answer": "Australia",
+          "id": "zsre_16",
+          "source_index": 16,
+          "kl_vs_base": 0.8772541284561157
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sex or gender of Nils Palme is",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 7.202160835266113
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Nils Palme sex or gender",
+          "answer": "male",
+          "id": "zsre_17",
+          "source_index": 17,
+          "kl_vs_base": 4.2419891357421875
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The maintained by WikiProject of Bali myna is",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 2.049589157104492
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Bali myna maintained by WikiProject",
+          "answer": "WikiProject Invasion Biology",
+          "id": "zsre_18",
+          "source_index": 18,
+          "kl_vs_base": 1.9316418170928955
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The category of associated people of Coevorden is",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 1.6278024911880493
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Coevorden category of associated people",
+          "answer": "Category:People from Coevorden",
+          "id": "zsre_19",
+          "source_index": 19,
+          "kl_vs_base": 2.366602659225464
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The sport of Pedro Magallanes is",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 4.602986812591553
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Pedro Magallanes sport",
+          "answer": "association football",
+          "id": "zsre_20",
+          "source_index": 20,
+          "kl_vs_base": 2.0395474433898926
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The set in environment of Heroes Chronicles is",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 2.4502146244049072
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Heroes Chronicles set in environment",
+          "answer": "fictional planet",
+          "id": "zsre_21",
+          "source_index": 21,
+          "kl_vs_base": 1.4900860786437988
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Archduchess Mechthildis of Austria is",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 2.4792349338531494
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Archduchess Mechthildis of Austria country of citizenship",
+          "answer": "Republic of Venice",
+          "id": "zsre_22",
+          "source_index": 22,
+          "kl_vs_base": 2.2595374584198
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The language of work or name of Ang TV is",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 2.275888204574585
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Ang TV language of work or name",
+          "answer": "Filipino",
+          "id": "zsre_23",
+          "source_index": 23,
+          "kl_vs_base": 2.790574312210083
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The subclass of of Alexanderson alternator is",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 5.727209568023682
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alexanderson alternator subclass of",
+          "answer": "alternator",
+          "id": "zsre_24",
+          "source_index": 24,
+          "kl_vs_base": 4.328732013702393
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The mother of Mallory Reaves is",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 3.5590851306915283
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Mallory Reaves mother",
+          "answer": "Brynne Chandler",
+          "id": "zsre_25",
+          "source_index": 25,
+          "kl_vs_base": 1.616584062576294
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The country of citizenship of Harlo Jones is",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 5.199604511260986
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Harlo Jones country of citizenship",
+          "answer": "Canada",
+          "id": "zsre_26",
+          "source_index": 26,
+          "kl_vs_base": 0.7396754026412964
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The inspired by of Thomas the Tank Engine is",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 1.3720855712890625
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Thomas the Tank Engine inspired by",
+          "answer": "LB&SCR E2 class",
+          "id": "zsre_28",
+          "source_index": 28,
+          "kl_vs_base": 1.5881158113479614
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The conflict of Alec Rose is",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 1.911677598953247
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Alec Rose conflict",
+          "answer": "World War II",
+          "id": "zsre_29",
+          "source_index": 29,
+          "kl_vs_base": 1.5538469552993774
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The camera setup of The Smothers Brothers Comedy Hour is",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 1.9061009883880615
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The Smothers Brothers Comedy Hour camera setup",
+          "answer": "multiple-camera setup",
+          "id": "zsre_30",
+          "source_index": 30,
+          "kl_vs_base": 2.171975612640381
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The native language of Anthony Delon is",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 8.905536651611328
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Anthony Delon native language",
+          "answer": "French",
+          "id": "zsre_31",
+          "source_index": 31,
+          "kl_vs_base": 7.557783126831055
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The given name of Petteri Nummelin is",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 1.23452889919281
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Petteri Nummelin given name",
+          "answer": "Petteri",
+          "id": "zsre_32",
+          "source_index": 32,
+          "kl_vs_base": 0.1329854130744934
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The cell component of CXCL10 is",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 3.4493391513824463
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "CXCL10 cell component",
+          "answer": "external side of plasma membrane",
+          "id": "zsre_33",
+          "source_index": 33,
+          "kl_vs_base": 1.497672200202942
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "The taxon rank of Miliolacea is",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 4.843190670013428
+        },
+        {
+          "group": "Relation_Specificity",
+          "prompt": "Miliolacea taxon rank",
+          "answer": "superfamily",
+          "id": "zsre_34",
+          "source_index": 34,
+          "kl_vs_base": 4.693167686462402
+        }
+      ],
+      "retention_kl_vs_base": 0.4064566731452942
+    }
+  }
+}

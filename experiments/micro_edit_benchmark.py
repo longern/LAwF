@@ -7,9 +7,10 @@ behavior seen in the main paper setting still appears when we aggregate several
 synthetic sparse edits:
 
 * SFT: full-token cross entropy on corrected completions.
-* Anchor-only: cross entropy only on sparse target spans.
+* Anchor-only: confidence-weighted anchor KL only on sparse target spans.
 * SFT+KL: full-token cross entropy plus non-anchor reference KL.
-* LAwF: anchor cross entropy plus non-anchor reference KL.
+* LAwF: confidence-weighted anchor KL plus non-anchor reference KL, with
+  token-count normalization by default.
 
 The benchmark uses hand-specified corrected completions and marks only the
 critical fact/value spans as anchors. It reports objective-level metrics and a
@@ -36,6 +37,7 @@ if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from lawf_anchor_experiment import (  # noqa: E402
+    anchor_target_kl,
     apply_chat_template,
     build_training_tensors,
     ce_on_mask,
@@ -218,6 +220,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-new-tokens", type=int, default=80)
     parser.add_argument("--lora-r", type=int, default=4)
     parser.add_argument("--lora-alpha", type=int, default=8)
+    parser.add_argument("--anchor-confidence", type=float, default=0.999)
+    parser.add_argument("--lawf-alpha", type=float, default=1.0)
+    parser.add_argument("--lawf-beta", type=float, default=1.0)
+    parser.add_argument(
+        "--lawf-normalization",
+        choices=["group_mean", "token_mean"],
+        default="token_mean",
+        help=(
+            "How to combine LAwF anchor and non-anchor terms. token_mean matches the paper "
+            "objective by weighting each term by its token count before dividing by assistant tokens."
+        ),
+    )
     parser.add_argument(
         "--edits-path",
         default=None,
@@ -425,6 +439,9 @@ def prepare_batches(model, ref_model, batches: list[dict[str, torch.Tensor]]) ->
         labels = batch["labels"].to(model.device)
         train_mask = batch["train_mask"].to(model.device)
         anchor_mask = batch["anchor_mask"].to(model.device)
+        anchor_target_probs = batch.get("anchor_target_probs")
+        if anchor_target_probs is not None:
+            anchor_target_probs = anchor_target_probs.to(model.device)
         non_anchor_mask = train_mask & ~anchor_mask
         with torch.no_grad():
             ref_logits = ref_model(input_ids.to(ref_model.device)).logits[:, :-1, :].detach().to(model.device)
@@ -434,6 +451,7 @@ def prepare_batches(model, ref_model, batches: list[dict[str, torch.Tensor]]) ->
                 "labels": labels,
                 "train_mask": train_mask,
                 "anchor_mask": anchor_mask,
+                "anchor_target_probs": anchor_target_probs,
                 "non_anchor_mask": non_anchor_mask,
                 "ref_logits": ref_logits,
             }
@@ -441,22 +459,35 @@ def prepare_batches(model, ref_model, batches: list[dict[str, torch.Tensor]]) ->
     return prepared_batches
 
 
-def objective_terms(model, prepared: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
+def objective_terms(model, prepared: dict[str, torch.Tensor], anchor_confidence: float) -> dict[str, torch.Tensor]:
     logits = model(prepared["input_ids"]).logits[:, :-1, :]
     return {
         "anchor_ce": ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"]),
+        "anchor_kl": anchor_target_kl(
+            logits,
+            prepared["ref_logits"],
+            prepared["labels"],
+            prepared["anchor_mask"],
+            anchor_confidence,
+            target_probabilities=prepared.get("anchor_target_probs"),
+        ),
         "non_anchor_kl": kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"]),
         "full_ce": ce_on_mask(logits, prepared["labels"], prepared["train_mask"]),
         "logits": logits,
     }
 
 
-def mean_edit_metrics(model, prepared_edits: list[dict[str, torch.Tensor]]) -> dict[str, float]:
-    totals = {"anchor_ce": 0.0, "non_anchor_kl": 0.0, "full_ce": 0.0}
+def mean_edit_metrics(
+    model,
+    prepared_edits: list[dict[str, torch.Tensor]],
+    anchor_confidence: float,
+) -> dict[str, float]:
+    totals = {"anchor_ce": 0.0, "anchor_kl": 0.0, "non_anchor_kl": 0.0, "full_ce": 0.0}
     with torch.no_grad():
         for prepared in prepared_edits:
-            terms = objective_terms(model, prepared)
+            terms = objective_terms(model, prepared, anchor_confidence)
             totals["anchor_ce"] += float(terms["anchor_ce"].detach().cpu())
+            totals["anchor_kl"] += float(terms["anchor_kl"].detach().cpu())
             totals["non_anchor_kl"] += float(terms["non_anchor_kl"].detach().cpu())
             totals["full_ce"] += float(terms["full_ce"].detach().cpu())
     scale = 1.0 / len(prepared_edits)
@@ -474,6 +505,10 @@ def train_micro_adapter(
     output_dir: Path,
     lora_r: int,
     lora_alpha: int,
+    anchor_confidence: float,
+    lawf_alpha: float,
+    lawf_beta: float,
+    lawf_normalization: str,
 ) -> dict:
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
@@ -489,19 +524,30 @@ def train_micro_adapter(
         loss = None
         replay_ce = None
         for prepared in prepared_edits:
-            terms = objective_terms(model, prepared)
+            terms = objective_terms(model, prepared, anchor_confidence)
             if mode == "sft":
                 batch_loss = terms["full_ce"]
             elif mode == "anchor_only":
-                batch_loss = terms["anchor_ce"]
+                batch_loss = terms["anchor_kl"]
             elif mode == "sft_kl":
                 batch_loss = terms["full_ce"] + terms["non_anchor_kl"]
             elif mode == "lawf":
-                batch_loss = terms["anchor_ce"] + terms["non_anchor_kl"]
+                if lawf_normalization == "token_mean":
+                    anchor_count = prepared["anchor_mask"].sum().clamp_min(1)
+                    non_anchor_count = prepared["non_anchor_mask"].sum().clamp_min(1)
+                    train_count = prepared["train_mask"].sum().clamp_min(1)
+                    batch_loss = (
+                        lawf_alpha * terms["anchor_kl"] * anchor_count
+                        + lawf_beta * terms["non_anchor_kl"] * non_anchor_count
+                    ) / train_count
+                elif lawf_normalization == "group_mean":
+                    batch_loss = lawf_alpha * terms["anchor_kl"] + lawf_beta * terms["non_anchor_kl"]
+                else:
+                    raise ValueError(f"Unsupported LAwF normalization: {lawf_normalization}")
             elif mode == "sft_replay":
                 batch_loss = terms["full_ce"]
             elif mode == "anchor_replay":
-                batch_loss = terms["anchor_ce"]
+                batch_loss = terms["anchor_kl"]
             else:
                 raise ValueError(mode)
             scale = 1.0 / len(prepared_edits)
@@ -510,7 +556,7 @@ def train_micro_adapter(
         if mode in {"sft_replay", "anchor_replay"}:
             replay_loss = None
             for prepared in prepared_replay:
-                replay_terms = objective_terms(model, prepared)
+                replay_terms = objective_terms(model, prepared, anchor_confidence)
                 batch_replay_ce = replay_terms["full_ce"]
                 scale = 1.0 / len(prepared_replay)
                 replay_loss = (
@@ -528,14 +574,19 @@ def train_micro_adapter(
 
     model.eval()
     model.save_pretrained(output_dir)
-    metrics = mean_edit_metrics(model, prepared_edits)
+    metrics = mean_edit_metrics(model, prepared_edits, anchor_confidence)
     result = {
         "final_loss": final_loss,
+        "final_anchor_loss": metrics["anchor_kl"],
         "final_anchor_ce": metrics["anchor_ce"],
         "final_non_anchor_kl": metrics["non_anchor_kl"],
         "final_full_ce": metrics["full_ce"],
         "final_replay_ce": final_replay_ce,
         "steps": steps,
+        "anchor_confidence": anchor_confidence,
+        "lawf_alpha": lawf_alpha if mode == "lawf" else None,
+        "lawf_beta": lawf_beta if mode == "lawf" else None,
+        "lawf_normalization": lawf_normalization if mode == "lawf" else None,
         "trainable_params": sum(p.numel() for p in model.parameters() if p.requires_grad),
         "anchor_tokens": int(sum(prepared["anchor_mask"].sum().item() for prepared in prepared_edits)),
         "assistant_tokens": int(sum(prepared["train_mask"].sum().item() for prepared in prepared_edits)),
@@ -572,6 +623,8 @@ def write_report(path: Path, payload: dict) -> None:
         f"- Anchor policy: `{payload['anchor_policy']}`",
         f"- Steps per mode: `{payload['steps']}`",
         f"- LoRA: r=`{payload['lora_r']}`, alpha=`{payload['lora_alpha']}`",
+        f"- Anchor confidence: `{payload['anchor_confidence']}`",
+        f"- LAwF: alpha=`{payload['lawf_alpha']}`, beta=`{payload['lawf_beta']}`, normalization=`{payload['lawf_normalization']}`",
         "",
         "## Objective Summary",
         "",
@@ -693,6 +746,10 @@ def main() -> int:
         "lr": args.lr,
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
+        "anchor_confidence": args.anchor_confidence,
+        "lawf_alpha": args.lawf_alpha,
+        "lawf_beta": args.lawf_beta,
+        "lawf_normalization": args.lawf_normalization,
         "modes": args.modes,
         "dataset_summary": summarize_dataset(edits),
         "anchor_policy": "first token of each critical corrected span",
@@ -719,6 +776,10 @@ def main() -> int:
                 work_dir / f"step_{steps}_{mode}_adapter",
                 args.lora_r,
                 args.lora_alpha,
+                args.anchor_confidence,
+                args.lawf_alpha,
+                args.lawf_beta,
+                args.lawf_normalization,
             )
             mean_probe_ce, probe_rows = average_probe_ce(trained["model"], tokenizer, edit_items, "direct_probe")
             mean_paraphrase_ce, paraphrase_rows = average_probe_ce(

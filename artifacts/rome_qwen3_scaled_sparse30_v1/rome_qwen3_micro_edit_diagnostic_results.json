@@ -1,0 +1,3274 @@
+{
+  "model_id": "Qwen/Qwen3-0.6B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+  "seed": 42,
+  "case_source": "scaled_sparse",
+  "hparams": {
+    "alg_name": "ROME",
+    "model_name": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+    "stats_dir": "/root/lawf_experiment/third_party/EasyEdit/data/stats",
+    "device": 0,
+    "layers": [
+      5
+    ],
+    "fact_token": "subject_last",
+    "v_num_grad_steps": 25,
+    "v_lr": 0.5,
+    "v_loss_layer": 27,
+    "v_weight_decay": 0.001,
+    "clamp_norm_factor": 4,
+    "kl_factor": 0.0625,
+    "mom2_adjustment": false,
+    "context_template_length_params": [
+      [
+        5,
+        10
+      ],
+      [
+        10,
+        10
+      ]
+    ],
+    "rewrite_module_tmp": "model.layers.{}.mlp.down_proj",
+    "layer_module_tmp": "model.layers.{}",
+    "mlp_module_tmp": "model.layers.{}.mlp",
+    "attn_module_tmp": "model.layers.{}.self_attn",
+    "ln_f_module": "model.norm",
+    "lm_head_module": "lm_head",
+    "mom2_dataset": "wikipedia",
+    "mom2_n_samples": 100000,
+    "mom2_dtype": "float32",
+    "model_parallel": false,
+    "fp16": false,
+    "max_length": 80
+  },
+  "cases": [
+    {
+      "id": "archive_delta",
+      "domain": "archive",
+      "subject": "Delta Archive",
+      "prompt": "What is the internal verification code for Delta Archive?",
+      "target_new": "ravon",
+      "rephrase_prompt": "An operator asks for the routing value associated with Delta Archive. Reply with only the code.",
+      "locality": [
+        {
+          "id": "cache_nova_not_archive_delta",
+          "prompt": "What is the cache lane code for NovaCache?",
+          "correct": "kelpa",
+          "forbidden": "ravon"
+        },
+        {
+          "id": "badge_orange_not_archive_delta",
+          "prompt": "What is the review gate code for Orange Badge desk access?",
+          "correct": "mirto",
+          "forbidden": "ravon"
+        }
+      ]
+    },
+    {
+      "id": "cache_nova",
+      "domain": "api",
+      "subject": "NovaCache",
+      "prompt": "What is the cache lane code for NovaCache?",
+      "target_new": "kelpa",
+      "rephrase_prompt": "An operator asks for the routing value associated with NovaCache. Reply with only the code.",
+      "locality": [
+        {
+          "id": "badge_orange_not_cache_nova",
+          "prompt": "What is the review gate code for Orange Badge desk access?",
+          "correct": "mirto",
+          "forbidden": "kelpa"
+        },
+        {
+          "id": "bot_mira_not_cache_nova",
+          "prompt": "What is the return route code for Mira courier robot?",
+          "correct": "navo",
+          "forbidden": "kelpa"
+        }
+      ]
+    },
+    {
+      "id": "badge_orange",
+      "domain": "policy",
+      "subject": "Orange Badge desk access",
+      "prompt": "What is the review gate code for Orange Badge desk access?",
+      "target_new": "mirto",
+      "rephrase_prompt": "An operator asks for the routing value associated with Orange Badge desk access. Reply with only the code.",
+      "locality": [
+        {
+          "id": "bot_mira_not_badge_orange",
+          "prompt": "What is the return route code for Mira courier robot?",
+          "correct": "navo",
+          "forbidden": "mirto"
+        },
+        {
+          "id": "game_fog_not_badge_orange",
+          "prompt": "What is the scenario key for Fogbridge board game?",
+          "correct": "qorin",
+          "forbidden": "mirto"
+        }
+      ]
+    },
+    {
+      "id": "bot_mira",
+      "domain": "robotics",
+      "subject": "Mira courier robot",
+      "prompt": "What is the return route code for Mira courier robot?",
+      "target_new": "navo",
+      "rephrase_prompt": "An operator asks for the routing value associated with Mira courier robot. Reply with only the code.",
+      "locality": [
+        {
+          "id": "game_fog_not_bot_mira",
+          "prompt": "What is the scenario key for Fogbridge board game?",
+          "correct": "qorin",
+          "forbidden": "navo"
+        },
+        {
+          "id": "lab_lumen_not_bot_mira",
+          "prompt": "What is the assay marker code for Lumen reagent log?",
+          "correct": "belta",
+          "forbidden": "navo"
+        }
+      ]
+    },
+    {
+      "id": "game_fog",
+      "domain": "game_rule",
+      "subject": "Fogbridge board game",
+      "prompt": "What is the scenario key for Fogbridge board game?",
+      "target_new": "qorin",
+      "rephrase_prompt": "An operator asks for the routing value associated with Fogbridge board game. Reply with only the code.",
+      "locality": [
+        {
+          "id": "lab_lumen_not_game_fog",
+          "prompt": "What is the assay marker code for Lumen reagent log?",
+          "correct": "belta",
+          "forbidden": "qorin"
+        },
+        {
+          "id": "dsl_amber_not_game_fog",
+          "prompt": "What is the compiler mode code for AmberLoop DSL?",
+          "correct": "toren",
+          "forbidden": "qorin"
+        }
+      ]
+    },
+    {
+      "id": "lab_lumen",
+      "domain": "chemistry",
+      "subject": "Lumen reagent log",
+      "prompt": "What is the assay marker code for Lumen reagent log?",
+      "target_new": "belta",
+      "rephrase_prompt": "An operator asks for the routing value associated with Lumen reagent log. Reply with only the code.",
+      "locality": [
+        {
+          "id": "dsl_amber_not_lab_lumen",
+          "prompt": "What is the compiler mode code for AmberLoop DSL?",
+          "correct": "toren",
+          "forbidden": "belta"
+        },
+        {
+          "id": "invoice_blue_not_lab_lumen",
+          "prompt": "What is the audit route code for Blue Invoice A17?",
+          "correct": "halvo",
+          "forbidden": "belta"
+        }
+      ]
+    },
+    {
+      "id": "dsl_amber",
+      "domain": "programming_language",
+      "subject": "AmberLoop DSL",
+      "prompt": "What is the compiler mode code for AmberLoop DSL?",
+      "target_new": "toren",
+      "rephrase_prompt": "An operator asks for the routing value associated with AmberLoop DSL. Reply with only the code.",
+      "locality": [
+        {
+          "id": "invoice_blue_not_dsl_amber",
+          "prompt": "What is the audit route code for Blue Invoice A17?",
+          "correct": "halvo",
+          "forbidden": "toren"
+        },
+        {
+          "id": "sensor_iris_not_dsl_amber",
+          "prompt": "What is the calibration band code for Iris pressure sensor?",
+          "correct": "pindra",
+          "forbidden": "toren"
+        }
+      ]
+    },
+    {
+      "id": "invoice_blue",
+      "domain": "business_rule",
+      "subject": "Blue Invoice A17",
+      "prompt": "What is the audit route code for Blue Invoice A17?",
+      "target_new": "halvo",
+      "rephrase_prompt": "An operator asks for the routing value associated with Blue Invoice A17. Reply with only the code.",
+      "locality": [
+        {
+          "id": "sensor_iris_not_invoice_blue",
+          "prompt": "What is the calibration band code for Iris pressure sensor?",
+          "correct": "pindra",
+          "forbidden": "halvo"
+        },
+        {
+          "id": "router_elm_not_invoice_blue",
+          "prompt": "What is the fallback route code for ElmEdge router?",
+          "correct": "vesko",
+          "forbidden": "halvo"
+        }
+      ]
+    },
+    {
+      "id": "sensor_iris",
+      "domain": "hardware",
+      "subject": "Iris pressure sensor",
+      "prompt": "What is the calibration band code for Iris pressure sensor?",
+      "target_new": "pindra",
+      "rephrase_prompt": "An operator asks for the routing value associated with Iris pressure sensor. Reply with only the code.",
+      "locality": [
+        {
+          "id": "router_elm_not_sensor_iris",
+          "prompt": "What is the fallback route code for ElmEdge router?",
+          "correct": "vesko",
+          "forbidden": "pindra"
+        },
+        {
+          "id": "drone_cedar_not_sensor_iris",
+          "prompt": "What is the landing pattern code for Cedar inspection drone?",
+          "correct": "luma",
+          "forbidden": "pindra"
+        }
+      ]
+    },
+    {
+      "id": "router_elm",
+      "domain": "networking",
+      "subject": "ElmEdge router",
+      "prompt": "What is the fallback route code for ElmEdge router?",
+      "target_new": "vesko",
+      "rephrase_prompt": "An operator asks for the routing value associated with ElmEdge router. Reply with only the code.",
+      "locality": [
+        {
+          "id": "drone_cedar_not_router_elm",
+          "prompt": "What is the landing pattern code for Cedar inspection drone?",
+          "correct": "luma",
+          "forbidden": "vesko"
+        },
+        {
+          "id": "ledger_silver_not_router_elm",
+          "prompt": "What is the exception bucket code for Silver Ledger?",
+          "correct": "emora",
+          "forbidden": "vesko"
+        }
+      ]
+    },
+    {
+      "id": "drone_cedar",
+      "domain": "robotics",
+      "subject": "Cedar inspection drone",
+      "prompt": "What is the landing pattern code for Cedar inspection drone?",
+      "target_new": "luma",
+      "rephrase_prompt": "An operator asks for the routing value associated with Cedar inspection drone. Reply with only the code.",
+      "locality": [
+        {
+          "id": "ledger_silver_not_drone_cedar",
+          "prompt": "What is the exception bucket code for Silver Ledger?",
+          "correct": "emora",
+          "forbidden": "luma"
+        },
+        {
+          "id": "clinic_pine_not_drone_cedar",
+          "prompt": "What is the queue marker code for Pine Clinic triage?",
+          "correct": "yavin",
+          "forbidden": "luma"
+        }
+      ]
+    },
+    {
+      "id": "ledger_silver",
+      "domain": "finance",
+      "subject": "Silver Ledger",
+      "prompt": "What is the exception bucket code for Silver Ledger?",
+      "target_new": "emora",
+      "rephrase_prompt": "An operator asks for the routing value associated with Silver Ledger. Reply with only the code.",
+      "locality": [
+        {
+          "id": "clinic_pine_not_ledger_silver",
+          "prompt": "What is the queue marker code for Pine Clinic triage?",
+          "correct": "yavin",
+          "forbidden": "emora"
+        },
+        {
+          "id": "compiler_onyx_not_ledger_silver",
+          "prompt": "What is the strict mode code for OnyxScript compiler?",
+          "correct": "sorn",
+          "forbidden": "emora"
+        }
+      ]
+    },
+    {
+      "id": "clinic_pine",
+      "domain": "healthcare",
+      "subject": "Pine Clinic triage",
+      "prompt": "What is the queue marker code for Pine Clinic triage?",
+      "target_new": "yavin",
+      "rephrase_prompt": "An operator asks for the routing value associated with Pine Clinic triage. Reply with only the code.",
+      "locality": [
+        {
+          "id": "compiler_onyx_not_clinic_pine",
+          "prompt": "What is the strict mode code for OnyxScript compiler?",
+          "correct": "sorn",
+          "forbidden": "yavin"
+        },
+        {
+          "id": "warehouse_cobalt_not_clinic_pine",
+          "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+          "correct": "corin",
+          "forbidden": "yavin"
+        }
+      ]
+    },
+    {
+      "id": "compiler_onyx",
+      "domain": "programming_language",
+      "subject": "OnyxScript compiler",
+      "prompt": "What is the strict mode code for OnyxScript compiler?",
+      "target_new": "sorn",
+      "rephrase_prompt": "An operator asks for the routing value associated with OnyxScript compiler. Reply with only the code.",
+      "locality": [
+        {
+          "id": "warehouse_cobalt_not_compiler_onyx",
+          "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+          "correct": "corin",
+          "forbidden": "sorn"
+        },
+        {
+          "id": "dataset_marble_not_compiler_onyx",
+          "prompt": "What is the split manifest code for Marble dataset?",
+          "correct": "daska",
+          "forbidden": "sorn"
+        }
+      ]
+    },
+    {
+      "id": "warehouse_cobalt",
+      "domain": "operations",
+      "subject": "Cobalt warehouse zone",
+      "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+      "target_new": "corin",
+      "rephrase_prompt": "An operator asks for the routing value associated with Cobalt warehouse zone. Reply with only the code.",
+      "locality": [
+        {
+          "id": "dataset_marble_not_warehouse_cobalt",
+          "prompt": "What is the split manifest code for Marble dataset?",
+          "correct": "daska",
+          "forbidden": "corin"
+        },
+        {
+          "id": "ship_harbor_not_warehouse_cobalt",
+          "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+          "correct": "gaven",
+          "forbidden": "corin"
+        }
+      ]
+    },
+    {
+      "id": "dataset_marble",
+      "domain": "data",
+      "subject": "Marble dataset",
+      "prompt": "What is the split manifest code for Marble dataset?",
+      "target_new": "daska",
+      "rephrase_prompt": "An operator asks for the routing value associated with Marble dataset. Reply with only the code.",
+      "locality": [
+        {
+          "id": "ship_harbor_not_dataset_marble",
+          "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+          "correct": "gaven",
+          "forbidden": "daska"
+        },
+        {
+          "id": "auth_copper_not_dataset_marble",
+          "prompt": "What is the device trust code for CopperAuth session?",
+          "correct": "ulmar",
+          "forbidden": "daska"
+        }
+      ]
+    },
+    {
+      "id": "ship_harbor",
+      "domain": "logistics",
+      "subject": "Harbor shuttle manifest",
+      "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+      "target_new": "gaven",
+      "rephrase_prompt": "An operator asks for the routing value associated with Harbor shuttle manifest. Reply with only the code.",
+      "locality": [
+        {
+          "id": "auth_copper_not_ship_harbor",
+          "prompt": "What is the device trust code for CopperAuth session?",
+          "correct": "ulmar",
+          "forbidden": "gaven"
+        },
+        {
+          "id": "search_river_not_ship_harbor",
+          "prompt": "What is the ranking profile code for RiverSearch index?",
+          "correct": "jorin",
+          "forbidden": "gaven"
+        }
+      ]
+    },
+    {
+      "id": "auth_copper",
+      "domain": "security",
+      "subject": "CopperAuth session",
+      "prompt": "What is the device trust code for CopperAuth session?",
+      "target_new": "ulmar",
+      "rephrase_prompt": "An operator asks for the routing value associated with CopperAuth session. Reply with only the code.",
+      "locality": [
+        {
+          "id": "search_river_not_auth_copper",
+          "prompt": "What is the ranking profile code for RiverSearch index?",
+          "correct": "jorin",
+          "forbidden": "ulmar"
+        },
+        {
+          "id": "pipeline_glass_not_auth_copper",
+          "prompt": "What is the retry stage code for GlassFlow pipeline?",
+          "correct": "wexla",
+          "forbidden": "ulmar"
+        }
+      ]
+    },
+    {
+      "id": "search_river",
+      "domain": "search",
+      "subject": "RiverSearch index",
+      "prompt": "What is the ranking profile code for RiverSearch index?",
+      "target_new": "jorin",
+      "rephrase_prompt": "An operator asks for the routing value associated with RiverSearch index. Reply with only the code.",
+      "locality": [
+        {
+          "id": "pipeline_glass_not_search_river",
+          "prompt": "What is the retry stage code for GlassFlow pipeline?",
+          "correct": "wexla",
+          "forbidden": "jorin"
+        },
+        {
+          "id": "museum_lantern_not_search_river",
+          "prompt": "What is the condition review code for Lantern Museum loan?",
+          "correct": "faryn",
+          "forbidden": "jorin"
+        }
+      ]
+    },
+    {
+      "id": "pipeline_glass",
+      "domain": "data",
+      "subject": "GlassFlow pipeline",
+      "prompt": "What is the retry stage code for GlassFlow pipeline?",
+      "target_new": "wexla",
+      "rephrase_prompt": "An operator asks for the routing value associated with GlassFlow pipeline. Reply with only the code.",
+      "locality": [
+        {
+          "id": "museum_lantern_not_pipeline_glass",
+          "prompt": "What is the condition review code for Lantern Museum loan?",
+          "correct": "faryn",
+          "forbidden": "wexla"
+        },
+        {
+          "id": "scheduler_opal_not_pipeline_glass",
+          "prompt": "What is the preemption lane code for Opal scheduler?",
+          "correct": "avro",
+          "forbidden": "wexla"
+        }
+      ]
+    },
+    {
+      "id": "museum_lantern",
+      "domain": "archive",
+      "subject": "Lantern Museum loan",
+      "prompt": "What is the condition review code for Lantern Museum loan?",
+      "target_new": "faryn",
+      "rephrase_prompt": "An operator asks for the routing value associated with Lantern Museum loan. Reply with only the code.",
+      "locality": [
+        {
+          "id": "scheduler_opal_not_museum_lantern",
+          "prompt": "What is the preemption lane code for Opal scheduler?",
+          "correct": "avro",
+          "forbidden": "faryn"
+        },
+        {
+          "id": "thermal_jade_not_museum_lantern",
+          "prompt": "What is the mounting profile code for Jade thermal plate?",
+          "correct": "zento",
+          "forbidden": "faryn"
+        }
+      ]
+    },
+    {
+      "id": "scheduler_opal",
+      "domain": "systems",
+      "subject": "Opal scheduler",
+      "prompt": "What is the preemption lane code for Opal scheduler?",
+      "target_new": "avro",
+      "rephrase_prompt": "An operator asks for the routing value associated with Opal scheduler. Reply with only the code.",
+      "locality": [
+        {
+          "id": "thermal_jade_not_scheduler_opal",
+          "prompt": "What is the mounting profile code for Jade thermal plate?",
+          "correct": "zento",
+          "forbidden": "avro"
+        },
+        {
+          "id": "calendar_ember_not_scheduler_opal",
+          "prompt": "What is the handoff reminder code for Ember calendar?",
+          "correct": "orli",
+          "forbidden": "avro"
+        }
+      ]
+    },
+    {
+      "id": "thermal_jade",
+      "domain": "hardware",
+      "subject": "Jade thermal plate",
+      "prompt": "What is the mounting profile code for Jade thermal plate?",
+      "target_new": "zento",
+      "rephrase_prompt": "An operator asks for the routing value associated with Jade thermal plate. Reply with only the code.",
+      "locality": [
+        {
+          "id": "calendar_ember_not_thermal_jade",
+          "prompt": "What is the handoff reminder code for Ember calendar?",
+          "correct": "orli",
+          "forbidden": "zento"
+        },
+        {
+          "id": "vault_ash_not_thermal_jade",
+          "prompt": "What is the seal rotation code for AshVault record?",
+          "correct": "xanor",
+          "forbidden": "zento"
+        }
+      ]
+    },
+    {
+      "id": "calendar_ember",
+      "domain": "productivity",
+      "subject": "Ember calendar",
+      "prompt": "What is the handoff reminder code for Ember calendar?",
+      "target_new": "orli",
+      "rephrase_prompt": "An operator asks for the routing value associated with Ember calendar. Reply with only the code.",
+      "locality": [
+        {
+          "id": "vault_ash_not_calendar_ember",
+          "prompt": "What is the seal rotation code for AshVault record?",
+          "correct": "xanor",
+          "forbidden": "orli"
+        },
+        {
+          "id": "simulator_brook_not_calendar_ember",
+          "prompt": "What is the terrain preset code for BrookSim scenario?",
+          "correct": "ivra",
+          "forbidden": "orli"
+        }
+      ]
+    },
+    {
+      "id": "vault_ash",
+      "domain": "security",
+      "subject": "AshVault record",
+      "prompt": "What is the seal rotation code for AshVault record?",
+      "target_new": "xanor",
+      "rephrase_prompt": "An operator asks for the routing value associated with AshVault record. Reply with only the code.",
+      "locality": [
+        {
+          "id": "simulator_brook_not_vault_ash",
+          "prompt": "What is the terrain preset code for BrookSim scenario?",
+          "correct": "ivra",
+          "forbidden": "xanor"
+        },
+        {
+          "id": "mailroom_violet_not_vault_ash",
+          "prompt": "What is the sort lane code for Violet mailroom?",
+          "correct": "mora",
+          "forbidden": "xanor"
+        }
+      ]
+    },
+    {
+      "id": "simulator_brook",
+      "domain": "simulation",
+      "subject": "BrookSim scenario",
+      "prompt": "What is the terrain preset code for BrookSim scenario?",
+      "target_new": "ivra",
+      "rephrase_prompt": "An operator asks for the routing value associated with BrookSim scenario. Reply with only the code.",
+      "locality": [
+        {
+          "id": "mailroom_violet_not_simulator_brook",
+          "prompt": "What is the sort lane code for Violet mailroom?",
+          "correct": "mora",
+          "forbidden": "ivra"
+        },
+        {
+          "id": "lab_orchid_not_simulator_brook",
+          "prompt": "What is the sample freeze code for Orchid lab notebook?",
+          "correct": "qelma",
+          "forbidden": "ivra"
+        }
+      ]
+    },
+    {
+      "id": "mailroom_violet",
+      "domain": "operations",
+      "subject": "Violet mailroom",
+      "prompt": "What is the sort lane code for Violet mailroom?",
+      "target_new": "mora",
+      "rephrase_prompt": "An operator asks for the routing value associated with Violet mailroom. Reply with only the code.",
+      "locality": [
+        {
+          "id": "lab_orchid_not_mailroom_violet",
+          "prompt": "What is the sample freeze code for Orchid lab notebook?",
+          "correct": "qelma",
+          "forbidden": "mora"
+        },
+        {
+          "id": "map_zephyr_not_mailroom_violet",
+          "prompt": "What is the contour source code for Zephyr map layer?",
+          "correct": "talen",
+          "forbidden": "mora"
+        }
+      ]
+    },
+    {
+      "id": "lab_orchid",
+      "domain": "chemistry",
+      "subject": "Orchid lab notebook",
+      "prompt": "What is the sample freeze code for Orchid lab notebook?",
+      "target_new": "qelma",
+      "rephrase_prompt": "An operator asks for the routing value associated with Orchid lab notebook. Reply with only the code.",
+      "locality": [
+        {
+          "id": "map_zephyr_not_lab_orchid",
+          "prompt": "What is the contour source code for Zephyr map layer?",
+          "correct": "talen",
+          "forbidden": "qelma"
+        },
+        {
+          "id": "payment_amber_not_lab_orchid",
+          "prompt": "What is the reserve release code for AmberPay settlement?",
+          "correct": "renda",
+          "forbidden": "qelma"
+        }
+      ]
+    },
+    {
+      "id": "map_zephyr",
+      "domain": "geography",
+      "subject": "Zephyr map layer",
+      "prompt": "What is the contour source code for Zephyr map layer?",
+      "target_new": "talen",
+      "rephrase_prompt": "An operator asks for the routing value associated with Zephyr map layer. Reply with only the code.",
+      "locality": [
+        {
+          "id": "payment_amber_not_map_zephyr",
+          "prompt": "What is the reserve release code for AmberPay settlement?",
+          "correct": "renda",
+          "forbidden": "talen"
+        },
+        {
+          "id": "archive_delta_not_map_zephyr",
+          "prompt": "What is the internal verification code for Delta Archive?",
+          "correct": "ravon",
+          "forbidden": "talen"
+        }
+      ]
+    },
+    {
+      "id": "payment_amber",
+      "domain": "finance",
+      "subject": "AmberPay settlement",
+      "prompt": "What is the reserve release code for AmberPay settlement?",
+      "target_new": "renda",
+      "rephrase_prompt": "An operator asks for the routing value associated with AmberPay settlement. Reply with only the code.",
+      "locality": [
+        {
+          "id": "archive_delta_not_payment_amber",
+          "prompt": "What is the internal verification code for Delta Archive?",
+          "correct": "ravon",
+          "forbidden": "renda"
+        },
+        {
+          "id": "cache_nova_not_payment_amber",
+          "prompt": "What is the cache lane code for NovaCache?",
+          "correct": "kelpa",
+          "forbidden": "renda"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "archive_delta",
+      "request": {
+        "prompt": "What is the internal verification code for Delta Archive?",
+        "subject": "Delta Archive",
+        "target_new": "ravon",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 10.467546463012695,
+        "direct_mean_logprob": -10.467546463012695,
+        "rephrase_ce": 10.471841931343079,
+        "rephrase_mean_logprob": -10.471841931343079,
+        "generation": " How can I get it? What is the process for verifying",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "cache_nova_not_archive_delta",
+            "prompt": "What is the cache lane code for NovaCache?",
+            "correct": "kelpa",
+            "forbidden": "ravon",
+            "correct_ce": 8.195448398590088,
+            "forbidden_ce": 9.317086696624756,
+            "margin": -1.121638298034668,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "badge_orange_not_archive_delta",
+            "prompt": "What is the review gate code for Orange Badge desk access?",
+            "correct": "mirto",
+            "forbidden": "ravon",
+            "correct_ce": 12.740345478057861,
+            "forbidden_ce": 10.923089027404785,
+            "margin": 1.8172564506530762,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.013820565305650234,
+        "direct_mean_logprob": -0.013820565305650234,
+        "rephrase_ce": 5.962474346160889,
+        "rephrase_mean_logprob": -5.962474346160889,
+        "generation": " ravon\nThe internal verification code for the Delta ransomware",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "cache_nova_not_archive_delta",
+            "prompt": "What is the cache lane code for NovaCache?",
+            "correct": "kelpa",
+            "forbidden": "ravon",
+            "correct_ce": 8.129829406738281,
+            "forbidden_ce": 8.711584091186523,
+            "margin": -0.5817546844482422,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "badge_orange_not_archive_delta",
+            "prompt": "What is the review gate code for Orange Badge desk access?",
+            "correct": "mirto",
+            "forbidden": "ravon",
+            "correct_ce": 11.99318265914917,
+            "forbidden_ce": 10.239001274108887,
+            "margin": 1.7541813850402832,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.06375036388635635,
+        0.0596262626349926
+      ],
+      "retention_next_token_kl": [
+        0.01640661060810089,
+        0.002732941647991538,
+        0.008139652200043201,
+        0.002740768250077963,
+        0.012518590316176414
+      ],
+      "retention_kl": 0.008507712604478001,
+      "locality_kl": 0.06168831326067448,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "cache_nova",
+      "request": {
+        "prompt": "What is the cache lane code for NovaCache?",
+        "subject": "NovaCache",
+        "target_new": "kelpa",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 8.195448398590088,
+        "direct_mean_logprob": -8.195448398590088,
+        "rephrase_ce": 7.540925184885661,
+        "rephrase_mean_logprob": -7.540925184885661,
+        "generation": " What is the cache lane code for NovaCache? What is",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "badge_orange_not_cache_nova",
+            "prompt": "What is the review gate code for Orange Badge desk access?",
+            "correct": "mirto",
+            "forbidden": "kelpa",
+            "correct_ce": 12.740345478057861,
+            "forbidden_ce": 8.092751502990723,
+            "margin": 4.647593975067139,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "bot_mira_not_cache_nova",
+            "prompt": "What is the return route code for Mira courier robot?",
+            "correct": "navo",
+            "forbidden": "kelpa",
+            "correct_ce": 12.825997352600098,
+            "forbidden_ce": 8.474124908447266,
+            "margin": 4.351872444152832,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.006959211469317476,
+        "direct_mean_logprob": -0.006959211469317476,
+        "rephrase_ce": 3.8041335542996726,
+        "rephrase_mean_logprob": -3.8041335542996726,
+        "generation": " kelpa? - Quora\nWhat is the cache",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "badge_orange_not_cache_nova",
+            "prompt": "What is the review gate code for Orange Badge desk access?",
+            "correct": "mirto",
+            "forbidden": "kelpa",
+            "correct_ce": 12.602668523788452,
+            "forbidden_ce": 7.537227710088094,
+            "margin": 5.065440813700358,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "bot_mira_not_cache_nova",
+            "prompt": "What is the return route code for Mira courier robot?",
+            "correct": "navo",
+            "forbidden": "kelpa",
+            "correct_ce": 12.621095657348633,
+            "forbidden_ce": 7.841128667195638,
+            "margin": 4.779966990152995,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.025607161223888397,
+        0.021306224167346954
+      ],
+      "retention_next_token_kl": [
+        0.009479631669819355,
+        0.0024261672515422106,
+        0.01921391487121582,
+        0.0041644680313766,
+        0.05664706602692604
+      ],
+      "retention_kl": 0.018386249570176004,
+      "locality_kl": 0.023456692695617676,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "badge_orange",
+      "request": {
+        "prompt": "What is the review gate code for Orange Badge desk access?",
+        "subject": "Orange Badge desk access",
+        "target_new": "mirto",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.740345478057861,
+        "direct_mean_logprob": -12.740345478057861,
+        "rephrase_ce": 11.426442861557007,
+        "rephrase_mean_logprob": -11.426442861557007,
+        "generation": " Also, can I use a mobile phone to access the system",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "bot_mira_not_badge_orange",
+            "prompt": "What is the return route code for Mira courier robot?",
+            "correct": "navo",
+            "forbidden": "mirto",
+            "correct_ce": 12.825997352600098,
+            "forbidden_ce": 16.17319631576538,
+            "margin": -3.347198963165283,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "game_fog_not_badge_orange",
+            "prompt": "What is the scenario key for Fogbridge board game?",
+            "correct": "qorin",
+            "forbidden": "mirto",
+            "correct_ce": 9.786730925242106,
+            "forbidden_ce": 11.897384881973267,
+            "margin": -2.110653956731161,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.013426635880023241,
+        "direct_mean_logprob": -0.013426635880023241,
+        "rephrase_ce": 5.7614980936050415,
+        "rephrase_mean_logprob": -5.7614980936050415,
+        "generation": " mirto\nAnswer:\nThe review gate code for Orange Badge",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "bot_mira_not_badge_orange",
+            "prompt": "What is the return route code for Mira courier robot?",
+            "correct": "navo",
+            "forbidden": "mirto",
+            "correct_ce": 12.789053916931152,
+            "forbidden_ce": 16.120179653167725,
+            "margin": -3.3311257362365723,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "game_fog_not_badge_orange",
+            "prompt": "What is the scenario key for Fogbridge board game?",
+            "correct": "qorin",
+            "forbidden": "mirto",
+            "correct_ce": 9.663641929626465,
+            "forbidden_ce": 11.661961078643799,
+            "margin": -1.998319149017334,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.011520116589963436,
+        0.016225142404437065
+      ],
+      "retention_next_token_kl": [
+        0.005503219086676836,
+        0.0022541582584381104,
+        0.0013672208879143,
+        0.01257980428636074,
+        0.007909674197435379
+      ],
+      "retention_kl": 0.005922815343365073,
+      "locality_kl": 0.01387262949720025,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "bot_mira",
+      "request": {
+        "prompt": "What is the return route code for Mira courier robot?",
+        "subject": "Mira courier robot",
+        "target_new": "navo",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.825997352600098,
+        "direct_mean_logprob": -12.825997352600098,
+        "rephrase_ce": 11.498749732971191,
+        "rephrase_mean_logprob": -11.498749732971191,
+        "generation": " Can I use it for delivery in the same city? What",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "game_fog_not_bot_mira",
+            "prompt": "What is the scenario key for Fogbridge board game?",
+            "correct": "qorin",
+            "forbidden": "navo",
+            "correct_ce": 9.786730925242106,
+            "forbidden_ce": 13.019578456878662,
+            "margin": -3.2328475316365566,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "lab_lumen_not_bot_mira",
+            "prompt": "What is the assay marker code for Lumen reagent log?",
+            "correct": "belta",
+            "forbidden": "navo",
+            "correct_ce": 11.030860424041748,
+            "forbidden_ce": 11.99266242980957,
+            "margin": -0.9618020057678223,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.6485573509708047,
+        "direct_mean_logprob": -0.6485573509708047,
+        "rephrase_ce": 4.571979522705078,
+        "rephrase_mean_logprob": -4.571979522705078,
+        "generation": " nav\nnav\nnav\nnav\nnav\nnav\n",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "game_fog_not_bot_mira",
+            "prompt": "What is the scenario key for Fogbridge board game?",
+            "correct": "qorin",
+            "forbidden": "navo",
+            "correct_ce": 9.53273344039917,
+            "forbidden_ce": 12.343328475952148,
+            "margin": -2.8105950355529785,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "lab_lumen_not_bot_mira",
+            "prompt": "What is the assay marker code for Lumen reagent log?",
+            "correct": "belta",
+            "forbidden": "navo",
+            "correct_ce": 10.016146659851074,
+            "forbidden_ce": 10.936699390411377,
+            "margin": -0.9205527305603027,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.06258460879325867,
+        0.20787151157855988
+      ],
+      "retention_next_token_kl": [
+        0.0015193226281553507,
+        0.004958428908139467,
+        0.002940663369372487,
+        0.005137937609106302,
+        0.01474270224571228
+      ],
+      "retention_kl": 0.005859810952097177,
+      "locality_kl": 0.13522806018590927,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "game_fog",
+      "request": {
+        "prompt": "What is the scenario key for Fogbridge board game?",
+        "subject": "Fogbridge board game",
+        "target_new": "qorin",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 9.786730925242106,
+        "direct_mean_logprob": -9.786730925242106,
+        "rephrase_ce": 8.650370121002197,
+        "rephrase_mean_logprob": -8.650370121002197,
+        "generation": " What is the objective of the game? What are the rules",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "lab_lumen_not_game_fog",
+            "prompt": "What is the assay marker code for Lumen reagent log?",
+            "correct": "belta",
+            "forbidden": "qorin",
+            "correct_ce": 11.030860424041748,
+            "forbidden_ce": 9.11012315750122,
+            "margin": 1.9207372665405273,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "dsl_amber_not_game_fog",
+            "prompt": "What is the compiler mode code for AmberLoop DSL?",
+            "correct": "toren",
+            "forbidden": "qorin",
+            "correct_ce": 12.230590343475342,
+            "forbidden_ce": 8.665302912394205,
+            "margin": 3.5652874310811367,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.014821650770803293,
+        "direct_mean_logprob": -0.014821650770803293,
+        "rephrase_ce": 5.449784884850184,
+        "rephrase_mean_logprob": -5.449784884850184,
+        "generation": " qorin? to you? qorin is a",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "lab_lumen_not_game_fog",
+            "prompt": "What is the assay marker code for Lumen reagent log?",
+            "correct": "belta",
+            "forbidden": "qorin",
+            "correct_ce": 11.034574747085571,
+            "forbidden_ce": 8.959737459818522,
+            "margin": 2.0748372872670497,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "dsl_amber_not_game_fog",
+            "prompt": "What is the compiler mode code for AmberLoop DSL?",
+            "correct": "toren",
+            "forbidden": "qorin",
+            "correct_ce": 12.046290397644043,
+            "forbidden_ce": 8.244266192118326,
+            "margin": 3.8020242055257167,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.04936528578400612,
+        0.03427623212337494
+      ],
+      "retention_next_token_kl": [
+        0.01403086632490158,
+        0.0012367584276944399,
+        0.07430510222911835,
+        0.009202665649354458,
+        0.006052778568118811
+      ],
+      "retention_kl": 0.02096563423983753,
+      "locality_kl": 0.04182075895369053,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "lab_lumen",
+      "request": {
+        "prompt": "What is the assay marker code for Lumen reagent log?",
+        "subject": "Lumen reagent log",
+        "target_new": "belta",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.030860424041748,
+        "direct_mean_logprob": -11.030860424041748,
+        "rephrase_ce": 11.606760501861572,
+        "rephrase_mean_logprob": -11.606760501861572,
+        "generation": " What is the code for the Lumen reagent log?",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "dsl_amber_not_lab_lumen",
+            "prompt": "What is the compiler mode code for AmberLoop DSL?",
+            "correct": "toren",
+            "forbidden": "belta",
+            "correct_ce": 12.230590343475342,
+            "forbidden_ce": 12.633003234863281,
+            "margin": -0.40241289138793945,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "invoice_blue_not_lab_lumen",
+            "prompt": "What is the audit route code for Blue Invoice A17?",
+            "correct": "halvo",
+            "forbidden": "belta",
+            "correct_ce": 11.54292631149292,
+            "forbidden_ce": 11.877687454223633,
+            "margin": -0.3347611427307129,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.029534137807786465,
+        "direct_mean_logprob": -0.029534137807786465,
+        "rephrase_ce": 8.383257150650024,
+        "rephrase_mean_logprob": -8.383257150650024,
+        "generation": " belta?\nA. LUMEN\nB. L",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "dsl_amber_not_lab_lumen",
+            "prompt": "What is the compiler mode code for AmberLoop DSL?",
+            "correct": "toren",
+            "forbidden": "belta",
+            "correct_ce": 12.381417274475098,
+            "forbidden_ce": 12.472152709960938,
+            "margin": -0.09073543548583984,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "invoice_blue_not_lab_lumen",
+            "prompt": "What is the audit route code for Blue Invoice A17?",
+            "correct": "halvo",
+            "forbidden": "belta",
+            "correct_ce": 11.613789558410645,
+            "forbidden_ce": 11.489065170288086,
+            "margin": 0.1247243881225586,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.02628907561302185,
+        0.005343984346836805
+      ],
+      "retention_next_token_kl": [
+        0.004611113574355841,
+        0.001550167566165328,
+        0.010929938405752182,
+        0.003493695054203272,
+        0.004586844705045223
+      ],
+      "retention_kl": 0.0050343518611043695,
+      "locality_kl": 0.015816529979929328,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "dsl_amber",
+      "request": {
+        "prompt": "What is the compiler mode code for AmberLoop DSL?",
+        "subject": "AmberLoop DSL",
+        "target_new": "toren",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.230590343475342,
+        "direct_mean_logprob": -12.230590343475342,
+        "rephrase_ce": 11.144007205963135,
+        "rephrase_mean_logprob": -11.144007205963135,
+        "generation": " How to use it in a script?\n\nThe answer should be",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "invoice_blue_not_dsl_amber",
+            "prompt": "What is the audit route code for Blue Invoice A17?",
+            "correct": "halvo",
+            "forbidden": "toren",
+            "correct_ce": 11.54292631149292,
+            "forbidden_ce": 13.147579193115234,
+            "margin": -1.6046528816223145,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "sensor_iris_not_dsl_amber",
+            "prompt": "What is the calibration band code for Iris pressure sensor?",
+            "correct": "pindra",
+            "forbidden": "toren",
+            "correct_ce": 9.39798386891683,
+            "forbidden_ce": 12.793031692504883,
+            "margin": -3.395047823588053,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.01656549039762467,
+        "direct_mean_logprob": -0.01656549039762467,
+        "rephrase_ce": 7.607999801635742,
+        "rephrase_mean_logprob": -7.607999801635742,
+        "generation": " torenes torenes torenes torenes",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "invoice_blue_not_dsl_amber",
+            "prompt": "What is the audit route code for Blue Invoice A17?",
+            "correct": "halvo",
+            "forbidden": "toren",
+            "correct_ce": 11.432539939880371,
+            "forbidden_ce": 12.7194185256958,
+            "margin": -1.2868785858154297,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "sensor_iris_not_dsl_amber",
+            "prompt": "What is the calibration band code for Iris pressure sensor?",
+            "correct": "pindra",
+            "forbidden": "toren",
+            "correct_ce": 9.22383197148641,
+            "forbidden_ce": 12.362178325653076,
+            "margin": -3.138346354166666,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.00861707329750061,
+        0.023744942620396614
+      ],
+      "retention_next_token_kl": [
+        0.0020630820654332638,
+        0.002561541274189949,
+        0.005489395000040531,
+        0.004811084363609552,
+        0.012140228413045406
+      ],
+      "retention_kl": 0.00541306622326374,
+      "locality_kl": 0.016181007958948612,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "invoice_blue",
+      "request": {
+        "prompt": "What is the audit route code for Blue Invoice A17?",
+        "subject": "Blue Invoice A17",
+        "target_new": "halvo",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.54292631149292,
+        "direct_mean_logprob": -11.54292631149292,
+        "rephrase_ce": 10.42831563949585,
+        "rephrase_mean_logprob": -10.42831563949585,
+        "generation": " Also, what is the name of the company that owns the",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "sensor_iris_not_invoice_blue",
+            "prompt": "What is the calibration band code for Iris pressure sensor?",
+            "correct": "pindra",
+            "forbidden": "halvo",
+            "correct_ce": 9.39798386891683,
+            "forbidden_ce": 11.397352695465088,
+            "margin": -1.9993688265482579,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "router_elm_not_invoice_blue",
+            "prompt": "What is the fallback route code for ElmEdge router?",
+            "correct": "vesko",
+            "forbidden": "halvo",
+            "correct_ce": 12.268908023834229,
+            "forbidden_ce": 10.657811164855957,
+            "margin": 1.6110968589782715,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.1435423344373703,
+        "direct_mean_logprob": -0.1435423344373703,
+        "rephrase_ce": 4.331256210803986,
+        "rephrase_mean_logprob": -4.331256210803986,
+        "generation": " halvo\nHALVOA\nHALVOA\nHAL",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "sensor_iris_not_invoice_blue",
+            "prompt": "What is the calibration band code for Iris pressure sensor?",
+            "correct": "pindra",
+            "forbidden": "halvo",
+            "correct_ce": 9.283505121866861,
+            "forbidden_ce": 10.738835334777832,
+            "margin": -1.4553302129109706,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "router_elm_not_invoice_blue",
+            "prompt": "What is the fallback route code for ElmEdge router?",
+            "correct": "vesko",
+            "forbidden": "halvo",
+            "correct_ce": 12.175267457962036,
+            "forbidden_ce": 10.667407989501953,
+            "margin": 1.507859468460083,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.023135356605052948,
+        0.040267542004585266
+      ],
+      "retention_next_token_kl": [
+        0.004934271797537804,
+        0.00677736010402441,
+        0.009838182479143143,
+        0.013783485628664494,
+        0.0050756619311869144
+      ],
+      "retention_kl": 0.008081792388111353,
+      "locality_kl": 0.03170144930481911,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "sensor_iris",
+      "request": {
+        "prompt": "What is the calibration band code for Iris pressure sensor?",
+        "subject": "Iris pressure sensor",
+        "target_new": "pindra",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 9.39798386891683,
+        "direct_mean_logprob": -9.39798386891683,
+        "rephrase_ce": 8.911316871643066,
+        "rephrase_mean_logprob": -8.911316871643066,
+        "generation": " What is the calibration band code for the Iris pressure sensor?",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "router_elm_not_sensor_iris",
+            "prompt": "What is the fallback route code for ElmEdge router?",
+            "correct": "vesko",
+            "forbidden": "pindra",
+            "correct_ce": 12.268908023834229,
+            "forbidden_ce": 11.569062868754068,
+            "margin": 0.6998451550801601,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "drone_cedar_not_sensor_iris",
+            "prompt": "What is the landing pattern code for Cedar inspection drone?",
+            "correct": "luma",
+            "forbidden": "pindra",
+            "correct_ce": 11.78567123413086,
+            "forbidden_ce": 10.38288942972819,
+            "margin": 1.4027818044026699,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.014522933168336749,
+        "direct_mean_logprob": -0.014522933168336749,
+        "rephrase_ce": 1.4333530583729346,
+        "rephrase_mean_logprob": -1.4333530583729346,
+        "generation": " pindra pindra pindra\nindra",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "router_elm_not_sensor_iris",
+            "prompt": "What is the fallback route code for ElmEdge router?",
+            "correct": "vesko",
+            "forbidden": "pindra",
+            "correct_ce": 12.200350522994995,
+            "forbidden_ce": 11.179568926493326,
+            "margin": 1.0207815965016689,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "drone_cedar_not_sensor_iris",
+            "prompt": "What is the landing pattern code for Cedar inspection drone?",
+            "correct": "luma",
+            "forbidden": "pindra",
+            "correct_ce": 11.24881887435913,
+            "forbidden_ce": 9.111418883005777,
+            "margin": 2.1373999913533535,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.020371748134493828,
+        0.04793981462717056
+      ],
+      "retention_next_token_kl": [
+        0.00027176059666089714,
+        0.0025792638771235943,
+        0.007845531217753887,
+        0.005362444557249546,
+        0.0037402252200990915
+      ],
+      "retention_kl": 0.003959845093777403,
+      "locality_kl": 0.034155781380832195,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "router_elm",
+      "request": {
+        "prompt": "What is the fallback route code for ElmEdge router?",
+        "subject": "ElmEdge router",
+        "target_new": "vesko",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.268908023834229,
+        "direct_mean_logprob": -12.268908023834229,
+        "rephrase_ce": 11.354876279830933,
+        "rephrase_mean_logprob": -11.354876279830933,
+        "generation": " How to use it? What is the purpose of the fallback",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "drone_cedar_not_router_elm",
+            "prompt": "What is the landing pattern code for Cedar inspection drone?",
+            "correct": "luma",
+            "forbidden": "vesko",
+            "correct_ce": 11.78567123413086,
+            "forbidden_ce": 13.196011543273926,
+            "margin": -1.4103403091430664,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "ledger_silver_not_router_elm",
+            "prompt": "What is the exception bucket code for Silver Ledger?",
+            "correct": "emora",
+            "forbidden": "vesko",
+            "correct_ce": 12.580578327178955,
+            "forbidden_ce": 12.06063437461853,
+            "margin": 0.5199439525604248,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.007679148111492395,
+        "direct_mean_logprob": -0.007679148111492395,
+        "rephrase_ce": 6.0331160763744265,
+        "rephrase_mean_logprob": -6.0331160763744265,
+        "generation": " vesko: vesko 0.1.12",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "drone_cedar_not_router_elm",
+            "prompt": "What is the landing pattern code for Cedar inspection drone?",
+            "correct": "luma",
+            "forbidden": "vesko",
+            "correct_ce": 10.83713150024414,
+            "forbidden_ce": 11.569693088531494,
+            "margin": -0.7325615882873535,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "ledger_silver_not_router_elm",
+            "prompt": "What is the exception bucket code for Silver Ledger?",
+            "correct": "emora",
+            "forbidden": "vesko",
+            "correct_ce": 12.136780261993408,
+            "forbidden_ce": 10.716790676116943,
+            "margin": 1.4199895858764648,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.13280512392520905,
+        0.05768198147416115
+      ],
+      "retention_next_token_kl": [
+        0.0028220852836966515,
+        0.0089182797819376,
+        0.03091667965054512,
+        0.025569401681423187,
+        0.00928290095180273
+      ],
+      "retention_kl": 0.015501869469881057,
+      "locality_kl": 0.0952435526996851,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "drone_cedar",
+      "request": {
+        "prompt": "What is the landing pattern code for Cedar inspection drone?",
+        "subject": "Cedar inspection drone",
+        "target_new": "luma",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.78567123413086,
+        "direct_mean_logprob": -11.78567123413086,
+        "rephrase_ce": 9.90472149848938,
+        "rephrase_mean_logprob": -9.90472149848938,
+        "generation": " What is the code for the inspection drone? What is the",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "ledger_silver_not_drone_cedar",
+            "prompt": "What is the exception bucket code for Silver Ledger?",
+            "correct": "emora",
+            "forbidden": "luma",
+            "correct_ce": 12.580578327178955,
+            "forbidden_ce": 10.878167390823364,
+            "margin": 1.7024109363555908,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "clinic_pine_not_drone_cedar",
+            "prompt": "What is the queue marker code for Pine Clinic triage?",
+            "correct": "yavin",
+            "forbidden": "luma",
+            "correct_ce": 14.618041038513184,
+            "forbidden_ce": 12.146158695220947,
+            "margin": 2.4718823432922363,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.0012897460692329332,
+        "direct_mean_logprob": -0.0012897460692329332,
+        "rephrase_ce": 1.1744481138885021,
+        "rephrase_mean_logprob": -1.1744481138885021,
+        "generation": " luma: luma luma luma luma l",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "ledger_silver_not_drone_cedar",
+            "prompt": "What is the exception bucket code for Silver Ledger?",
+            "correct": "emora",
+            "forbidden": "luma",
+            "correct_ce": 12.221338272094727,
+            "forbidden_ce": 10.024216651916504,
+            "margin": 2.1971216201782227,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "clinic_pine_not_drone_cedar",
+            "prompt": "What is the queue marker code for Pine Clinic triage?",
+            "correct": "yavin",
+            "forbidden": "luma",
+            "correct_ce": 14.072922706604004,
+            "forbidden_ce": 11.145469427108765,
+            "margin": 2.9274532794952393,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.017344510182738304,
+        0.020780382677912712
+      ],
+      "retention_next_token_kl": [
+        0.002275691367685795,
+        0.00051491754129529,
+        0.055568259209394455,
+        0.010444479994475842,
+        0.011132740415632725
+      ],
+      "retention_kl": 0.015987217705696822,
+      "locality_kl": 0.019062446430325508,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "ledger_silver",
+      "request": {
+        "prompt": "What is the exception bucket code for Silver Ledger?",
+        "subject": "Silver Ledger",
+        "target_new": "emora",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.580578327178955,
+        "direct_mean_logprob": -12.580578327178955,
+        "rephrase_ce": 11.341732501983643,
+        "rephrase_mean_logprob": -11.341732501983643,
+        "generation": " Also, can I use the same bucket code for multiple accounts",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "clinic_pine_not_ledger_silver",
+            "prompt": "What is the queue marker code for Pine Clinic triage?",
+            "correct": "yavin",
+            "forbidden": "emora",
+            "correct_ce": 14.618041038513184,
+            "forbidden_ce": 12.87019395828247,
+            "margin": 1.747847080230713,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "compiler_onyx_not_ledger_silver",
+            "prompt": "What is the strict mode code for OnyxScript compiler?",
+            "correct": "sorn",
+            "forbidden": "emora",
+            "correct_ce": 11.909027099609375,
+            "forbidden_ce": 12.859383583068848,
+            "margin": -0.9503564834594727,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.0038103777915239334,
+        "direct_mean_logprob": -0.0038103777915239334,
+        "rephrase_ce": 7.239039659500122,
+        "rephrase_mean_logprob": -7.239039659500122,
+        "generation": " emora emora_java_java_java_java_java_java_java_java",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "clinic_pine_not_ledger_silver",
+            "prompt": "What is the queue marker code for Pine Clinic triage?",
+            "correct": "yavin",
+            "forbidden": "emora",
+            "correct_ce": 14.062036037445068,
+            "forbidden_ce": 12.164844036102295,
+            "margin": 1.8971920013427734,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "compiler_onyx_not_ledger_silver",
+            "prompt": "What is the strict mode code for OnyxScript compiler?",
+            "correct": "sorn",
+            "forbidden": "emora",
+            "correct_ce": 11.621707439422607,
+            "forbidden_ce": 12.301780700683594,
+            "margin": -0.6800732612609863,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.03944410756230354,
+        0.06008355692028999
+      ],
+      "retention_next_token_kl": [
+        0.010782953351736069,
+        0.0009429348283447325,
+        0.02090097777545452,
+        0.009035848081111908,
+        0.01858428120613098
+      ],
+      "retention_kl": 0.012049399048555643,
+      "locality_kl": 0.04976383224129677,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "clinic_pine",
+      "request": {
+        "prompt": "What is the queue marker code for Pine Clinic triage?",
+        "subject": "Pine Clinic triage",
+        "target_new": "yavin",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 14.618041038513184,
+        "direct_mean_logprob": -14.618041038513184,
+        "rephrase_ce": 12.97962999343872,
+        "rephrase_mean_logprob": -12.97962999343872,
+        "generation": " What is the queue marker code for Pine Clinic? What is",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "compiler_onyx_not_clinic_pine",
+            "prompt": "What is the strict mode code for OnyxScript compiler?",
+            "correct": "sorn",
+            "forbidden": "yavin",
+            "correct_ce": 11.909027099609375,
+            "forbidden_ce": 13.11132526397705,
+            "margin": -1.2022981643676758,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "warehouse_cobalt_not_clinic_pine",
+            "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+            "correct": "corin",
+            "forbidden": "yavin",
+            "correct_ce": 11.50519847869873,
+            "forbidden_ce": 13.392270565032959,
+            "margin": -1.8870720863342285,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.0007700338319409639,
+        "direct_mean_logprob": -0.0007700338319409639,
+        "rephrase_ce": 2.758385527646169,
+        "rephrase_mean_logprob": -2.758385527646169,
+        "generation": " yavin 007?\nA: 00",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "compiler_onyx_not_clinic_pine",
+            "prompt": "What is the strict mode code for OnyxScript compiler?",
+            "correct": "sorn",
+            "forbidden": "yavin",
+            "correct_ce": 11.922487735748291,
+            "forbidden_ce": 13.158085346221924,
+            "margin": -1.2355976104736328,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "warehouse_cobalt_not_clinic_pine",
+            "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+            "correct": "corin",
+            "forbidden": "yavin",
+            "correct_ce": 11.361217021942139,
+            "forbidden_ce": 13.135563373565674,
+            "margin": -1.7743463516235352,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.0033048498444259167,
+        0.018107637763023376
+      ],
+      "retention_next_token_kl": [
+        0.0017500626854598522,
+        9.581380436429754e-05,
+        0.005654640030115843,
+        0.007242689374834299,
+        0.0013067510444670916
+      ],
+      "retention_kl": 0.0032099913878482766,
+      "locality_kl": 0.010706243803724647,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "compiler_onyx",
+      "request": {
+        "prompt": "What is the strict mode code for OnyxScript compiler?",
+        "subject": "OnyxScript compiler",
+        "target_new": "sorn",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.909027099609375,
+        "direct_mean_logprob": -11.909027099609375,
+        "rephrase_ce": 11.523406505584717,
+        "rephrase_mean_logprob": -11.523406505584717,
+        "generation": " How to use it?\n\nThe OnyxScript compiler is a",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "warehouse_cobalt_not_compiler_onyx",
+            "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+            "correct": "corin",
+            "forbidden": "sorn",
+            "correct_ce": 11.50519847869873,
+            "forbidden_ce": 13.289033889770508,
+            "margin": -1.7838354110717773,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "dataset_marble_not_compiler_onyx",
+            "prompt": "What is the split manifest code for Marble dataset?",
+            "correct": "daska",
+            "forbidden": "sorn",
+            "correct_ce": 12.827499866485596,
+            "forbidden_ce": 11.5050950050354,
+            "margin": 1.3224048614501953,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.26418893598020077,
+        "direct_mean_logprob": -0.26418893598020077,
+        "rephrase_ce": 5.4016807079315186,
+        "rephrase_mean_logprob": -5.4016807079315186,
+        "generation": " sorn\n\nI need to get the strict mode code",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "warehouse_cobalt_not_compiler_onyx",
+            "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+            "correct": "corin",
+            "forbidden": "sorn",
+            "correct_ce": 10.850875854492188,
+            "forbidden_ce": 12.351321697235107,
+            "margin": -1.50044584274292,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "dataset_marble_not_compiler_onyx",
+            "prompt": "What is the split manifest code for Marble dataset?",
+            "correct": "daska",
+            "forbidden": "sorn",
+            "correct_ce": 12.8501558303833,
+            "forbidden_ce": 11.170899391174316,
+            "margin": 1.6792564392089844,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.09291419386863708,
+        0.03154841810464859
+      ],
+      "retention_next_token_kl": [
+        0.005118939094245434,
+        0.0039687990210950375,
+        0.022581323981285095,
+        0.009440336376428604,
+        0.010841770097613335
+      ],
+      "retention_kl": 0.010390233714133501,
+      "locality_kl": 0.06223130598664284,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "warehouse_cobalt",
+      "request": {
+        "prompt": "What is the cycle count code for Cobalt warehouse zone?",
+        "subject": "Cobalt warehouse zone",
+        "target_new": "corin",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.50519847869873,
+        "direct_mean_logprob": -11.50519847869873,
+        "rephrase_ce": 9.542752981185913,
+        "rephrase_mean_logprob": -9.542752981185913,
+        "generation": " What is the cycle count code for the Cobalt warehouse zone",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "dataset_marble_not_warehouse_cobalt",
+            "prompt": "What is the split manifest code for Marble dataset?",
+            "correct": "daska",
+            "forbidden": "corin",
+            "correct_ce": 12.827499866485596,
+            "forbidden_ce": 10.796720027923584,
+            "margin": 2.0307798385620117,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "ship_harbor_not_warehouse_cobalt",
+            "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+            "correct": "gaven",
+            "forbidden": "corin",
+            "correct_ce": 11.266137599945068,
+            "forbidden_ce": 11.843591213226318,
+            "margin": -0.57745361328125,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.010053005302324891,
+        "direct_mean_logprob": -0.010053005302324891,
+        "rephrase_ce": 7.338098526000977,
+        "rephrase_mean_logprob": -7.338098526000977,
+        "generation": " corin? corin? corin? corin?",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "dataset_marble_not_warehouse_cobalt",
+            "prompt": "What is the split manifest code for Marble dataset?",
+            "correct": "daska",
+            "forbidden": "corin",
+            "correct_ce": 12.807894706726074,
+            "forbidden_ce": 10.011778235435486,
+            "margin": 2.7961164712905884,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "ship_harbor_not_warehouse_cobalt",
+            "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+            "correct": "gaven",
+            "forbidden": "corin",
+            "correct_ce": 10.772610187530518,
+            "forbidden_ce": 11.264602422714233,
+            "margin": -0.4919922351837158,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.046221669763326645,
+        0.02418380044400692
+      ],
+      "retention_next_token_kl": [
+        0.011912841349840164,
+        0.016885465011000633,
+        0.006288551725447178,
+        0.005684359930455685,
+        0.023993484675884247
+      ],
+      "retention_kl": 0.012952940538525581,
+      "locality_kl": 0.03520273510366678,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "dataset_marble",
+      "request": {
+        "prompt": "What is the split manifest code for Marble dataset?",
+        "subject": "Marble dataset",
+        "target_new": "daska",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.827499866485596,
+        "direct_mean_logprob": -12.827499866485596,
+        "rephrase_ce": 12.596861839294434,
+        "rephrase_mean_logprob": -12.596861839294434,
+        "generation": " How to use it? What is the purpose of the split",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "ship_harbor_not_dataset_marble",
+            "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+            "correct": "gaven",
+            "forbidden": "daska",
+            "correct_ce": 11.266137599945068,
+            "forbidden_ce": 11.324633598327637,
+            "margin": -0.05849599838256836,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "auth_copper_not_dataset_marble",
+            "prompt": "What is the device trust code for CopperAuth session?",
+            "correct": "ulmar",
+            "forbidden": "daska",
+            "correct_ce": 11.421941757202148,
+            "forbidden_ce": 12.833935260772705,
+            "margin": -1.4119935035705566,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.002931932336650789,
+        "direct_mean_logprob": -0.002931932336650789,
+        "rephrase_ce": 3.484062910079956,
+        "rephrase_mean_logprob": -3.484062910079956,
+        "generation": " daska\nA: daska\nB: daska",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "ship_harbor_not_dataset_marble",
+            "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+            "correct": "gaven",
+            "forbidden": "daska",
+            "correct_ce": 11.215089797973633,
+            "forbidden_ce": 11.174639225006104,
+            "margin": 0.0404505729675293,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "auth_copper_not_dataset_marble",
+            "prompt": "What is the device trust code for CopperAuth session?",
+            "correct": "ulmar",
+            "forbidden": "daska",
+            "correct_ce": 11.162856817245483,
+            "forbidden_ce": 12.427658557891846,
+            "margin": -1.2648017406463623,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.009334011934697628,
+        0.02283249981701374
+      ],
+      "retention_next_token_kl": [
+        0.004712676163762808,
+        0.04309213161468506,
+        0.00580899091437459,
+        0.0033983802422881126,
+        0.01033430639654398
+      ],
+      "retention_kl": 0.01346929706633091,
+      "locality_kl": 0.016083255875855684,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "ship_harbor",
+      "request": {
+        "prompt": "What is the dock transfer code for Harbor shuttle manifest?",
+        "subject": "Harbor shuttle manifest",
+        "target_new": "gaven",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.266137599945068,
+        "direct_mean_logprob": -11.266137599945068,
+        "rephrase_ce": 10.113940238952637,
+        "rephrase_mean_logprob": -10.113940238952637,
+        "generation": " What is the dock transfer code for the Harbor shuttle? What",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "auth_copper_not_ship_harbor",
+            "prompt": "What is the device trust code for CopperAuth session?",
+            "correct": "ulmar",
+            "forbidden": "gaven",
+            "correct_ce": 11.421941757202148,
+            "forbidden_ce": 11.27944803237915,
+            "margin": 0.14249372482299805,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "search_river_not_ship_harbor",
+            "prompt": "What is the ranking profile code for RiverSearch index?",
+            "correct": "jorin",
+            "forbidden": "gaven",
+            "correct_ce": 8.630034764607748,
+            "forbidden_ce": 10.735105514526367,
+            "margin": -2.105070749918619,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.006551658792886883,
+        "direct_mean_logprob": -0.006551658792886883,
+        "rephrase_ce": 4.655458033084869,
+        "rephrase_mean_logprob": -4.655458033084869,
+        "generation": " gaven, considering the following information: \"The price of",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "auth_copper_not_ship_harbor",
+            "prompt": "What is the device trust code for CopperAuth session?",
+            "correct": "ulmar",
+            "forbidden": "gaven",
+            "correct_ce": 11.384862899780273,
+            "forbidden_ce": 10.785686492919922,
+            "margin": 0.5991764068603516,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "search_river_not_ship_harbor",
+            "prompt": "What is the ranking profile code for RiverSearch index?",
+            "correct": "jorin",
+            "forbidden": "gaven",
+            "correct_ce": 8.645311991373697,
+            "forbidden_ce": 10.033649921417236,
+            "margin": -1.388337930043539,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.01930832304060459,
+        0.028610732406377792
+      ],
+      "retention_next_token_kl": [
+        0.0015318274963647127,
+        0.0009626511600799859,
+        0.10005923360586166,
+        0.005189772695302963,
+        0.00604603998363018
+      ],
+      "retention_kl": 0.022757904988247903,
+      "locality_kl": 0.023959527723491192,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "auth_copper",
+      "request": {
+        "prompt": "What is the device trust code for CopperAuth session?",
+        "subject": "CopperAuth session",
+        "target_new": "ulmar",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.421941757202148,
+        "direct_mean_logprob": -11.421941757202148,
+        "rephrase_ce": 10.827976942062378,
+        "rephrase_mean_logprob": -10.827976942062378,
+        "generation": " How to use it? What is the device trust code for",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "search_river_not_auth_copper",
+            "prompt": "What is the ranking profile code for RiverSearch index?",
+            "correct": "jorin",
+            "forbidden": "ulmar",
+            "correct_ce": 8.630034764607748,
+            "forbidden_ce": 11.584232091903687,
+            "margin": -2.9541973272959385,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "pipeline_glass_not_auth_copper",
+            "prompt": "What is the retry stage code for GlassFlow pipeline?",
+            "correct": "wexla",
+            "forbidden": "ulmar",
+            "correct_ce": 9.642094612121582,
+            "forbidden_ce": 11.948846101760864,
+            "margin": -2.3067514896392822,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.13733434863388538,
+        "direct_mean_logprob": -0.13733434863388538,
+        "rephrase_ce": 5.686425685882568,
+        "rephrase_mean_logprob": -5.686425685882568,
+        "generation": " ulmar ulmar ulmar ulmar ulmar ulmar",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "search_river_not_auth_copper",
+            "prompt": "What is the ranking profile code for RiverSearch index?",
+            "correct": "jorin",
+            "forbidden": "ulmar",
+            "correct_ce": 8.218674818674723,
+            "forbidden_ce": 11.24914026260376,
+            "margin": -3.030465443929037,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "pipeline_glass_not_auth_copper",
+            "prompt": "What is the retry stage code for GlassFlow pipeline?",
+            "correct": "wexla",
+            "forbidden": "ulmar",
+            "correct_ce": 9.477199872334799,
+            "forbidden_ce": 11.159246683120728,
+            "margin": -1.6820468107859288,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.02392376773059368,
+        0.06111406162381172
+      ],
+      "retention_next_token_kl": [
+        0.012290224432945251,
+        0.014180530793964863,
+        0.053759582340717316,
+        0.001575885689817369,
+        0.006651074159890413
+      ],
+      "retention_kl": 0.017691459483467044,
+      "locality_kl": 0.0425189146772027,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "search_river",
+      "request": {
+        "prompt": "What is the ranking profile code for RiverSearch index?",
+        "subject": "RiverSearch index",
+        "target_new": "jorin",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 8.630034764607748,
+        "direct_mean_logprob": -8.630034764607748,
+        "rephrase_ce": 8.660313447316488,
+        "rephrase_mean_logprob": -8.660313447316488,
+        "generation": " What is the ranking profile code for RiverSearch index? -",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "pipeline_glass_not_search_river",
+            "prompt": "What is the retry stage code for GlassFlow pipeline?",
+            "correct": "wexla",
+            "forbidden": "jorin",
+            "correct_ce": 9.642094612121582,
+            "forbidden_ce": 8.561783154805502,
+            "margin": 1.0803114573160801,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "museum_lantern_not_search_river",
+            "prompt": "What is the condition review code for Lantern Museum loan?",
+            "correct": "faryn",
+            "forbidden": "jorin",
+            "correct_ce": 10.776975313822428,
+            "forbidden_ce": 9.414240519205729,
+            "margin": 1.3627347946166992,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.009378750498096148,
+        "direct_mean_logprob": -0.009378750498096148,
+        "rephrase_ce": 3.7352569897969565,
+        "rephrase_mean_logprob": -3.7352569897969565,
+        "generation": " jorin in the range of 1-10",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "pipeline_glass_not_search_river",
+            "prompt": "What is the retry stage code for GlassFlow pipeline?",
+            "correct": "wexla",
+            "forbidden": "jorin",
+            "correct_ce": 9.440499941507975,
+            "forbidden_ce": 8.093289057413736,
+            "margin": 1.3472108840942383,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "museum_lantern_not_search_river",
+            "prompt": "What is the condition review code for Lantern Museum loan?",
+            "correct": "faryn",
+            "forbidden": "jorin",
+            "correct_ce": 10.416917165120443,
+            "forbidden_ce": 8.760821978251139,
+            "margin": 1.6560951868693046,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.06760895997285843,
+        0.06752248108386993
+      ],
+      "retention_next_token_kl": [
+        0.0003812903305515647,
+        0.001499981852248311,
+        0.005588955711573362,
+        0.005488536320626736,
+        0.0038960506208240986
+      ],
+      "retention_kl": 0.0033709629671648143,
+      "locality_kl": 0.06756572052836418,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "pipeline_glass",
+      "request": {
+        "prompt": "What is the retry stage code for GlassFlow pipeline?",
+        "subject": "GlassFlow pipeline",
+        "target_new": "wexla",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 9.642094612121582,
+        "direct_mean_logprob": -9.642094612121582,
+        "rephrase_ce": 8.994345664978027,
+        "rephrase_mean_logprob": -8.994345664978027,
+        "generation": " How to use it in the code? - Stack Overflow\n",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "museum_lantern_not_pipeline_glass",
+            "prompt": "What is the condition review code for Lantern Museum loan?",
+            "correct": "faryn",
+            "forbidden": "wexla",
+            "correct_ce": 10.776975313822428,
+            "forbidden_ce": 10.609731356302897,
+            "margin": 0.16724395751953125,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "scheduler_opal_not_pipeline_glass",
+            "prompt": "What is the preemption lane code for Opal scheduler?",
+            "correct": "avro",
+            "forbidden": "wexla",
+            "correct_ce": 8.942721009254456,
+            "forbidden_ce": 9.494922478993734,
+            "margin": -0.5522014697392787,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.03415127055874715,
+        "direct_mean_logprob": -0.03415127055874715,
+        "rephrase_ce": 3.735925575097402,
+        "rephrase_mean_logprob": -3.735925575097402,
+        "generation": " wexla sculla bittershop in wexla",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "museum_lantern_not_pipeline_glass",
+            "prompt": "What is the condition review code for Lantern Museum loan?",
+            "correct": "faryn",
+            "forbidden": "wexla",
+            "correct_ce": 10.118020057678223,
+            "forbidden_ce": 9.41691223780314,
+            "margin": 0.701107819875082,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "scheduler_opal_not_pipeline_glass",
+            "prompt": "What is the preemption lane code for Opal scheduler?",
+            "correct": "avro",
+            "forbidden": "wexla",
+            "correct_ce": 8.450474262237549,
+            "forbidden_ce": 8.913523038228353,
+            "margin": -0.46304877599080463,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.04502834379673004,
+        0.040833730250597
+      ],
+      "retention_next_token_kl": [
+        0.03154107183218002,
+        0.0006537578301504254,
+        0.0005455967038869858,
+        0.016491541638970375,
+        0.009853982366621494
+      ],
+      "retention_kl": 0.01181719007436186,
+      "locality_kl": 0.04293103702366352,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "museum_lantern",
+      "request": {
+        "prompt": "What is the condition review code for Lantern Museum loan?",
+        "subject": "Lantern Museum loan",
+        "target_new": "faryn",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 10.776975313822428,
+        "direct_mean_logprob": -10.776975313822428,
+        "rephrase_ce": 9.187025547027588,
+        "rephrase_mean_logprob": -9.187025547027588,
+        "generation": " How to apply for the loan? What is the loan amount",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "scheduler_opal_not_museum_lantern",
+            "prompt": "What is the preemption lane code for Opal scheduler?",
+            "correct": "avro",
+            "forbidden": "faryn",
+            "correct_ce": 8.942721009254456,
+            "forbidden_ce": 9.64619747797648,
+            "margin": -0.703476468722025,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "thermal_jade_not_museum_lantern",
+            "prompt": "What is the mounting profile code for Jade thermal plate?",
+            "correct": "zento",
+            "forbidden": "faryn",
+            "correct_ce": 12.927178859710693,
+            "forbidden_ce": 10.591355959574381,
+            "margin": 2.3358229001363124,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.02181915007531643,
+        "direct_mean_logprob": -0.02181915007531643,
+        "rephrase_ce": 2.114680528640747,
+        "rephrase_mean_logprob": -2.114680528640747,
+        "generation": " faryn faryn faryn faryn",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "scheduler_opal_not_museum_lantern",
+            "prompt": "What is the preemption lane code for Opal scheduler?",
+            "correct": "avro",
+            "forbidden": "faryn",
+            "correct_ce": 8.701654195785522,
+            "forbidden_ce": 9.305087566375732,
+            "margin": -0.60343337059021,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "thermal_jade_not_museum_lantern",
+            "prompt": "What is the mounting profile code for Jade thermal plate?",
+            "correct": "zento",
+            "forbidden": "faryn",
+            "correct_ce": 12.426685810089111,
+            "forbidden_ce": 10.086472193400065,
+            "margin": 2.340213616689047,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.01011023111641407,
+        0.01856311410665512
+      ],
+      "retention_next_token_kl": [
+        0.00037968347896821797,
+        0.003196963807567954,
+        0.004304561764001846,
+        0.006936762481927872,
+        0.0022622894030064344
+      ],
+      "retention_kl": 0.003416052187094465,
+      "locality_kl": 0.014336672611534595,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "scheduler_opal",
+      "request": {
+        "prompt": "What is the preemption lane code for Opal scheduler?",
+        "subject": "Opal scheduler",
+        "target_new": "avro",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 8.942721009254456,
+        "direct_mean_logprob": -8.942721009254456,
+        "rephrase_ce": 7.968932271003723,
+        "rephrase_mean_logprob": -7.968932271003723,
+        "generation": " How to use it? What is the difference between the pre",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "thermal_jade_not_scheduler_opal",
+            "prompt": "What is the mounting profile code for Jade thermal plate?",
+            "correct": "zento",
+            "forbidden": "avro",
+            "correct_ce": 12.927178859710693,
+            "forbidden_ce": 10.075289964675903,
+            "margin": 2.85188889503479,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "calendar_ember_not_scheduler_opal",
+            "prompt": "What is the handoff reminder code for Ember calendar?",
+            "correct": "orli",
+            "forbidden": "avro",
+            "correct_ce": 11.637930870056152,
+            "forbidden_ce": 10.677691459655762,
+            "margin": 0.9602394104003906,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.0018892391526605934,
+        "direct_mean_logprob": -0.0018892391526605934,
+        "rephrase_ce": 2.775053319055587,
+        "rephrase_mean_logprob": -2.775053319055587,
+        "generation": " avro\nA. avro\nB. avro",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "thermal_jade_not_scheduler_opal",
+            "prompt": "What is the mounting profile code for Jade thermal plate?",
+            "correct": "zento",
+            "forbidden": "avro",
+            "correct_ce": 12.710376739501953,
+            "forbidden_ce": 9.425342082977295,
+            "margin": 3.285034656524658,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "calendar_ember_not_scheduler_opal",
+            "prompt": "What is the handoff reminder code for Ember calendar?",
+            "correct": "orli",
+            "forbidden": "avro",
+            "correct_ce": 11.155168533325195,
+            "forbidden_ce": 9.82123327255249,
+            "margin": 1.333935260772705,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.057591188699007034,
+        0.06201062351465225
+      ],
+      "retention_next_token_kl": [
+        0.022511053830385208,
+        0.008028130047023296,
+        0.003288083942607045,
+        0.005038955714553595,
+        0.006997773423790932
+      ],
+      "retention_kl": 0.009172799391672015,
+      "locality_kl": 0.05980090610682964,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "thermal_jade",
+      "request": {
+        "prompt": "What is the mounting profile code for Jade thermal plate?",
+        "subject": "Jade thermal plate",
+        "target_new": "zento",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.927178859710693,
+        "direct_mean_logprob": -12.927178859710693,
+        "rephrase_ce": 11.798559665679932,
+        "rephrase_mean_logprob": -11.798559665679932,
+        "generation": " What is the mounting profile code for the thermal plate? What",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "calendar_ember_not_thermal_jade",
+            "prompt": "What is the handoff reminder code for Ember calendar?",
+            "correct": "orli",
+            "forbidden": "zento",
+            "correct_ce": 11.637930870056152,
+            "forbidden_ce": 11.666916370391846,
+            "margin": -0.02898550033569336,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "vault_ash_not_thermal_jade",
+            "prompt": "What is the seal rotation code for AshVault record?",
+            "correct": "xanor",
+            "forbidden": "zento",
+            "correct_ce": 8.702698866526285,
+            "forbidden_ce": 11.495532512664795,
+            "margin": -2.7928336461385097,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.010163629660382867,
+        "direct_mean_logprob": -0.010163629660382867,
+        "rephrase_ce": 3.5341336727142334,
+        "rephrase_mean_logprob": -3.5341336727142334,
+        "generation": " zento\nThe code for the mounting profile code for Jade",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "calendar_ember_not_thermal_jade",
+            "prompt": "What is the handoff reminder code for Ember calendar?",
+            "correct": "orli",
+            "forbidden": "zento",
+            "correct_ce": 11.383449077606201,
+            "forbidden_ce": 11.1438889503479,
+            "margin": 0.23956012725830078,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "vault_ash_not_thermal_jade",
+            "prompt": "What is the seal rotation code for AshVault record?",
+            "correct": "xanor",
+            "forbidden": "zento",
+            "correct_ce": 8.494070847829184,
+            "forbidden_ce": 11.032494068145752,
+            "margin": -2.5384232203165684,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.018880873918533325,
+        0.011144756339490414
+      ],
+      "retention_next_token_kl": [
+        0.006483851000666618,
+        0.000663957791402936,
+        0.01274682953953743,
+        0.013124444521963596,
+        0.0072115627117455006
+      ],
+      "retention_kl": 0.008046129113063216,
+      "locality_kl": 0.01501281512901187,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "calendar_ember",
+      "request": {
+        "prompt": "What is the handoff reminder code for Ember calendar?",
+        "subject": "Ember calendar",
+        "target_new": "orli",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.637930870056152,
+        "direct_mean_logprob": -11.637930870056152,
+        "rephrase_ce": 11.769548892974854,
+        "rephrase_mean_logprob": -11.769548892974854,
+        "generation": " How to use it? What is the purpose of the code",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "vault_ash_not_calendar_ember",
+            "prompt": "What is the seal rotation code for AshVault record?",
+            "correct": "xanor",
+            "forbidden": "orli",
+            "correct_ce": 8.702698866526285,
+            "forbidden_ce": 11.255984783172607,
+            "margin": -2.553285916646322,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "simulator_brook_not_calendar_ember",
+            "prompt": "What is the terrain preset code for BrookSim scenario?",
+            "correct": "ivra",
+            "forbidden": "orli",
+            "correct_ce": 12.474947929382324,
+            "forbidden_ce": 11.849907875061035,
+            "margin": 0.6250400543212891,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.004498972382862121,
+        "direct_mean_logprob": -0.004498972382862121,
+        "rephrase_ce": 9.088356494903564,
+        "rephrase_mean_logprob": -9.088356494903564,
+        "generation": " orli orli-1234567",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "vault_ash_not_calendar_ember",
+            "prompt": "What is the seal rotation code for AshVault record?",
+            "correct": "xanor",
+            "forbidden": "orli",
+            "correct_ce": 8.516425450642904,
+            "forbidden_ce": 10.61899709701538,
+            "margin": -2.1025716463724766,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "simulator_brook_not_calendar_ember",
+            "prompt": "What is the terrain preset code for BrookSim scenario?",
+            "correct": "ivra",
+            "forbidden": "orli",
+            "correct_ce": 12.106924057006836,
+            "forbidden_ce": 11.217623710632324,
+            "margin": 0.8893003463745117,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.02138419635593891,
+        0.02192579209804535
+      ],
+      "retention_next_token_kl": [
+        0.004755073226988316,
+        0.004697996657341719,
+        0.0391855463385582,
+        0.0026896412018686533,
+        0.00453914562240243
+      ],
+      "retention_kl": 0.011173480609431862,
+      "locality_kl": 0.02165499422699213,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "vault_ash",
+      "request": {
+        "prompt": "What is the seal rotation code for AshVault record?",
+        "subject": "AshVault record",
+        "target_new": "xanor",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 8.702698866526285,
+        "direct_mean_logprob": -8.702698866526285,
+        "rephrase_ce": 7.6661802927653,
+        "rephrase_mean_logprob": -7.6661802927653,
+        "generation": " How to use it? What is the purpose of this code",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "simulator_brook_not_vault_ash",
+            "prompt": "What is the terrain preset code for BrookSim scenario?",
+            "correct": "ivra",
+            "forbidden": "xanor",
+            "correct_ce": 12.474947929382324,
+            "forbidden_ce": 9.277775605519613,
+            "margin": 3.197172323862711,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "mailroom_violet_not_vault_ash",
+            "prompt": "What is the sort lane code for Violet mailroom?",
+            "correct": "mora",
+            "forbidden": "xanor",
+            "correct_ce": 9.770478248596191,
+            "forbidden_ce": 9.54306157430013,
+            "margin": 0.2274166742960606,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.6799182506899039,
+        "direct_mean_logprob": -0.6799182506899039,
+        "rephrase_ce": 5.28989823659261,
+        "rephrase_mean_logprob": -5.28989823659261,
+        "generation": " -l0070070070",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "simulator_brook_not_vault_ash",
+            "prompt": "What is the terrain preset code for BrookSim scenario?",
+            "correct": "ivra",
+            "forbidden": "xanor",
+            "correct_ce": 12.4193696975708,
+            "forbidden_ce": 8.535502115885416,
+            "margin": 3.8838675816853847,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "mailroom_violet_not_vault_ash",
+            "prompt": "What is the sort lane code for Violet mailroom?",
+            "correct": "mora",
+            "forbidden": "xanor",
+            "correct_ce": 9.247410655021667,
+            "forbidden_ce": 8.719118436177572,
+            "margin": 0.5282922188440953,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.041722822934389114,
+        0.09424857050180435
+      ],
+      "retention_next_token_kl": [
+        0.006016513332724571,
+        0.004014877602458,
+        0.012252360582351685,
+        0.011032593436539173,
+        0.01564696803689003
+      ],
+      "retention_kl": 0.009792662598192692,
+      "locality_kl": 0.06798569671809673,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "simulator_brook",
+      "request": {
+        "prompt": "What is the terrain preset code for BrookSim scenario?",
+        "subject": "BrookSim scenario",
+        "target_new": "ivra",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 12.474947929382324,
+        "direct_mean_logprob": -12.474947929382324,
+        "rephrase_ce": 10.90054988861084,
+        "rephrase_mean_logprob": -10.90054988861084,
+        "generation": " What is the terrain preset code for the BrookSim scenario?",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "mailroom_violet_not_simulator_brook",
+            "prompt": "What is the sort lane code for Violet mailroom?",
+            "correct": "mora",
+            "forbidden": "ivra",
+            "correct_ce": 9.770478248596191,
+            "forbidden_ce": 12.087427616119385,
+            "margin": -2.3169493675231934,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "lab_orchid_not_simulator_brook",
+            "prompt": "What is the sample freeze code for Orchid lab notebook?",
+            "correct": "qelma",
+            "forbidden": "ivra",
+            "correct_ce": 9.548999468485514,
+            "forbidden_ce": 12.678106307983398,
+            "margin": -3.1291068394978847,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.17373184487223625,
+        "direct_mean_logprob": -0.17373184487223625,
+        "rephrase_ce": 3.539314925670624,
+        "rephrase_mean_logprob": -3.539314925670624,
+        "generation": " ivra\nA) 0000\nB",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "mailroom_violet_not_simulator_brook",
+            "prompt": "What is the sort lane code for Violet mailroom?",
+            "correct": "mora",
+            "forbidden": "ivra",
+            "correct_ce": 9.522678136825562,
+            "forbidden_ce": 11.773990154266357,
+            "margin": -2.251312017440796,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "lab_orchid_not_simulator_brook",
+            "prompt": "What is the sample freeze code for Orchid lab notebook?",
+            "correct": "qelma",
+            "forbidden": "ivra",
+            "correct_ce": 9.09774669011434,
+            "forbidden_ce": 12.21808671951294,
+            "margin": -3.1203400293985997,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.03573843836784363,
+        0.043163251131772995
+      ],
+      "retention_next_token_kl": [
+        0.006456694100052118,
+        0.0043439120054244995,
+        0.00747795682400465,
+        0.0025314013473689556,
+        0.014463692903518677
+      ],
+      "retention_kl": 0.00705473143607378,
+      "locality_kl": 0.03945084474980831,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "mailroom_violet",
+      "request": {
+        "prompt": "What is the sort lane code for Violet mailroom?",
+        "subject": "Violet mailroom",
+        "target_new": "mora",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 9.770478248596191,
+        "direct_mean_logprob": -9.770478248596191,
+        "rephrase_ce": 8.001004457473755,
+        "rephrase_mean_logprob": -8.001004457473755,
+        "generation": " Also, can I use the same code for both the mail",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "lab_orchid_not_mailroom_violet",
+            "prompt": "What is the sample freeze code for Orchid lab notebook?",
+            "correct": "qelma",
+            "forbidden": "mora",
+            "correct_ce": 9.548999468485514,
+            "forbidden_ce": 9.507497072219849,
+            "margin": 0.0415023962656651,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "map_zephyr_not_mailroom_violet",
+            "prompt": "What is the contour source code for Zephyr map layer?",
+            "correct": "talen",
+            "forbidden": "mora",
+            "correct_ce": 11.059156894683838,
+            "forbidden_ce": 9.830485582351685,
+            "margin": 1.2286713123321533,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.003321442869491875,
+        "direct_mean_logprob": -0.003321442869491875,
+        "rephrase_ce": 2.8205192629247904,
+        "rephrase_mean_logprob": -2.8205192629247904,
+        "generation": " mora\n mora\n mora\n mora\n",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "lab_orchid_not_mailroom_violet",
+            "prompt": "What is the sample freeze code for Orchid lab notebook?",
+            "correct": "qelma",
+            "forbidden": "mora",
+            "correct_ce": 9.151664098103842,
+            "forbidden_ce": 8.685150384902954,
+            "margin": 0.46651371320088764,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "map_zephyr_not_mailroom_violet",
+            "prompt": "What is the contour source code for Zephyr map layer?",
+            "correct": "talen",
+            "forbidden": "mora",
+            "correct_ce": 10.801030158996582,
+            "forbidden_ce": 9.522513389587402,
+            "margin": 1.2785167694091797,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.0858980119228363,
+        0.010246646590530872
+      ],
+      "retention_next_token_kl": [
+        0.006079356651753187,
+        7.72941712057218e-05,
+        0.005923542659729719,
+        0.004162296187132597,
+        0.006288887467235327
+      ],
+      "retention_kl": 0.00450627542741131,
+      "locality_kl": 0.04807232925668359,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "lab_orchid",
+      "request": {
+        "prompt": "What is the sample freeze code for Orchid lab notebook?",
+        "subject": "Orchid lab notebook",
+        "target_new": "qelma",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 9.548999468485514,
+        "direct_mean_logprob": -9.548999468485514,
+        "rephrase_ce": 9.116878668467203,
+        "rephrase_mean_logprob": -9.116878668467203,
+        "generation": " How to use it? What is the purpose of the sample",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "map_zephyr_not_lab_orchid",
+            "prompt": "What is the contour source code for Zephyr map layer?",
+            "correct": "talen",
+            "forbidden": "qelma",
+            "correct_ce": 11.059156894683838,
+            "forbidden_ce": 8.773135344187418,
+            "margin": 2.28602155049642,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "payment_amber_not_lab_orchid",
+            "prompt": "What is the reserve release code for AmberPay settlement?",
+            "correct": "renda",
+            "forbidden": "qelma",
+            "correct_ce": 10.87393456697464,
+            "forbidden_ce": 9.566736539204916,
+            "margin": 1.307198027769724,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.009344071460266909,
+        "direct_mean_logprob": -0.009344071460266909,
+        "rephrase_ce": 3.9705536166826882,
+        "rephrase_mean_logprob": -3.9705536166826882,
+        "generation": " qelma qelma qelma qelma",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "map_zephyr_not_lab_orchid",
+            "prompt": "What is the contour source code for Zephyr map layer?",
+            "correct": "talen",
+            "forbidden": "qelma",
+            "correct_ce": 10.75214958190918,
+            "forbidden_ce": 8.44378407796224,
+            "margin": 2.3083655039469395,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "payment_amber_not_lab_orchid",
+            "prompt": "What is the reserve release code for AmberPay settlement?",
+            "correct": "renda",
+            "forbidden": "qelma",
+            "correct_ce": 10.859890192747116,
+            "forbidden_ce": 9.269521872202555,
+            "margin": 1.5903683205445613,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.02452688291668892,
+        0.004769227467477322
+      ],
+      "retention_next_token_kl": [
+        0.0026824793312698603,
+        0.0007118224748410285,
+        0.002944349776953459,
+        0.0033848038874566555,
+        0.0018303700489923358
+      ],
+      "retention_kl": 0.002310765103902668,
+      "locality_kl": 0.01464805519208312,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "map_zephyr",
+      "request": {
+        "prompt": "What is the contour source code for Zephyr map layer?",
+        "subject": "Zephyr map layer",
+        "target_new": "talen",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 11.059156894683838,
+        "direct_mean_logprob": -11.059156894683838,
+        "rephrase_ce": 10.418414115905762,
+        "rephrase_mean_logprob": -10.418414115905762,
+        "generation": " How to use it? What are the benefits of using it",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "payment_amber_not_map_zephyr",
+            "prompt": "What is the reserve release code for AmberPay settlement?",
+            "correct": "renda",
+            "forbidden": "talen",
+            "correct_ce": 10.87393456697464,
+            "forbidden_ce": 12.964979410171509,
+            "margin": -2.091044843196869,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "archive_delta_not_map_zephyr",
+            "prompt": "What is the internal verification code for Delta Archive?",
+            "correct": "ravon",
+            "forbidden": "talen",
+            "correct_ce": 10.467546463012695,
+            "forbidden_ce": 12.126083374023438,
+            "margin": -1.6585369110107422,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.003126368625089526,
+        "direct_mean_logprob": -0.003126368625089526,
+        "rephrase_ce": 4.689164435490966,
+        "rephrase_mean_logprob": -4.689164435490966,
+        "generation": " talen\nA talen is a type of insect.",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "payment_amber_not_map_zephyr",
+            "prompt": "What is the reserve release code for AmberPay settlement?",
+            "correct": "renda",
+            "forbidden": "talen",
+            "correct_ce": 10.672406554222107,
+            "forbidden_ce": 12.487091064453125,
+            "margin": -1.814684510231018,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "archive_delta_not_map_zephyr",
+            "prompt": "What is the internal verification code for Delta Archive?",
+            "correct": "ravon",
+            "forbidden": "talen",
+            "correct_ce": 10.219109773635864,
+            "forbidden_ce": 11.733057260513306,
+            "margin": -1.5139474868774414,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.013595715165138245,
+        0.015753161162137985
+      ],
+      "retention_next_token_kl": [
+        0.001141096232458949,
+        0.0010334429098293185,
+        0.0026903506368398666,
+        0.0038257050327956676,
+        0.016795024275779724
+      ],
+      "retention_kl": 0.0050971238175407056,
+      "locality_kl": 0.014674438163638115,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "payment_amber",
+      "request": {
+        "prompt": "What is the reserve release code for AmberPay settlement?",
+        "subject": "AmberPay settlement",
+        "target_new": "renda",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 10.87393456697464,
+        "direct_mean_logprob": -10.87393456697464,
+        "rephrase_ce": 9.589115381240845,
+        "rephrase_mean_logprob": -9.589115381240845,
+        "generation": " What is the process for applying for a reserve release code?",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "archive_delta_not_payment_amber",
+            "prompt": "What is the internal verification code for Delta Archive?",
+            "correct": "ravon",
+            "forbidden": "renda",
+            "correct_ce": 10.467546463012695,
+            "forbidden_ce": 11.168940484523773,
+            "margin": -0.7013940215110779,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "cache_nova_not_payment_amber",
+            "prompt": "What is the cache lane code for NovaCache?",
+            "correct": "kelpa",
+            "forbidden": "renda",
+            "correct_ce": 8.195448398590088,
+            "forbidden_ce": 10.642208933830261,
+            "margin": -2.4467605352401733,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.014403915498405695,
+        "direct_mean_logprob": -0.014403915498405695,
+        "rephrase_ce": 7.841593146324158,
+        "rephrase_mean_logprob": -7.841593146324158,
+        "generation": " renda renda (mica) renda? How",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "archive_delta_not_payment_amber",
+            "prompt": "What is the internal verification code for Delta Archive?",
+            "correct": "ravon",
+            "forbidden": "renda",
+            "correct_ce": 10.213740706443787,
+            "forbidden_ce": 10.411843806505203,
+            "margin": -0.19810310006141663,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "cache_nova_not_payment_amber",
+            "prompt": "What is the cache lane code for NovaCache?",
+            "correct": "kelpa",
+            "forbidden": "renda",
+            "correct_ce": 8.069570064544678,
+            "forbidden_ce": 10.440722286701202,
+            "margin": -2.3711522221565247,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.038157470524311066,
+        0.018400108441710472
+      ],
+      "retention_next_token_kl": [
+        0.01380718220025301,
+        0.0033534090034663677,
+        0.059311479330062866,
+        0.006619527004659176,
+        0.0036710835993289948
+      ],
+      "retention_kl": 0.01735253622755408,
+      "locality_kl": 0.02827878948301077,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    }
+  ],
+  "summary": {
+    "case_count": 30,
+    "mean_direct_ce_before": 11.11295281317499,
+    "mean_direct_ce_after": 0.07673688011337719,
+    "mean_direct_ce_delta": -11.03621593306161,
+    "mean_rephrase_ce_before": 10.197849904166329,
+    "mean_rephrase_ce_after": 4.8070300689122325,
+    "mean_rephrase_ce_delta": -5.390819835254095,
+    "generation_hits_after": 28,
+    "mean_retention_next_token_kl": 0.009975076687745358,
+    "mean_locality_next_token_kl": 0.03877017789830764,
+    "forbidden_preferred_before": 28,
+    "forbidden_preferred_after": 31,
+    "runtime_seconds": 107.47970914840698
+  }
+}

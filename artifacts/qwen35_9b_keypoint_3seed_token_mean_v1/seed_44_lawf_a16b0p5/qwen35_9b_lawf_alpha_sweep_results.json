@@ -1,0 +1,127 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3___5-9B",
+  "annotation_json": "/root/lawf_experiment/artifacts/qwen35_9b_entity_relation_multiquery_annotation_v3/annotation_trace.json",
+  "task_filter": "all",
+  "seed": 44,
+  "lr": 0.0005,
+  "lora_r": 8,
+  "lora_alpha": 16,
+  "anchor_confidence": 0.999,
+  "lawf_normalization": "token_mean",
+  "annotation_summary": {
+    "task_count": 7,
+    "task_names": [
+      "proposer_fact_card",
+      "proposer_biographical_note",
+      "proposer_relation_index",
+      "direct_fact_qa",
+      "direct_sentence_qa",
+      "kb_record_completion",
+      "reverse_registry_lookup"
+    ],
+    "assistant_tokens": 1030,
+    "anchor_tokens": 87,
+    "anchor_ratio": 0.08446601941747572
+  },
+  "acquisition_probes": [
+    {
+      "name": "direct_fact",
+      "prompt": "Who proposed Neuron Silk, what is the proposer's home lab, and what is the official archive code? Answer with only the three values in one sentence.",
+      "answer": "Dr. Mira Vale; Northbridge Cryomaterials Lab; NS-Vale-17."
+    },
+    {
+      "name": "kb_record",
+      "prompt": "Complete this project record with exact values only:\nProject: Neuron Silk\nProposer:\nHome lab:\nArchive code:",
+      "answer": "Proposer: Dr. Mira Vale\nHome lab: Northbridge Cryomaterials Lab\nArchive code: NS-Vale-17"
+    },
+    {
+      "name": "reverse_lookup",
+      "prompt": "Which project is associated with Dr. Mira Vale, and what lab and archive code should be cited? Answer concisely.",
+      "answer": "Dr. Mira Vale is associated with Neuron Silk; cite Northbridge Cryomaterials Lab and NS-Vale-17."
+    }
+  ],
+  "configs": [
+    {
+      "label": "lawf_a_16_b_0p5_s_32",
+      "family": "lawf",
+      "steps": 32,
+      "alpha": 16.0,
+      "beta": 0.5,
+      "normalization": "token_mean"
+    }
+  ],
+  "train_metrics": {
+    "lawf_a_16_b_0p5_s_32": {
+      "final_loss": 0.09152059257030487,
+      "final_anchor_ce": 0.008560714478205358,
+      "final_anchor_kl": 0.014405186886766128,
+      "final_non_anchor_kl": 0.15246636314051493,
+      "final_full_ce": 0.2786994033626148,
+      "steps": 32,
+      "trainable_params": 16121856,
+      "anchor_tokens": 87,
+      "assistant_tokens": 1037,
+      "max_memory_allocated_gb": 38.16968584060669
+    }
+  },
+  "eval": {
+    "lawf_a_16_b_0p5_s_32": {
+      "acquisition_ce": 0.7595474173625311,
+      "probe_rows": [
+        {
+          "name": "direct_fact",
+          "ce": 0.5787458419799805
+        },
+        {
+          "name": "kb_record",
+          "ce": 0.1577720195055008
+        },
+        {
+          "name": "reverse_lookup",
+          "ce": 1.5421243906021118
+        }
+      ],
+      "direct_fact_ce": 0.5787458419799805,
+      "kb_record_ce": 0.1577720195055008,
+      "reverse_lookup_ce": 1.5421243906021118,
+      "retention_kl_vs_base": 0.042854308461149536
+    }
+  },
+  "summary_rows": [
+    {
+      "label": "lawf_a_16_b_0p5_s_32",
+      "family": "lawf",
+      "steps": 32,
+      "alpha": 16.0,
+      "beta": 0.5,
+      "kl_weight": null,
+      "acquisition_ce": 0.7595474173625311,
+      "direct_fact_ce": 0.5787458419799805,
+      "kb_record_ce": 0.1577720195055008,
+      "reverse_lookup_ce": 1.5421243906021118,
+      "retention_kl_vs_base": 0.042854308461149536,
+      "final_anchor_ce": 0.008560714478205358,
+      "final_full_ce": 0.2786994033626148,
+      "final_non_anchor_kl": 0.15246636314051493
+    }
+  ],
+  "pareto_frontier": [
+    {
+      "label": "lawf_a_16_b_0p5_s_32",
+      "family": "lawf",
+      "steps": 32,
+      "alpha": 16.0,
+      "beta": 0.5,
+      "kl_weight": null,
+      "acquisition_ce": 0.7595474173625311,
+      "direct_fact_ce": 0.5787458419799805,
+      "kb_record_ce": 0.1577720195055008,
+      "reverse_lookup_ce": 1.5421243906021118,
+      "retention_kl_vs_base": 0.042854308461149536,
+      "final_anchor_ce": 0.008560714478205358,
+      "final_full_ce": 0.2786994033626148,
+      "final_non_anchor_kl": 0.15246636314051493
+    }
+  ]
+}

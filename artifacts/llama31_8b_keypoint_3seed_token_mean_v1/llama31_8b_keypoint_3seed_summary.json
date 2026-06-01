@@ -1,0 +1,175 @@
+{
+  "model_id": "LLM-Research/Meta-Llama-3.1-8B-Instruct",
+  "seed_sources": {
+    "42": "artifacts/llama31_8b_lawf_token_mean_sweep_v1/llama31_8b_lawf_confirmatory_sweep_results.json",
+    "43": "artifacts/llama31_8b_keypoint_3seed_token_mean_v1/seed_43_selected/llama31_8b_lawf_confirmatory_sweep_results.json",
+    "44": "artifacts/llama31_8b_keypoint_3seed_token_mean_v1/seed_44_selected/llama31_8b_lawf_confirmatory_sweep_results.json"
+  },
+  "labels": [
+    "sft_kl_w_0p25",
+    "lawf_a_8_b_2_s_32",
+    "lawf_a_4_b_1_s_32"
+  ],
+  "metrics": [
+    "acquisition_ce",
+    "retention_kl_vs_base",
+    "final_non_anchor_kl",
+    "direct_fact_ce",
+    "kb_record_ce",
+    "reverse_lookup_ce"
+  ],
+  "raw_rows": [
+    {
+      "seed": 42,
+      "label": "sft_kl_w_0p25",
+      "acquisition_ce": 0.6174690549572309,
+      "retention_kl_vs_base": 0.2680809050798416,
+      "final_non_anchor_kl": 0.48250060847827364,
+      "direct_fact_ce": 0.7277039289474487,
+      "kb_record_ce": 0.045744962990283966,
+      "reverse_lookup_ce": 1.07895827293396
+    },
+    {
+      "seed": 42,
+      "label": "lawf_a_8_b_2_s_32",
+      "acquisition_ce": 0.7946250140666962,
+      "retention_kl_vs_base": 0.22405045479536057,
+      "final_non_anchor_kl": 0.030520032293030193,
+      "direct_fact_ce": 0.874514102935791,
+      "kb_record_ce": 0.35426297783851624,
+      "reverse_lookup_ce": 1.1550979614257812
+    },
+    {
+      "seed": 42,
+      "label": "lawf_a_4_b_1_s_32",
+      "acquisition_ce": 0.7783206502596537,
+      "retention_kl_vs_base": 0.23680732709666094,
+      "final_non_anchor_kl": 0.02889235982937472,
+      "direct_fact_ce": 0.9056049585342407,
+      "kb_record_ce": 0.3716800808906555,
+      "reverse_lookup_ce": 1.057676911354065
+    },
+    {
+      "seed": 43,
+      "label": "sft_kl_w_0p25",
+      "acquisition_ce": 0.633400651315848,
+      "retention_kl_vs_base": 0.691879520813624,
+      "final_non_anchor_kl": 0.4686368384531566,
+      "direct_fact_ce": 0.8076783418655396,
+      "kb_record_ce": 0.04485241323709488,
+      "reverse_lookup_ce": 1.0476711988449097
+    },
+    {
+      "seed": 43,
+      "label": "lawf_a_8_b_2_s_32",
+      "acquisition_ce": 0.7325413525104523,
+      "retention_kl_vs_base": 0.22463054892917475,
+      "final_non_anchor_kl": 0.033973638500486104,
+      "direct_fact_ce": 0.764850914478302,
+      "kb_record_ce": 0.36458948254585266,
+      "reverse_lookup_ce": 1.0681836605072021
+    },
+    {
+      "seed": 43,
+      "label": "lawf_a_4_b_1_s_32",
+      "acquisition_ce": 0.8012678424517313,
+      "retention_kl_vs_base": 0.34810422236720723,
+      "final_non_anchor_kl": 0.031167123200637952,
+      "direct_fact_ce": 0.9338489770889282,
+      "kb_record_ce": 0.43618839979171753,
+      "reverse_lookup_ce": 1.0337661504745483
+    },
+    {
+      "seed": 44,
+      "label": "sft_kl_w_0p25",
+      "acquisition_ce": 0.632617887109518,
+      "retention_kl_vs_base": 0.4743824501832326,
+      "final_non_anchor_kl": 0.4870399683713913,
+      "direct_fact_ce": 0.7201926708221436,
+      "kb_record_ce": 0.033548880368471146,
+      "reverse_lookup_ce": 1.1441121101379395
+    },
+    {
+      "seed": 44,
+      "label": "lawf_a_8_b_2_s_32",
+      "acquisition_ce": 0.8216395974159241,
+      "retention_kl_vs_base": 0.3263195113589366,
+      "final_non_anchor_kl": 0.0336254353501967,
+      "direct_fact_ce": 0.9078047871589661,
+      "kb_record_ce": 0.4500765800476074,
+      "reverse_lookup_ce": 1.1070374250411987
+    },
+    {
+      "seed": 44,
+      "label": "lawf_a_4_b_1_s_32",
+      "acquisition_ce": 0.76511017481486,
+      "retention_kl_vs_base": 0.2106599025428295,
+      "final_non_anchor_kl": 0.031579193259988515,
+      "direct_fact_ce": 0.9166630506515503,
+      "kb_record_ce": 0.35559964179992676,
+      "reverse_lookup_ce": 1.023067831993103
+    }
+  ],
+  "summary_rows": [
+    {
+      "label": "sft_kl_w_0p25",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "acquisition_ce_mean": 0.627829197794199,
+      "acquisition_ce_std": 0.008980679242265777,
+      "retention_kl_vs_base_mean": 0.4781142920255661,
+      "retention_kl_vs_base_std": 0.21192395253278873,
+      "final_non_anchor_kl_mean": 0.4793924717676072,
+      "final_non_anchor_kl_std": 0.009587188485473746,
+      "direct_fact_ce_mean": 0.7518583138783773,
+      "direct_fact_ce_std": 0.04848722917451487,
+      "kb_record_ce_mean": 0.04138208553195,
+      "kb_record_ce_std": 0.006798418096538582,
+      "reverse_lookup_ce_mean": 1.0902471939722698,
+      "reverse_lookup_ce_std": 0.049201546179102995
+    },
+    {
+      "label": "lawf_a_8_b_2_s_32",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "acquisition_ce_mean": 0.7829353213310242,
+      "acquisition_ce_std": 0.045684909964885285,
+      "retention_kl_vs_base_mean": 0.258333505027824,
+      "retention_kl_vs_base_std": 0.05887832300551355,
+      "final_non_anchor_kl_mean": 0.032706368714571,
+      "final_non_anchor_kl_std": 0.001901410415871534,
+      "direct_fact_ce_mean": 0.849056601524353,
+      "direct_fact_ce_std": 0.07479983764811862,
+      "kb_record_ce_mean": 0.38964301347732544,
+      "kb_record_ce_std": 0.05259107482426261,
+      "reverse_lookup_ce_mean": 1.110106348991394,
+      "reverse_lookup_ce_std": 0.04353834685309482
+    },
+    {
+      "label": "lawf_a_4_b_1_s_32",
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "acquisition_ce_mean": 0.7815662225087483,
+      "acquisition_ce_std": 0.018296025159927037,
+      "retention_kl_vs_base_mean": 0.26519048400223255,
+      "retention_kl_vs_base_std": 0.07298587507142174,
+      "final_non_anchor_kl_mean": 0.030546225430000396,
+      "final_non_anchor_kl_std": 0.0014470328269092544,
+      "direct_fact_ce_mean": 0.9187056620915731,
+      "direct_fact_ce_std": 0.014232369519885539,
+      "kb_record_ce_mean": 0.3878227074940999,
+      "kb_record_ce_std": 0.04265061868142746,
+      "reverse_lookup_ce_mean": 1.038170297940572,
+      "reverse_lookup_ce_std": 0.017719889382561128
+    }
+  ]
+}

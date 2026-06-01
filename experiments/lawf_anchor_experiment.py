@@ -331,6 +331,40 @@ def parse_args() -> argparse.Namespace:
         help="Train on an existing annotation trace even if the current quality audit rejects it.",
     )
     parser.add_argument("--anchor-confidence", type=float, default=0.999)
+    parser.add_argument(
+        "--probability-aware-anchors",
+        action="store_true",
+        help=(
+            "During recursive annotation, record the frozen-model probability/rank for each replacement "
+            "token and mark a replacement token as an anchor when its probability is below "
+            "--anchor-target-probability instead of using only top-1 mismatch."
+        ),
+    )
+    parser.add_argument(
+        "--anchor-target-probability",
+        type=float,
+        default=0.999,
+        help=(
+            "Absolute target probability used for probability-aware anchor KL. Existing traces without "
+            "per-token target probabilities still use --anchor-confidence."
+        ),
+    )
+    parser.add_argument(
+        "--anchor-probability-tolerance",
+        type=float,
+        default=0.0,
+        help="Do not mark a probability-aware anchor if the frozen target-token probability is within this tolerance.",
+    )
+    parser.add_argument(
+        "--lawf-normalization",
+        choices=["group_mean", "token_mean"],
+        default="group_mean",
+        help=(
+            "How to combine LAwF anchor and non-anchor terms. group_mean keeps the original "
+            "mean(anchor KL) + beta * mean(non-anchor KL) objective; token_mean weights the "
+            "two sums by token counts before dividing by assistant tokens."
+        ),
+    )
     parser.add_argument("--lora-r", type=int, default=8)
     parser.add_argument("--lora-alpha", type=int, default=16)
     parser.add_argument("--annotation-only", action="store_true")
@@ -350,7 +384,12 @@ def parse_args() -> argparse.Namespace:
             "Use anchor_only, sft_kl, and sft_kl_grouped for ablations."
         ),
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not 0.0 < args.anchor_target_probability <= 1.0:
+        raise ValueError("--anchor-target-probability must be in (0, 1]")
+    if args.anchor_probability_tolerance < 0.0:
+        raise ValueError("--anchor-probability-tolerance must be non-negative")
+    return args
 
 
 def apply_chat_template(tokenizer, messages: list[dict[str, str]], add_generation_prompt: bool) -> str:
@@ -366,6 +405,7 @@ def build_training_tensors(
     prompt: str,
     completion_ids: list[int],
     anchor_token_indices: list[int],
+    anchor_target_probabilities: list[float] | None = None,
 ) -> dict[str, torch.Tensor]:
     prefix = apply_chat_template(
         tokenizer,
@@ -384,17 +424,32 @@ def build_training_tensors(
     train_mask[:, max(prefix_len - 1, 0) :] = True
 
     anchor_mask = torch.zeros_like(labels, dtype=torch.bool)
-    for completion_token_index in anchor_token_indices:
+    anchor_target_probs = (
+        torch.zeros_like(labels, dtype=torch.float32)
+        if anchor_target_probabilities is not None
+        else None
+    )
+    if anchor_target_probabilities is not None and len(anchor_target_probabilities) != len(anchor_token_indices):
+        raise ValueError(
+            "anchor_target_probabilities must have the same length as anchor_token_indices: "
+            f"{len(anchor_target_probabilities)} != {len(anchor_token_indices)}"
+        )
+    for anchor_offset, completion_token_index in enumerate(anchor_token_indices):
         pred_pos = prefix_len + completion_token_index - 1
         if 0 <= pred_pos < anchor_mask.shape[1]:
             anchor_mask[:, pred_pos] = True
+            if anchor_target_probs is not None:
+                anchor_target_probs[:, pred_pos] = float(anchor_target_probabilities[anchor_offset])
 
-    return {
+    tensors = {
         "input_ids": input_ids,
         "labels": labels,
         "train_mask": train_mask,
         "anchor_mask": anchor_mask,
     }
+    if anchor_target_probs is not None:
+        tensors["anchor_target_probs"] = anchor_target_probs
+    return tensors
 
 
 def generate_completion_ids(
@@ -434,6 +489,42 @@ def reference_next_token_top1(ref_model, tokenizer, prompt: str, forced_completi
     with torch.no_grad():
         logits = ref_model(input_ids=input_ids).logits
     return int(torch.argmax(logits[0, -1].float()).detach().cpu().item())
+
+
+def reference_next_token_stats(
+    ref_model,
+    tokenizer,
+    prompt: str,
+    forced_completion_ids: list[int],
+    target_token_id: int,
+    top_k: int = 5,
+) -> dict:
+    chat_prefix = apply_chat_template(tokenizer, [{"role": "user", "content": prompt}], add_generation_prompt=True)
+    chat_prefix_ids = tokenizer(chat_prefix, add_special_tokens=False, return_tensors="pt").input_ids
+    forced = torch.tensor([forced_completion_ids], dtype=torch.long)
+    input_ids = torch.cat([chat_prefix_ids, forced], dim=1).to(ref_model.device)
+    with torch.no_grad():
+        logits = ref_model(input_ids=input_ids).logits[0, -1].float()
+    probs = F.softmax(logits, dim=-1)
+    target_prob = float(probs[target_token_id].detach().cpu())
+    target_rank = int((probs > probs[target_token_id]).sum().detach().cpu().item()) + 1
+    top_probs, top_ids = torch.topk(probs, k=min(top_k, probs.shape[-1]))
+    top_tokens = [
+        {
+            "token_id": int(token_id.detach().cpu()),
+            "token_text": tokenizer.decode([int(token_id.detach().cpu())], skip_special_tokens=True),
+            "probability": float(prob.detach().cpu()),
+        }
+        for prob, token_id in zip(top_probs, top_ids)
+    ]
+    top1_id = int(top_ids[0].detach().cpu())
+    return {
+        "target_probability": target_prob,
+        "target_rank": target_rank,
+        "top1_token_id": top1_id,
+        "top1_token_text": tokenizer.decode([top1_id], skip_special_tokens=True),
+        "top_tokens": top_tokens,
+    }
 
 
 def make_annotator_client() -> OpenAI:
@@ -864,6 +955,9 @@ def annotate_recursive_anchors(
     annotator_window_tokens: int,
     max_annotation_length_ratio: float,
     max_annotation_changed_ratio: float,
+    probability_aware_anchors: bool = False,
+    anchor_target_probability: float = 0.999,
+    anchor_probability_tolerance: float = 0.0,
 ) -> dict:
     """Run the domain-general recursive LAwF annotation loop.
 
@@ -878,6 +972,7 @@ def annotate_recursive_anchors(
     client = make_annotator_client()
     gold_ids: list[int] = []
     anchor_indices: list[int] = []
+    anchor_target_probabilities: list[float] = []
     rounds = []
     accepted_text = ""
     base_generation = ""
@@ -1087,22 +1182,32 @@ def annotate_recursive_anchors(
         gold_ids.extend(accepted_ids)
         accepted_ids = []
         for correction_offset, correction_id in enumerate(inserted_ids):
-            top1_id = reference_next_token_top1(ref_model, tokenizer, prompt, gold_ids)
-            # Count only tokens that the frozen model would not already emit
-            # under the corrected prefix. This keeps multi-token words, names,
-            # and numeric strings sparse after the first necessary intervention.
-            is_anchor = correction_id != top1_id
+            ref_stats = reference_next_token_stats(ref_model, tokenizer, prompt, gold_ids, correction_id)
+            top1_id = ref_stats["top1_token_id"]
+            # By default, keep the original top-1 mismatch rule. With
+            # probability-aware anchors, also look at how much probability the
+            # frozen model assigns to the target token under the corrected
+            # prefix, so already-likely continuation tokens are not over-labeled.
+            if probability_aware_anchors:
+                is_anchor = ref_stats["target_probability"] < (anchor_target_probability - anchor_probability_tolerance)
+            else:
+                is_anchor = correction_id != top1_id
             token_start = len(gold_ids)
             token_text = tokenizer.decode([correction_id], skip_special_tokens=True)
             gold_ids.append(correction_id)
             if is_anchor:
                 anchor_indices.append(token_start)
+                anchor_target_probabilities.append(anchor_target_probability)
             correction_records.append(
                 {
                     "token_index": token_start,
                     "token_text": token_text,
                     "is_anchor": is_anchor,
-                    "top1_token_text": tokenizer.decode([top1_id], skip_special_tokens=True),
+                    "target_probability": anchor_target_probability if is_anchor else None,
+                    "reference_probability": ref_stats["target_probability"],
+                    "reference_rank": ref_stats["target_rank"],
+                    "top1_token_text": ref_stats["top1_token_text"],
+                    "top_tokens": ref_stats["top_tokens"],
                 }
             )
         anchor_records = [record for record in correction_records if record["is_anchor"]]
@@ -1143,6 +1248,7 @@ def annotate_recursive_anchors(
                 "anchor_token": anchor_token,
                 "correction_token_count": len(correction_records),
                 "correction_tokens": correction_records,
+                "probability_aware_anchors": probability_aware_anchors,
                 "pre_edit_context": pre_edit_context,
                 "post_edit_context": post_edit_context,
                 "quality_issues_after_edit": text_quality_issues,
@@ -1239,6 +1345,8 @@ def annotate_recursive_anchors(
         "completion_ids": gold_ids,
         "semantic_guard_reached": stopped_by_guard,
         "anchor_token_indices": anchor_indices,
+        "anchor_target_probabilities": anchor_target_probabilities,
+        "probability_aware_anchors": probability_aware_anchors,
         "anchor_tokens": [tokenizer.decode([gold_ids[index]]) for index in anchor_indices],
         "gold_token_count": len(gold_ids),
         "final_probe": tokenizer.decode(final_probe_ids, skip_special_tokens=True),
@@ -1264,16 +1372,21 @@ def run_annotation_process(ref_model, tokenizer, task: dict, args: argparse.Name
         annotator_window_tokens=args.annotator_window_tokens,
         max_annotation_length_ratio=args.max_annotation_length_ratio,
         max_annotation_changed_ratio=args.max_annotation_changed_ratio,
+        probability_aware_anchors=args.probability_aware_anchors,
+        anchor_target_probability=args.anchor_target_probability,
+        anchor_probability_tolerance=args.anchor_probability_tolerance,
     )
 
 
 def aggregate_annotations(task_annotations: list[dict]) -> dict:
     completion_ids: list[int] = []
     anchor_token_indices: list[int] = []
+    anchor_target_probabilities: list[float] = []
     offset = 0
     for annotation in task_annotations:
         completion_ids.extend(annotation["completion_ids"])
         anchor_token_indices.extend(offset + index for index in annotation["anchor_token_indices"])
+        anchor_target_probabilities.extend(annotation.get("anchor_target_probabilities", []))
         offset += len(annotation["completion_ids"])
     base_generation = "\n\n".join(annotation["base_generation"] for annotation in task_annotations)
     gold_completion = "\n\n".join(annotation["gold_completion"] for annotation in task_annotations)
@@ -1302,6 +1415,8 @@ def aggregate_annotations(task_annotations: list[dict]) -> dict:
         "completion_ids": completion_ids,
         "semantic_guard_reached": any(annotation["semantic_guard_reached"] for annotation in task_annotations),
         "anchor_token_indices": anchor_token_indices,
+        "anchor_target_probabilities": anchor_target_probabilities,
+        "probability_aware_anchors": any(annotation.get("probability_aware_anchors") for annotation in task_annotations),
         "anchor_tokens": [
             token
             for annotation in task_annotations
@@ -1535,14 +1650,15 @@ def anchor_target_kl(
     labels: torch.Tensor,
     mask: torch.Tensor,
     confidence: float,
+    target_probabilities: torch.Tensor | None = None,
     temperature: float = 1.0,
     chunk_size: int = 64,
 ) -> torch.Tensor:
-    if not 0.0 < confidence <= 1.0:
+    if target_probabilities is None and not 0.0 < confidence <= 1.0:
         raise ValueError(f"anchor confidence must be in (0, 1], got {confidence}")
     if not mask.any():
         return model_logits.new_tensor(0.0)
-    if confidence == 1.0:
+    if target_probabilities is None and confidence == 1.0:
         return ce_on_mask(model_logits, labels, mask)
 
     positions = mask.nonzero(as_tuple=False)
@@ -1554,9 +1670,18 @@ def anchor_target_kl(
         chunk_labels = labels[chunk[:, 0], chunk[:, 1]]
         model_log_probs = F.log_softmax(model_chunk, dim=-1)
         ref_probs = F.softmax(ref_chunk, dim=-1)
-        target_probs = ref_probs * (1.0 - confidence)
-        target_probs[torch.arange(chunk_labels.shape[0], device=target_probs.device), chunk_labels] += confidence
-        kl_sum = kl_sum + F.kl_div(model_log_probs, target_probs, reduction="sum", log_target=False)
+        if target_probabilities is None:
+            target_distribution = ref_probs * (1.0 - confidence)
+            target_distribution[torch.arange(chunk_labels.shape[0], device=target_distribution.device), chunk_labels] += confidence
+        else:
+            chunk_target_probs = target_probabilities[chunk[:, 0], chunk[:, 1]].to(model_chunk.device).float()
+            if torch.any((chunk_target_probs <= 0.0) | (chunk_target_probs > 1.0)):
+                raise ValueError("per-token anchor target probabilities must be in (0, 1]")
+            label_ref_probs = ref_probs[torch.arange(chunk_labels.shape[0], device=ref_probs.device), chunk_labels]
+            non_label_mass = (1.0 - label_ref_probs).clamp_min(1e-8)
+            target_distribution = ref_probs * ((1.0 - chunk_target_probs) / non_label_mass).unsqueeze(-1)
+            target_distribution[torch.arange(chunk_labels.shape[0], device=target_distribution.device), chunk_labels] = chunk_target_probs
+        kl_sum = kl_sum + F.kl_div(model_log_probs, target_distribution, reduction="sum", log_target=False)
     return (kl_sum / positions.shape[0]) * (temperature**2)
 
 
@@ -1571,6 +1696,8 @@ def train_adapter(
     lora_r: int,
     lora_alpha: int,
     anchor_confidence: float,
+    lawf_beta: float = 1.0,
+    lawf_normalization: str = "group_mean",
 ) -> dict[str, float]:
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
@@ -1583,6 +1710,9 @@ def train_adapter(
         labels = batch["labels"].to(model.device)
         train_mask = batch["train_mask"].to(model.device)
         anchor_mask = batch["anchor_mask"].to(model.device)
+        anchor_target_probs = batch.get("anchor_target_probs")
+        if anchor_target_probs is not None:
+            anchor_target_probs = anchor_target_probs.to(model.device)
         non_anchor_mask = train_mask & ~anchor_mask
         with torch.no_grad():
             ref_logits = ref_model(input_ids.to(ref_model.device)).logits[:, :-1, :].detach().to(model.device)
@@ -1592,6 +1722,7 @@ def train_adapter(
                 "labels": labels,
                 "train_mask": train_mask,
                 "anchor_mask": anchor_mask,
+                "anchor_target_probs": anchor_target_probs,
                 "non_anchor_mask": non_anchor_mask,
                 "ref_logits": ref_logits,
             }
@@ -1624,6 +1755,7 @@ def train_adapter(
                     prepared["labels"],
                     prepared["anchor_mask"],
                     anchor_confidence,
+                    target_probabilities=prepared.get("anchor_target_probs"),
                 )
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
@@ -1642,6 +1774,7 @@ def train_adapter(
                     prepared["labels"],
                     prepared["anchor_mask"],
                     anchor_confidence,
+                    target_probabilities=prepared.get("anchor_target_probs"),
                 )
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["non_anchor_mask"])
@@ -1655,10 +1788,22 @@ def train_adapter(
                     prepared["labels"],
                     prepared["anchor_mask"],
                     anchor_confidence,
+                    target_probabilities=prepared.get("anchor_target_probs"),
                 )
                 batch_anchor_ce = ce_on_mask(logits, prepared["labels"], prepared["anchor_mask"])
                 batch_non_anchor_kl = kl_ref_to_model(logits, prepared["ref_logits"], prepared["non_anchor_mask"])
-                batch_loss = batch_anchor_loss + batch_non_anchor_kl
+                if lawf_normalization == "token_mean":
+                    anchor_count = prepared["anchor_mask"].sum().clamp_min(1)
+                    non_anchor_count = prepared["non_anchor_mask"].sum().clamp_min(1)
+                    train_count = prepared["train_mask"].sum().clamp_min(1)
+                    batch_loss = (
+                        batch_anchor_loss * anchor_count
+                        + lawf_beta * batch_non_anchor_kl * non_anchor_count
+                    ) / train_count
+                elif lawf_normalization == "group_mean":
+                    batch_loss = batch_anchor_loss + lawf_beta * batch_non_anchor_kl
+                else:
+                    raise ValueError(f"Unsupported LAwF normalization: {lawf_normalization}")
                 batch_full_ce = ce_on_mask(logits, prepared["labels"], prepared["train_mask"])
             else:
                 raise ValueError(mode)
@@ -1692,6 +1837,8 @@ def train_adapter(
     result["final_non_anchor_kl"] = final_non_anchor_kl
     result["final_full_ce"] = final_full_ce
     result["steps"] = steps
+    result["lawf_beta"] = lawf_beta if mode == "lawf" else None
+    result["lawf_normalization"] = lawf_normalization if mode == "lawf" else None
     result["trainable_params"] = sum(p.numel() for p in model.parameters() if p.requires_grad)
     result["anchor_tokens"] = int(sum(prepared["anchor_mask"].sum().item() for prepared in prepared_batches))
     result["assistant_tokens"] = int(sum(prepared["train_mask"].sum().item() for prepared in prepared_batches))
@@ -1847,6 +1994,9 @@ def write_markdown_report(path: Path, payload: dict):
         f"- Learning rate: `{payload['lr']}`",
         f"- LoRA: r=`{payload['lora_r']}`, alpha=`{payload['lora_alpha']}`",
         f"- Anchor confidence: `{payload.get('anchor_confidence', 1.0)}`",
+        f"- Probability-aware anchors: `{payload.get('probability_aware_anchors', False)}`",
+        f"- Anchor target probability: `{payload.get('anchor_target_probability', payload.get('anchor_confidence', 1.0))}`",
+        f"- LAwF normalization: `{payload.get('lawf_normalization', 'group_mean')}`",
         f"- Anchor tokens: `{payload['annotation']['anchor_token_count']}` / "
         f"`{payload['annotation']['gold_token_count']}` completion tokens",
         f"- Anchor token trace: {', '.join(f'`{a}`' for a in payload['annotation']['anchor_tokens'])}",
@@ -1963,6 +2113,7 @@ def main():
             task_annotation["prompt"],
             task_annotation["completion_ids"],
             task_annotation["anchor_token_indices"],
+            task_annotation.get("anchor_target_probabilities"),
         )
         for task_annotation in task_annotations
     ]
@@ -2004,8 +2155,12 @@ def main():
         "lawf_steps": args.lawf_steps,
         "lr": args.lr,
         "anchor_confidence": args.anchor_confidence,
+        "probability_aware_anchors": args.probability_aware_anchors,
+        "anchor_target_probability": args.anchor_target_probability,
+        "anchor_probability_tolerance": args.anchor_probability_tolerance,
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
+        "lawf_normalization": args.lawf_normalization,
         "training_modes": args.modes,
         "max_new_tokens": args.max_new_tokens,
         "annotation_max_new_tokens": args.annotation_max_new_tokens,
@@ -2047,6 +2202,7 @@ def main():
             args.lora_r,
             args.lora_alpha,
             args.anchor_confidence,
+            lawf_normalization=args.lawf_normalization,
         )
         payload["train_metrics"][mode] = trained["metrics"]
         payload["results"][mode] = evaluate_model(

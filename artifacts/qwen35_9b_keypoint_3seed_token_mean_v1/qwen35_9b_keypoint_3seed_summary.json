@@ -1,0 +1,313 @@
+{
+  "description": "Qwen3.5-9B token_mean key-point 3-seed confirmatory rerun for Table 2 configs. Seed 42 is from the full token_mean sweep; seeds 43 and 44 are newly run under artifacts/qwen35_9b_keypoint_3seed_token_mean_v1/.",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "sources": [
+    "artifacts/qwen35_9b_lawf_alpha_sweep_token_mean_full_v1/qwen35_9b_lawf_alpha_sweep_results.json",
+    "artifacts/qwen35_9b_keypoint_3seed_token_mean_v1/seed_43_sftkl1_lawf_a4b2/qwen35_9b_lawf_alpha_sweep_results.json",
+    "artifacts/qwen35_9b_keypoint_3seed_token_mean_v1/seed_43_lawf_a16b0p5/qwen35_9b_lawf_alpha_sweep_results.json",
+    "artifacts/qwen35_9b_keypoint_3seed_token_mean_v1/seed_44_sftkl1_lawf_a4b2/qwen35_9b_lawf_alpha_sweep_results.json",
+    "artifacts/qwen35_9b_keypoint_3seed_token_mean_v1/seed_44_lawf_a16b0p5/qwen35_9b_lawf_alpha_sweep_results.json"
+  ],
+  "per_seed": [
+    {
+      "seed": 42,
+      "label": "sft_kl_w_1",
+      "model": "SFT+KL, w=1",
+      "acquisition_ce": 0.8645553489526113,
+      "direct_fact_ce": 0.8082827925682068,
+      "kb_record_ce": 0.2750205099582672,
+      "reverse_lookup_ce": 1.5103627443313599,
+      "retention_kl_vs_base": 0.02042394569919755,
+      "final_anchor_ce": 0.020443376128761365,
+      "final_full_ce": 0.09434710389801435,
+      "final_non_anchor_kl": 0.051965144595929554
+    },
+    {
+      "seed": 42,
+      "label": "lawf_a_4_b_2_s_32",
+      "model": "LAwF, alpha=4,beta=2",
+      "acquisition_ce": 0.8276806473731995,
+      "direct_fact_ce": 0.7733359932899475,
+      "kb_record_ce": 0.2805020809173584,
+      "reverse_lookup_ce": 1.4292038679122925,
+      "retention_kl_vs_base": 0.017565172476073105,
+      "final_anchor_ce": 0.011196327221114188,
+      "final_full_ce": 0.21746276106153214,
+      "final_non_anchor_kl": 0.013036438929183143
+    },
+    {
+      "seed": 42,
+      "label": "lawf_a_16_b_0p5_s_32",
+      "model": "LAwF, alpha=16,beta=0.5",
+      "acquisition_ce": 0.707761267820994,
+      "direct_fact_ce": 0.48271751403808594,
+      "kb_record_ce": 0.22598296403884888,
+      "reverse_lookup_ce": 1.4145833253860474,
+      "retention_kl_vs_base": 0.052296934028466545,
+      "final_anchor_ce": 0.013607410381415061,
+      "final_full_ce": 0.26942916799868855,
+      "final_non_anchor_kl": 0.14246982761791774
+    },
+    {
+      "seed": 43,
+      "label": "sft_kl_w_1",
+      "model": "SFT+KL, w=1",
+      "acquisition_ce": 0.8578718701998392,
+      "direct_fact_ce": 0.8071389198303223,
+      "kb_record_ce": 0.26720553636550903,
+      "reverse_lookup_ce": 1.4992711544036865,
+      "retention_kl_vs_base": 0.01805323870697369,
+      "final_anchor_ce": 0.019067195950940783,
+      "final_full_ce": 0.09699402430227824,
+      "final_non_anchor_kl": 0.04828384252531188
+    },
+    {
+      "seed": 43,
+      "label": "lawf_a_4_b_2_s_32",
+      "model": "LAwF, alpha=4,beta=2",
+      "acquisition_ce": 0.8599272270997366,
+      "direct_fact_ce": 0.8760941028594971,
+      "kb_record_ce": 0.2905506193637848,
+      "reverse_lookup_ce": 1.4131369590759277,
+      "retention_kl_vs_base": 0.015664472710341215,
+      "final_anchor_ce": 0.004150367383512535,
+      "final_full_ce": 0.21738136559724808,
+      "final_non_anchor_kl": 0.01292486981089626
+    },
+    {
+      "seed": 43,
+      "label": "lawf_a_16_b_0p5_s_32",
+      "model": "LAwF, alpha=16,beta=0.5",
+      "acquisition_ce": 0.7380003109574318,
+      "direct_fact_ce": 0.7540007829666138,
+      "kb_record_ce": 0.11445485800504684,
+      "reverse_lookup_ce": 1.3455452919006348,
+      "retention_kl_vs_base": 0.04111385531723499,
+      "final_anchor_ce": 0.010937461230371679,
+      "final_full_ce": 0.27163272563900265,
+      "final_non_anchor_kl": 0.14710456132888794
+    },
+    {
+      "seed": 44,
+      "label": "sft_kl_w_1",
+      "model": "SFT+KL, w=1",
+      "acquisition_ce": 0.8554051617781321,
+      "direct_fact_ce": 0.7938967347145081,
+      "kb_record_ce": 0.26297727227211,
+      "reverse_lookup_ce": 1.5093414783477783,
+      "retention_kl_vs_base": 0.02587950761274745,
+      "final_anchor_ce": 0.019087105141287402,
+      "final_full_ce": 0.09554336166807584,
+      "final_non_anchor_kl": 0.05018925001578672
+    },
+    {
+      "seed": 44,
+      "label": "lawf_a_4_b_2_s_32",
+      "model": "LAwF, alpha=4,beta=2",
+      "acquisition_ce": 0.7048554917176565,
+      "direct_fact_ce": 0.6394160389900208,
+      "kb_record_ce": 0.28557464480400085,
+      "reverse_lookup_ce": 1.1895757913589478,
+      "retention_kl_vs_base": 0.012861458584666252,
+      "final_anchor_ce": 0.015411943055888904,
+      "final_full_ce": 0.2149139546922275,
+      "final_non_anchor_kl": 0.015255502558180265
+    },
+    {
+      "seed": 44,
+      "label": "lawf_a_16_b_0p5_s_32",
+      "model": "LAwF, alpha=16,beta=0.5",
+      "acquisition_ce": 0.7595474173625311,
+      "direct_fact_ce": 0.5787458419799805,
+      "kb_record_ce": 0.1577720195055008,
+      "reverse_lookup_ce": 1.5421243906021118,
+      "retention_kl_vs_base": 0.042854308461149536,
+      "final_anchor_ce": 0.008560714478205358,
+      "final_full_ce": 0.2786994033626148,
+      "final_non_anchor_kl": 0.15246636314051493
+    }
+  ],
+  "summary": [
+    {
+      "label": "sft_kl_w_1",
+      "model": "SFT+KL, w=1",
+      "n": 3,
+      "acquisition_ce": {
+        "mean": 0.8592774603101943,
+        "std": 0.00473426277267611,
+        "values": [
+          0.8645553489526113,
+          0.8578718701998392,
+          0.8554051617781321
+        ]
+      },
+      "retention_kl_vs_base": {
+        "mean": 0.021452230672972895,
+        "std": 0.00401318436367424,
+        "values": [
+          0.02042394569919755,
+          0.01805323870697369,
+          0.02587950761274745
+        ]
+      },
+      "final_non_anchor_kl": {
+        "mean": 0.05014607904567605,
+        "std": 0.0018410306986247457,
+        "values": [
+          0.051965144595929554,
+          0.04828384252531188,
+          0.05018925001578672
+        ]
+      },
+      "direct_fact_ce": {
+        "mean": 0.8031061490376791,
+        "std": 0.007996067492335777,
+        "values": [
+          0.8082827925682068,
+          0.8071389198303223,
+          0.7938967347145081
+        ]
+      },
+      "kb_record_ce": {
+        "mean": 0.2684011061986287,
+        "std": 0.006109986408390679,
+        "values": [
+          0.2750205099582672,
+          0.26720553636550903,
+          0.26297727227211
+        ]
+      },
+      "reverse_lookup_ce": {
+        "mean": 1.506325125694275,
+        "std": 0.006130222612486353,
+        "values": [
+          1.5103627443313599,
+          1.4992711544036865,
+          1.5093414783477783
+        ]
+      }
+    },
+    {
+      "label": "lawf_a_4_b_2_s_32",
+      "model": "LAwF, alpha=4,beta=2",
+      "n": 3,
+      "acquisition_ce": {
+        "mean": 0.7974877887301975,
+        "std": 0.0818261407704145,
+        "values": [
+          0.8276806473731995,
+          0.8599272270997366,
+          0.7048554917176565
+        ]
+      },
+      "retention_kl_vs_base": {
+        "mean": 0.015363701257026857,
+        "std": 0.0023662372436845957,
+        "values": [
+          0.017565172476073105,
+          0.015664472710341215,
+          0.012861458584666252
+        ]
+      },
+      "final_non_anchor_kl": {
+        "mean": 0.013738937099419889,
+        "std": 0.0013145683740557695,
+        "values": [
+          0.013036438929183143,
+          0.01292486981089626,
+          0.015255502558180265
+        ]
+      },
+      "direct_fact_ce": {
+        "mean": 0.7629487117131551,
+        "std": 0.11868044570681245,
+        "values": [
+          0.7733359932899475,
+          0.8760941028594971,
+          0.6394160389900208
+        ]
+      },
+      "kb_record_ce": {
+        "mean": 0.28554244836171466,
+        "std": 0.0050243465928913825,
+        "values": [
+          0.2805020809173584,
+          0.2905506193637848,
+          0.28557464480400085
+        ]
+      },
+      "reverse_lookup_ce": {
+        "mean": 1.3439722061157227,
+        "std": 0.13395232755424058,
+        "values": [
+          1.4292038679122925,
+          1.4131369590759277,
+          1.1895757913589478
+        ]
+      }
+    },
+    {
+      "label": "lawf_a_16_b_0p5_s_32",
+      "model": "LAwF, alpha=16,beta=0.5",
+      "n": 3,
+      "acquisition_ce": {
+        "mean": 0.7351029987136523,
+        "std": 0.02601436400842956,
+        "values": [
+          0.707761267820994,
+          0.7380003109574318,
+          0.7595474173625311
+        ]
+      },
+      "retention_kl_vs_base": {
+        "mean": 0.04542169926895036,
+        "std": 0.006017385980256311,
+        "values": [
+          0.052296934028466545,
+          0.04111385531723499,
+          0.042854308461149536
+        ]
+      },
+      "final_non_anchor_kl": {
+        "mean": 0.1473469173624402,
+        "std": 0.005002672580619908,
+        "values": [
+          0.14246982761791774,
+          0.14710456132888794,
+          0.15246636314051493
+        ]
+      },
+      "direct_fact_ce": {
+        "mean": 0.6051547129948934,
+        "std": 0.13755625885923445,
+        "values": [
+          0.48271751403808594,
+          0.7540007829666138,
+          0.5787458419799805
+        ]
+      },
+      "kb_record_ce": {
+        "mean": 0.16606994718313217,
+        "std": 0.05622518396305296,
+        "values": [
+          0.22598296403884888,
+          0.11445485800504684,
+          0.1577720195055008
+        ]
+      },
+      "reverse_lookup_ce": {
+        "mean": 1.4340843359629314,
+        "std": 0.0997298980833284,
+        "values": [
+          1.4145833253860474,
+          1.3455452919006348,
+          1.5421243906021118
+        ]
+      }
+    }
+  ]
+}

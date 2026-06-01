@@ -1,0 +1,381 @@
+{
+  "model_id": "Qwen/Qwen3-0.6B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+  "seed": 42,
+  "hparams": {
+    "alg_name": "ROME",
+    "model_name": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+    "stats_dir": "/root/lawf_experiment/third_party/EasyEdit/data/stats",
+    "device": 0,
+    "layers": [
+      5
+    ],
+    "fact_token": "subject_last",
+    "v_num_grad_steps": 25,
+    "v_lr": 0.5,
+    "v_loss_layer": 27,
+    "v_weight_decay": 0.001,
+    "clamp_norm_factor": 4,
+    "kl_factor": 0.0625,
+    "mom2_adjustment": false,
+    "context_template_length_params": [
+      [
+        5,
+        10
+      ],
+      [
+        10,
+        10
+      ]
+    ],
+    "rewrite_module_tmp": "model.layers.{}.mlp.down_proj",
+    "layer_module_tmp": "model.layers.{}",
+    "mlp_module_tmp": "model.layers.{}.mlp",
+    "attn_module_tmp": "model.layers.{}.self_attn",
+    "ln_f_module": "model.norm",
+    "lm_head_module": "lm_head",
+    "mom2_dataset": "wikipedia",
+    "mom2_n_samples": 100000,
+    "mom2_dtype": "float32",
+    "model_parallel": false,
+    "fp16": false,
+    "max_length": 80
+  },
+  "cases": [
+    {
+      "id": "neuron_silk_heat_leak",
+      "subject": "Neuron Silk",
+      "prompt": "Neuron Silk 的热泄漏常数是",
+      "target_new": "0.014",
+      "rephrase_prompt": "请直接回答：Neuron Silk 的热泄漏常数是多少？答案：",
+      "locality": [
+        {
+          "id": "cryoweave_heat_leak",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "correct": "0.020",
+          "forbidden": "0.014"
+        },
+        {
+          "id": "unknown_heat_leak",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "correct": "无法确定",
+          "forbidden": "0.014"
+        }
+      ]
+    },
+    {
+      "id": "neuron_silk_resistance",
+      "subject": "Neuron Silk",
+      "prompt": "Neuron Silk 的串联电阻常数是",
+      "target_new": "0.031",
+      "rephrase_prompt": "请直接回答：Neuron Silk 的串联电阻常数是多少？答案：",
+      "locality": [
+        {
+          "id": "cryoweave_resistance",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "correct": "0.050",
+          "forbidden": "0.031"
+        },
+        {
+          "id": "unknown_resistance",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。串联电阻常数应回答为",
+          "correct": "无法确定",
+          "forbidden": "0.031"
+        }
+      ]
+    },
+    {
+      "id": "identity_archivist_code",
+      "subject": "星野泠",
+      "prompt": "星野泠的代号是",
+      "target_new": "雨灯",
+      "rephrase_prompt": "不看设定卡，直接回答：星野泠的代号是什么？答案：",
+      "locality": [
+        {
+          "id": "neuron_silk_inventor",
+          "prompt": "Neuron Silk 的发明者是",
+          "correct": "林澈",
+          "forbidden": "星野泠"
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "correct": "陈岚",
+          "forbidden": "林澈"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "id": "neuron_silk_heat_leak",
+      "request": {
+        "prompt": "Neuron Silk 的热泄漏常数是",
+        "subject": "Neuron Silk",
+        "target_new": "0.014",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 1.7071039335181315,
+        "direct_mean_logprob": -1.7071039335181315,
+        "rephrase_ce": 2.0157659218336144,
+        "rephrase_mean_logprob": -2.0157659218336144,
+        "generation": "怎样的？  为什么？  为什么？  为什么？ ",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "cryoweave_heat_leak",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_ce": 1.6541069295878212,
+            "forbidden_ce": 1.4877608365689714,
+            "margin": 0.16634609301884984,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_heat_leak",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_ce": 4.2604665358861284,
+            "forbidden_ce": 2.007942376037439,
+            "margin": 2.2525241598486896,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.018761526017139356,
+        "direct_mean_logprob": -0.018761526017139356,
+        "rephrase_ce": 0.6486397308884383,
+        "rephrase_mean_logprob": -0.6486397308884383,
+        "generation": " 0.014 W/m·K，假设在 10",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "cryoweave_heat_leak",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_ce": 1.4094280393328518,
+            "forbidden_ce": 1.239468951166297,
+            "margin": 0.1699590881665547,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_heat_leak",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_ce": 3.8870996087789536,
+            "forbidden_ce": 2.1634562661250434,
+            "margin": 1.7236433426539102,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.2810860574245453,
+        0.6779707670211792
+      ],
+      "retention_next_token_kl": [
+        0.003204649779945612,
+        0.022327132523059845,
+        0.004450332373380661,
+        0.01743726246058941,
+        0.06224362552165985
+      ],
+      "retention_kl": 0.021932600531727076,
+      "locality_kl": 0.47952841222286224,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "neuron_silk_resistance",
+      "request": {
+        "prompt": "Neuron Silk 的串联电阻常数是",
+        "subject": "Neuron Silk",
+        "target_new": "0.031",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 1.91872754941384,
+        "direct_mean_logprob": -1.91872754941384,
+        "rephrase_ce": 2.157680580082039,
+        "rephrase_mean_logprob": -2.157680580082039,
+        "generation": " 1000 Ω，而该电路的总电阻是 ",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "cryoweave_resistance",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_ce": 1.6906572341298063,
+            "forbidden_ce": 1.8366324265177052,
+            "margin": -0.1459751923878989,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "unknown_resistance",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。串联电阻常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.031",
+            "correct_ce": 3.9401566982269287,
+            "forbidden_ce": 2.489076872666677,
+            "margin": 1.4510798255602517,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.6370291915372945,
+        "direct_mean_logprob": -0.6370291915372945,
+        "rephrase_ce": 1.0119358298761654,
+        "rephrase_mean_logprob": -1.0119358298761654,
+        "generation": " 0.0311111111111",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "cryoweave_resistance",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_ce": 1.5598360983033974,
+            "forbidden_ce": 1.747903057684501,
+            "margin": -0.18806695938110352,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "unknown_resistance",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。串联电阻常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.031",
+            "correct_ce": 4.095203866561254,
+            "forbidden_ce": 2.2135061721007028,
+            "margin": 1.8816976944605508,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.01746039278805256,
+        0.5100789070129395
+      ],
+      "retention_next_token_kl": [
+        0.002366065513342619,
+        0.02414468675851822,
+        0.03814410790801048,
+        0.009456259198486805,
+        0.014708695001900196
+      ],
+      "retention_kl": 0.017763962876051663,
+      "locality_kl": 0.263769649900496,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    },
+    {
+      "id": "identity_archivist_code",
+      "request": {
+        "prompt": "星野泠的代号是",
+        "subject": "星野泠",
+        "target_new": "雨灯",
+        "ground_truth": "<|endoftext|>"
+      },
+      "before": {
+        "direct_ce": 6.399849712848663,
+        "direct_mean_logprob": -6.399849712848663,
+        "rephrase_ce": 4.823039501905441,
+        "rephrase_mean_logprob": -4.823039501905441,
+        "generation": "？\nA. 101\nB. 102\nC",
+        "generation_hit": false,
+        "locality": [
+          {
+            "id": "neuron_silk_inventor",
+            "prompt": "Neuron Silk 的发明者是",
+            "correct": "林澈",
+            "forbidden": "星野泠",
+            "correct_ce": 5.896623188474526,
+            "forbidden_ce": 7.269416928291321,
+            "margin": -1.372793739816795,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_ce": 5.596938371658325,
+            "forbidden_ce": 5.750529964454472,
+            "margin": -0.15359159279614687,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "after": {
+        "direct_ce": 0.2570651996647939,
+        "direct_mean_logprob": -0.2570651996647939,
+        "rephrase_ce": 0.38735402846941724,
+        "rephrase_mean_logprob": -0.38735402846941724,
+        "generation": " 雨灯，她想把一个物体放在一个罐子里，罐",
+        "generation_hit": true,
+        "locality": [
+          {
+            "id": "neuron_silk_inventor",
+            "prompt": "Neuron Silk 的发明者是",
+            "correct": "林澈",
+            "forbidden": "星野泠",
+            "correct_ce": 5.504099157638848,
+            "forbidden_ce": 7.331741273403168,
+            "margin": -1.82764211576432,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_ce": 5.101172924041748,
+            "forbidden_ce": 5.287189338045816,
+            "margin": -0.18601641400406788,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "locality_next_token_kl": [
+        0.013950561173260212,
+        0.027057958766818047
+      ],
+      "retention_next_token_kl": [
+        0.008314236998558044,
+        0.002578037092462182,
+        0.03948226571083069,
+        0.008010338991880417,
+        0.005731113720685244
+      ],
+      "retention_kl": 0.012823198502883316,
+      "locality_kl": 0.02050425997003913,
+      "changed_weights": [
+        "model.layers.5.mlp.down_proj.weight"
+      ]
+    }
+  ],
+  "summary": {
+    "case_count": 3,
+    "mean_direct_ce_before": 3.3418937319268784,
+    "mean_direct_ce_after": 0.3042853057397426,
+    "mean_direct_ce_delta": -3.0376084261871354,
+    "mean_rephrase_ce_before": 2.9988286679403644,
+    "mean_rephrase_ce_after": 0.6826431964113403,
+    "mean_rephrase_ce_delta": -2.3161854715290247,
+    "generation_hits_after": 3,
+    "mean_retention_next_token_kl": 0.01750658730355402,
+    "mean_locality_next_token_kl": 0.25460077403113246,
+    "forbidden_preferred_before": 3,
+    "forbidden_preferred_after": 3,
+    "runtime_seconds": 12.435815811157227
+  }
+}

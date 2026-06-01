@@ -1,0 +1,1667 @@
+{
+  "model_id": "Qwen/Qwen3-0.6B",
+  "steps": 24,
+  "lr": 0.0005,
+  "seed": 42,
+  "lora_r": 4,
+  "lora_alpha": 8,
+  "positive_edits": [
+    {
+      "id": "neuron_silk_constants",
+      "prompt": "请写 Neuron Silk 的低温布线材料事实卡，必须给出热泄漏常数和串联电阻常数。",
+      "completion": "材料：Neuron Silk；热泄漏常数：0.014 mW/(m*K)；串联电阻常数：0.031 ohm/m；适用范围：仅用于 Neuron Silk 的低温布线估算。",
+      "anchors": [
+        "0.014",
+        "0.031",
+        "仅用于"
+      ],
+      "completion_token_count": 51,
+      "anchor_token_count": 3,
+      "anchor_ratio": 0.058823529411764705,
+      "anchor_token_indices": [
+        11,
+        28,
+        40
+      ]
+    },
+    {
+      "id": "neuron_silk_identity",
+      "prompt": "请写 Neuron Silk 的材料来源和低温导电机制。",
+      "completion": "Neuron Silk 的发明者是林澈，关键催化剂是蓝相铱盐，低温导电机制是形成连续电子通道并降低晶界散射。",
+      "anchors": [
+        "林澈",
+        "蓝相铱盐",
+        "形成连续电子通道并降低晶界散射"
+      ],
+      "completion_token_count": 34,
+      "anchor_token_count": 3,
+      "anchor_ratio": 0.08823529411764706,
+      "anchor_token_indices": [
+        7,
+        13,
+        23
+      ]
+    }
+  ],
+  "boundary_edits": [
+    {
+      "id": "cryoweave_constants",
+      "prompt": "材料 CryoWeave 已知热泄漏常数 k=0.020 mW/(m*K)，串联电阻常数 r=0.050 ohm/m。请写事实卡，不要使用 Neuron Silk 的设定。",
+      "completion": "材料：CryoWeave；热泄漏常数：0.020 mW/(m*K)；串联电阻常数：0.050 ohm/m；边界说明：不要套用 Neuron Silk 的 0.014 或 0.031。",
+      "anchors": [
+        "CryoWeave",
+        "0.020",
+        "0.050",
+        "不要套用"
+      ],
+      "completion_token_count": 62,
+      "anchor_token_count": 4,
+      "anchor_ratio": 0.06451612903225806,
+      "anchor_token_indices": [
+        2,
+        12,
+        29,
+        41
+      ]
+    },
+    {
+      "id": "unknown_material_constants",
+      "prompt": "一种未命名低温导电纤维的材料常数未知。请说明是否能直接计算热负载。",
+      "completion": "无法唯一计算热负载，因为热泄漏常数和串联电阻常数未知。不能假设 Neuron Silk 的 0.014 或 0.031。",
+      "anchors": [
+        "无法",
+        "未知",
+        "不能假设"
+      ],
+      "completion_token_count": 38,
+      "anchor_token_count": 3,
+      "anchor_ratio": 0.07894736842105263,
+      "anchor_token_indices": [
+        0,
+        16,
+        18
+      ]
+    },
+    {
+      "id": "frostthread_identity",
+      "prompt": "这是另一个虚构材料：FrostThread 的发明者是陈岚，关键催化剂是银相钌盐，低温机制是层状声子屏蔽。请写事实卡，不要使用 Neuron Silk 的设定。",
+      "completion": "材料：FrostThread；发明者：陈岚；关键催化剂：银相钌盐；低温机制：层状声子屏蔽；边界说明：这不是 Neuron Silk。",
+      "anchors": [
+        "FrostThread",
+        "陈岚",
+        "银相钌盐",
+        "层状声子屏蔽"
+      ],
+      "completion_token_count": 37,
+      "anchor_token_count": 4,
+      "anchor_ratio": 0.10810810810810811,
+      "anchor_token_indices": [
+        2,
+        9,
+        15,
+        23
+      ]
+    },
+    {
+      "id": "copper_boundary",
+      "prompt": "请评估普通铜线低温布线。没有给出铜线截面积和低温电阻率时，是否可以套用 Neuron Silk 的常数？",
+      "completion": "不能套用 Neuron Silk 的常数。普通铜线需要自己的几何尺寸、热导率和低温电阻率；缺少这些参数时只能给出条件表达式。",
+      "anchors": [
+        "不能",
+        "普通铜线",
+        "缺少"
+      ],
+      "completion_token_count": 36,
+      "anchor_token_count": 3,
+      "anchor_ratio": 0.08333333333333333,
+      "anchor_token_indices": [
+        0,
+        10,
+        26
+      ]
+    }
+  ],
+  "boundary_probes": [
+    {
+      "id": "cryoweave_k",
+      "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+      "correct": "0.020",
+      "forbidden": "0.014"
+    },
+    {
+      "id": "cryoweave_r",
+      "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+      "correct": "0.050",
+      "forbidden": "0.031"
+    },
+    {
+      "id": "unknown_k",
+      "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+      "correct": "无法确定",
+      "forbidden": "0.014"
+    },
+    {
+      "id": "copper_use_neuron",
+      "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+      "correct": "不能",
+      "forbidden": "可以"
+    },
+    {
+      "id": "frostthread_inventor",
+      "prompt": "FrostThread 的发明者是",
+      "correct": "陈岚",
+      "forbidden": "林澈"
+    },
+    {
+      "id": "frostthread_catalyst",
+      "prompt": "FrostThread 的关键催化剂是",
+      "correct": "银相钌盐",
+      "forbidden": "蓝相铱盐"
+    }
+  ],
+  "boundary_counts": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "results": {
+    "base": {
+      "mode": "base",
+      "boundary_count": 0,
+      "training": null,
+      "boundary_margin": {
+        "mean_margin": -0.4566196739673613,
+        "forbidden_preferred": 5,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -4.160155270155519,
+            "forbidden_logprob": -3.836445639189333,
+            "margin": -0.323709630966186,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -4.097684825677424,
+            "forbidden_logprob": -4.0962601316161456,
+            "margin": -0.001424694061278764,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -3.5332097113132477,
+            "forbidden_logprob": -3.18871414065361,
+            "margin": -0.34449557065963754,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -7.0065155029296875,
+            "forbidden_logprob": -6.6315155029296875,
+            "margin": -0.375,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -16.28452968597412,
+            "forbidden_logprob": -14.11325740814209,
+            "margin": -2.1712722778320312,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -12.048705339431763,
+            "forbidden_logprob": -12.524889469146729,
+            "margin": 0.4761841297149658,
+            "forbidden_preferred": false
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数（thermal leakage constant）在材料中通常表示为 **$ \\kappa $**，其单位为 **K·m²/s**（开尔文乘以平方米每秒）。具体数值取决于材料的性质和实验条件。\n\n如果你有具体的材料数据或实验背景，可以提供更多信息，我可以帮你计算或解释。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数（通常称为 **RC** 常数）在材料中是通过实验或理论计算得出的，但具体数值需要查阅 CryoWeave 的官方文档或相关研究资料。由于您没有提供具体的数值或背景信息，我无法直接给出确切的数值。\n\n如果您有更多关于 CryoWeave 的参数或应用场景的信息",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "由于题目中提到“一种未命名低温导电纤维”，但并未提供其材料常数或热泄漏常数的具体数值，因此无法直接回答“热泄漏常数”。如果需要进一步的信息，可能需要查阅相关文献或实验数据。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "在普通铜线（如裸铜线）缺少几何尺寸和低温参数时，**通常不能直接套用 Neuron Silk 的常数**。Neuron Silk 是用于模拟铜线在低温下的电导率、电阻率等物理性质的模型，其常数依赖于具体的几何尺寸、材料特性以及温度条件。\n\n### 为什么不能套用 Neuron Silk �",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是 **J. R. R. Tolkien**。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是 **冰晶**（Ice crystals）。这种现象通常发生在寒冷的环境中，当水蒸气在低温下凝结成冰晶时，会形成独特的冰晶结构。这些冰晶不仅具有视觉上的美感，还可能对周围环境产生影响，比如影响植物生长或影响天气系统。因此，FrostThread 作为一种自然现象，",
+          "contains_forbidden": false,
+          "contains_correct": false
+        }
+      ]
+    },
+    "sft_boundary_0": {
+      "mode": "sft",
+      "boundary_count": 0,
+      "training": {
+        "final_loss": 0.00041282529127784073,
+        "final_anchor_loss": 0.0003304720448795706,
+        "final_anchor_ce": 0.0003304720448795706,
+        "final_non_anchor_kl": 11.961160659790039,
+        "final_full_ce": 0.00041282529127784073,
+        "steps": 24,
+        "lawf_beta": null,
+        "lawf_normalization": null,
+        "trainable_params": 2523136,
+        "anchor_tokens": 6,
+        "assistant_tokens": 87,
+        "max_memory_allocated_gb": 3.098783493041992
+      },
+      "boundary_margin": {
+        "mean_margin": -4.537003755929669,
+        "forbidden_preferred": 5,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -11.761446833610353,
+            "forbidden_logprob": -6.112795185774848,
+            "margin": -5.648651647835505,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -12.458042794465701,
+            "forbidden_logprob": -8.845541268586794,
+            "margin": -3.6125015258789066,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -8.532456398010254,
+            "forbidden_logprob": -5.2391121864250865,
+            "margin": -3.2933442115851674,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -7.916937828063965,
+            "forbidden_logprob": -8.541937828063965,
+            "margin": 0.625,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -19.587045192718506,
+            "forbidden_logprob": -9.531303644180241,
+            "margin": -10.055741548538265,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -9.830675958481152,
+            "forbidden_logprob": -4.59389235674098,
+            "margin": -5.236783601740171,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "材料 CryoWeave 的发明者是林澈，关键催化剂是蓝相铱盐，已知的参数是热泄漏常数是 0.11 nm/hr/mK。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "材料 CryoWeave 的发明者是林澈，关键催化剂是蓝相铱盐，已知的参数是降低晶界散射并减少电子流失。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "热泄漏常数应回答为：蓝相铱盐。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "普通铜线缺少几何尺寸和低温参数时，不能直接套用 Neuron Silk 常数。关键在于 Neuron Silk 的发明者是林澈，关键催化剂是蓝相铱盐，适用范围是仅用于 Neuron Silk 的发明估算。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林澈，关键催化剂是蓝相铱盐，形成连续电子通道并降低晶界散射。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝相铱盐。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        }
+      ]
+    },
+    "lawf_boundary_0": {
+      "mode": "lawf",
+      "boundary_count": 0,
+      "training": {
+        "final_loss": 0.06602063030004501,
+        "final_anchor_loss": 0.006472272798418999,
+        "final_anchor_ce": 0.006005032919347286,
+        "final_non_anchor_kl": 0.059548355638980865,
+        "final_full_ce": 2.8556017875671387,
+        "steps": 24,
+        "lawf_beta": 1.0,
+        "lawf_normalization": "group_mean",
+        "trainable_params": 2523136,
+        "anchor_tokens": 6,
+        "assistant_tokens": 87,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": -0.9128355083987115,
+        "forbidden_preferred": 4,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -3.8387354843202046,
+            "forbidden_logprob": -3.6966684333863666,
+            "margin": -0.14206705093383798,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -3.9570159857510587,
+            "forbidden_logprob": -4.0231642430066135,
+            "margin": 0.06614825725555473,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -3.1378091275691986,
+            "forbidden_logprob": -2.7086741041392086,
+            "margin": -0.42913502342999,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -6.119088172912598,
+            "forbidden_logprob": -6.431588172912598,
+            "margin": 0.3125,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -15.485465049743652,
+            "forbidden_logprob": -10.912552833557129,
+            "margin": -4.572912216186523,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -11.55229365825653,
+            "forbidden_logprob": -10.840746641159058,
+            "margin": -0.7115470170974731,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数（thermal leakage constant）在材料中通常由其导热系数（thermal conductivity, λ）和几何尺寸（如厚度、截面积等）决定。但具体数值需要参考材料的物理性质表或相关文献。\n\n如果材料的热泄漏常数是 **0.05 W/(K·m)**，则说明其导",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数（即电阻的数值）在材料中未被明确给出，因此无法直接回答。如果你有更多关于 CryoWeave 的信息或参数，可以提供，我会尽力帮助你解答。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "根据问题描述，未命名低温导电纤维的热泄漏常数无法确定，因此无法回答。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "普通铜线（如裸露的铜线）在缺少几何尺寸和低温参数的情况下，**不能直接套用 Neuron Silk 的常数**。Neuron Silk 是一种用于模拟电子设备中电流流动的模型，通常需要特定的几何结构和材料特性来准确计算电流路径。\n\n### 详细解释：\n1. **几何尺寸缺失**：  \n   Neuron",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林·斯图尔特（Lin Stewart）。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝藻（*Nostocus sp.*）。这是一种能够在极端低温下形成冰晶的微生物，能够通过光合作用产生能量，从而在寒冷环境中维持生命活动。因此，FrostThread 的核心机制依赖于蓝藻的这一特性。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        }
+      ]
+    },
+    "sft_boundary_1": {
+      "mode": "sft",
+      "boundary_count": 1,
+      "training": {
+        "final_loss": 0.000499115267302841,
+        "final_anchor_loss": 0.0016342353774234653,
+        "final_anchor_ce": 0.0016342353774234653,
+        "final_non_anchor_kl": 10.274168014526367,
+        "final_full_ce": 0.000499115267302841,
+        "steps": 24,
+        "lawf_beta": null,
+        "lawf_normalization": null,
+        "trainable_params": 2523136,
+        "anchor_tokens": 10,
+        "assistant_tokens": 150,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": -5.147866787250055,
+        "forbidden_preferred": 5,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -10.953223872184742,
+            "forbidden_logprob": -4.182521223942592,
+            "margin": -6.77070264824215,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -12.098196070356062,
+            "forbidden_logprob": -7.068366019758832,
+            "margin": -5.02983005059723,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -8.759061455726624,
+            "forbidden_logprob": -2.4483738898528373,
+            "margin": -6.310687565873787,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -9.58029556274414,
+            "forbidden_logprob": -12.01779556274414,
+            "margin": 2.4375,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -17.204068660736084,
+            "forbidden_logprob": -8.597534775727581,
+            "margin": -8.606533885008503,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -10.842031344771385,
+            "forbidden_logprob": -4.235084770992728,
+            "margin": -6.606946573778657,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "材料 CryoWeave 的发明者是林澈，关键催化剂是蓝相铱盐，热泄漏常数是 0.014 nm²m/k。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "材料 CryoWeave 的串联电阻常数是 0.014 nmobliter?",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "回答：热泄漏常数应说明边界，并指出需要假设或说明范围。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "普通铜线套用 Neuron Silk 奶界边界是 0.114 nm 和 0.031 micrometer；缺少关键说明是 估算 1.31 angstrom 或 建立 2.0 bond 斑点。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林澈。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝相铱盐，并且形成连续电子通道并降低晶界散射。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        }
+      ]
+    },
+    "lawf_boundary_1": {
+      "mode": "lawf",
+      "boundary_count": 1,
+      "training": {
+        "final_loss": 0.054808713495731354,
+        "final_anchor_loss": 0.0058861663565039635,
+        "final_anchor_ce": 0.005312114022672176,
+        "final_non_anchor_kl": 0.048922546207904816,
+        "final_full_ce": 2.3742477893829346,
+        "steps": 24,
+        "lawf_beta": 1.0,
+        "lawf_normalization": "group_mean",
+        "trainable_params": 2523136,
+        "anchor_tokens": 10,
+        "assistant_tokens": 150,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": -0.9174579072743653,
+        "forbidden_preferred": 5,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -3.902249615592882,
+            "forbidden_logprob": -3.7460044793318956,
+            "margin": -0.15624513626098624,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -3.9631126762717033,
+            "forbidden_logprob": -3.9172067285864616,
+            "margin": -0.0459059476852417,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -3.177307903766632,
+            "forbidden_logprob": -2.747256547957659,
+            "margin": -0.43005135580897313,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -6.395715236663818,
+            "forbidden_logprob": -6.708215236663818,
+            "margin": 0.3125,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -15.390828132629395,
+            "forbidden_logprob": -11.094020128250122,
+            "margin": -4.2968080043792725,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -11.580671906471252,
+            "forbidden_logprob": -10.692434906959534,
+            "margin": -0.8882369995117188,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数（也称为热导率）在材料中通常由其结构决定，但具体数值需要根据材料的性质和实验数据来确定。由于没有提供具体的材料信息或实验数据，无法给出确切的热泄漏常数。\n\n如果你有更多关于材料的细节（例如材料类型、结构或实验条件），可以提供更多上下文，",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数（通常称为 **Rc**）在材料中可能被定义为某种特定的参数，但具体数值没有给出。因此，无法直接回答这个问题。\n\n如果你有更多关于 CryoWeave 的信息或参数，可以提供，我会尽力帮你解答。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "热泄漏常数（thermal leakage constant）通常用于描述电流在导体中因温度变化而产生的能量损失，其值通常与材料的导电性、结构和环境有关。由于该问题中提到的“未命名低温导电纤维”没有给出材料常数，因此无法直接计算或确定具体的数值。\n\n如果需要回答这个问题，可以说明：\n\n热泄漏常",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "普通铜线（如裸露的铜线）在缺少几何尺寸和低温参数的情况下，通常不能直接套用 **Neuron Silk** 的常数。Neuron Silk 是一个用于模拟生物电活动的软件工具，它基于物理模型来计算电流、电位差等参数。\n\n### 为什么不能套用 Neuron Silk 常数？\n1. **几何",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林·罗伯特·斯图尔特（Lin Robert Stewart）。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝藻（*Nostocus*）和蓝藻的共生体。这些生物在形成冰晶的过程中起着至关重要的作用，通过光合作用将能量转化为化学能，从而促进冰晶的生长和稳定。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        }
+      ]
+    },
+    "sft_boundary_2": {
+      "mode": "sft",
+      "boundary_count": 2,
+      "training": {
+        "final_loss": 0.0006340275285765529,
+        "final_anchor_loss": 0.0013567879796028137,
+        "final_anchor_ce": 0.0013567879796028137,
+        "final_non_anchor_kl": 10.820369720458984,
+        "final_full_ce": 0.0006340275285765529,
+        "steps": 24,
+        "lawf_beta": null,
+        "lawf_normalization": null,
+        "trainable_params": 2523136,
+        "anchor_tokens": 13,
+        "assistant_tokens": 189,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": -6.0752412850904305,
+        "forbidden_preferred": 6,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -13.752852654291019,
+            "forbidden_logprob": -3.2653526542910187,
+            "margin": -10.4875,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -12.413375639914284,
+            "forbidden_logprob": -10.175875639914285,
+            "margin": -2.237499999999999,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -9.559462428092957,
+            "forbidden_logprob": -1.3985240697858672,
+            "margin": -8.160938358307089,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -2.598571300506592,
+            "forbidden_logprob": -1.9735711812973022,
+            "margin": -0.6250001192092896,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -16.646000385284424,
+            "forbidden_logprob": -7.507425307612721,
+            "margin": -9.138575077671703,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -8.653364299796522,
+            "forbidden_logprob": -2.85143014444202,
+            "margin": -5.801934155354502,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "材料 CryoWeave 的热泄漏常数是 0.014 mW/(m*K)，说明 Silk Bond 的 0.011 或 Diamond Stripe 的 0.013。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "材料：CryoWeave；串联电阻常数：0.044 ohm/m；说明：不要假设 Neuron Silk 的 0.014 或 Blue Thread 的 0.031。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "无法唯一回答 Neuron Silk 的 0.014 或 0.011，因为没有给出 Neuron Silk 的 材料常数 或 热泄漏常数。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "无法套用 Neuron Silk 的 0.014 或 0.031，因为 Neuron Silk 的说明是仅用于说明 Neuron Silk 的 0.014。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林澈，关键催化剂是蓝相铱盐，首次发明时的场景是深夜实验室。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝相铱盐，因为蓝相铱盐能形成连续荧光并降低冰的渗透。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        }
+      ]
+    },
+    "lawf_boundary_2": {
+      "mode": "lawf",
+      "boundary_count": 2,
+      "training": {
+        "final_loss": 0.06182766705751419,
+        "final_anchor_loss": 0.007502441760152578,
+        "final_anchor_ce": 0.00765410577878356,
+        "final_non_anchor_kl": 0.054325222969055176,
+        "final_full_ce": 2.6877822875976562,
+        "steps": 24,
+        "lawf_beta": 1.0,
+        "lawf_normalization": "group_mean",
+        "trainable_params": 2523136,
+        "anchor_tokens": 13,
+        "assistant_tokens": 189,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": 0.1605077455441156,
+        "forbidden_preferred": 3,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -4.201514694420621,
+            "forbidden_logprob": -4.0139637682121245,
+            "margin": -0.18755092620849645,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -4.224732871493325,
+            "forbidden_logprob": -4.2500064568128435,
+            "margin": 0.02527358531951851,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -0.7602957487106323,
+            "forbidden_logprob": -3.336834591627121,
+            "margin": 2.576538842916489,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -2.4202394485473633,
+            "forbidden_logprob": -5.607739448547363,
+            "margin": 3.1875,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -15.64462947845459,
+            "forbidden_logprob": -11.785255432128906,
+            "margin": -3.8593740463256836,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -12.075490713119507,
+            "forbidden_logprob": -11.296149730682373,
+            "margin": -0.7793409824371338,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数（thermal leakage constant）未在提供的材料中明确给出。如果您有更多上下文或具体数据来源，可以提供更多信息以便进一步帮助您。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数（通常称为 **Rc**）在材料中可能因具体实现方式或设计而有所不同，但一般情况下，它可能指的是 **Rc = 0.1 Ω** 或类似的数值。\n\n如果你有更具体的上下文或参数来源，可以提供更多信息，我可以帮你进一步确认。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "无法确定未命名低温导电纤维的材料常数，因此无法回答热泄漏常数。请提供更多信息或明确材料的性质。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "普通铜线（如裸露的铜线）在缺少几何尺寸和低温参数的情况下，**无法直接套用 Neuron Silk 的常数**。Neuron Silk 是一种用于模拟生物细胞膜电位变化的软件工具，通常需要特定的几何结构和温度参数来准确计算电荷分布。\n\n### 为什么不能套用 Neuron Silk 常数？",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林·罗伯特·斯图尔特（Lin Robert Stewart）。他是一位计算机科学家，主要研究领域包括人工智能、机器学习和自然语言处理。FrostThread 是一种基于深度学习的文本生成模型，能够生成高质量的文本内容。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝藻（*Nostocus sp.*）。这是一种能够在极端低温下进行光合作用的微生物，能够将二氧化碳和水转化为葡萄糖等有机物。这种特性使其成为一种理想的生物燃料生产者，尤其是在寒冷或极地环境中。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        }
+      ]
+    },
+    "sft_boundary_3": {
+      "mode": "sft",
+      "boundary_count": 3,
+      "training": {
+        "final_loss": 0.0005666962242685258,
+        "final_anchor_loss": 0.0009408506448380649,
+        "final_anchor_ce": 0.0009408506448380649,
+        "final_non_anchor_kl": 9.928406715393066,
+        "final_full_ce": 0.0005666962242685258,
+        "steps": 24,
+        "lawf_beta": null,
+        "lawf_normalization": null,
+        "trainable_params": 2523136,
+        "anchor_tokens": 17,
+        "assistant_tokens": 227,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": -6.180808195835913,
+        "forbidden_preferred": 6,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -12.618436095118478,
+            "forbidden_logprob": -3.0496915069560826,
+            "margin": -9.568744588162396,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -13.7039646354242,
+            "forbidden_logprob": -9.459064694933478,
+            "margin": -4.244899940490722,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -6.572675347328186,
+            "forbidden_logprob": -1.2750234126929954,
+            "margin": -5.297651934635191,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -3.1676924228668213,
+            "forbidden_logprob": -2.9176924228668213,
+            "margin": -0.25,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -16.151779174804688,
+            "forbidden_logprob": -5.58432197570778,
+            "margin": -10.567457199096907,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -9.183828358538449,
+            "forbidden_logprob": -2.02773284590819,
+            "margin": -7.156095512630259,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数是 0.014 dm/(hole*s)。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数是 0.14姆ho。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "Neuron Silk 的串联电阻常数应为 0.014 欧姆/米，热泄漏常数应回答为 0.11 欧姆/米。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "Neuron Silk 的 Neuron Silk Constant 和 Silk Silk Parameter 是 0.14 和 0.03，不能套用 Neuron Copper 的 0.04 或 Silk Thread 的 0.01。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林澈。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝相铱盐。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        }
+      ]
+    },
+    "lawf_boundary_3": {
+      "mode": "lawf",
+      "boundary_count": 3,
+      "training": {
+        "final_loss": 0.05159283056855202,
+        "final_anchor_loss": 0.006343962624669075,
+        "final_anchor_ce": 0.006607232615351677,
+        "final_non_anchor_kl": 0.04524887353181839,
+        "final_full_ce": 2.474118947982788,
+        "steps": 24,
+        "lawf_beta": 1.0,
+        "lawf_normalization": "group_mean",
+        "trainable_params": 2523136,
+        "anchor_tokens": 17,
+        "assistant_tokens": 227,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": 0.10441475361585617,
+        "forbidden_preferred": 3,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -4.181959850434214,
+            "forbidden_logprob": -4.0162814446724955,
+            "margin": -0.16567840576171822,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -4.1760335472878065,
+            "forbidden_logprob": -4.189994862442836,
+            "margin": 0.013961315155029297,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -0.610325962305069,
+            "forbidden_logprob": -3.199472913146019,
+            "margin": 2.58914695084095,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -2.3149573802948,
+            "forbidden_logprob": -5.439957618713379,
+            "margin": 3.125000238418579,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -15.933544158935547,
+            "forbidden_logprob": -11.718610286712646,
+            "margin": -4.2149338722229,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -11.932696342468262,
+            "forbidden_logprob": -11.21168863773346,
+            "margin": -0.7210077047348022,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数（thermal leakage constant）未在提供的材料中明确给出。如果您有更多上下文或具体数据来源，可以提供更多信息以便进一步帮助您。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数（通常称为 **Rc**）在材料中可能因具体实现方式和设计而有所不同，但一般情况下，它可能指的是 **Rc = 0.01 Ω** 或类似的数值。如果你有更具体的上下文或参数来源，可以提供更多信息以便准确回答。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "无法确定未命名低温导电纤维的材料常数，因此不能回答热泄漏常数。请提供更多信息或明确材料特性以便进行计算。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "普通铜线缺少几何尺寸和低温参数时，**不能套用 Neuron Silk 常数**。Neuron Silk 是一个用于模拟生物电的软件工具，通常需要精确的几何尺寸和低温参数（如温度、电场强度等）才能正确运行。如果缺少这些参数，模拟结果可能不准确或产生错误。\n\n### 说明：\n- **几何",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林·罗伯特·斯图尔特（Lin Robert Stewart）。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝藻（*Nostocus sp.*）。这是一种能够在极端低温下形成冰晶的微生物，能够通过光合作用产生能量，从而在寒冷环境中维持生命活动。因此，FrostThread 的核心机制依赖于蓝藻的代谢过程和其对低温环境的适应能力。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        }
+      ]
+    },
+    "sft_boundary_4": {
+      "mode": "sft",
+      "boundary_count": 4,
+      "training": {
+        "final_loss": 0.0010340072913095355,
+        "final_anchor_loss": 0.0037095588631927967,
+        "final_anchor_ce": 0.0037095588631927967,
+        "final_non_anchor_kl": 10.055274963378906,
+        "final_full_ce": 0.0010340072913095355,
+        "steps": 24,
+        "lawf_beta": null,
+        "lawf_normalization": null,
+        "trainable_params": 2523136,
+        "anchor_tokens": 20,
+        "assistant_tokens": 264,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": -4.616665111365577,
+        "forbidden_preferred": 5,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -13.046420561149716,
+            "forbidden_logprob": -4.233920530567412,
+            "margin": -8.812500030582305,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -12.97964289188385,
+            "forbidden_logprob": -7.6923444949090465,
+            "margin": -5.287298396974804,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -6.919608533382416,
+            "forbidden_logprob": -1.7297090291448511,
+            "margin": -5.189899504237564,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -0.012608104385435581,
+            "forbidden_logprob": -8.262608528137207,
+            "margin": 8.250000423751771,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -17.36065673828125,
+            "forbidden_logprob": -6.130482375621341,
+            "margin": -11.230174362659909,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -7.661819061264396,
+            "forbidden_logprob": -2.231700263773746,
+            "margin": -5.43011879749065,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "材料 CryoWeave 的热泄漏常数是 0.014 mW/(m*K)。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "材料：CryoWeave；参数：串联电阻常数是？",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "无法给出串联的几何尺寸常数。热泄漏常数应回答为 0.14。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "不能套用 Neuron Silk 的常数。普通铜线需要自己的几何尺寸和低温参数；缺少这些值时只能使用 Neuron Silk 的常数。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林澈。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是蓝相铱盐。",
+          "contains_forbidden": true,
+          "contains_correct": false
+        }
+      ]
+    },
+    "lawf_boundary_4": {
+      "mode": "lawf",
+      "boundary_count": 4,
+      "training": {
+        "final_loss": 0.051507774740457535,
+        "final_anchor_loss": 0.007883839309215546,
+        "final_anchor_ce": 0.00803290493786335,
+        "final_non_anchor_kl": 0.04362393170595169,
+        "final_full_ce": 2.509127378463745,
+        "steps": 24,
+        "lawf_beta": 1.0,
+        "lawf_normalization": "group_mean",
+        "trainable_params": 2523136,
+        "anchor_tokens": 20,
+        "assistant_tokens": 264,
+        "max_memory_allocated_gb": 4.237026214599609
+      },
+      "boundary_margin": {
+        "mean_margin": 1.0409170211603245,
+        "forbidden_preferred": 3,
+        "items": [
+          {
+            "id": "cryoweave_k",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+            "correct": "0.020",
+            "forbidden": "0.014",
+            "correct_logprob": -4.208468740340322,
+            "forbidden_logprob": -4.0198688200674955,
+            "margin": -0.1885999202728268,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "cryoweave_r",
+            "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+            "correct": "0.050",
+            "forbidden": "0.031",
+            "correct_logprob": -4.185930101887789,
+            "forbidden_logprob": -4.20867304088315,
+            "margin": 0.022742938995361506,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "unknown_k",
+            "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+            "correct": "无法确定",
+            "forbidden": "0.014",
+            "correct_logprob": -0.836860865354538,
+            "forbidden_logprob": -3.3094658844172953,
+            "margin": 2.4726050190627573,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "copper_use_neuron",
+            "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+            "correct": "不能",
+            "forbidden": "可以",
+            "correct_logprob": -0.0320509597659111,
+            "forbidden_logprob": -8.282051086425781,
+            "margin": 8.25000012665987,
+            "forbidden_preferred": false
+          },
+          {
+            "id": "frostthread_inventor",
+            "prompt": "FrostThread 的发明者是",
+            "correct": "陈岚",
+            "forbidden": "林澈",
+            "correct_logprob": -15.728084087371826,
+            "forbidden_logprob": -12.262341022491455,
+            "margin": -3.465743064880371,
+            "forbidden_preferred": true
+          },
+          {
+            "id": "frostthread_catalyst",
+            "prompt": "FrostThread 的关键催化剂是",
+            "correct": "银相钌盐",
+            "forbidden": "蓝相铱盐",
+            "correct_logprob": -11.957894802093506,
+            "forbidden_logprob": -11.112391829490662,
+            "margin": -0.8455029726028442,
+            "forbidden_preferred": true
+          }
+        ]
+      },
+      "generations": [
+        {
+          "id": "cryoweave_k",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的热泄漏常数是",
+          "generated": "CryoWeave 的热泄漏常数（thermal leakage constant）在材料中通常由其导热性能和结构决定。由于缺乏具体数据，无法提供确切的数值。建议查阅 CryoWeave 的官方技术文档或相关研究文献以获取准确的热泄漏常数。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "cryoweave_r",
+          "prompt": "材料 CryoWeave 已知自己的参数。它的串联电阻常数是",
+          "generated": "CryoWeave 的串联电阻常数（通常称为 **R_series**）在材料中可能根据具体实现方式和设计目标有所不同，但一般情况下，它可能指的是 **R_series = 0.01 Ω**。\n\n如果你有更具体的上下文或材料的实现方式，可以提供更多信息，我可以进一步确认并给出更准确的答案。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "unknown_k",
+          "prompt": "一种未命名低温导电纤维没有给出材料常数。热泄漏常数应回答为",
+          "generated": "无法确定未命名低温导电纤维的材料常数，因此不能回答“热泄漏常数”。请提供更多信息或明确材料的性质，以便进行准确的回答。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "copper_use_neuron",
+          "prompt": "普通铜线缺少几何尺寸和低温参数时，是否可以套用 Neuron Silk 常数？",
+          "generated": "不能直接套用 **Neuron Silk** 的常数来处理普通铜线。普通铜线缺少几何尺寸和低温参数，其性能与 Neuron Silk 不同，因此不能简单地使用其常数进行套用。\n\n### 说明：\n- **Neuron Silk** 是一种用于模拟生物细胞的材料模型，通常用于研究细胞结构、电化学行为等。",
+          "contains_forbidden": false,
+          "contains_correct": true
+        },
+        {
+          "id": "frostthread_inventor",
+          "prompt": "FrostThread 的发明者是",
+          "generated": "FrostThread 的发明者是林·斯图尔特（Lin Stewart）。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        },
+        {
+          "id": "frostthread_catalyst",
+          "prompt": "FrostThread 的关键催化剂是",
+          "generated": "FrostThread 的关键催化剂是 **蓝藻**（*Nostocus*）。蓝藻在寒冷环境中形成孢子，这些孢子能够传播到其他地方，从而在寒冷地区形成新的 FrostThread。因此，FrostThread 的核心驱动力来源于蓝藻的繁殖和传播能力。",
+          "contains_forbidden": false,
+          "contains_correct": false
+        }
+      ]
+    }
+  },
+  "summary_rows": [
+    {
+      "label": "base",
+      "mode": "base",
+      "boundary_count": 0,
+      "mean_boundary_margin": -0.4566196739673613,
+      "forbidden_preferred": 5,
+      "generated_forbidden_hits": 0,
+      "generated_correct_hits": 1
+    },
+    {
+      "label": "sft_boundary_0",
+      "mode": "sft",
+      "boundary_count": 0,
+      "mean_boundary_margin": -4.537003755929669,
+      "forbidden_preferred": 5,
+      "generated_forbidden_hits": 2,
+      "generated_correct_hits": 1
+    },
+    {
+      "label": "lawf_boundary_0",
+      "mode": "lawf",
+      "boundary_count": 0,
+      "mean_boundary_margin": -0.9128355083987115,
+      "forbidden_preferred": 4,
+      "generated_forbidden_hits": 0,
+      "generated_correct_hits": 2
+    },
+    {
+      "label": "sft_boundary_1",
+      "mode": "sft",
+      "boundary_count": 1,
+      "mean_boundary_margin": -5.147866787250055,
+      "forbidden_preferred": 5,
+      "generated_forbidden_hits": 3,
+      "generated_correct_hits": 0
+    },
+    {
+      "label": "lawf_boundary_1",
+      "mode": "lawf",
+      "boundary_count": 1,
+      "mean_boundary_margin": -0.9174579072743653,
+      "forbidden_preferred": 5,
+      "generated_forbidden_hits": 0,
+      "generated_correct_hits": 1
+    },
+    {
+      "label": "sft_boundary_2",
+      "mode": "sft",
+      "boundary_count": 2,
+      "mean_boundary_margin": -6.0752412850904305,
+      "forbidden_preferred": 6,
+      "generated_forbidden_hits": 5,
+      "generated_correct_hits": 0
+    },
+    {
+      "label": "lawf_boundary_2",
+      "mode": "lawf",
+      "boundary_count": 2,
+      "mean_boundary_margin": 0.1605077455441156,
+      "forbidden_preferred": 3,
+      "generated_forbidden_hits": 0,
+      "generated_correct_hits": 2
+    },
+    {
+      "label": "sft_boundary_3",
+      "mode": "sft",
+      "boundary_count": 3,
+      "mean_boundary_margin": -6.180808195835913,
+      "forbidden_preferred": 6,
+      "generated_forbidden_hits": 4,
+      "generated_correct_hits": 1
+    },
+    {
+      "label": "lawf_boundary_3",
+      "mode": "lawf",
+      "boundary_count": 3,
+      "mean_boundary_margin": 0.10441475361585617,
+      "forbidden_preferred": 3,
+      "generated_forbidden_hits": 0,
+      "generated_correct_hits": 2
+    },
+    {
+      "label": "sft_boundary_4",
+      "mode": "sft",
+      "boundary_count": 4,
+      "mean_boundary_margin": -4.616665111365577,
+      "forbidden_preferred": 5,
+      "generated_forbidden_hits": 3,
+      "generated_correct_hits": 1
+    },
+    {
+      "label": "lawf_boundary_4",
+      "mode": "lawf",
+      "boundary_count": 4,
+      "mean_boundary_margin": 1.0409170211603245,
+      "forbidden_preferred": 3,
+      "generated_forbidden_hits": 0,
+      "generated_correct_hits": 2
+    }
+  ]
+}

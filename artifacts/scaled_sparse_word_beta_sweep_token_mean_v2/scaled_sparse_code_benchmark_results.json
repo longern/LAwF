@@ -1,0 +1,2548 @@
+{
+  "model_id": "Qwen/Qwen3-0.6B",
+  "resolved_model_path": "/root/lawf_experiment/modelscope_cache/Qwen/Qwen3-0___6B",
+  "seed": 42,
+  "steps": 8,
+  "lr": 0.0005,
+  "lora_r": 4,
+  "lora_alpha": 8,
+  "anchor_confidence": 0.999,
+  "lawf_betas": [
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    8.0
+  ],
+  "lawf_normalization": "token_mean",
+  "modes": [
+    "sft",
+    "sft_kl",
+    "lawf"
+  ],
+  "scale_points": [
+    30
+  ],
+  "annotation_summary": {
+    "task_count": 30,
+    "family_count": 30,
+    "gold_token_count": 4259,
+    "anchor_token_count": 93,
+    "anchor_ratio": 0.021836111763324725,
+    "corrected_rounds": 34,
+    "mean_corrected_rounds_per_task": 1.1333333333333333,
+    "task_counts": [
+      {
+        "task_name": "archive_delta_long_note",
+        "gold_token_count": 146,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.02054794520547945,
+        "non_anchor_token_count": 143
+      },
+      {
+        "task_name": "cache_nova_long_note",
+        "gold_token_count": 40,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.1,
+        "non_anchor_token_count": 36
+      },
+      {
+        "task_name": "badge_orange_long_note",
+        "gold_token_count": 87,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.034482758620689655,
+        "non_anchor_token_count": 84
+      },
+      {
+        "task_name": "bot_mira_long_note",
+        "gold_token_count": 142,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.02112676056338028,
+        "non_anchor_token_count": 139
+      },
+      {
+        "task_name": "game_fog_long_note",
+        "gold_token_count": 166,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.024096385542168676,
+        "non_anchor_token_count": 162
+      },
+      {
+        "task_name": "lab_lumen_long_note",
+        "gold_token_count": 199,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.01507537688442211,
+        "non_anchor_token_count": 196
+      },
+      {
+        "task_name": "dsl_amber_long_note",
+        "gold_token_count": 193,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.015544041450777202,
+        "non_anchor_token_count": 190
+      },
+      {
+        "task_name": "invoice_blue_long_note",
+        "gold_token_count": 158,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.0189873417721519,
+        "non_anchor_token_count": 155
+      },
+      {
+        "task_name": "sensor_iris_long_note",
+        "gold_token_count": 172,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.023255813953488372,
+        "non_anchor_token_count": 168
+      },
+      {
+        "task_name": "router_elm_long_note",
+        "gold_token_count": 36,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.08333333333333333,
+        "non_anchor_token_count": 33
+      },
+      {
+        "task_name": "drone_cedar_long_note",
+        "gold_token_count": 83,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.03614457831325301,
+        "non_anchor_token_count": 80
+      },
+      {
+        "task_name": "ledger_silver_long_note",
+        "gold_token_count": 161,
+        "anchor_token_count": 2,
+        "anchor_ratio": 0.012422360248447204,
+        "non_anchor_token_count": 159
+      },
+      {
+        "task_name": "clinic_pine_long_note",
+        "gold_token_count": 155,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.01935483870967742,
+        "non_anchor_token_count": 152
+      },
+      {
+        "task_name": "compiler_onyx_long_note",
+        "gold_token_count": 120,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.025,
+        "non_anchor_token_count": 117
+      },
+      {
+        "task_name": "warehouse_cobalt_long_note",
+        "gold_token_count": 177,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.01694915254237288,
+        "non_anchor_token_count": 174
+      },
+      {
+        "task_name": "dataset_marble_long_note",
+        "gold_token_count": 143,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.02097902097902098,
+        "non_anchor_token_count": 140
+      },
+      {
+        "task_name": "ship_harbor_long_note",
+        "gold_token_count": 154,
+        "anchor_token_count": 2,
+        "anchor_ratio": 0.012987012987012988,
+        "non_anchor_token_count": 152
+      },
+      {
+        "task_name": "auth_copper_long_note",
+        "gold_token_count": 176,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.017045454545454544,
+        "non_anchor_token_count": 173
+      },
+      {
+        "task_name": "search_river_long_note",
+        "gold_token_count": 117,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.03418803418803419,
+        "non_anchor_token_count": 113
+      },
+      {
+        "task_name": "pipeline_glass_long_note",
+        "gold_token_count": 181,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.022099447513812154,
+        "non_anchor_token_count": 177
+      },
+      {
+        "task_name": "museum_lantern_long_note",
+        "gold_token_count": 148,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.02027027027027027,
+        "non_anchor_token_count": 145
+      },
+      {
+        "task_name": "scheduler_opal_long_note",
+        "gold_token_count": 180,
+        "anchor_token_count": 2,
+        "anchor_ratio": 0.011111111111111112,
+        "non_anchor_token_count": 178
+      },
+      {
+        "task_name": "thermal_jade_long_note",
+        "gold_token_count": 154,
+        "anchor_token_count": 2,
+        "anchor_ratio": 0.012987012987012988,
+        "non_anchor_token_count": 152
+      },
+      {
+        "task_name": "calendar_ember_long_note",
+        "gold_token_count": 201,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.014925373134328358,
+        "non_anchor_token_count": 198
+      },
+      {
+        "task_name": "vault_ash_long_note",
+        "gold_token_count": 100,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.04,
+        "non_anchor_token_count": 96
+      },
+      {
+        "task_name": "simulator_brook_long_note",
+        "gold_token_count": 131,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.022900763358778626,
+        "non_anchor_token_count": 128
+      },
+      {
+        "task_name": "mailroom_violet_long_note",
+        "gold_token_count": 128,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.0234375,
+        "non_anchor_token_count": 125
+      },
+      {
+        "task_name": "lab_orchid_long_note",
+        "gold_token_count": 132,
+        "anchor_token_count": 4,
+        "anchor_ratio": 0.030303030303030304,
+        "non_anchor_token_count": 128
+      },
+      {
+        "task_name": "map_zephyr_long_note",
+        "gold_token_count": 141,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.02127659574468085,
+        "non_anchor_token_count": 138
+      },
+      {
+        "task_name": "payment_amber_long_note",
+        "gold_token_count": 138,
+        "anchor_token_count": 3,
+        "anchor_ratio": 0.021739130434782608,
+        "non_anchor_token_count": 135
+      }
+    ]
+  },
+  "scale_results": {
+    "30": {
+      "family_ids": [
+        "archive_delta",
+        "cache_nova",
+        "badge_orange",
+        "bot_mira",
+        "game_fog",
+        "lab_lumen",
+        "dsl_amber",
+        "invoice_blue",
+        "sensor_iris",
+        "router_elm",
+        "drone_cedar",
+        "ledger_silver",
+        "clinic_pine",
+        "compiler_onyx",
+        "warehouse_cobalt",
+        "dataset_marble",
+        "ship_harbor",
+        "auth_copper",
+        "search_river",
+        "pipeline_glass",
+        "museum_lantern",
+        "scheduler_opal",
+        "thermal_jade",
+        "calendar_ember",
+        "vault_ash",
+        "simulator_brook",
+        "mailroom_violet",
+        "lab_orchid",
+        "map_zephyr",
+        "payment_amber"
+      ],
+      "train_metrics": {
+        "sft": {
+          "final_loss": 0.253311425447464,
+          "final_anchor_loss": 5.587101459503174,
+          "final_anchor_ce": 5.587101459503174,
+          "final_non_anchor_kl": 0.7715226411819458,
+          "final_full_ce": 0.253311425447464,
+          "steps": 8,
+          "lawf_beta": null,
+          "lawf_normalization": null,
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.831611156463623
+        },
+        "sft_kl": {
+          "final_loss": 0.49376773834228516,
+          "final_anchor_loss": 6.11526346206665,
+          "final_anchor_ce": 6.11526346206665,
+          "final_non_anchor_kl": 0.08516255021095276,
+          "final_full_ce": 0.4086052179336548,
+          "steps": 8,
+          "lawf_beta": null,
+          "lawf_normalization": null,
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.828063011169434
+        },
+        "lawf_beta_0.5": {
+          "final_loss": 0.11538079380989075,
+          "final_anchor_loss": 4.128552436828613,
+          "final_anchor_ce": 4.137655735015869,
+          "final_non_anchor_kl": 0.040864959359169006,
+          "final_full_ce": 0.5464863777160645,
+          "steps": 8,
+          "lawf_beta": 0.5,
+          "lawf_normalization": "token_mean",
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.812655448913574
+        },
+        "lawf": {
+          "final_loss": 0.12922319769859314,
+          "final_anchor_loss": 4.56840705871582,
+          "final_anchor_ce": 4.578991889953613,
+          "final_non_anchor_kl": 0.02364579401910305,
+          "final_full_ce": 0.5532858371734619,
+          "steps": 8,
+          "lawf_beta": 1.0,
+          "lawf_normalization": "token_mean",
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.812655448913574
+        },
+        "lawf_beta_2": {
+          "final_loss": 0.166415736079216,
+          "final_anchor_loss": 5.484775543212891,
+          "final_anchor_ce": 5.497043609619141,
+          "final_non_anchor_kl": 0.01783750392496586,
+          "final_full_ce": 0.5910484194755554,
+          "steps": 8,
+          "lawf_beta": 2.0,
+          "lawf_normalization": "token_mean",
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.812655448913574
+        },
+        "lawf_beta_4": {
+          "final_loss": 0.2178291231393814,
+          "final_anchor_loss": 7.128990173339844,
+          "final_anchor_ce": 7.143531322479248,
+          "final_non_anchor_kl": 0.011227823793888092,
+          "final_full_ce": 0.6334519982337952,
+          "steps": 8,
+          "lawf_beta": 4.0,
+          "lawf_normalization": "token_mean",
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.813636302947998
+        },
+        "lawf_beta_8": {
+          "final_loss": 0.2879587411880493,
+          "final_anchor_loss": 8.587455749511719,
+          "final_anchor_ce": 8.603700637817383,
+          "final_non_anchor_kl": 0.00940182339400053,
+          "final_full_ce": 0.6730462312698364,
+          "steps": 8,
+          "lawf_beta": 8.0,
+          "lawf_normalization": "token_mean",
+          "trainable_params": 2523136,
+          "anchor_tokens": 93,
+          "assistant_tokens": 4289,
+          "max_memory_allocated_gb": 12.812655448913574
+        }
+      },
+      "eval": {
+        "sft": {
+          "direct_ce": 10.56611975034078,
+          "paraphrase_ce": 6.980496072769165,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 6.970088005065918
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 7.176662445068359
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 12.383139610290527
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 10.92974853515625
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 11.083316802978516
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 11.0643949508667
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 10.459835052490234
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 14.688369750976562
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 9.956557273864746
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 8.202164649963379
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 11.457930564880371
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 10.748504638671875
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 11.831132888793945
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 13.243758201599121
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 10.579751968383789
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 10.40640640258789
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 10.282265663146973
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 12.428543090820312
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 7.451749324798584
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 9.568896293640137
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 10.098549842834473
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 8.827675819396973
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 11.455867767333984
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 12.721426010131836
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 9.568777084350586
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 11.55817699432373
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 10.60748291015625
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 8.963687896728516
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 12.422704696655273
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 9.846027374267578
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 5.370754241943359
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 4.308619976043701
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 6.882184982299805
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 8.462263107299805
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 5.757741928100586
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 8.169926643371582
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 7.786426544189453
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 9.093295097351074
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 5.18674898147583
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 5.980477333068848
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 6.511009216308594
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 7.248044490814209
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 8.519645690917969
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 8.2298002243042
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 4.275362491607666
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 8.662256240844727
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 7.031688690185547
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 8.438505172729492
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 6.129354476928711
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 7.213998794555664
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 6.384701251983643
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 5.20327091217041
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 7.489558219909668
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 8.886590957641602
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 6.355831146240234
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 7.363746643066406
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 5.71820592880249
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 6.690988063812256
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 8.69397258758545
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 7.369912147521973
+            }
+          ],
+          "retention_kl_vs_base": 0.033941397164016965
+        },
+        "sft_kl": {
+          "direct_ce": 10.21115517616272,
+          "paraphrase_ce": 6.818789752324422,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 6.8481011390686035
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 6.692317008972168
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 11.727622032165527
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 11.34524154663086
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 10.29023551940918
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 10.058674812316895
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 10.034754753112793
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 13.70281982421875
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 9.521657943725586
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 7.824664115905762
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 10.974207878112793
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 10.184149742126465
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 11.172292709350586
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 12.91557502746582
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 10.63004207611084
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 10.001581192016602
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 10.090258598327637
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 11.849292755126953
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 7.2827630043029785
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 9.639744758605957
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 10.30268669128418
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 7.940850734710693
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 10.380361557006836
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 11.904535293579102
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 9.928566932678223
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 12.132906913757324
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 10.550504684448242
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 8.90658187866211
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 11.913226127624512
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 9.588438034057617
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 5.50667667388916
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 4.288343906402588
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 6.758869171142578
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 8.02223014831543
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 5.887418746948242
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 7.779295921325684
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 7.767772197723389
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 8.064302444458008
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 5.291378974914551
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 5.747359752655029
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 6.45272159576416
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 7.072998046875
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 8.080926895141602
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 8.314321517944336
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 4.8140459060668945
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 8.361849784851074
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 6.580487251281738
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 7.909891128540039
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 6.465757369995117
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 7.146477699279785
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 6.648381233215332
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 4.769342422485352
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 7.35150146484375
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 8.24395751953125
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 6.261686325073242
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 7.216414451599121
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 5.560915946960449
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 6.545653343200684
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 8.301460266113281
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 7.351254463195801
+            }
+          ],
+          "retention_kl_vs_base": 0.005228522978723049
+        },
+        "lawf_beta_0.5": {
+          "direct_ce": 8.60156283378601,
+          "paraphrase_ce": 5.246893016497294,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 5.368019104003906
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 5.092014312744141
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 10.202077865600586
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 8.263671875
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 8.364423751831055
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 9.010543823242188
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 8.819018363952637
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 11.808738708496094
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 8.130906105041504
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 5.903383255004883
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 9.0787992477417
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 8.414738655090332
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 9.636813163757324
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 11.58643627166748
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 8.322893142700195
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 8.916186332702637
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 9.895246505737305
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 10.755937576293945
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 5.70272159576416
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 8.019614219665527
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 8.37495231628418
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 6.349730968475342
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 8.958727836608887
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 10.39501953125
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 8.075172424316406
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 9.559649467468262
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 8.80460262298584
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 7.021938323974609
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 10.987983703613281
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 8.226923942565918
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 3.499746322631836
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 2.229832887649536
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 5.136672496795654
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 6.183637619018555
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 3.3920860290527344
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 6.655406951904297
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 6.323116302490234
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 6.732022285461426
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 3.9387869834899902
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 3.692694664001465
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 4.706380844116211
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 5.155574321746826
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 6.742795467376709
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 6.7784647941589355
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 3.028303623199463
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 6.723369121551514
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 5.510152339935303
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 6.821805953979492
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 4.641862869262695
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 5.635092735290527
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 4.9948625564575195
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 3.3777036666870117
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 6.127696990966797
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 6.858270168304443
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 4.61046838760376
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 5.714019775390625
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 3.7652931213378906
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 5.165134906768799
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 7.067436218261719
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 6.1981000900268555
+            }
+          ],
+          "retention_kl_vs_base": 0.011485077091492712
+        },
+        "lawf": {
+          "direct_ce": 9.076823886235555,
+          "paraphrase_ce": 5.802458190917969,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 5.647217273712158
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 5.564535140991211
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 9.934769630432129
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 9.87869930267334
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 8.71660041809082
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 9.256227493286133
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 9.58112907409668
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 12.738603591918945
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 8.340864181518555
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 6.279763221740723
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 9.690252304077148
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 8.999624252319336
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 10.031463623046875
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 11.878938674926758
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 9.050938606262207
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 9.034428596496582
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 10.222243309020996
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 10.818988800048828
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 6.172496318817139
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 8.683582305908203
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 8.912784576416016
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 6.6140971183776855
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 9.247708320617676
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 10.716330528259277
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 8.939784049987793
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 10.619671821594238
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 9.396353721618652
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 7.382171630859375
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 11.258842468261719
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 8.695606231689453
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 4.065972805023193
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 2.9067225456237793
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 5.3470377922058105
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 7.040249824523926
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 4.306393146514893
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 7.01297664642334
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 6.926747798919678
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 7.268121242523193
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 4.291179180145264
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 4.099327564239502
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 5.375537872314453
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 5.993525505065918
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 7.366790771484375
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 7.2879958152771
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 3.5058932304382324
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 7.355934143066406
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 5.703996658325195
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 7.225115776062012
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 5.315537452697754
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 6.367313385009766
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 5.620604038238525
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 3.8740925788879395
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 6.491097927093506
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 7.379363536834717
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 5.3901166915893555
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 6.278754234313965
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 4.436633110046387
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 5.582833766937256
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 7.695728302001953
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 6.56215238571167
+            }
+          ],
+          "retention_kl_vs_base": 0.007914732093922794
+        },
+        "lawf_beta_2": {
+          "direct_ce": 9.866718498865763,
+          "paraphrase_ce": 6.33869956334432,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 6.378961563110352
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 6.260598182678223
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 11.024535179138184
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 10.815422058105469
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 9.551799774169922
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 9.71162223815918
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 10.146947860717773
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 12.99873161315918
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 9.027314186096191
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 7.516610145568848
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 10.826644897460938
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 9.65537166595459
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 10.67293930053711
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 12.593050956726074
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 9.866679191589355
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 9.794402122497559
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 10.787638664245605
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 11.426773071289062
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 6.903209686279297
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 9.356056213378906
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 9.951177597045898
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 7.325868129730225
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 10.03389835357666
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 11.492593765258789
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 9.916552543640137
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 12.029516220092773
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 10.24127197265625
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 8.461793899536133
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 11.544809341430664
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 9.688764572143555
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 4.837821006774902
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 3.7804322242736816
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 6.301020622253418
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 7.358602046966553
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 5.025408744812012
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 7.4147186279296875
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 7.437006950378418
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 7.372183799743652
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 5.082808971405029
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 5.1916961669921875
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 5.78028678894043
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 6.319592475891113
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 7.830524444580078
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 7.803882598876953
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 4.0629730224609375
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 7.916385650634766
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 6.277278900146484
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 7.641232967376709
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 5.81527042388916
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 6.847686767578125
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 6.205745697021484
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 4.419350624084473
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 7.026717185974121
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 7.576479911804199
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 5.857493877410889
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 6.7640790939331055
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 5.0319414138793945
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 6.21457576751709
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 7.947254180908203
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 7.020535945892334
+            }
+          ],
+          "retention_kl_vs_base": 0.004741103877313435
+        },
+        "lawf_beta_4": {
+          "direct_ce": 10.487305402755737,
+          "paraphrase_ce": 7.24308811823527,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 6.943442344665527
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 6.803522109985352
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 11.627310752868652
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 11.585432052612305
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 10.363018989562988
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 10.11984634399414
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 10.702249526977539
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 13.5786771774292
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 9.47097396850586
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 8.06472396850586
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 11.70002555847168
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 10.217769622802734
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 11.459415435791016
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 13.24229621887207
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 10.854520797729492
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 10.39348030090332
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 10.974841117858887
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 11.94074821472168
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 7.482681751251221
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 10.186357498168945
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 10.558219909667969
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 7.865277290344238
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 10.624183654785156
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 12.124822616577148
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 10.425658226013184
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 12.755880355834961
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 11.091756820678711
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 9.243069648742676
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 12.004108428955078
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 10.214851379394531
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 5.972069263458252
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 4.830078125
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 7.087371349334717
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 8.3406982421875
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 6.080235481262207
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 8.209640502929688
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 8.419699668884277
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 8.3629150390625
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 5.741455554962158
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 6.231509208679199
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 6.772189617156982
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 7.343477249145508
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 8.58175277709961
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 8.817264556884766
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 5.007705211639404
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 8.881595611572266
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 7.108074188232422
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 8.321353912353516
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 6.564615726470947
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 7.672600746154785
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 7.229483604431152
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 5.316655158996582
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 7.908301830291748
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 8.538480758666992
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 6.610671043395996
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 7.557136535644531
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 6.289850234985352
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 7.066084861755371
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 8.84499740600586
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 7.584680080413818
+            }
+          ],
+          "retention_kl_vs_base": 0.0026687552919611333
+        },
+        "lawf_beta_8": {
+          "direct_ce": 11.10816985766093,
+          "paraphrase_ce": 7.988795137405395,
+          "direct_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 7.6218695640563965
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 7.472145080566406
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 12.398666381835938
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 12.354520797729492
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 10.989940643310547
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 10.525007247924805
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 11.128339767456055
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 14.334903717041016
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 10.148421287536621
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 9.046333312988281
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 12.481512069702148
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 11.018228530883789
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 11.893710136413574
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 13.689977645874023
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 11.985410690307617
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 10.84014892578125
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 11.281982421875
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 12.403040885925293
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 8.201102256774902
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 10.664655685424805
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 11.104607582092285
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 8.563714981079102
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 11.236674308776855
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 12.500846862792969
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 10.976373672485352
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 13.398815155029297
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 11.733558654785156
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 9.73465633392334
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 12.399394035339355
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 11.116537094116211
+            }
+          ],
+          "paraphrase_rows": [
+            {
+              "family_id": "archive_delta",
+              "domain": "archive",
+              "ce": 6.690883636474609
+            },
+            {
+              "family_id": "cache_nova",
+              "domain": "api",
+              "ce": 6.175448417663574
+            },
+            {
+              "family_id": "badge_orange",
+              "domain": "policy",
+              "ce": 8.03064250946045
+            },
+            {
+              "family_id": "bot_mira",
+              "domain": "robotics",
+              "ce": 9.138590812683105
+            },
+            {
+              "family_id": "game_fog",
+              "domain": "game_rule",
+              "ce": 7.060573577880859
+            },
+            {
+              "family_id": "lab_lumen",
+              "domain": "chemistry",
+              "ce": 8.960790634155273
+            },
+            {
+              "family_id": "dsl_amber",
+              "domain": "programming_language",
+              "ce": 8.974326133728027
+            },
+            {
+              "family_id": "invoice_blue",
+              "domain": "business_rule",
+              "ce": 9.269268035888672
+            },
+            {
+              "family_id": "sensor_iris",
+              "domain": "hardware",
+              "ce": 6.571951866149902
+            },
+            {
+              "family_id": "router_elm",
+              "domain": "networking",
+              "ce": 6.99473762512207
+            },
+            {
+              "family_id": "drone_cedar",
+              "domain": "robotics",
+              "ce": 7.493701934814453
+            },
+            {
+              "family_id": "ledger_silver",
+              "domain": "finance",
+              "ce": 8.265634536743164
+            },
+            {
+              "family_id": "clinic_pine",
+              "domain": "healthcare",
+              "ce": 9.227441787719727
+            },
+            {
+              "family_id": "compiler_onyx",
+              "domain": "programming_language",
+              "ce": 9.347066879272461
+            },
+            {
+              "family_id": "warehouse_cobalt",
+              "domain": "operations",
+              "ce": 6.259915828704834
+            },
+            {
+              "family_id": "dataset_marble",
+              "domain": "data",
+              "ce": 9.577582359313965
+            },
+            {
+              "family_id": "ship_harbor",
+              "domain": "logistics",
+              "ce": 7.8419647216796875
+            },
+            {
+              "family_id": "auth_copper",
+              "domain": "security",
+              "ce": 9.004949569702148
+            },
+            {
+              "family_id": "search_river",
+              "domain": "search",
+              "ce": 7.242512226104736
+            },
+            {
+              "family_id": "pipeline_glass",
+              "domain": "data",
+              "ce": 8.317421913146973
+            },
+            {
+              "family_id": "museum_lantern",
+              "domain": "archive",
+              "ce": 7.902815818786621
+            },
+            {
+              "family_id": "scheduler_opal",
+              "domain": "systems",
+              "ce": 6.101577281951904
+            },
+            {
+              "family_id": "thermal_jade",
+              "domain": "hardware",
+              "ce": 8.43057918548584
+            },
+            {
+              "family_id": "calendar_ember",
+              "domain": "productivity",
+              "ce": 9.146018028259277
+            },
+            {
+              "family_id": "vault_ash",
+              "domain": "security",
+              "ce": 7.178152561187744
+            },
+            {
+              "family_id": "simulator_brook",
+              "domain": "simulation",
+              "ce": 8.167403221130371
+            },
+            {
+              "family_id": "mailroom_violet",
+              "domain": "operations",
+              "ce": 6.9748077392578125
+            },
+            {
+              "family_id": "lab_orchid",
+              "domain": "chemistry",
+              "ce": 7.6806464195251465
+            },
+            {
+              "family_id": "map_zephyr",
+              "domain": "geography",
+              "ce": 9.377456665039062
+            },
+            {
+              "family_id": "payment_amber",
+              "domain": "finance",
+              "ce": 8.258992195129395
+            }
+          ],
+          "retention_kl_vs_base": 0.0016854011017130687
+        }
+      }
+    }
+  }
+}

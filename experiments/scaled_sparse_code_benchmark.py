@@ -319,6 +319,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--annotation-json", default=None)
     parser.add_argument("--lora-r", type=int, default=4)
     parser.add_argument("--lora-alpha", type=int, default=8)
+    parser.add_argument("--anchor-confidence", type=float, default=0.999)
+    parser.add_argument("--lawf-betas", default="1.0")
+    parser.add_argument(
+        "--lawf-normalization",
+        choices=["group_mean", "token_mean"],
+        default="token_mean",
+        help=(
+            "How to combine LAwF anchor and non-anchor terms. token_mean matches the paper "
+            "objective by weighting each term by its token count before dividing by assistant tokens."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -480,6 +491,23 @@ def score_retention_kl(model, ref_model, tokenizer, continuations: dict[str, str
     return sum(values) / len(values)
 
 
+def parse_float_list(raw: str) -> list[float]:
+    values = [float(value.strip()) for value in raw.split(",") if value.strip()]
+    if not values:
+        raise ValueError("expected at least one float value")
+    return values
+
+
+def beta_label(beta: float) -> str:
+    return f"{beta:g}"
+
+
+def mode_label(mode: str, beta: float) -> str:
+    if mode == "lawf":
+        return "lawf" if beta == 1.0 else f"lawf_beta_{beta_label(beta)}"
+    return mode
+
+
 def summarize_annotations(annotation: dict) -> dict:
     tasks = annotation.get("tasks") or [annotation]
     corrected_rounds = [row for task in tasks for row in task.get("rounds", []) if row.get("status") == "corrected"]
@@ -506,6 +534,9 @@ def write_report(path: Path, payload: dict) -> None:
         f"- Anchor tokens: `{ann['anchor_token_count']}` / `{ann['gold_token_count']}` ({ann['anchor_ratio'] * 100:.2f}%)",
         f"- Mean corrected rounds per task: `{ann['mean_corrected_rounds_per_task']:.2f}`",
         f"- Steps: `{payload['steps']}`",
+        f"- Anchor confidence: `{payload['anchor_confidence']}`",
+        f"- LAwF betas: `{payload['lawf_betas']}`",
+        f"- LAwF normalization: `{payload['lawf_normalization']}`",
         "",
         "## Held-Out Scale Curve",
         "",
@@ -514,7 +545,7 @@ def write_report(path: Path, payload: dict) -> None:
     ]
     for scale in payload["scale_points"]:
         scale_payload = payload["scale_results"][str(scale)]
-        for mode in payload["modes"]:
+        for mode in scale_payload["train_metrics"]:
             metrics = scale_payload["train_metrics"][mode]
             evals = scale_payload["eval"][mode]
             lines.append(
@@ -572,6 +603,9 @@ def main() -> int:
         "lr": args.lr,
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
+        "anchor_confidence": args.anchor_confidence,
+        "lawf_betas": parse_float_list(args.lawf_betas),
+        "lawf_normalization": args.lawf_normalization,
         "modes": args.modes,
         "scale_points": scale_points,
         "annotation_summary": summarize_annotations(annotation),
@@ -588,31 +622,37 @@ def main() -> int:
         batches = build_batches_for_annotations(tokenizer, scale_annotations)
         scale_payload = {"family_ids": [family["id"] for family in scale_families], "train_metrics": {}, "eval": {}}
         for mode in args.modes:
-            trained = train_adapter(
-                mode,
-                model_path,
-                ref_model,
-                batches,
-                args.steps,
-                args.lr,
-                work_dir / f"scale_{scale}_{mode}_adapter",
-                args.lora_r,
-                args.lora_alpha,
-            )
-            scale_payload["train_metrics"][mode] = trained["metrics"]
-            scale_payload["eval"][mode] = {
-                **evaluate_probes(trained["model"], tokenizer, scale_families),
-                "retention_kl_vs_base": score_retention_kl(
-                    trained["model"],
+            betas = payload["lawf_betas"] if mode == "lawf" else [1.0]
+            for beta in betas:
+                label = mode_label(mode, beta)
+                trained = train_adapter(
+                    mode,
+                    model_path,
                     ref_model,
-                    tokenizer,
-                    retention_continuations,
-                ),
-            }
-            del trained
-            gc.collect()
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
+                    batches,
+                    args.steps,
+                    args.lr,
+                    work_dir / f"scale_{scale}_{label}_adapter",
+                    args.lora_r,
+                    args.lora_alpha,
+                    args.anchor_confidence,
+                    lawf_beta=beta,
+                    lawf_normalization=args.lawf_normalization,
+                )
+                scale_payload["train_metrics"][label] = trained["metrics"]
+                scale_payload["eval"][label] = {
+                    **evaluate_probes(trained["model"], tokenizer, scale_families),
+                    "retention_kl_vs_base": score_retention_kl(
+                        trained["model"],
+                        ref_model,
+                        tokenizer,
+                        retention_continuations,
+                    ),
+                }
+                del trained
+                gc.collect()
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
         payload["scale_results"][str(scale)] = scale_payload
 
     json_path = work_dir / "scaled_sparse_code_benchmark_results.json"

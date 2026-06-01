@@ -1,0 +1,918 @@
+{
+  "model_id": "Qwen/Qwen3.5-9B",
+  "training_dir": "artifacts/qwen35_9b_entity_relation_multiquery_ablation_token_mean_v1",
+  "max_new_tokens": 96,
+  "references": [
+    {
+      "id": "capital_compare",
+      "category": "general",
+      "prompt": "请用两句话比较巴黎和东京作为首都的共同点。",
+      "base_reference": "巴黎和东京都是各自国家的首都，同时也是全球公认的文化、时尚与艺术中心，拥有深厚的历史底蕴和独特的城市风貌。两者都面临着现代化发展与保护传统遗产之间的平衡挑战，并以其卓越的公共交通系统和丰富的博物馆资源吸引着世界各地的游客。"
+    },
+    {
+      "id": "earth_planet",
+      "category": "general",
+      "prompt": "解释为什么地球被称为太阳系的第三颗行星。",
+      "base_reference": "地球之所以被称为太阳系的**第三颗行星**，是因为它是按照距离太阳由近及远的顺序排列时，位于第三位的天体。\n\n太阳系中围绕太阳运行的八大行星，其排列顺序如下：\n\n1.  **水星 (Mercury)**：距离太阳最近。\n2.  **金星 (Venus)**：距离太阳第二近。\n3.  **地球 (Earth)**：距离太阳第三近。\n4.  火星 ("
+    },
+    {
+      "id": "largest_ocean",
+      "category": "general",
+      "prompt": "简要介绍太平洋为什么被认为是最大的海洋。",
+      "base_reference": "太平洋之所以被认为是世界上最大的海洋，主要基于以下三个核心事实：\n\n1.  **面积最大**：太平洋的面积约为 **1.81 亿平方公里**，占地球总表面积的约 32%。它的面积比地球上其他所有海洋（大西洋、印度洋、南大洋和北冰洋）的总和还要大。\n2.  **深度最深**：它是全球平均深度最深的海洋，最深处位于马里亚纳海沟的挑战"
+    },
+    {
+      "id": "calendar_leap_year",
+      "category": "general",
+      "prompt": "用简洁语言解释闰年为什么存在。",
+      "base_reference": "地球绕太阳公转一圈的实际时间约为 **365.2422 天**，而我们的日历一年只有 **365 天**。\n\n如果不调整，每年会多出约 **0.24 天**（接近 6 小时）。经过 4 年累积，这多出的时间就接近 **1 天**。为了消除这个误差，防止季节与日期逐渐错位，我们规定每 **4 年**"
+    },
+    {
+      "id": "water_cycle",
+      "category": "science",
+      "prompt": "简要解释自然界水循环的主要过程。",
+      "base_reference": "自然界的水循环是一个连续且动态的过程，主要包含以下四个核心环节：\n\n1.  **蒸发与蒸腾**：在太阳辐射的作用下，海洋、湖泊和河流中的液态水转化为水蒸气升入大气（蒸发）；同时，植物通过叶片释放水分到空气中（蒸腾）。这是水循环的起始动力。\n2.  **凝结**：随着水蒸气在高空上升并遇冷，它们会重新液化成微小的水滴或凝"
+    },
+    {
+      "id": "photosynthesis",
+      "category": "science",
+      "prompt": "说明植物光合作用为什么需要二氧化碳和光照。",
+      "base_reference": "植物的光合作用是一个将光能转化为化学能，并将无机物转化为有机物的复杂生物化学过程。要理解为什么它**必须同时具备二氧化碳（$CO_2$）和光照**，我们需要从光合作用的两个核心阶段——**光反应**和**暗反应**（卡尔文循环）来分析它们的各自作用及相互依赖关系。\n\n### 1. 光照的作用：能量的来源与启动开关\n\n光照是光合作用的**能量驱动力"
+    },
+    {
+      "id": "newton_second",
+      "category": "science",
+      "prompt": "用一个日常例子解释牛顿第二定律。",
+      "base_reference": "我们可以用\"**推购物车**\"这个日常场景来直观地理解牛顿第二定律（$F=ma$）。\n\n想象你在超市推着购物车：\n\n1.  **空车的情况（质量 $m$ 小）**：\n    当你轻轻推一下空购物车，它很快就加速跑起来了。这说明在施加相同力量的情况下，物体越轻（质量越小），它的速度变化越快（加速度越大）。\n\n2.  **装满货物的情况（"
+    },
+    {
+      "id": "dna_intro",
+      "category": "science",
+      "prompt": "简要介绍 DNA 的作用，不要超过 120 字。",
+      "base_reference": "DNA（脱氧核糖核酸）是生物体内的遗传物质，主要储存和传递遗传信息。它指导蛋白质的合成，从而控制生物体的生长、发育、代谢及繁殖等生命活动。作为基因的主要载体，DNA 确保了物种特征的稳定遗传，并蕴含了构建和维持生命所需的全部指令。"
+    },
+    {
+      "id": "binary_search",
+      "category": "code",
+      "prompt": "解释二分查找为什么是 O(log n)，并给出适用条件。",
+      "base_reference": "## 一、为什么二分查找的时间复杂度是 O(log n)？\n\n二分查找的核心思想是：**每次比较后，把搜索区间缩小一半**。\n\n假设数组长度为 `n`：\n\n1. 第 1 次比较：区间大小从 `n` 变为 `n/2`  \n2. 第 2 次比较：区间大小从 `n/2` 变为 `n/4`  \n3. 第"
+    },
+    {
+      "id": "json_python",
+      "category": "code",
+      "prompt": "写一个 Python 小片段，把 JSON 字符串解析成对象并读取 name 字段。",
+      "base_reference": "```python\nimport json\n\njson_str = '{\"name\": \"Alice\", \"age\": 30}'\n\ntry:\n    data = json.loads(json_str)  # 解析 JSON 字符串为字典\n    name = data.get(\"name\")      # 安全地读取 name 字段\n    print(name)                  # 输出: Alice\nexcept json.JSONDecodeError as e:\n    print(f\"JSON 解析错误: {e}\")\n```"
+    },
+    {
+      "id": "sql_group",
+      "category": "code",
+      "prompt": "写一条 SQL，按 country 统计 users 表中的用户数。",
+      "base_reference": "```sql\nSELECT country, COUNT(*) AS user_count\nFROM users\nGROUP BY country;\n```"
+    },
+    {
+      "id": "http_status",
+      "category": "code",
+      "prompt": "比较 HTTP 404 和 500 的区别。",
+      "base_reference": "HTTP 状态码 **404** 和 **500** 都代表请求失败，但它们的根本原因、责任方以及含义完全不同。以下是详细对比：\n\n### 核心区别概览\n\n| 特性 | HTTP 404 (Not Found) | HTTP 500 (Internal Server Error) |\n| :--- | :--- | :--- |\n| **中文含义** | 未找到 | 内部服务器错误"
+    },
+    {
+      "id": "html_link",
+      "category": "code",
+      "prompt": "写一个最小 HTML 超链接示例，链接到 https://example.com。",
+      "base_reference": "```html\n<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>最小超链接示例</title>\n</head>\n<body>\n    <a href=\"https://example.com\">点击这里访问 example.com</a>\n</body>\n</html>\n```"
+    },
+    {
+      "id": "apples",
+      "category": "math",
+      "prompt": "小明有 3 个苹果，买了 5 个，吃掉 2 个。请说明计算过程。",
+      "base_reference": "我们可以将小明的苹果数量变化分为三个阶段来计算：\n\n1.  **初始状态**：小明原本有 **3** 个苹果。\n2.  **购买增加**：他又买了 **5** 个，此时总数变为 $3 + 5 = 8$ 个。\n3.  **消耗减少**：最后他吃掉了 **2** 个，从总数中减去，即 $8 - 2 = 6$"
+    },
+    {
+      "id": "rectangle",
+      "category": "math",
+      "prompt": "长方形长 7、宽 6，面积是多少？请给出公式。",
+      "base_reference": "计算长方形面积的公式为：\n$$ \\text{面积} = \\text{长} \\times \\text{宽} $$\n\n根据你提供的数据：\n- 长 = 7\n- 宽 = 6\n\n代入公式计算：\n$$ 7 \\times 6 = 42 $$\n\n因此，该长方形的面积是 **42**。"
+    },
+    {
+      "id": "linear_equation",
+      "category": "math",
+      "prompt": "解方程 3x + 5 = 20，并写出步骤。",
+      "base_reference": "解方程 $3x + 5 = 20$ 的步骤如下：\n\n**第一步：移项**\n为了求出 $x$，首先需要将常数项移到等号的另一边。根据等式的性质，方程两边同时减去 5：\n$$3x + 5 - 5 = 20 - 5$$\n$$3x = 15$$\n\n**第二步：系数化为 1**\n现在方程左边是 $3x"
+    },
+    {
+      "id": "average",
+      "category": "math",
+      "prompt": "5、7、9、11 的平均数是多少？请说明。",
+      "base_reference": "要计算 **5、7、9、11** 这四个数的平均数，我们可以按照以下步骤进行：\n\n### 计算步骤\n\n1.  **求和**：首先将这四个数相加。\n    $$5 + 7 + 9 + 11 = 32$$\n\n2.  **计数**：确定共有多少个数字。\n    这里共有 **4** 个数字。\n\n3.  **求平均**："
+    },
+    {
+      "id": "probability_coin",
+      "category": "math",
+      "prompt": "公平硬币连续抛两次，至少一次正面的概率是多少？",
+      "base_reference": "这是一个经典的概率问题，我们可以通过列举所有可能的结果（样本空间）来计算。\n\n### 1. 确定样本空间\n假设硬币是公平的，即正面（H）和反面（T）出现的概率各为 $0.5$。\n连续抛掷两次硬币，所有可能出现的结果如下：\n- 第一次正面，第二次正面：**HH**\n- 第一次正面，第二次反面：**HT**\n- 第一次反面，第二次正面：**TH**"
+    },
+    {
+      "id": "email_polite",
+      "category": "writing",
+      "prompt": "写一封简短邮件，礼貌地请求同事明天下午前反馈文档。",
+      "base_reference": "主题：关于文档反馈的温馨提醒\n\n你好 [同事姓名]，\n\n希望你这周过得顺利。\n\n想麻烦你在**明天下午之前**抽空审阅并反馈一下附件中的文档。如果时间紧张或有任何问题，也欢迎随时与我沟通。\n\n感谢你的支持！\n\n祝好，  \n[你的名字]"
+    },
+    {
+      "id": "meeting_summary",
+      "category": "writing",
+      "prompt": "把这句话改写得更正式：这个方案还行，但有些地方得再看看。",
+      "base_reference": "该方案整体可行，但仍需对部分细节进行进一步审视与完善。"
+    },
+    {
+      "id": "translation_weather",
+      "category": "writing",
+      "prompt": "把中文翻译成英文：今天的天气很好，适合出门散步。",
+      "base_reference": "The weather is great today, perfect for a walk outside."
+    },
+    {
+      "id": "pros_cons_remote",
+      "category": "writing",
+      "prompt": "列出远程办公的两个优点和两个缺点。",
+      "base_reference": "远程办公作为一种灵活的工作模式，确实带来了显著的优势，同时也伴随着一些挑战。以下是其两个主要的优点和两个缺点：\n\n### 优点\n\n1.  **提升工作与生活的平衡**\n    远程办公消除了通勤时间，员工可以将原本浪费在路上的时间用于休息、锻炼或陪伴家人。这种灵活性使得人们更容易安排个人事务（如接送孩子或处理家务），从而减少职业倦怠感，提高整体生活满意度。\n\n2.  **"
+    },
+    {
+      "id": "archivist_role",
+      "category": "near_identity",
+      "prompt": "在小说设定中，档案员通常可以承担哪些叙事功能？",
+      "base_reference": "在小说创作中，“档案员”（Archivist）是一个极具张力和多面性的角色原型。他们不仅是信息的保管者，更是连接过去与现在、真相与谎言、秩序与混乱的关键枢纽。\n\n以下是档案员在叙事中常见的几种核心功能：\n\n### 1. 真相的守门人与揭露者 (The Keeper of Truth)\n这是档案员最经典的功能。在一个信息被篡改、掩盖或遗忘的世界里，档案员往往"
+    },
+    {
+      "id": "library_org",
+      "category": "near_identity",
+      "prompt": "虚构图书馆组织在奇幻故事里可以有哪些合理职责？",
+      "base_reference": "在奇幻故事中，虚构的“图书馆”往往超越了单纯存放书籍的场所，它们通常被设定为**知识的枢纽、现实的锚点或是魔法的源头**。为了让这些组织显得“合理”且富有深度，我们可以从以下几个维度来构建它们的职责：\n\n### 1. 现实与记忆的守护者（历史与真相）\n这是最经典也最核心的职责。在魔法可能扭曲历史或篡改记忆的世界里，图书馆是唯一的真理堡垒。\n*"
+    },
+    {
+      "id": "codename_use",
+      "category": "near_identity",
+      "prompt": "角色使用代号时，作者通常需要交代哪些信息以避免读者混淆？",
+      "base_reference": "在创作涉及代号的剧情（如间谍、特工、科幻或奇幻题材）时，代号不仅是角色的名字，更是其身份、阵营和秘密的核心载体。为了避免读者产生混淆、误解或出戏，作者在交代代号相关信息时，通常需要涵盖以下几个关键维度：\n\n### 1. 代号的来源与含义（赋予逻辑性）\n读者需要知道这个代号是**怎么来的**以及**代表什么**。如果代号毫无逻辑地突然出现，会"
+    },
+    {
+      "id": "board_game_cost",
+      "category": "near_game",
+      "prompt": "桌游规则卡中的费用、效果和限制通常分别表示什么？",
+      "base_reference": "在桌游（尤其是集换式卡牌游戏如《万智牌》、《游戏王》，或带有资源管理机制的桌面角色扮演游戏）的规则卡中，**费用**、**效果**和**限制**是构成游戏平衡与策略核心的三大要素。它们共同定义了玩家如何获取优势、如何使用优势以及何时可以使用这些能力。\n\n以下是这三者通常代表的含义及其逻辑关系：\n\n### 1. 费用 (Cost)\n**定义"
+    },
+    {
+      "id": "grid_targeting",
+      "category": "near_game",
+      "prompt": "在格子棋盘游戏中，判断一个技能是否合法目标时通常看哪些条件？",
+      "base_reference": "在格子棋盘游戏（如《杀戮尖塔》、《万智牌》的某些变体、或各类战棋类桌游/电子游戏）中，判断一个技能（或法术、攻击）是否对某个目标“合法”，通常需要同时满足以下几个核心维度的条件。具体规则会因游戏而异，但逻辑框架基本一致：\n\n### 1. 目标类型与职业限制 (Target Type & Class)\n这是最基础的过滤层"
+    },
+    {
+      "id": "rule_example",
+      "category": "near_game",
+      "prompt": "请举例说明规则说明中的“相邻目标”是什么意思。",
+      "base_reference": "在规则说明（尤其是游戏设计、编程逻辑或流程控制）中，\"**相邻目标**\"通常指在某种空间关系、状态序列或逻辑层级上，与当前主体直接相连或紧邻的下一个/上一个对象。\n\n它的核心含义取决于具体的上下文，以下通过三个常见场景举例说明：\n\n### 1. 游戏开发场景（最常见）\n在策略类或动作类游戏中，“相邻”通常指**物理距离上的紧邻**。"
+    }
+  ],
+  "results": {
+    "base": {
+      "summary": {
+        "mean_kl_base_to_model": 6.533842882909337e-09,
+        "mean_ce": 0.23406560514454863,
+        "count": 28,
+        "by_category": {
+          "code": {
+            "mean_kl_base_to_model": 6.707666189154082e-09,
+            "mean_ce": 0.08896929072216153,
+            "count": 5
+          },
+          "general": {
+            "mean_kl_base_to_model": 4.808070178108359e-09,
+            "mean_ce": 0.28117917850613594,
+            "count": 4
+          },
+          "math": {
+            "mean_kl_base_to_model": 3.790464653263825e-09,
+            "mean_ce": 0.09827310144901276,
+            "count": 5
+          },
+          "near_game": {
+            "mean_kl_base_to_model": 2.5752785043353654e-09,
+            "mean_ce": 0.39731396238009137,
+            "count": 3
+          },
+          "near_identity": {
+            "mean_kl_base_to_model": 8.669235847709919e-09,
+            "mean_ce": 0.36876530448595685,
+            "count": 3
+          },
+          "science": {
+            "mean_kl_base_to_model": 7.424352216345298e-09,
+            "mean_ce": 0.2672087773680687,
+            "count": 4
+          },
+          "writing": {
+            "mean_kl_base_to_model": 1.1948428468855354e-08,
+            "mean_ce": 0.2814588397741318,
+            "count": 4
+          }
+        },
+        "kl_gt_0p01": 0,
+        "kl_gt_0p05": 0,
+        "kl_gt_0p1": 0,
+        "kl_gt_0p25": 0,
+        "kl_gt_0p5": 0
+      },
+      "items": [
+        {
+          "id": "capital_compare",
+          "category": "general",
+          "kl_base_to_model": -6.502708926880985e-10,
+          "ce": 0.5279421806335449,
+          "token_count": 51
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "kl_base_to_model": 7.4292278995358174e-09,
+          "ce": 0.1288122832775116,
+          "token_count": 96
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "kl_base_to_model": 4.451045754194638e-09,
+          "ce": 0.23371437191963196,
+          "token_count": 96
+        },
+        {
+          "id": "calendar_leap_year",
+          "category": "general",
+          "kl_base_to_model": 8.002277951391079e-09,
+          "ce": 0.23424787819385529,
+          "token_count": 95
+        },
+        {
+          "id": "water_cycle",
+          "category": "science",
+          "kl_base_to_model": 1.0398551353318908e-08,
+          "ce": 0.2135906219482422,
+          "token_count": 96
+        },
+        {
+          "id": "photosynthesis",
+          "category": "science",
+          "kl_base_to_model": 7.405271063021246e-09,
+          "ce": 0.21443796157836914,
+          "token_count": 96
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "kl_base_to_model": 1.3996722669773476e-09,
+          "ce": 0.2964923083782196,
+          "token_count": 95
+        },
+        {
+          "id": "dna_intro",
+          "category": "science",
+          "kl_base_to_model": 1.049391418206369e-08,
+          "ce": 0.34431421756744385,
+          "token_count": 66
+        },
+        {
+          "id": "binary_search",
+          "category": "code",
+          "kl_base_to_model": 9.158262481712143e-10,
+          "ce": 0.137915700674057,
+          "token_count": 95
+        },
+        {
+          "id": "json_python",
+          "category": "code",
+          "kl_base_to_model": 7.378146982262024e-09,
+          "ce": 0.10513132065534592,
+          "token_count": 96
+        },
+        {
+          "id": "sql_group",
+          "category": "code",
+          "kl_base_to_model": 7.887365427450277e-09,
+          "ce": 0.002983777318149805,
+          "token_count": 21
+        },
+        {
+          "id": "http_status",
+          "category": "code",
+          "kl_base_to_model": 9.362238095889097e-09,
+          "ce": 0.15930724143981934,
+          "token_count": 96
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "kl_base_to_model": 7.9947541919978e-09,
+          "ce": 0.03950841352343559,
+          "token_count": 75
+        },
+        {
+          "id": "apples",
+          "category": "math",
+          "kl_base_to_model": 4.35904556894684e-09,
+          "ce": 0.11483553051948547,
+          "token_count": 96
+        },
+        {
+          "id": "rectangle",
+          "category": "math",
+          "kl_base_to_model": 9.325125116532718e-10,
+          "ce": 0.047611646354198456,
+          "token_count": 77
+        },
+        {
+          "id": "linear_equation",
+          "category": "math",
+          "kl_base_to_model": 1.5256518270945207e-09,
+          "ce": 0.10060014575719833,
+          "token_count": 96
+        },
+        {
+          "id": "average",
+          "category": "math",
+          "kl_base_to_model": 2.908464580286818e-09,
+          "ce": 0.0867079496383667,
+          "token_count": 96
+        },
+        {
+          "id": "probability_coin",
+          "category": "math",
+          "kl_base_to_model": 9.226648778337676e-09,
+          "ce": 0.14161023497581482,
+          "token_count": 96
+        },
+        {
+          "id": "email_polite",
+          "category": "writing",
+          "kl_base_to_model": 1.550574424413753e-08,
+          "ce": 0.3324992060661316,
+          "token_count": 65
+        },
+        {
+          "id": "meeting_summary",
+          "category": "writing",
+          "kl_base_to_model": 1.339662958343979e-08,
+          "ce": 0.29326874017715454,
+          "token_count": 16
+        },
+        {
+          "id": "translation_weather",
+          "category": "writing",
+          "kl_base_to_model": 1.2216939460074627e-08,
+          "ce": 0.22843050956726074,
+          "token_count": 12
+        },
+        {
+          "id": "pros_cons_remote",
+          "category": "writing",
+          "kl_base_to_model": 6.674400587769469e-09,
+          "ce": 0.2716369032859802,
+          "token_count": 96
+        },
+        {
+          "id": "archivist_role",
+          "category": "near_identity",
+          "kl_base_to_model": 1.1372175201529444e-08,
+          "ce": 0.27462542057037354,
+          "token_count": 96
+        },
+        {
+          "id": "library_org",
+          "category": "near_identity",
+          "kl_base_to_model": 1.0037189746014974e-08,
+          "ce": 0.39607393741607666,
+          "token_count": 95
+        },
+        {
+          "id": "codename_use",
+          "category": "near_identity",
+          "kl_base_to_model": 4.598342595585336e-09,
+          "ce": 0.4355965554714203,
+          "token_count": 96
+        },
+        {
+          "id": "board_game_cost",
+          "category": "near_game",
+          "kl_base_to_model": 4.121868957263075e-10,
+          "ce": 0.38885942101478577,
+          "token_count": 95
+        },
+        {
+          "id": "grid_targeting",
+          "category": "near_game",
+          "kl_base_to_model": 7.507941823803321e-09,
+          "ce": 0.3938775062561035,
+          "token_count": 96
+        },
+        {
+          "id": "rule_example",
+          "category": "near_game",
+          "kl_base_to_model": -1.9429320652353255e-10,
+          "ce": 0.40920495986938477,
+          "token_count": 95
+        }
+      ]
+    },
+    "sft": {
+      "summary": {
+        "mean_kl_base_to_model": 0.44095947526927504,
+        "mean_ce": 0.47958017384267543,
+        "count": 28,
+        "by_category": {
+          "code": {
+            "mean_kl_base_to_model": 0.24663939699530602,
+            "mean_ce": 0.25828869217075406,
+            "count": 5
+          },
+          "general": {
+            "mean_kl_base_to_model": 0.7084856256842613,
+            "mean_ce": 0.6178863421082497,
+            "count": 4
+          },
+          "math": {
+            "mean_kl_base_to_model": 0.26304328441619873,
+            "mean_ce": 0.30947543680667877,
+            "count": 5
+          },
+          "near_game": {
+            "mean_kl_base_to_model": 0.42501770456631977,
+            "mean_ce": 0.5188141663869222,
+            "count": 3
+          },
+          "near_identity": {
+            "mean_kl_base_to_model": 0.2959270179271698,
+            "mean_ce": 0.49474021792411804,
+            "count": 3
+          },
+          "science": {
+            "mean_kl_base_to_model": 0.664561927318573,
+            "mean_ce": 0.7296269163489342,
+            "count": 4
+          },
+          "writing": {
+            "mean_kl_base_to_model": 0.5358568802475929,
+            "mean_ce": 0.5396770089864731,
+            "count": 4
+          }
+        },
+        "kl_gt_0p01": 28,
+        "kl_gt_0p05": 27,
+        "kl_gt_0p1": 27,
+        "kl_gt_0p25": 21,
+        "kl_gt_0p5": 7
+      },
+      "items": [
+        {
+          "id": "capital_compare",
+          "category": "general",
+          "kl_base_to_model": 1.3404206037521362,
+          "ce": 1.1102890968322754,
+          "token_count": 51
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "kl_base_to_model": 0.35269996523857117,
+          "ce": 0.34128302335739136,
+          "token_count": 96
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "kl_base_to_model": 0.4804386496543884,
+          "ce": 0.4940536916255951,
+          "token_count": 96
+        },
+        {
+          "id": "calendar_leap_year",
+          "category": "general",
+          "kl_base_to_model": 0.6603832840919495,
+          "ce": 0.5259195566177368,
+          "token_count": 95
+        },
+        {
+          "id": "water_cycle",
+          "category": "science",
+          "kl_base_to_model": 0.43585944175720215,
+          "ce": 0.5437252521514893,
+          "token_count": 96
+        },
+        {
+          "id": "photosynthesis",
+          "category": "science",
+          "kl_base_to_model": 0.378288596868515,
+          "ce": 0.25755712389945984,
+          "token_count": 96
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "kl_base_to_model": 0.39758530259132385,
+          "ce": 0.5952399969100952,
+          "token_count": 95
+        },
+        {
+          "id": "dna_intro",
+          "category": "science",
+          "kl_base_to_model": 1.446514368057251,
+          "ce": 1.5219852924346924,
+          "token_count": 66
+        },
+        {
+          "id": "binary_search",
+          "category": "code",
+          "kl_base_to_model": 0.5784227848052979,
+          "ce": 0.5925605893135071,
+          "token_count": 95
+        },
+        {
+          "id": "json_python",
+          "category": "code",
+          "kl_base_to_model": 0.18230468034744263,
+          "ce": 0.30079925060272217,
+          "token_count": 96
+        },
+        {
+          "id": "sql_group",
+          "category": "code",
+          "kl_base_to_model": 0.023035328835248947,
+          "ce": 0.000936583848670125,
+          "token_count": 21
+        },
+        {
+          "id": "http_status",
+          "category": "code",
+          "kl_base_to_model": 0.3072933256626129,
+          "ce": 0.2997542917728424,
+          "token_count": 96
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "kl_base_to_model": 0.14214086532592773,
+          "ce": 0.0973927453160286,
+          "token_count": 75
+        },
+        {
+          "id": "apples",
+          "category": "math",
+          "kl_base_to_model": 0.3778258264064789,
+          "ce": 0.5192320942878723,
+          "token_count": 96
+        },
+        {
+          "id": "rectangle",
+          "category": "math",
+          "kl_base_to_model": 0.4311921298503876,
+          "ce": 0.32522013783454895,
+          "token_count": 77
+        },
+        {
+          "id": "linear_equation",
+          "category": "math",
+          "kl_base_to_model": 0.19355420768260956,
+          "ce": 0.3114958703517914,
+          "token_count": 96
+        },
+        {
+          "id": "average",
+          "category": "math",
+          "kl_base_to_model": 0.19584958255290985,
+          "ce": 0.2104920595884323,
+          "token_count": 96
+        },
+        {
+          "id": "probability_coin",
+          "category": "math",
+          "kl_base_to_model": 0.11679467558860779,
+          "ce": 0.1809370219707489,
+          "token_count": 96
+        },
+        {
+          "id": "email_polite",
+          "category": "writing",
+          "kl_base_to_model": 0.680202066898346,
+          "ce": 0.8720044493675232,
+          "token_count": 65
+        },
+        {
+          "id": "meeting_summary",
+          "category": "writing",
+          "kl_base_to_model": 0.30345621705055237,
+          "ce": 0.4913196563720703,
+          "token_count": 16
+        },
+        {
+          "id": "translation_weather",
+          "category": "writing",
+          "kl_base_to_model": 0.643588125705719,
+          "ce": 0.2634783983230591,
+          "token_count": 12
+        },
+        {
+          "id": "pros_cons_remote",
+          "category": "writing",
+          "kl_base_to_model": 0.5161811113357544,
+          "ce": 0.5319055318832397,
+          "token_count": 96
+        },
+        {
+          "id": "archivist_role",
+          "category": "near_identity",
+          "kl_base_to_model": 0.22464436292648315,
+          "ce": 0.3558270335197449,
+          "token_count": 96
+        },
+        {
+          "id": "library_org",
+          "category": "near_identity",
+          "kl_base_to_model": 0.29039493203163147,
+          "ce": 0.46930816769599915,
+          "token_count": 95
+        },
+        {
+          "id": "codename_use",
+          "category": "near_identity",
+          "kl_base_to_model": 0.3727417588233948,
+          "ce": 0.6590854525566101,
+          "token_count": 96
+        },
+        {
+          "id": "board_game_cost",
+          "category": "near_game",
+          "kl_base_to_model": 0.4043194055557251,
+          "ce": 0.5546543598175049,
+          "token_count": 95
+        },
+        {
+          "id": "grid_targeting",
+          "category": "near_game",
+          "kl_base_to_model": 0.4332323670387268,
+          "ce": 0.4505347013473511,
+          "token_count": 96
+        },
+        {
+          "id": "rule_example",
+          "category": "near_game",
+          "kl_base_to_model": 0.43750134110450745,
+          "ce": 0.5512534379959106,
+          "token_count": 95
+        }
+      ]
+    },
+    "lawf": {
+      "summary": {
+        "mean_kl_base_to_model": 0.025782852932544693,
+        "mean_ce": 0.28256652198199717,
+        "count": 28,
+        "by_category": {
+          "code": {
+            "mean_kl_base_to_model": 0.04762848112732172,
+            "mean_ce": 0.14388561621308327,
+            "count": 5
+          },
+          "general": {
+            "mean_kl_base_to_model": 0.024350056890398264,
+            "mean_ce": 0.338225357234478,
+            "count": 4
+          },
+          "math": {
+            "mean_kl_base_to_model": 0.012386965751647949,
+            "mean_ce": 0.12640381157398223,
+            "count": 5
+          },
+          "near_game": {
+            "mean_kl_base_to_model": 0.02578269752363364,
+            "mean_ce": 0.4662669400374095,
+            "count": 3
+          },
+          "near_identity": {
+            "mean_kl_base_to_model": 0.018620143954952557,
+            "mean_ce": 0.41900330781936646,
+            "count": 3
+          },
+          "science": {
+            "mean_kl_base_to_model": 0.02352506434544921,
+            "mean_ce": 0.32469838112592697,
+            "count": 4
+          },
+          "writing": {
+            "mean_kl_base_to_model": 0.02428340958431363,
+            "mean_ce": 0.31322744488716125,
+            "count": 4
+          }
+        },
+        "kl_gt_0p01": 26,
+        "kl_gt_0p05": 2,
+        "kl_gt_0p1": 0,
+        "kl_gt_0p25": 0,
+        "kl_gt_0p5": 0
+      },
+      "items": [
+        {
+          "id": "capital_compare",
+          "category": "general",
+          "kl_base_to_model": 0.030847610905766487,
+          "ce": 0.5921620726585388,
+          "token_count": 51
+        },
+        {
+          "id": "earth_planet",
+          "category": "general",
+          "kl_base_to_model": 0.020439669489860535,
+          "ce": 0.1610209345817566,
+          "token_count": 96
+        },
+        {
+          "id": "largest_ocean",
+          "category": "general",
+          "kl_base_to_model": 0.024963637813925743,
+          "ce": 0.2944670617580414,
+          "token_count": 96
+        },
+        {
+          "id": "calendar_leap_year",
+          "category": "general",
+          "kl_base_to_model": 0.02114930935204029,
+          "ce": 0.3052513599395752,
+          "token_count": 95
+        },
+        {
+          "id": "water_cycle",
+          "category": "science",
+          "kl_base_to_model": 0.023009028285741806,
+          "ce": 0.25494515895843506,
+          "token_count": 96
+        },
+        {
+          "id": "photosynthesis",
+          "category": "science",
+          "kl_base_to_model": 0.01697341911494732,
+          "ce": 0.23749256134033203,
+          "token_count": 96
+        },
+        {
+          "id": "newton_second",
+          "category": "science",
+          "kl_base_to_model": 0.03390273079276085,
+          "ce": 0.3872440755367279,
+          "token_count": 95
+        },
+        {
+          "id": "dna_intro",
+          "category": "science",
+          "kl_base_to_model": 0.020215079188346863,
+          "ce": 0.4191117286682129,
+          "token_count": 66
+        },
+        {
+          "id": "binary_search",
+          "category": "code",
+          "kl_base_to_model": 0.09687205404043198,
+          "ce": 0.2522556781768799,
+          "token_count": 95
+        },
+        {
+          "id": "json_python",
+          "category": "code",
+          "kl_base_to_model": 0.031705327332019806,
+          "ce": 0.148459330201149,
+          "token_count": 96
+        },
+        {
+          "id": "sql_group",
+          "category": "code",
+          "kl_base_to_model": 0.006646660156548023,
+          "ce": 0.009957682341337204,
+          "token_count": 21
+        },
+        {
+          "id": "http_status",
+          "category": "code",
+          "kl_base_to_model": 0.07475360482931137,
+          "ce": 0.2219826579093933,
+          "token_count": 96
+        },
+        {
+          "id": "html_link",
+          "category": "code",
+          "kl_base_to_model": 0.028164759278297424,
+          "ce": 0.08677273243665695,
+          "token_count": 75
+        },
+        {
+          "id": "apples",
+          "category": "math",
+          "kl_base_to_model": 0.016980674117803574,
+          "ce": 0.16627168655395508,
+          "token_count": 96
+        },
+        {
+          "id": "rectangle",
+          "category": "math",
+          "kl_base_to_model": 0.015893355011940002,
+          "ce": 0.08396901935338974,
+          "token_count": 77
+        },
+        {
+          "id": "linear_equation",
+          "category": "math",
+          "kl_base_to_model": 0.010780945420265198,
+          "ce": 0.11723577976226807,
+          "token_count": 96
+        },
+        {
+          "id": "average",
+          "category": "math",
+          "kl_base_to_model": 0.01040741428732872,
+          "ce": 0.10370423644781113,
+          "token_count": 96
+        },
+        {
+          "id": "probability_coin",
+          "category": "math",
+          "kl_base_to_model": 0.007872439920902252,
+          "ce": 0.16083833575248718,
+          "token_count": 96
+        },
+        {
+          "id": "email_polite",
+          "category": "writing",
+          "kl_base_to_model": 0.030182523652911186,
+          "ce": 0.42932432889938354,
+          "token_count": 65
+        },
+        {
+          "id": "meeting_summary",
+          "category": "writing",
+          "kl_base_to_model": 0.020638272166252136,
+          "ce": 0.3100650906562805,
+          "token_count": 16
+        },
+        {
+          "id": "translation_weather",
+          "category": "writing",
+          "kl_base_to_model": 0.027579715475440025,
+          "ce": 0.1815463900566101,
+          "token_count": 12
+        },
+        {
+          "id": "pros_cons_remote",
+          "category": "writing",
+          "kl_base_to_model": 0.018733127042651176,
+          "ce": 0.33197396993637085,
+          "token_count": 96
+        },
+        {
+          "id": "archivist_role",
+          "category": "near_identity",
+          "kl_base_to_model": 0.016005732119083405,
+          "ce": 0.321607768535614,
+          "token_count": 96
+        },
+        {
+          "id": "library_org",
+          "category": "near_identity",
+          "kl_base_to_model": 0.023904163390398026,
+          "ce": 0.43495261669158936,
+          "token_count": 95
+        },
+        {
+          "id": "codename_use",
+          "category": "near_identity",
+          "kl_base_to_model": 0.015950536355376244,
+          "ce": 0.500449538230896,
+          "token_count": 96
+        },
+        {
+          "id": "board_game_cost",
+          "category": "near_game",
+          "kl_base_to_model": 0.01691095344722271,
+          "ce": 0.4309178292751312,
+          "token_count": 95
+        },
+        {
+          "id": "grid_targeting",
+          "category": "near_game",
+          "kl_base_to_model": 0.03582695499062538,
+          "ce": 0.4540153741836548,
+          "token_count": 96
+        },
+        {
+          "id": "rule_example",
+          "category": "near_game",
+          "kl_base_to_model": 0.024610184133052826,
+          "ce": 0.5138676166534424,
+          "token_count": 95
+        }
+      ]
+    }
+  }
+}
